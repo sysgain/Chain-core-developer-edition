@@ -6,21 +6,17 @@
             "type": "int",
             "defaultValue": 2
         },
-        "adminUsername-Generator": {
+        "adminUsername": {
             "type": "string",
             "defaultValue": "ashuser"
         },
-        "adminPassword-Generator": {
+        "adminPassword": {
             "type": "string",
             "defaultValue": "Ashpassword123"
         },
-        "adminUsername-signer": {
+        "objectId": {
             "type": "string",
-            "defaultValue": "ashuser"
-        },
-        "adminPassword-signer": {
-            "type": "string",
-            "defaultValue": "Ashpassword123"
+            "defaultValue": "fd6c1923-5ea7-4b77-ae32-eca1a5445f9a"
         }
     },
     "variables": {
@@ -46,11 +42,14 @@
         "generatorSubnetName": "gen-subnet",
         "signerSubnetName": "signer-subnet",
         "lbPipDns": "[concat('chain-gen-',variables('suffix'))]",
-        "keyVaultName": "[concat(variables('prefix'),'-keybunch-',variables('suffix'))]",
+        "keyVaultName": "[concat(variables('prefix'),'-',variables('suffix'),'-keybunch')]",
         "tenantId": "[subscription().tenantId]",
-        "objectId": "fd6c1923-5ea7-4b77-ae32-eca1a5445f9a",
-        "signerScriptUrl": "https://informaticasrc22.blob.core.windows.net/source2/signer-script.sh",
-        "signerScriptFileName": "signer-script.sh"
+        "signerScript1Url": "",
+        "signerScript1FileName": "",
+        "generatorScriptUrl": "",
+        "generatorScriptFileName": "",
+        "signerScriptUrl2": "",
+        "signerScript2FileName": ""
     },
     "resources": [
         {
@@ -99,8 +98,8 @@
                 },
                 "osProfile": {
                     "computerName": "[variables('chainGeneratorVmName')]",
-                    "adminUsername": "[parameters('adminUsername-Generator')]",
-                    "adminPassword": "[parameters('adminPassword-Generator')]",
+                    "adminUsername": "[parameters('adminUsername')]",
+                    "adminPassword": "[parameters('adminPassword')]",
                     "linuxConfiguration": {
                         "disablePasswordAuthentication": false
                     },
@@ -137,7 +136,6 @@
                 }
             ]
         },
-        
         {
             "type": "Microsoft.Compute/virtualMachines",
             "name": "[concat(variables('chainSignerVmName'),'-',copyIndex())]",
@@ -175,8 +173,8 @@
                 },
                 "osProfile": {
                     "computerName": "[concat(variables('chainSignerVmName'),'-',copyIndex())]",
-                    "adminUsername": "[parameters('adminUsername-signer')]",
-                    "adminPassword": "[parameters('adminPassword-signer')]",
+                    "adminUsername": "[parameters('adminUsername')]",
+                    "adminPassword": "[parameters('adminPassword')]",
                     "linuxConfiguration": {
                         "disablePasswordAuthentication": false
                     },
@@ -523,7 +521,7 @@
                 },
                 "accessPolicies": [
                     {
-                        "objectId": "[variables('objectId')]",
+                        "objectId": "[parameters('objectId')]",
                         "tenantId": "[variables('tenantId')]",
                         "permissions": {
                             "keys": [
