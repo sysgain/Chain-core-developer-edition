@@ -280,6 +280,17 @@
                             "backendPort": 22,
                             "protocol": "Tcp"
                         }
+                    },
+                    {
+                        "name": "HTTPS",
+                        "properties": {
+                            "frontendIPConfiguration": {
+                                "id": "[variables('lbIpConfigId')]"
+                            },
+                            "frontendPort": 443,
+                            "backendPort": 443,
+                            "protocol": "Tcp"
+                        }
                     }
                 ],
                 "outboundNatRules": [],
