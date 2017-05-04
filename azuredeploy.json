@@ -46,7 +46,7 @@
         "generatorSubnetName": "gen-subnet",
         "signerSubnetName": "signer-subnet",
         "lbPipDns": "[concat('chain-gen-',variables('suffix'))]",
-        "keyVaultName": "[concat(variables('prefix'),'-',variables('suffix'),'-keybunch')]",
+        "keyVaultName": "[concat(variables('prefix'),'-',variables('suffix'),'-kvlt')]",
         "tenantId": "[subscription().tenantId]",
         "signerScript1Url": "",
         "signerScript1FileName": "",
