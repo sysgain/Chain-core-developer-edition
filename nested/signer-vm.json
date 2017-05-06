@@ -81,9 +81,6 @@
                     ]
                 }
             },
-            "dependsOn": [
-                "[resourceId('Microsoft.Network/networkInterfaces', concat(variables('signerNicName'),'-',copyIndex(1)))]"
-            ],
             "resources": [
                 {
                     "type": "extensions",

@@ -49,12 +49,7 @@
                 "networkSecurityGroup": {
                     "id": "[resourceId('Microsoft.Network/networkSecurityGroups', variables('signerNsgName'))]"
                 }
-            },
-            "dependsOn": [
-                "[resourceId('Microsoft.Network/publicIPAddresses', concat(variables('signerVMIpName'),'-',copyIndex(1)))]",
-                "[resourceId('Microsoft.Network/virtualNetworks', variables('virtualNetworksName'))]",
-                "[resourceId('Microsoft.Network/networkSecurityGroups', variables('signerNsgName'))]"
-            ]
+            }
         }
     ]
 }

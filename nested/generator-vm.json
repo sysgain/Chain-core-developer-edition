@@ -70,9 +70,6 @@
                     ]
                 }
             },
-            "dependsOn": [
-                "[resourceId('Microsoft.Network/networkInterfaces', variables('generatorNicName'))]"
-            ],
             "resources": [
                 {
                     "type": "extensions",

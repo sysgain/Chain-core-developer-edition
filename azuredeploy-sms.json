@@ -424,6 +424,9 @@
             "name": "signerVMsSetup",
             "apiVersion": "2016-02-01",
             "type": "Microsoft.Resources/deployments",
+            "dependsOn": [
+                "signerNICSetup"
+            ],
             "properties": {
                 "mode": "Incremental",
                 "templateLink": {
@@ -441,6 +444,9 @@
             "name": "generatorVMSetup",
             "apiVersion": "2016-02-01",
             "type": "Microsoft.Resources/deployments",
+            "dependsOn":[
+                "generatorNICSetup"
+            ],
             "properties": {
                 "mode": "Incremental",
                 "templateLink": {
@@ -458,6 +464,11 @@
             "name": "generatorNICSetup",
             "apiVersion": "2016-02-01",
             "type": "Microsoft.Resources/deployments",
+            "dependsOn":[
+                "vnetSetup",
+                "nsgSetup",
+                "lbSetup"
+            ],
             "properties": {
                 "mode": "Incremental",
                 "templateLink": {
@@ -475,6 +486,11 @@
             "name": "signerNICSetup",
             "apiVersion": "2016-02-01",
             "type": "Microsoft.Resources/deployments",
+            "dependsOn": [
+                "pipSetup",
+                "vnetSetup",
+                "nsgSetup"
+            ],
             "properties": {
                 "mode": "Incremental",
                 "templateLink": {
@@ -548,6 +564,9 @@
         },
         {
             "name": "lbSetup",
+            "dependsOn":[
+                "pipSetup"
+            ],
             "apiVersion": "2016-02-01",
             "type": "Microsoft.Resources/deployments",
             "properties": {

@@ -148,10 +148,7 @@
                 ],
                 "outboundNatRules": [],
                 "inboundNatPools": []
-            },
-            "dependsOn": [
-                "[resourceId('Microsoft.Network/publicIPAddresses', variables('generatorLbIpName'))]"
-            ]
+            }
         }
     ]
 }

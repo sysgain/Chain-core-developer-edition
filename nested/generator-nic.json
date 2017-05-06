@@ -51,12 +51,7 @@
                 "networkSecurityGroup": {
                     "id": "[resourceId('Microsoft.Network/networkSecurityGroups', variables('generatorNsgName'))]"
                 }
-            },
-            "dependsOn": [
-                "[resourceId('Microsoft.Network/virtualNetworks', variables('virtualNetworksName'))]",
-                "[resourceId('Microsoft.Network/loadBalancers', variables('chainLoadBalancerName'))]",
-                "[resourceId('Microsoft.Network/networkSecurityGroups', variables('generatorNsgName'))]"
-            ]
+            }
         }
     ]
 }
