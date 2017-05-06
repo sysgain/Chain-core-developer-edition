@@ -122,7 +122,18 @@
         },
         "signer_nodes_Count": {
             "type": "int",
-            "defaultValue": 2
+            "defaultValue": 2,
+            "allowedValues": [
+                1,
+                2,
+                3,
+                4,
+                5,
+                6,
+                7,
+                8,
+                9
+            ]
         },
         "adminUsername": {
             "type": "string",
