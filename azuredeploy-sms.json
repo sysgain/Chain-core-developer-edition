@@ -488,23 +488,7 @@
                 }
             }
         },
-        {
-            "name": "signerNICSetup",
-            "apiVersion": "2016-02-01",
-            "type": "Microsoft.Resources/deployments",
-            "properties": {
-                "mode": "Incremental",
-                "templateLink": {
-                    "uri": "[variables('signerNICsetupURL')]",
-                    "contentVersion": "1.0.0.0"
-                },
-                "parameters": {
-                    "signerVMsettings": {
-                        "value": "[variables('signerNicSettings')]"
-                    }
-                }
-            }
-        },
+        
         {
             "name": "avaialabilitySetSetup",
             "apiVersion": "2016-02-01",
