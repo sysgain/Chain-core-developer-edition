@@ -381,7 +381,7 @@
         "lbSettings": {
             "chainLoadBalancerName": "[concat(variables('prefix'),'-lb')]",
             "location": "[parameters('location')]",
-            "generatorLbIpName": "",
+            "generatorLbIpName": "[variables('pipSettings').generatorLbIpName]",
             "apiVersion": "2016-03-30"
         },
         "vnetSettings": {
