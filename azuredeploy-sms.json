@@ -454,7 +454,7 @@
                     "contentVersion": "1.0.0.0"
                 },
                 "parameters": {
-                    "signerVMsettings": {
+                    "generatorVMsettings": {
                         "value": "[variables('generatorVMsettings')]"
                     }
                 }
@@ -476,7 +476,7 @@
                     "contentVersion": "1.0.0.0"
                 },
                 "parameters": {
-                    "signerVMsettings": {
+                    "generatorNicSettings": {
                         "value": "[variables('generatorNicSettings')]"
                     }
                 }
@@ -498,7 +498,7 @@
                     "contentVersion": "1.0.0.0"
                 },
                 "parameters": {
-                    "signerVMsettings": {
+                    "signerNicSettings": {
                         "value": "[variables('signerNicSettings')]"
                     }
                 }
@@ -576,7 +576,7 @@
                     "contentVersion": "1.0.0.0"
                 },
                 "parameters": {
-                    "pipSettings": {
+                    "lbSettings": {
                         "value": "[variables('lbSettings')]"
                     }
                 }
@@ -593,7 +593,7 @@
                     "contentVersion": "1.0.0.0"
                 },
                 "parameters": {
-                    "pipSettings": {
+                    "nsgSettings": {
                         "value": "[variables('nsgSettings')]"
                     }
                 }
@@ -610,7 +610,7 @@
                     "contentVersion": "1.0.0.0"
                 },
                 "parameters": {
-                    "signerVMsettings": {
+                    "keyVaultSettings": {
                         "value": "[variables('keyVaultSettings')]"
                     }
                 }
