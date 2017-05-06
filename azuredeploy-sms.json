@@ -143,16 +143,16 @@
     },
     "variables": {
         "baseUrl": "https://raw.githubusercontent.com/sysgain/Chain-core-developer-edition/chain-core-dev",
-        "signerVMsSetupURL": "[concat(variables('baseUrl'),'')]",
-        "generatorVMsetupURL": "[concat(variables('baseUrl'),'')]",
-        "generatorNICsetupURL": "[concat(variables('baseUrl'),'')]",
-        "signerNICsetupURL": "[concat(variables('baseUrl'),'')]",
-        "avaialabilitySetSetupURL": "[concat(variables('baseUrl'),'')]",
-        "vnetSetupURL": "[concat(variables('baseUrl'),'')]",
-        "pipSetupURL": "[concat(variables('baseUrl'),'')]",
-        "lbSetupURL": "[concat(variables('baseUrl'),'')]",
-        "nsgSetupURL": "[concat(variables('baseUrl'),'')]",
-        "keyVaultSetupURL": "[concat(variables('baseUrl'),'')]",
+        "signerVMsSetupURL": "[concat(variables('baseUrl'),'/nested/signer-vm.json')]",
+        "generatorVMsetupURL": "[concat(variables('baseUrl'),'/nested/generator-vm.json')]",
+        "generatorNICsetupURL": "[concat(variables('baseUrl'),'/nested/generator-nic.json')]",
+        "signerNICsetupURL": "[concat(variables('baseUrl'),'/nested/signer-nic.json')]",
+        "avaialabilitySetSetupURL": "[concat(variables('baseUrl'),'/nested/availabilitySet.json')]",
+        "vnetSetupURL": "[concat(variables('baseUrl'),'/nested/vnet.json')]",
+        "pipSetupURL": "[concat(variables('baseUrl'),'/nested/pip.json')]",
+        "lbSetupURL": "[concat(variables('baseUrl'),'/nested/lb.json')]",
+        "nsgSetupURL": "[concat(variables('baseUrl'),'/nested/nsg.json')]",
+        "keyVaultSetupURL": "[concat(variables('baseUrl'),'/nested/keyvault.json')]",
         "vmSizesMap": {
             "Standard_A4": {
                 "storageAccountType": "Standard_LRS"
