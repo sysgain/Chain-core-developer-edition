@@ -7,7 +7,7 @@
         }
     },
     "variables": {
-        "prefix": "[parameters('generatorVMsettings').prefix]",
+        "suffix": "[parameters('generatorVMsettings').suffix]",
         "location": "[parameters('generatorVMsettings').location]",
         "generatorNicName": "[parameters('generatorVMsettings').generatorNicName]",
         "generatorVmName": "[parameters('generatorVMsettings').generatorVmName]",
@@ -43,7 +43,7 @@
                     },
                     "osDisk": {
                         "osType": "Linux",
-                        "name": "[concat(variables('generatorVmName'),'-',variables('prefix'),'-osDisk')]",
+                        "name": "[concat(variables('generatorVmName'),'-',variables('suffix'),'-osDisk')]",
                         "createOption": "FromImage",
                         "caching": "ReadWrite",
                         "managedDisk": {

@@ -329,7 +329,7 @@
         "suffix": "[substring(uniqueString(resourceGroup().id) ,0, 5)]",
         "availabilitySetsName": "[concat(variables('prefix'),'-avset')]",
         "signerVMsettings": {
-            "prefix": "[variables('prefix')]",
+            "suffix": "[variables('suffix')]",
             "availabilitySetsName": "[variables('availabilitySetsName')]",
             "signerNicName": "[concat(variables('prefix'),'-signer-nic')]",
             "signerVmName": "[concat(variables('prefix'),'-signer-vm')]",
@@ -351,7 +351,7 @@
             "storageAccountType": "[variables('vmSizesMap')[parameters('signerVmSize')].storageAccountType]"
         },
         "generatorVMsettings": {
-            "prefix": "[variables('prefix')]",
+            "suffix": "[variables('suffix')]",
             "location": "[parameters('location')]",
             "generatorNicName": "[concat(variables('prefix'),'-nic')]",
             "publisher": "Canonical",

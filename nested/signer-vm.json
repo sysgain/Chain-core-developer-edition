@@ -7,7 +7,7 @@
         }
     },
     "variables": {
-        "prefix": "[concat(parameters('signerVMsettings').prefix)]",
+        "suffix": "[concat(parameters('signerVMsettings').suffix)]",
         "apiVersion": "[concat(parameters('signerVMsettings').apiVersion)]",
         "availabilitySetsName": "[concat(parameters('signerVMsettings').availabilitySetsName)]",
         "signerNicName": "[concat(parameters('signerVMsettings').signerNicName)]",
@@ -54,7 +54,7 @@
                     },
                     "osDisk": {
                         "osType": "Linux",
-                        "name": "[concat(variables('signerVmName'),'-',copyIndex(1),'-',variables('prefix'),'-osDisk')]",
+                        "name": "[concat(variables('signerVmName'),'-',copyIndex(1),'-',variables('suffix'),'-osDisk')]",
                         "createOption": "FromImage",
                         "caching": "ReadWrite",
                         "managedDisk": {
