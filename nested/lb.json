@@ -1,0 +1,157 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+       "lbSettings":{
+           "type": "object"
+       }
+    },
+    "variables": {
+            "chainLoadBalancerName": "[parameters('lbSettings').chainLoadBalancerName]",
+            "location":"[parameters('lbSettings').location]",
+            "apiVersion": "[parameters('lbSettings').apiVersion]",
+            "generatorLbIpName":"[parameters('lbSettings').generatorLbIpName]",
+            "lbid": "[resourceId('Microsoft.Network/loadBalancers',variables('chainLoadBalancerName'))]",
+            "lbIpConfigId": "[concat(variables('lbid'),'/frontendIPConfigurations/LoadBalancerFrontEnd')]",
+            "lbBkpoolId": "[concat(variables('lbid'),'/backendAddressPools/lb-bkpool')]",
+            "lbwebProbeId": "[concat(variables('lbid'),'/probes/web-port')]",
+            "lbhttpProbeId": "[concat(variables('lbid'),'/probes/http')]",
+            "lbhttpsProbeId": "[concat(variables('lbid'),'/probes/https')]"
+    },
+    "resources": [
+        {
+            "type": "Microsoft.Network/loadBalancers",
+            "name": "[variables('chainLoadBalancerName')]",
+            "apiVersion": "[variables('apiVersion')]",
+            "location": "[variables('location')]",
+            "properties": {
+                "frontendIPConfigurations": [
+                    {
+                        "name": "LoadBalancerFrontEnd",
+                        "properties": {
+                            "privateIPAllocationMethod": "Dynamic",
+                            "publicIPAddress": {
+                                "id": "[resourceId('Microsoft.Network/publicIPAddresses', variables('generatorLbIpName'))]"
+                            }
+                        }
+                    }
+                ],
+                "backendAddressPools": [
+                    {
+                        "name": "lb-bkpool"
+                    }
+                ],
+                "loadBalancingRules": [
+                    {
+                        "name": "web-console",
+                        "properties": {
+                            "frontendIPConfiguration": {
+                                "id": "[variables('lbIpConfigId')]"
+                            },
+                            "frontendPort": 1999,
+                            "backendPort": 1999,
+                            "enableFloatingIP": false,
+                            "idleTimeoutInMinutes": 4,
+                            "protocol": "Tcp",
+                            "loadDistribution": "Default",
+                            "backendAddressPool": {
+                                "id": "[variables('lbBkpoolId')]"
+                            },
+                            "probe": {
+                                "id": "[variables('lbwebProbeId')]"
+                            }
+                        }
+                    },
+                    {
+                        "name": "https",
+                        "properties": {
+                            "frontendIPConfiguration": {
+                                "id": "[variables('lbIpConfigId')]"
+                            },
+                            "frontendPort": 443,
+                            "backendPort": 443,
+                            "enableFloatingIP": false,
+                            "idleTimeoutInMinutes": 4,
+                            "protocol": "Tcp",
+                            "loadDistribution": "Default",
+                            "backendAddressPool": {
+                                "id": "[variables('lbBkpoolId')]"
+                            },
+                            "probe": {
+                                "id": "[variables('lbhttpsProbeId')]"
+                            }
+                        }
+                    },
+                    {
+                        "name": "http",
+                        "properties": {
+                            "frontendIPConfiguration": {
+                                "id": "[variables('lbIpConfigId')]"
+                            },
+                            "frontendPort": 80,
+                            "backendPort": 80,
+                            "enableFloatingIP": false,
+                            "idleTimeoutInMinutes": 4,
+                            "protocol": "Tcp",
+                            "loadDistribution": "Default",
+                            "backendAddressPool": {
+                                "id": "[variables('lbBkpoolId')]"
+                            },
+                            "probe": {
+                                "id": "[variables('lbhttpProbeId')]"
+                            }
+                        }
+                    }
+                ],
+                "probes": [
+                    {
+                        "name": "web-port",
+                        "properties": {
+                            "protocol": "Tcp",
+                            "port": 1999,
+                            "intervalInSeconds": 5,
+                            "numberOfProbes": 2
+                        }
+                    },
+                    {
+                        "name": "http",
+                        "properties": {
+                            "protocol": "Http",
+                            "port": 80,
+                            "requestPath": "/",
+                            "intervalInSeconds": 5,
+                            "numberOfProbes": 2
+                        }
+                    },
+                    {
+                        "name": "https",
+                        "properties": {
+                            "protocol": "Tcp",
+                            "port": 443,
+                            "intervalInSeconds": 5,
+                            "numberOfProbes": 2
+                        }
+                    }
+                ],
+                "inboundNatRules": [
+                    {
+                        "name": "ssh",
+                        "properties": {
+                            "frontendIPConfiguration": {
+                                "id": "[variables('lbIpConfigId')]"
+                            },
+                            "frontendPort": 22,
+                            "backendPort": 22,
+                            "protocol": "Tcp"
+                        }
+                    }
+                ],
+                "outboundNatRules": [],
+                "inboundNatPools": []
+            },
+            "dependsOn": [
+                "[resourceId('Microsoft.Network/publicIPAddresses', variables('generatorLbIpName'))]"
+            ]
+        }
+    ]
+}
