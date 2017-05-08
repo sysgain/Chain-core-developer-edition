@@ -383,6 +383,10 @@
             "name": "vnetGatewaySetup",
             "apiVersion": "2016-02-01",
             "type": "Microsoft.Resources/deployments",
+            "dependsOn": [
+                "vnetSetup",
+                "pipSetup"
+            ],
             "properties": {
                 "mode": "Incremental",
                 "templateLink": {

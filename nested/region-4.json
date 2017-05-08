@@ -13,11 +13,9 @@
         },
         "adminUsername": {
             "type": "string"
-           
         },
         "adminPassword": {
             "type": "string"
-            
         },
         "gatewayName": {
             "type": "string"
@@ -257,7 +255,7 @@
         "vnetGatewaySettings": {
             "gatewayName": "[parameters('gatewayName')]",
             "location": "[parameters('location')]",
-            "apiVersion":"2016-09-01",
+            "apiVersion": "2016-09-01",
             "gatewaySubnetID": "[concat(variables('vnetID'),'/subnets/GatewaySubnet')]",
             "gatewayPipID": "[resourceId('Microsoft.Network/publicIPAddresses', variables('pipSettings').gatewayIpName)]",
             "gatewayIpConfig": "[concat(variables('prefix'),'-gateway-ipconfig')]",
@@ -385,6 +383,10 @@
             "name": "vnetGatewaySetup",
             "apiVersion": "2016-02-01",
             "type": "Microsoft.Resources/deployments",
+            "dependsOn": [
+                "vnetSetup",
+                "pipSetup"
+            ],
             "properties": {
                 "mode": "Incremental",
                 "templateLink": {
