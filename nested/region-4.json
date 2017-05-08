@@ -260,15 +260,22 @@
             "gatewayPipID": "[resourceId('Microsoft.Network/publicIPAddresses', variables('pipSettings').gatewayIpName)]",
             "gatewayIpConfig": "[concat(variables('prefix'),'-gateway-ipconfig')]",
             "vpnType": "RouteBased"
-        }
+        },
+        "signerVmDep": "[concat(variables('prefix'),'-signerVMsSetup')]",
+        "signerNicDep": "[concat(variables('prefix'),'-signerNICSetup')]",
+        "availSetDep": "[concat(variables('prefix'),'-avaialabilitySetSetup')]",
+        "vnetDep": "[concat(variables('prefix'),'-vnetSetup')]",
+        "pipDep": "[concat(variables('prefix'),'-pipSetup')]",
+        "nsgDep": "[concat(variables('prefix'),'-nsgSetup')]",
+        "gatewayDep": "[concat(variables('prefix'),'-vnetGatewaySetup')]"
     },
     "resources": [
         {
-            "name": "signerVMsSetup",
+            "name": "[variables('signerVmDep')]",
             "apiVersion": "2016-02-01",
             "type": "Microsoft.Resources/deployments",
             "dependsOn": [
-                "signerNICSetup"
+                "[variables('signerNicDep')]"
             ],
             "properties": {
                 "mode": "Incremental",
@@ -284,13 +291,13 @@
             }
         },
         {
-            "name": "signerNICSetup",
+            "name": "[variables('signerNicDep')]",
             "apiVersion": "2016-02-01",
             "type": "Microsoft.Resources/deployments",
             "dependsOn": [
-                "pipSetup",
-                "vnetSetup",
-                "nsgSetup"
+                "[variables('pipDep')]",
+                "[variables('vnetDep')]",
+                "[variables('nsgDep')]"
             ],
             "properties": {
                 "mode": "Incremental",
@@ -306,7 +313,7 @@
             }
         },
         {
-            "name": "avaialabilitySetSetup",
+            "name": "[variables('availSetDep')]",
             "apiVersion": "2016-02-01",
             "type": "Microsoft.Resources/deployments",
             "properties": {
@@ -329,7 +336,7 @@
             }
         },
         {
-            "name": "vnetSetup",
+            "name": "[variables('vnetDep')]",
             "apiVersion": "2016-02-01",
             "type": "Microsoft.Resources/deployments",
             "properties": {
@@ -346,7 +353,7 @@
             }
         },
         {
-            "name": "pipSetup",
+            "name": "[variables('pipDep')]",
             "apiVersion": "2016-02-01",
             "type": "Microsoft.Resources/deployments",
             "properties": {
@@ -363,7 +370,7 @@
             }
         },
         {
-            "name": "nsgSetup",
+            "name": "[variables('nsgDep')]",
             "apiVersion": "2016-02-01",
             "type": "Microsoft.Resources/deployments",
             "properties": {
@@ -380,12 +387,12 @@
             }
         },
         {
-            "name": "vnetGatewaySetup",
+            "name": "[variables('gatewayDep')]",
             "apiVersion": "2016-02-01",
             "type": "Microsoft.Resources/deployments",
             "dependsOn": [
-                "vnetSetup",
-                "pipSetup"
+                "[variables('vnetDep')]",
+                "[variables('pipDep')]"
             ],
             "properties": {
                 "mode": "Incremental",
