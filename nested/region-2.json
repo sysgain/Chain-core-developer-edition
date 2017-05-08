@@ -255,7 +255,6 @@
         "vnetGatewaySettings": {
             "gatewayName": "[parameters('gatewayName')]",
             "location": "[parameters('location')]",
-            "gatewayIpName": "[variables('pipSettings').gatewayIpName]",
             "gatewaySubnetID": "[concat(variables('vnetID'),'/subnets/GatewaySubnet')]",
             "gatewayPipID": "[resourceId('Microsoft.Network/publicIPAddresses', variables('pipSettings').gatewayIpName)]",
             "gatewayIpConfig": "[concat(variables('prefix'),'-gateway-ipconfig')]",
