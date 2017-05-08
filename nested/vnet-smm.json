@@ -12,7 +12,7 @@
             "gatewaySubnetRange":"[parameters('vnetSettings').gatewaySubnetRange]",
             "signerSubnetName": "[parameters('vnetSettings').signerSubnetName]",
             "vnetRange":"[parameters('vnetSettings').vnetRange]",
-            "subnet2Range":"[parameters('vnetSettings').subnet1Range]",
+            "subnet2Range":"[parameters('vnetSettings').subnet2Range]",
             "apiVersion":"[parameters('vnetSettings').apiVersion]"
     },
     "resources": [
