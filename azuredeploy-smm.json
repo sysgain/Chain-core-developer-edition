@@ -77,7 +77,7 @@
                 "Standard_GS5"
             ],
             "metadata": {
-                "description": "OpenShift Master VM size"
+                "description": "Generator VM size"
             }
         },
         "signerVmSize": {
@@ -135,7 +135,7 @@
                 "Standard_GS5"
             ],
             "metadata": {
-                "description": "OpenShift Node VM(s) size"
+                "description": "Signer Node VM(s) size"
             }
         },
         "signer_nodes_Count": {
