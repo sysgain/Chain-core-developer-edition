@@ -7,7 +7,7 @@
         }
     },
     "variables": {
-        "gatewayName": "[parameters('vnetGatewaySettings').keyVaultName]",
+        "gatewayName": "[parameters('vnetGatewaySettings').gatewayName]",
         "apiVersion": "[parameters('vnetGatewaySettings').apiVersion]",
         "location": "[parameters('vnetGatewaySettings').location]",
         "gatewaySubnetID": "[parameters('vnetGatewaySettings').gatewaySubnetID]",
