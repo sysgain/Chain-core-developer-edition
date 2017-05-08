@@ -1,0 +1,469 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "location": {
+            "type": "string"
+        },
+        "signerVmSize": {
+            "type": "string",
+            "defaultValue": "Standard_D1_v2",
+            "allowedValues": [
+                "Standard_A4",
+                "Standard_A5",
+                "Standard_A6",
+                "Standard_A7",
+                "Standard_A8",
+                "Standard_A9",
+                "Standard_A10",
+                "Standard_A11",
+                "Standard_D2",
+                "Standard_D3",
+                "Standard_D4",
+                "Standard_D11",
+                "Standard_D12",
+                "Standard_D13",
+                "Standard_D14",
+                "Standard_D1_v2",
+                "Standard_D2_v2",
+                "Standard_D3_v2",
+                "Standard_D4_v2",
+                "Standard_D5_v2",
+                "Standard_D11_v2",
+                "Standard_D12_v2",
+                "Standard_D13_v2",
+                "Standard_D14_v2",
+                "Standard_G1",
+                "Standard_G2",
+                "Standard_G3",
+                "Standard_G4",
+                "Standard_G5",
+                "Standard_DS2",
+                "Standard_DS3",
+                "Standard_DS4",
+                "Standard_DS11",
+                "Standard_DS12",
+                "Standard_DS13",
+                "Standard_DS14",
+                "Standard_DS2_v2",
+                "Standard_DS3_v2",
+                "Standard_DS4_v2",
+                "Standard_DS5_v2",
+                "Standard_DS11_v2",
+                "Standard_DS12_v2",
+                "Standard_DS13_v2",
+                "Standard_DS14_v2",
+                "Standard_GS1",
+                "Standard_GS2",
+                "Standard_GS3",
+                "Standard_GS4",
+                "Standard_GS5"
+            ],
+            "metadata": {
+                "description": "OpenShift Node VM(s) size"
+            }
+        },
+        "signer_nodes_Count": {
+            "type": "int",
+            "defaultValue": 2,
+            "allowedValues": [
+                1,
+                2,
+                3,
+                4,
+                5,
+                6,
+                7,
+                8,
+                9
+            ]
+        },
+        "adminUsername": {
+            "type": "string",
+            "defaultValue": "ashuser"
+        },
+        "adminPassword": {
+            "type": "string",
+            "defaultValue": "Ashpassword123"
+        },
+        "gatewayName": {
+            "type": "string"
+        }
+    },
+    "variables": {
+        "baseUrl": "https://raw.githubusercontent.com/sysgain/Chain-core-developer-edition/chain-core-dev",
+        "signerVMsSetupURL": "[concat(variables('baseUrl'),'/nested/signer-vm.json')]",
+        "signerNICsetupURL": "[concat(variables('baseUrl'),'/nested/signer-nic.json')]",
+        "avaialabilitySetSetupURL": "[concat(variables('baseUrl'),'/nested/availabilitySet.json')]",
+        "vnetSetupURL": "[concat(variables('baseUrl'),'/nested/vnet-smm.json')]",
+        "pipSetupURL": "[concat(variables('baseUrl'),'/nested/pip-smm.json')]",
+        "nsgSetupURL": "[concat(variables('baseUrl'),'/nested/nsg.json')]",
+        "vnetGatewaySetupURL": "[concat(variables('baseUrl'),'/nested/vnetgateway-smm.json')]",
+        "vmSizesMap": {
+            "Standard_A4": {
+                "storageAccountType": "Standard_LRS"
+            },
+            "Standard_A5": {
+                "storageAccountType": "Standard_LRS"
+            },
+            "Standard_A6": {
+                "storageAccountType": "Standard_LRS"
+            },
+            "Standard_A7": {
+                "storageAccountType": "Standard_LRS"
+            },
+            "Standard_A8": {
+                "storageAccountType": "Standard_LRS"
+            },
+            "Standard_A9": {
+                "storageAccountType": "Standard_LRS"
+            },
+            "Standard_A10": {
+                "storageAccountType": "Standard_LRS"
+            },
+            "Standard_A11": {
+                "storageAccountType": "Standard_LRS"
+            },
+            "Standard_D1": {
+                "storageAccountType": "Standard_LRS"
+            },
+            "Standard_D2": {
+                "storageAccountType": "Standard_LRS"
+            },
+            "Standard_D3": {
+                "storageAccountType": "Standard_LRS"
+            },
+            "Standard_D4": {
+                "storageAccountType": "Standard_LRS"
+            },
+            "Standard_D11": {
+                "storageAccountType": "Standard_LRS"
+            },
+            "Standard_D12": {
+                "storageAccountType": "Standard_LRS"
+            },
+            "Standard_D13": {
+                "storageAccountType": "Standard_LRS"
+            },
+            "Standard_D14": {
+                "storageAccountType": "Standard_LRS"
+            },
+            "Standard_D1_v2": {
+                "storageAccountType": "Standard_LRS"
+            },
+            "Standard_D2_v2": {
+                "storageAccountType": "Standard_LRS"
+            },
+            "Standard_D3_v2": {
+                "storageAccountType": "Standard_LRS"
+            },
+            "Standard_D4_v2": {
+                "storageAccountType": "Standard_LRS"
+            },
+            "Standard_D5_v2": {
+                "storageAccountType": "Standard_LRS"
+            },
+            "Standard_D11_v2": {
+                "storageAccountType": "Standard_LRS"
+            },
+            "Standard_D12_v2": {
+                "storageAccountType": "Standard_LRS"
+            },
+            "Standard_D13_v2": {
+                "storageAccountType": "Standard_LRS"
+            },
+            "Standard_D14_v2": {
+                "storageAccountType": "Standard_LRS"
+            },
+            "Standard_G1": {
+                "storageAccountType": "Standard_LRS"
+            },
+            "Standard_G2": {
+                "storageAccountType": "Standard_LRS"
+            },
+            "Standard_G3": {
+                "storageAccountType": "Standard_LRS"
+            },
+            "Standard_G4": {
+                "storageAccountType": "Standard_LRS"
+            },
+            "Standard_G5": {
+                "storageAccountType": "Standard_LRS"
+            },
+            "Standard_DS1": {
+                "storageAccountType": "Premium_LRS"
+            },
+            "Standard_DS2": {
+                "storageAccountType": "Premium_LRS"
+            },
+            "Standard_DS3": {
+                "storageAccountType": "Premium_LRS"
+            },
+            "Standard_DS4": {
+                "storageAccountType": "Premium_LRS"
+            },
+            "Standard_DS11": {
+                "storageAccountType": "Premium_LRS"
+            },
+            "Standard_DS12": {
+                "storageAccountType": "Premium_LRS"
+            },
+            "Standard_DS13": {
+                "storageAccountType": "Premium_LRS"
+            },
+            "Standard_DS14": {
+                "storageAccountType": "Premium_LRS"
+            },
+            "Standard_DS1_v2": {
+                "storageAccountType": "Premium_LRS"
+            },
+            "Standard_DS2_v2": {
+                "storageAccountType": "Premium_LRS"
+            },
+            "Standard_DS3_v2": {
+                "storageAccountType": "Premium_LRS"
+            },
+            "Standard_DS4_v2": {
+                "storageAccountType": "Premium_LRS"
+            },
+            "Standard_DS5_v2": {
+                "storageAccountType": "Premium_LRS"
+            },
+            "Standard_DS11_v2": {
+                "storageAccountType": "Premium_LRS"
+            },
+            "Standard_DS12_v2": {
+                "storageAccountType": "Premium_LRS"
+            },
+            "Standard_DS13_v2": {
+                "storageAccountType": "Premium_LRS"
+            },
+            "Standard_DS14_v2": {
+                "storageAccountType": "Premium_LRS"
+            },
+            "Standard_DS15_v2": {
+                "storageAccountType": "Premium_LRS"
+            },
+            "Standard_GS1": {
+                "storageAccountType": "Premium_LRS"
+            },
+            "Standard_GS2": {
+                "storageAccountType": "Premium_LRS"
+            },
+            "Standard_GS3": {
+                "storageAccountType": "Premium_LRS"
+            },
+            "Standard_GS4": {
+                "storageAccountType": "Premium_LRS"
+            },
+            "Standard_GS5": {
+                "storageAccountType": "Premium_LRS"
+            }
+        },
+        "prefix": "Chain-reg3",
+        "suffix": "[substring(uniqueString(resourceGroup().id) ,0, 5)]",
+        "availabilitySetsName": "[concat(variables('prefix'),'-avset')]",
+        "signerVMsettings": {
+            "suffix": "[variables('suffix')]",
+            "availabilitySetsName": "[variables('availabilitySetsName')]",
+            "signerNicName": "[concat(variables('prefix'),'-signer-nic')]",
+            "signerVmName": "[concat(variables('prefix'),'-signer-vm')]",
+            "apiVersion": "2016-04-30-preview",
+            "publisher": "Canonical",
+            "offer": "UbuntuServer",
+            "sku": "16.04-LTS",
+            "version": "latest",
+            "diskSizeGB": 30,
+            "signerScript1Url": "",
+            "signerScript1FileName": "",
+            "signerScriptUrl2": "",
+            "signerScript2FileName": "",
+            "location": "[parameters('location')]",
+            "signer_nodes_Count": "[parameters('signer_nodes_Count')]",
+            "adminUsername": "[parameters('adminUsername')]",
+            "adminPassword": "[parameters('adminPassword')]",
+            "signerVmSize": "[parameters('signerVmSize')]",
+            "storageAccountType": "[variables('vmSizesMap')[parameters('signerVmSize')].storageAccountType]"
+        },
+        "signerNicSettings": {
+            "location": "[parameters('location')]",
+            "signerNicName": "[concat(variables('prefix'),'-signer-nic')]",
+            "signer_nodes_Count": "[parameters('signer_nodes_Count')]",
+            "privateIPAllocationMethod": "Dynamic",
+            "apiVersion": "2016-03-30",
+            "signerVMIpName": "[variables('pipSettings').signerVMIpName]",
+            "virtualNetworksName": "[variables('vnetSettings').virtualNetworksName]",
+            "signerSubnetName": "[variables('vnetSettings').signerSubnetName]",
+            "signerNsgName": "[variables('nsgSettings').signerNsgName]"
+        },
+        "vnetSettings": {
+            "virtualNetworksName": "[concat(variables('prefix'),'-vnet')]",
+            "location": "[parameters('location')]",
+            "signerSubnetName": "signer-subnet",
+            "vnetRange": "10.3.0.0/16",
+            "subnet2Range": "10.3.2.0/24",
+            "gatewaySubnetRange": "10.3.0.0/24",
+            "apiVersion": "2016-03-30"
+        },
+        "pipSettings": {
+            "gatewayPipDns": "[concat('gateway-reg3-',variables('suffix'))]",
+            "location": "[parameters('location')]",
+            "signerVMIpName": "[concat(variables('prefix'),'-signer-pip')]",
+            "signer_nodes_Count": "[parameters('signer_nodes_Count')]",
+            "signerPipDns": "[concat('signer-',variables('suffix'))]",
+            "apiVersion": "2016-03-30",
+            "publicIPAllocationMethod": "Dynamic",
+            "gatewayIpName": "[concat(variables('prefix'),'-gateway-pip')]"
+        },
+        "nsgSettings": {
+            "signerNsgName": "[concat(variables('prefix'),'-signer-nsg')]",
+            "apiVersion": "2016-03-30",
+            "location": "[parameters('location')]"
+        },
+        "vnetID": "[resourceId('Microsoft.Network/virtualNetworks',variables('vnetSettings').virtualNetworksName)]",
+        "vnetGatewaySettings": {
+            "gatewayName": "[parameters('gatewayName')]",
+            "location": "[parameters('location')]",
+            "gatewayIpName": "[variables('pipSettings').gatewayIpName]",
+            "gatewaySubnetID": "[concat(variables('vnetID'),'/subnets/GatewaySubnet')]",
+            "gatewayPipID": "[resourceId('Microsoft.Network/publicIPAddresses', variables('pipSettings').gatewayIpName)]",
+            "gatewayIpConfig": "[concat(variables('prefix'),'-gateway-ipconfig')]",
+            "vpnType": "RouteBased"
+        }
+    },
+    "resources": [
+        {
+            "name": "signerVMsSetup",
+            "apiVersion": "2016-02-01",
+            "type": "Microsoft.Resources/deployments",
+            "dependsOn": [
+                "signerNICSetup"
+            ],
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "[variables('signerVMsSetupURL')]",
+                    "contentVersion": "1.0.0.0"
+                },
+                "parameters": {
+                    "signerVMsettings": {
+                        "value": "[variables('signerVMsettings')]"
+                    }
+                }
+            }
+        },
+        {
+            "name": "signerNICSetup",
+            "apiVersion": "2016-02-01",
+            "type": "Microsoft.Resources/deployments",
+            "dependsOn": [
+                "pipSetup",
+                "vnetSetup",
+                "nsgSetup"
+            ],
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "[variables('signerNICsetupURL')]",
+                    "contentVersion": "1.0.0.0"
+                },
+                "parameters": {
+                    "signerNicSettings": {
+                        "value": "[variables('signerNicSettings')]"
+                    }
+                }
+            }
+        },
+        {
+            "name": "avaialabilitySetSetup",
+            "apiVersion": "2016-02-01",
+            "type": "Microsoft.Resources/deployments",
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "[variables('avaialabilitySetSetupURL')]",
+                    "contentVersion": "1.0.0.0"
+                },
+                "parameters": {
+                    "availabilitySetsName": {
+                        "value": "[variables('availabilitySetsName')]"
+                    },
+                    "location": {
+                        "value": "[parameters('location')]"
+                    },
+                    "apiVersion": {
+                        "value": "2016-04-30-preview"
+                    }
+                }
+            }
+        },
+        {
+            "name": "vnetSetup",
+            "apiVersion": "2016-02-01",
+            "type": "Microsoft.Resources/deployments",
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "[variables('vnetSetupURL')]",
+                    "contentVersion": "1.0.0.0"
+                },
+                "parameters": {
+                    "vnetSettings": {
+                        "value": "[variables('vnetSettings')]"
+                    }
+                }
+            }
+        },
+        {
+            "name": "pipSetup",
+            "apiVersion": "2016-02-01",
+            "type": "Microsoft.Resources/deployments",
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "[variables('pipSetupURL')]",
+                    "contentVersion": "1.0.0.0"
+                },
+                "parameters": {
+                    "pipSettings": {
+                        "value": "[variables('pipSettings')]"
+                    }
+                }
+            }
+        },
+        {
+            "name": "nsgSetup",
+            "apiVersion": "2016-02-01",
+            "type": "Microsoft.Resources/deployments",
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "[variables('nsgSetupURL')]",
+                    "contentVersion": "1.0.0.0"
+                },
+                "parameters": {
+                    "nsgSettings": {
+                        "value": "[variables('nsgSettings')]"
+                    }
+                }
+            }
+        },
+        {
+            "name": "vnetGatewaySetup",
+            "apiVersion": "2016-02-01",
+            "type": "Microsoft.Resources/deployments",
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "[variables('vnetGatewaySetupURL')]",
+                    "contentVersion": "1.0.0.0"
+                },
+                "parameters": {
+                    "vnetGatewaySettings": {
+                        "value": "[variables('vnetGatewaySettings')]"
+                    }
+                }
+            }
+        }
+    ]
+}
