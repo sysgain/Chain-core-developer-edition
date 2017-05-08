@@ -254,6 +254,7 @@
         "vnetID": "[resourceId('Microsoft.Network/virtualNetworks',variables('vnetSettings').virtualNetworksName)]",
         "vnetGatewaySettings": {
             "gatewayName": "[parameters('gatewayName')]",
+            "apiVersion":"2016-09-01",
             "location": "[parameters('location')]",
             "gatewaySubnetID": "[concat(variables('vnetID'),'/subnets/GatewaySubnet')]",
             "gatewayPipID": "[resourceId('Microsoft.Network/publicIPAddresses', variables('pipSettings').gatewayIpName)]",
