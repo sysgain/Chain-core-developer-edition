@@ -2,16 +2,6 @@
     "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
     "contentVersion": "1.0.0.0",
     "parameters": {
-        "regionCount": {
-            "type": "string",
-            "defaultValue": "2",
-            "allowedValues": [
-                "2",
-                "3",
-                "4",
-                "5"
-            ]
-        },
         "location_1": {
             "type": "string",
             "defaultValue": "westus"
@@ -163,6 +153,7 @@
                 9
             ]
         },
+       
         "adminUsername": {
             "type": "string",
             "defaultValue": "ashuser"
@@ -185,63 +176,37 @@
         }
     },
     "variables": {
-        "regionCount2": {
-            "region_1_setupURL": "[concat(variables('baseUrl'),'/nested/region-1.json')]",
-            "region_2_setupURL": "[concat(variables('baseUrl'),'/nested/region-2.json')]",
-            "region_3_setupURL": "[concat(variables('baseUrl'),'/nested/region-dummy.json')]",
-            "region_4_setupURL": "[concat(variables('baseUrl'),'/nested/region-dummy.json')]",
-            "region_5_setupURL": "[concat(variables('baseUrl'),'/nested/region-dummy.json')]",
-            "gateways_connection_setupURL": "[concat(variables('baseUrl'),'/nested/connections2reg.json')]"
-        },
-        "regionCount3": {
-            "region_1_setupURL": "[concat(variables('baseUrl'),'/nested/region-1.json')]",
-            "region_2_setupURL": "[concat(variables('baseUrl'),'/nested/region-2.json')]",
-            "region_3_setupURL": "[concat(variables('baseUrl'),'/nested/region-3.json')]",
-            "region_4_setupURL": "[concat(variables('baseUrl'),'/nested/region-dummy.json')]",
-            "region_5_setupURL": "[concat(variables('baseUrl'),'/nested/region-dummy.json')]",
-            "gateways_connection_setupURL": "[concat(variables('baseUrl'),'/nested/connections3reg.json')]"
-        },
-        "regionCount4": {
-            "region_1_setupURL": "[concat(variables('baseUrl'),'/nested/region-1.json')]",
-            "region_2_setupURL": "[concat(variables('baseUrl'),'/nested/region-2.json')]",
-            "region_3_setupURL": "[concat(variables('baseUrl'),'/nested/region-3.json')]",
-            "region_4_setupURL": "[concat(variables('baseUrl'),'/nested/region-4.json')]",
-            "region_5_setupURL": "[concat(variables('baseUrl'),'/nested/region-dummy.json')]",
-            "gateways_connection_setupURL": "[concat(variables('baseUrl'),'/nested/connections4reg.json')]"
-        },
-        "regionCount5": {
-            "region_1_setupURL": "[concat(variables('baseUrl'),'/nested/region-1.json')]",
-            "region_2_setupURL": "[concat(variables('baseUrl'),'/nested/region-2.json')]",
-            "region_3_setupURL": "[concat(variables('baseUrl'),'/nested/region-3.json')]",
-            "region_4_setupURL": "[concat(variables('baseUrl'),'/nested/region-4.json')]",
-            "region_5_setupURL": "[concat(variables('baseUrl'),'/nested/region-5.json')]",
-            "gateways_connection_setupURL": "[concat(variables('baseUrl'),'/nested/connections5reg.json')]"
-        },
         "baseUrl": "https://raw.githubusercontent.com/sysgain/Chain-core-developer-edition/chain-core-dev",
-        "gateways_connection_setupURL": "[concat(variables('baseUrl'),'/nested/connections.json')]",
-        "connectionSettings": {
+        "region-1-setupURL": "[concat(variables('baseUrl'),'/nested/region-1.json')]",
+        "region-2-setupURL": "[concat(variables('baseUrl'),'/nested/region-2.json')]",
+        "region-3-setupURL": "[concat(variables('baseUrl'),'/nested/region-3.json')]",
+        "region-4-setupURL": "[concat(variables('baseUrl'),'/nested/region-4.json')]",
+        "region-5-setupURL": "[concat(variables('baseUrl'),'/nested/region-5.json')]",
+        "gateways-connection-setupURL":"[concat(variables('baseUrl'),'/nested/connections.json')]",
+        
+        "connectionSettings":{
             "gatewayNameReg1": "Chain-reg1-gateway",
             "gatewayNameReg2": "Chain-reg2-gateway",
             "gatewayNameReg3": "Chain-reg3-gateway",
             "gatewayNameReg4": "Chain-reg4-gateway",
             "gatewayNameReg5": "Chain-reg5-gateway",
             "VPNSharedKey": "[parameters('VPNSharedKey')]",
-            "location_1": "[parameters('location_1')]",
-            "location_2": "[parameters('location_2')]",
-            "location_3": "[parameters('location_3')]",
-            "location_4": "[parameters('location_4')]",
-            "location_5": "[parameters('location_5')]"
+            "location_1":"[parameters('location_1')]",
+            "location_2":"[parameters('location_2')]",
+            "location_3":"[parameters('location_3')]",
+            "location_4":"[parameters('location_4')]",
+            "location_5":"[parameters('location_5')]"
         }
     },
     "resources": [
         {
-            "name": "region_1_setup",
+            "name": "region-1-setup",
             "apiVersion": "2016-02-01",
             "type": "Microsoft.Resources/deployments",
             "properties": {
                 "mode": "Incremental",
                 "templateLink": {
-                    "uri": "[variables(concat('regionCount',parameters('regionCount'))).region_1_setupURL]",
+                    "uri": "[variables('region-1-setupURL')]",
                     "contentVersion": "1.0.0.0"
                 },
                 "parameters": {
@@ -254,11 +219,11 @@
                     "location": {
                         "value": "[parameters('location_1')]"
                     },
-                    "generatorVmSize": {
-                        "value": "[parameters('generatorVmSize')]"
+                    "generatorVmSize":{
+                        "value":"[parameters('generatorVmSize')]"
                     },
-                    "signerVmSize": {
-                        "value": "[parameters('signerVmSize')]"
+                    "signerVmSize":{
+                        "value":"[parameters('signerVmSize')]"
                     },
                     "signer_nodes_Count": {
                         "value": "[parameters('signer_nodes_Count')]"
@@ -276,21 +241,21 @@
             }
         },
         {
-            "name": "region_2_setup",
+            "name": "region-2-setup",
             "apiVersion": "2016-02-01",
             "type": "Microsoft.Resources/deployments",
             "properties": {
                 "mode": "Incremental",
                 "templateLink": {
-                    "uri": "[variables(concat('regionCount',parameters('regionCount'))).region_2_setupURL]",
+                    "uri": "[variables('region-2-setupURL')]",
                     "contentVersion": "1.0.0.0"
                 },
                 "parameters": {
                     "location": {
                         "value": "[parameters('location_2')]"
                     },
-                    "signerVmSize": {
-                        "value": "[parameters('signerVmSize')]"
+                    "signerVmSize":{
+                        "value":"[parameters('signerVmSize')]"
                     },
                     "signer_nodes_Count": {
                         "value": "[parameters('signer_nodes_Count')]"
@@ -308,21 +273,21 @@
             }
         },
         {
-            "name": "region_3_setup",
+            "name": "region-3-setup",
             "apiVersion": "2016-02-01",
             "type": "Microsoft.Resources/deployments",
             "properties": {
                 "mode": "Incremental",
                 "templateLink": {
-                    "uri": "[variables(concat('regionCount',parameters('regionCount'))).region_3_setupURL]",
+                    "uri": "[variables('region-3-setupURL')]",
                     "contentVersion": "1.0.0.0"
                 },
                 "parameters": {
                     "location": {
                         "value": "[parameters('location_3')]"
                     },
-                    "signerVmSize": {
-                        "value": "[parameters('signerVmSize')]"
+                    "signerVmSize":{
+                        "value":"[parameters('signerVmSize')]"
                     },
                     "signer_nodes_Count": {
                         "value": "[parameters('signer_nodes_Count')]"
@@ -340,21 +305,21 @@
             }
         },
         {
-            "name": "region_4_setup",
+            "name": "region-4-setup",
             "apiVersion": "2016-02-01",
             "type": "Microsoft.Resources/deployments",
             "properties": {
                 "mode": "Incremental",
                 "templateLink": {
-                    "uri": "[variables(concat('regionCount',parameters('regionCount'))).region_4_setupURL]",
+                    "uri": "[variables('region-4-setupURL')]",
                     "contentVersion": "1.0.0.0"
                 },
                 "parameters": {
                     "location": {
                         "value": "[parameters('location_4')]"
                     },
-                    "signerVmSize": {
-                        "value": "[parameters('signerVmSize')]"
+                    "signerVmSize":{
+                        "value":"[parameters('signerVmSize')]"
                     },
                     "signer_nodes_Count": {
                         "value": "[parameters('signer_nodes_Count')]"
@@ -372,21 +337,21 @@
             }
         },
         {
-            "name": "region_5_setup",
+            "name": "region-5-setup",
             "apiVersion": "2016-02-01",
             "type": "Microsoft.Resources/deployments",
             "properties": {
                 "mode": "Incremental",
                 "templateLink": {
-                    "uri": "[variables(concat('regionCount',parameters('regionCount'))).region_5_setupURL]",
+                    "uri": "[variables('region-5-setupURL')]",
                     "contentVersion": "1.0.0.0"
                 },
                 "parameters": {
                     "location": {
                         "value": "[parameters('location_5')]"
                     },
-                    "signerVmSize": {
-                        "value": "[parameters('signerVmSize')]"
+                    "signerVmSize":{
+                        "value":"[parameters('signerVmSize')]"
                     },
                     "signer_nodes_Count": {
                         "value": "[parameters('signer_nodes_Count')]"
@@ -404,20 +369,20 @@
             }
         },
         {
-            "name": "gateways_connection_setup",
+            "name": "gateways-connection-setup",
             "apiVersion": "2016-02-01",
             "type": "Microsoft.Resources/deployments",
             "dependsOn": [
-                "region_1_setup",
-                "region_2_setup",
-                "region_3_setup",
-                "region_4_setup",
-                "region_5_setup"
+                "region-1-setup",
+                "region-2-setup",
+                "region-3-setup",
+                "region-4-setup",
+                "region-5-setup"
             ],
             "properties": {
                 "mode": "Incremental",
                 "templateLink": {
-                    "uri": "[variables(concat('regionCount',parameters('regionCount'))).gateways_connection_setupURL]",
+                    "uri": "[variables('gateways-connection-setupURL')]",
                     "contentVersion": "1.0.0.0"
                 },
                 "parameters": {
