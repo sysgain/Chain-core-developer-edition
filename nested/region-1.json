@@ -204,6 +204,12 @@
                 "storageAccountType": "Premium_LRS"
             }
         },
+        "gatewaySkuTypes":{
+            "Basic":"Basic",
+            "Standard":"Standard",
+            "HighPerformance":"HighPerformance",
+            "UltraPerformance":"UltraPerformance"
+        },
         "prefix": "Chain-reg1",
         "suffix": "[substring(uniqueString(resourceGroup().id) ,0, 5)]",
         "availabilitySetsName": "[concat(variables('prefix'),'-avset')]",
@@ -320,7 +326,8 @@
             "gatewaySubnetID": "[concat(variables('vnetID'),'/subnets/GatewaySubnet')]",
             "gatewayPipID": "[resourceId('Microsoft.Network/publicIPAddresses', variables('pipSettings').gatewayIpName)]",
             "gatewayIpConfig": "[concat(variables('prefix'),'-gateway-ipconfig')]",
-            "vpnType": "RouteBased"
+            "vpnType": "RouteBased",
+            "sku": "[variables('gatewaySkuTypes').Basic]"
         },
         "signerVmDep": "[concat(variables('prefix'),'-signerVMsSetup')]",
         "signerNicDep": "[concat(variables('prefix'),'-signerNICSetup')]",
