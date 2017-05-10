@@ -153,11 +153,10 @@
             "type": "string",
             "defaultValue": "d9bcf141-62ad-46b1-a22f-fd0b6e2c39a1"
         },
-        "storageAccountType":{
+        "storageAccountType": {
             "type": "string",
             "defaultValue": "Standard_LRS"
         }
-
     },
     "variables": {
         "baseUrl": "https://raw.githubusercontent.com/sysgain/Chain-core-developer-edition/chain-core-dev",
@@ -171,7 +170,6 @@
         "lbSetupURL": "[concat(variables('baseUrl'),'/nested/lb.json')]",
         "nsgSetupURL": "[concat(variables('baseUrl'),'/nested/nsg.json')]",
         "keyVaultSetupURL": "[concat(variables('baseUrl'),'/nested/keyvault.json')]",
-        
         "prefix": "Chain",
         "suffix": "[substring(uniqueString(resourceGroup().id) ,0, 5)]",
         "availabilitySetsName": "[concat(variables('prefix'),'-avset')]",
@@ -302,7 +300,7 @@
             "name": "generatorVMSetup",
             "apiVersion": "2016-02-01",
             "type": "Microsoft.Resources/deployments",
-            "dependsOn":[
+            "dependsOn": [
                 "generatorNICSetup"
             ],
             "properties": {
@@ -322,7 +320,7 @@
             "name": "generatorNICSetup",
             "apiVersion": "2016-02-01",
             "type": "Microsoft.Resources/deployments",
-            "dependsOn":[
+            "dependsOn": [
                 "vnetSetup",
                 "nsgSetup",
                 "lbSetup"
@@ -362,7 +360,6 @@
                 }
             }
         },
-        
         {
             "name": "avaialabilitySetSetup",
             "apiVersion": "2016-02-01",
@@ -422,7 +419,7 @@
         },
         {
             "name": "lbSetup",
-            "dependsOn":[
+            "dependsOn": [
                 "pipSetup"
             ],
             "apiVersion": "2016-02-01",

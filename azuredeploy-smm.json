@@ -183,7 +183,7 @@
             "type": "string",
             "defaultValue": "Ashpassword123"
         },
-        "storageAccountType":{
+        "storageAccountType": {
             "type": "string",
             "defaultValue": "Standard_LRS"
         }
@@ -234,8 +234,7 @@
             "location_3": "[parameters('location_3')]",
             "location_4": "[parameters('location_4')]",
             "location_5": "[parameters('location_5')]"
-        },
-        
+        }
     },
     "resources": [
         {
@@ -276,8 +275,8 @@
                     "gatewayName": {
                         "value": "[variables('connectionSettings').gatewayNameReg1]"
                     },
-                    "storageAccountType":{
-                        "value":"[parameters('storageAccountType')]"
+                    "storageAccountType": {
+                        "value": "[parameters('storageAccountType')]"
                     }
                 }
             }
@@ -311,8 +310,8 @@
                     "gatewayName": {
                         "value": "[variables('connectionSettings').gatewayNameReg2]"
                     },
-                    "storageAccountType":{
-                        "value":"[parameters('storageAccountType')]"
+                    "storageAccountType": {
+                        "value": "[parameters('storageAccountType')]"
                     }
                 }
             }
@@ -346,8 +345,8 @@
                     "gatewayName": {
                         "value": "[variables('connectionSettings').gatewayNameReg3]"
                     },
-                    "storageAccountType":{
-                        "value":"[parameters('storageAccountType')]"
+                    "storageAccountType": {
+                        "value": "[parameters('storageAccountType')]"
                     }
                 }
             }
@@ -381,8 +380,8 @@
                     "gatewayName": {
                         "value": "[variables('connectionSettings').gatewayNameReg4]"
                     },
-                    "storageAccountType":{
-                        "value":"[parameters('storageAccountType')]"
+                    "storageAccountType": {
+                        "value": "[parameters('storageAccountType')]"
                     }
                 }
             }
@@ -416,8 +415,8 @@
                     "gatewayName": {
                         "value": "[variables('connectionSettings').gatewayNameReg5]"
                     },
-                    "storageAccountType":{
-                        "value":"[parameters('storageAccountType')]"
+                    "storageAccountType": {
+                        "value": "[parameters('storageAccountType')]"
                     }
                 }
             }
