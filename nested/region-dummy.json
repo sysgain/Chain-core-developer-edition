@@ -19,6 +19,9 @@
         },
         "gatewayName": {
             "type": "string"
+        },
+        "storageAccountType": {
+            "type": "string"
         }
     },
     "variables": {
