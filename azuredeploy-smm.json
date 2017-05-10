@@ -277,7 +277,7 @@
                         "value": "[variables('connectionSettings').gatewayNameReg1]"
                     },
                     "storageAccountType":{
-                        "value":"[variables('storageAccountType')]"
+                        "value":"[parameters('storageAccountType')]"
                     }
                 }
             }
@@ -312,7 +312,7 @@
                         "value": "[variables('connectionSettings').gatewayNameReg2]"
                     },
                     "storageAccountType":{
-                        "value":"[variables('storageAccountType')]"
+                        "value":"[parameters('storageAccountType')]"
                     }
                 }
             }
@@ -347,7 +347,7 @@
                         "value": "[variables('connectionSettings').gatewayNameReg3]"
                     },
                     "storageAccountType":{
-                        "value":"[variables('storageAccountType')]"
+                        "value":"[parameters('storageAccountType')]"
                     }
                 }
             }
@@ -382,7 +382,7 @@
                         "value": "[variables('connectionSettings').gatewayNameReg4]"
                     },
                     "storageAccountType":{
-                        "value":"[variables('storageAccountType')]"
+                        "value":"[parameters('storageAccountType')]"
                     }
                 }
             }
@@ -417,7 +417,7 @@
                         "value": "[variables('connectionSettings').gatewayNameReg5]"
                     },
                     "storageAccountType":{
-                        "value":"[variables('storageAccountType')]"
+                        "value":"[parameters('storageAccountType')]"
                     }
                 }
             }
