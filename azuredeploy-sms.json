@@ -152,6 +152,10 @@
         "objectId2": {
             "type": "string",
             "defaultValue": "d9bcf141-62ad-46b1-a22f-fd0b6e2c39a1"
+        },
+        "storageAccountType":{
+            "type": "string",
+            "defaultValue": "Standard_LRS"
         }
 
     },
@@ -167,7 +171,7 @@
         "lbSetupURL": "[concat(variables('baseUrl'),'/nested/lb.json')]",
         "nsgSetupURL": "[concat(variables('baseUrl'),'/nested/nsg.json')]",
         "keyVaultSetupURL": "[concat(variables('baseUrl'),'/nested/keyvault.json')]",
-        "storageAccountType":"Standard_LRS",
+        
         "prefix": "Chain",
         "suffix": "[substring(uniqueString(resourceGroup().id) ,0, 5)]",
         "availabilitySetsName": "[concat(variables('prefix'),'-avset')]",
@@ -191,7 +195,7 @@
             "adminUsername": "[parameters('adminUsername')]",
             "adminPassword": "[parameters('adminPassword')]",
             "signerVmSize": "[parameters('signerVmSize')]",
-            "storageAccountType": "[variables('storageAccountType')]"
+            "storageAccountType": "[parameters('storageAccountType')]"
         },
         "generatorVMsettings": {
             "suffix": "[variables('suffix')]",
@@ -209,7 +213,7 @@
             "adminUsername": "[parameters('adminUsername')]",
             "adminPassword": "[parameters('adminPassword')]",
             "generatorVmSize": "[parameters('generatorVmSize')]",
-            "storageAccountType": "[variables('storageAccountType')]"
+            "storageAccountType": "[parameters('storageAccountType')]"
         },
         "generatorNicSettings": {
             "location": "[parameters('location')]",
