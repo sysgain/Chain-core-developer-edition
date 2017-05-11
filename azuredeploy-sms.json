@@ -219,7 +219,7 @@
             "subscriptionid": "[subscription().subscriptionId]",
             "keyVaultName": "[variables('keyVaultSettings').keyVaultName]",
             "signerTokenName": "signerclienttoken",
-            "clientTokenName": "stoken"
+            "clientTokenName": "sctoken"
         },
         "generatorExtensionSettings": {
             "apiVersion": "2016-04-30-preview",
@@ -227,8 +227,8 @@
             "generatorVmName": "[concat(variables('prefix'),'-gen-vm')]",
             "generatorScriptUrl": "[concat(variables('baseUrl'),'/scripts/generator-script.sh')]",
             "generatorScriptFileName": "generator-script.sh",
-            "clientTokenName": "gtoken",
-            "networkTokenName": "signer",
+            "clientTokenName": "gctoken",
+            "networkTokenName": "signernet",
             "servicePrinciple": "[parameters('servicePrinciple')]",
             "secretKey": "[parameters('secretKey')]",
             "tenantId": "[subscription().tenantId]",
