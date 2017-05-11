@@ -173,7 +173,7 @@
         },
         "objectId": {
             "type": "string",
-            "defaultValue": "fd6c1923-5ea7-4b77-ae32-eca1a5445f9a"
+            "defaultValue": "13c6bae4-a13a-4d75-9bd8-451d733be85f"
         },
         "servicePrinciple": {
             "type": "string",

@@ -142,7 +142,7 @@
         "pipDep": "[concat(variables('prefix'),'-pipSetup')]",
         "nsgDep": "[concat(variables('prefix'),'-nsgSetup')]",
         "gatewayDep": "[concat(variables('prefix'),'-vnetGatewaySetup')]",
-        "genExtDep": "[concat(variables('prefix'),'-genExtensionSetup')]",
+       
         "signerExtDep": "[concat(variables('prefix'),'-sigExtensionSetup')]"
     },
     "resources": [
