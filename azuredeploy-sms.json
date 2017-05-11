@@ -146,12 +146,10 @@
             "defaultValue": "Ashpassword123"
         },
         "servicePrinciple": {
-            "type": "string",
-            "defaultValue": "d4962dd2-e97e-4f3e-aa00-45e202305782"
+            "type": "string"
         },
         "secretKey": {
-            "type": "string",
-            "defaultValue": "EDBBROGcmzGDbXLiP0V5cH6XELl6Y0EndxBxpHL9J+E="
+            "type": "string"
         },
         "storageAccountType": {
             "type": "string",
