@@ -208,35 +208,6 @@
             "generatorVmSize": "[parameters('generatorVmSize')]",
             "storageAccountType": "[parameters('storageAccountType')]"
         },
-        "signerExtensionSettings": {
-            "apiVersion": "2016-04-30-preview",
-            "location": "[parameters('location')]",
-            "signerVmName": "[concat(variables('prefix'),'-signer-vm')]",
-            "signerScriptUrl": "https://raw.githubusercontent.com/ashwinse/test-base/master/smm/signer-script.sh",
-            "signerScriptFileName": "signer-script.sh",
-            "servicePrinciple": "[parameters('servicePrinciple')]",
-            "secretKey": "[parameters('secretKey')]",
-            "tenantId": "[subscription().tenantId]",
-            "subscriptionid": "[subscription().subscriptionId]",
-            "keyVaultName": "[variables('keyVaultSettings').keyVaultName]",
-            "signerTokenName": "signerclienttoken",
-            "clientTokenName": "sctoken",
-            "signer_nodes_Count": "[parameters('signer_nodes_Count')]"
-        },
-        "generatorExtensionSettings": {
-            "apiVersion": "2016-04-30-preview",
-            "location": "[parameters('location')]",
-            "generatorVmName": "[concat(variables('prefix'),'-gen-vm')]",
-            "generatorScriptUrl": "https://raw.githubusercontent.com/ashwinse/test-base/master/smm/generator-script.sh",
-            "generatorScriptFileName": "generator-script.sh",
-            "clientTokenName": "gctoken",
-            "networkTokenName": "signernet",
-            "servicePrinciple": "[parameters('servicePrinciple')]",
-            "secretKey": "[parameters('secretKey')]",
-            "tenantId": "[subscription().tenantId]",
-            "subscriptionId": "[subscription().subscriptionId]",
-            "keyVaultName": "[variables('keyVaultSettings').keyVaultName]"
-        },
         "generatorNicSettings": {
             "location": "[parameters('location')]",
             "generatorNicName": "[concat(variables('prefix'),'-nic')]",
@@ -295,7 +266,37 @@
             "tenantId": "[subscription().tenantId]",
             "apiVersion": "2015-06-01",
             "location": "[parameters('location')]",
-            "servicePrinciple": "[parameters('servicePrinciple')]"
+            "servicePrinciple": "[parameters('servicePrinciple')]",
+            "objectId":"[parameters('servicePrinciple')]"
+        },
+        "signerExtensionSettings": {
+            "apiVersion": "2016-04-30-preview",
+            "location": "[parameters('location')]",
+            "signerVmName": "[concat(variables('prefix'),'-signer-vm')]",
+            "signerScriptUrl": "https://raw.githubusercontent.com/ashwinse/test-base/master/smm/signer-script.sh",
+            "signerScriptFileName": "signer-script.sh",
+            "servicePrinciple": "[parameters('servicePrinciple')]",
+            "secretKey": "[parameters('secretKey')]",
+            "tenantId": "[subscription().tenantId]",
+            "subscriptionid": "[subscription().subscriptionId]",
+            "keyVaultName": "[variables('keyVaultSettings').keyVaultName]",
+            "signerTokenName": "signerclienttoken",
+            "clientTokenName": "sctoken",
+            "signer_nodes_Count": "[parameters('signer_nodes_Count')]"
+        },
+        "generatorExtensionSettings": {
+            "apiVersion": "2016-04-30-preview",
+            "location": "[parameters('location')]",
+            "generatorVmName": "[concat(variables('prefix'),'-gen-vm')]",
+            "generatorScriptUrl": "https://raw.githubusercontent.com/ashwinse/test-base/master/smm/generator-script.sh",
+            "generatorScriptFileName": "generator-script.sh",
+            "clientTokenName": "gctoken",
+            "networkTokenName": "signernet",
+            "servicePrinciple": "[parameters('servicePrinciple')]",
+            "secretKey": "[parameters('secretKey')]",
+            "tenantId": "[subscription().tenantId]",
+            "subscriptionId": "[subscription().subscriptionId]",
+            "keyVaultName": "[variables('keyVaultSettings').keyVaultName]"
         }
     },
     "resources": [

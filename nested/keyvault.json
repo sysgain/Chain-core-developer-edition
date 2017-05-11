@@ -11,7 +11,8 @@
         "tenantId": "[parameters('keyVaultSettings').tenantId]",
         "apiVersion": "[parameters('keyVaultSettings').apiVersion]",
         "location": "[parameters('keyVaultSettings').location]",
-        "servicePrinciple": "[parameters('keyVaultSettings').servicePrinciple]"
+        "servicePrinciple": "[parameters('keyVaultSettings').servicePrinciple]",
+        "objectId":"[parameters('keyVaultSettings').objectId]"
     },
     "resources": [
         {
@@ -28,7 +29,7 @@
                 },
                 "accessPolicies": [
                     {
-                        "objectId": "[variables('servicePrinciple')]",
+                        "objectId": "[variables('objectId')]",
                         "tenantId": "[variables('tenantId')]",
                         "permissions": {
                             "keys": [
