@@ -35,7 +35,6 @@ generatorctoken=`docker exec  $containerId /usr/bin/chain/corectl create-token $
 #generator blockchain_id
 chaincoreid=`docker exec  $containerId /usr/bin/chain/corectl config-generator | cut -c14-78`
 
-echo $chaincoreid
 sudo docker restart $containerId
 sleep 30
 #a network token that will be used by remote signers
@@ -45,10 +44,9 @@ networkToken=`docker exec  $containerId /usr/bin/chain/corectl create-token -net
 
 az login --service-principal -u $serviceprincipal -p $secretkey --tenant $tenatid
 az account set -s $subscriptionid
-echo "test az"
+
 az keyvault secret set --name genclientToken --vault-name $keyvaultname --value $generatorctoken
-echo "test keyvalt"
+
 az keyvault secret set --name networkToken   --vault-name $keyvaultname --value $networkToken
-echo "test escape"
+
 az keyvault secret set --name chaincoreid   --vault-name $keyvaultname --value $chaincoreid
-echo "test bid"
