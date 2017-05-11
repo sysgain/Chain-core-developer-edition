@@ -39,7 +39,7 @@
             "apiVersion": "[variables('apiVersion')]",
             "location": "[variables('location')]",
             "properties": {
-                "publicIPAllocationMethod": "Static",
+                "publicIPAllocationMethod": "Dynamic",
                 "idleTimeoutInMinutes": 4,
                 "dnsSettings": {
                     "domainNameLabel": "[variables('gatewayPipDns')]"
