@@ -20,9 +20,7 @@
         "offer": "[parameters('generatorVMsettings').offer]",
         "sku": "[parameters('generatorVMsettings').sku]",
         "version": "[parameters('generatorVMsettings').version]",
-        "diskSizeGB": "[parameters('generatorVMsettings').diskSizeGB]",
-        "generatorScriptUrl": "",
-        "generatorScriptFileName": ""
+        "diskSizeGB": "[parameters('generatorVMsettings').diskSizeGB]"
     },
     "resources": [
         {

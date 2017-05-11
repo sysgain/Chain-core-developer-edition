@@ -39,7 +39,7 @@
             "apiVersion": "[variables('apiVersion')]",
             "location": "[variables('location')]",
             "properties": {
-                "publicIPAllocationMethod": "Dynamic",
+                "publicIPAllocationMethod": "Static",
                 "idleTimeoutInMinutes": 4,
                 "dnsSettings": {
                     "domainNameLabel": "[variables('gatewayPipDns')]"
@@ -65,5 +65,15 @@
             },
             "dependsOn": []
         }
-    ]
+    ],
+    "outputs": {
+        "generatorIp":{
+            "type": "string",
+            "value": "[reference(resourceId('Microsoft.Network/publicIPAddresses', variables('generatorLbIpName'))).ipAddress]"
+        },
+        "gatewayIp":{
+            "type": "string",
+            "value": "[reference(resourceId('Microsoft.Network/publicIPAddresses', variables('gatewayIpName'))).ipAddress]"
+        }
+    }
 }

@@ -145,13 +145,13 @@
             "type": "string",
             "defaultValue": "Ashpassword123"
         },
-        "objectId1": {
+        "servicePrinciple": {
             "type": "string",
-            "defaultValue": "fd6c1923-5ea7-4b77-ae32-eca1a5445f9a"
+            "defaultValue": "d4962dd2-e97e-4f3e-aa00-45e202305782"
         },
-        "objectId2": {
+        "secretKey": {
             "type": "string",
-            "defaultValue": "d9bcf141-62ad-46b1-a22f-fd0b6e2c39a1"
+            "defaultValue": "EDBBROGcmzGDbXLiP0V5cH6XELl6Y0EndxBxpHL9J+E="
         },
         "storageAccountType": {
             "type": "string",
@@ -170,6 +170,8 @@
         "lbSetupURL": "[concat(variables('baseUrl'),'/nested/lb.json')]",
         "nsgSetupURL": "[concat(variables('baseUrl'),'/nested/nsg.json')]",
         "keyVaultSetupURL": "[concat(variables('baseUrl'),'/nested/keyvault.json')]",
+        "generatorExtensionSetupURL": "[concat(variables('baseUrl'),'/nested/generator-extension.json')]",
+        "signerExtensionSetupURL": "[concat(variables('baseUrl'),'/nested/signer-extension.json')]",
         "prefix": "Chain",
         "suffix": "[substring(uniqueString(resourceGroup().id) ,0, 5)]",
         "availabilitySetsName": "[concat(variables('prefix'),'-avset')]",
@@ -184,10 +186,6 @@
             "sku": "16.04-LTS",
             "version": "latest",
             "diskSizeGB": 30,
-            "signerScript1Url": "",
-            "signerScript1FileName": "",
-            "signerScriptUrl2": "",
-            "signerScript2FileName": "",
             "location": "[parameters('location')]",
             "signer_nodes_Count": "[parameters('signer_nodes_Count')]",
             "adminUsername": "[parameters('adminUsername')]",
@@ -204,14 +202,40 @@
             "sku": "16.04-LTS",
             "version": "latest",
             "diskSizeGB": 30,
-            "generatorScriptUrl": "",
-            "generatorScriptFileName": "",
             "generatorVmName": "[concat(variables('prefix'),'-gen-vm')]",
             "apiVersion": "2016-04-30-preview",
             "adminUsername": "[parameters('adminUsername')]",
             "adminPassword": "[parameters('adminPassword')]",
             "generatorVmSize": "[parameters('generatorVmSize')]",
             "storageAccountType": "[parameters('storageAccountType')]"
+        },
+        "signerExtensionSettings": {
+            "apiVersion": "2016-04-30-preview",
+            "location": "[parameters('location')]",
+            "signerVmName": "[concat(variables('prefix'),'-signer-vm')]",
+            "signerScript1Url": "[concat(variables('baseUrl'),'/scripts/signer-script.sh')]",
+            "signerScript1FileName": "signer-script.sh",
+            "servicePrinciple": "[parameters('servicePrinciple')]",
+            "secretKey": "[parameters('secretKey')]",
+            "tenantId": "[subscription().tenantId]",
+            "subscriptionid": "[subscription().subscriptionId]",
+            "keyVaultName": "[variables('keyVaultSettings').keyVaultName]",
+            "signerTokenName": "signerclienttoken",
+            "clientTokenName": "client"
+        },
+        "generatorExtensionSettings": {
+            "apiVersion": "2016-04-30-preview",
+            "location": "[parameters('location')]",
+            "generatorVmName": "[concat(variables('prefix'),'-gen-vm')]",
+            "generatorScriptUrl": "[concat(variables('baseUrl'),'/scripts/generator-script.sh')]",
+            "generatorScriptFileName": "generator-script.sh",
+            "clientTokenName": "client",
+            "networkTokenName": "signer",
+            "servicePrinciple": "[parameters('servicePrinciple')]",
+            "secretKey": "[parameters('secretKey')]",
+            "tenantId": "[subscription().tenantId]",
+            "subscriptionId": "[subscription().subscriptionId]",
+            "keyVaultName": "[variables('keyVaultSettings').keyVaultName]"
         },
         "generatorNicSettings": {
             "location": "[parameters('location')]",
@@ -258,7 +282,7 @@
             "signer_nodes_Count": "[parameters('signer_nodes_Count')]",
             "signerPipDns": "[concat('signer-',variables('suffix'))]",
             "apiVersion": "2016-03-30",
-            "publicIPAllocationMethod": "Dynamic"
+            "publicIPAllocationMethod": "Static"
         },
         "nsgSettings": {
             "generatorNsgName": "[concat(variables('prefix'),'-nsg')]",
@@ -271,8 +295,7 @@
             "tenantId": "[subscription().tenantId]",
             "apiVersion": "2015-06-01",
             "location": "[parameters('location')]",
-            "objectId1": "[parameters('objectId1')]",
-            "objectId2": "[parameters('objectId2')]"
+            "servicePrinciple": "[parameters('servicePrinciple')]"
         }
     },
     "resources": [
@@ -312,6 +335,50 @@
                 "parameters": {
                     "generatorVMsettings": {
                         "value": "[variables('generatorVMsettings')]"
+                    }
+                }
+            }
+        },
+        {
+            "name": "generatorExtensionSetup",
+            "apiVersion": "2016-02-01",
+            "type": "Microsoft.Resources/deployments",
+            "dependsOn": [
+                "generatorVMSetup"
+            ],
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "[variables('generatorExtensionSetupURL')]",
+                    "contentVersion": "1.0.0.0"
+                },
+                "parameters": {
+                    "generatorExtensionSettings": {
+                        "value": "[variables('generatorExtensionSettings')]"
+                    }
+                }
+            }
+        },
+        {
+            "name": "signerExtensionSetup",
+            "apiVersion": "2016-02-01",
+            "type": "Microsoft.Resources/deployments",
+            "dependsOn": [
+                "signerVMsSetup",
+                "generatorExtensionSetup"
+            ],
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "[variables('signerExtensionSetupURL')]",
+                    "contentVersion": "1.0.0.0"
+                },
+                "parameters": {
+                    "signerExtensionSettings": {
+                        "value": "[variables('signerExtensionSettings')]"
+                    },
+                    "generatorIp": {
+                        "value": "[reference('pipSetup').outputs.generatorIp.value]"
                     }
                 }
             }

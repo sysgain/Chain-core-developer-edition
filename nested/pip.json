@@ -49,5 +49,11 @@
             },
             "dependsOn": []
         }
-    ]
+    ],
+    "outputs": {
+        "generatorIp":{
+            "type": "string",
+            "value": "[reference(resourceId('Microsoft.Network/publicIPAddresses', variables('generatorLbIpName'))).ipAddress]"
+        }
+    }
 }

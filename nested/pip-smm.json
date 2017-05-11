@@ -49,5 +49,11 @@
             },
             "dependsOn": []
         }
-    ]
+    ],
+    "outputs": {
+        "gatewayIp":{
+            "type": "string",
+            "value": "[reference(resourceId('Microsoft.Network/publicIPAddresses', variables('gatewayIpName'))).ipAddress]"
+        }
+    }
 }

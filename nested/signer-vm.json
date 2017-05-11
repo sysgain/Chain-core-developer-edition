@@ -22,11 +22,7 @@
         "offer": "[parameters('signerVMsettings').offer]",
         "sku": "[parameters('signerVMsettings').sku]",
         "version": "[parameters('signerVMsettings').version]",
-        "diskSizeGB": "[parameters('signerVMsettings').diskSizeGB]",
-        "signerScript1Url": "",
-        "signerScript1FileName": "",
-        "signerScriptUrl2": "",
-        "signerScript2FileName": ""
+        "diskSizeGB": "[parameters('signerVMsettings').diskSizeGB]"
     },
     "resources": [
         {

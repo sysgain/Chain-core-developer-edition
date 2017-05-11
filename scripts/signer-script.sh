@@ -19,8 +19,8 @@ secretkey=$3
 tenatid=$4
 subscriptionid=$5
 keyvaultname=$6
-#signerclienttoken=$7
-clienttokenname=$7 
+signerclienttoken=$7
+clienttokenname=$8 
 az login --service-principal -u $serviceprincipal -p $secretkey --tenant $tenatid
 az account set -s $subscriptionid
 
@@ -46,4 +46,4 @@ docker exec  $containerId /usr/bin/chain/corectl config -t $generatornetworktoke
 
 sudo docker restart $containerId
 
-az keyvault secret set --name signerclienttoken1 --vault-name $keyvaultname --value $signerctoken
+az keyvault secret set --name $signerclienttoken --vault-name $keyvaultname --value $signerctoken
