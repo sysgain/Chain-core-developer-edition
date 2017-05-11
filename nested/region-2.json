@@ -22,6 +22,12 @@
         },
         "storageAccountType": {
             "type": "string"
+        },
+        "servicePrinciple": {
+            "type": "string"
+        },
+        "secretKey": {
+            "type": "securestring"
         }
     },
     "variables": {
@@ -33,6 +39,7 @@
         "pipSetupURL": "[concat(variables('baseUrl'),'/nested/pip-smm.json')]",
         "nsgSetupURL": "[concat(variables('baseUrl'),'/nested/nsg-smm.json')]",
         "vnetGatewaySetupURL": "[concat(variables('baseUrl'),'/nested/vnetgateway-smm.json')]",
+        "signerExtensionSetupURL": "[concat(variables('baseUrl'),'/nested/signer-extension.json')]",
         "gatewaySkuTypes": {
             "Basic": "Basic",
             "Standard": "Standard",
@@ -63,6 +70,21 @@
             "adminPassword": "[parameters('adminPassword')]",
             "signerVmSize": "[parameters('signerVmSize')]",
             "storageAccountType": "[parameters('storageAccountType')]"
+        },
+        "signerExtensionSettings": {
+            "apiVersion": "2016-04-30-preview",
+            "location": "[parameters('location')]",
+            "signerVmName": "[concat(variables('prefix'),'-signer-vm')]",
+            "signerScriptUrl": "https://raw.githubusercontent.com/ashwinse/test-base/master/smm/signer-script.sh",
+            "signerScriptFileName": "signer-script.sh",
+            "servicePrinciple": "[parameters('servicePrinciple')]",
+            "secretKey": "[parameters('secretKey')]",
+            "tenantId": "[subscription().tenantId]",
+            "subscriptionid": "[subscription().subscriptionId]",
+            "keyVaultName": "[concat('Chain','-',variables('suffix'),'-kvlt')]",
+            "signerTokenName": "signerclienttoken",
+            "clientTokenName": "sctoken",
+            "signer_nodes_Count": "[parameters('signer_nodes_Count')]"
         },
         "signerNicSettings": {
             "location": "[parameters('location')]",
@@ -116,7 +138,9 @@
         "vnetDep": "[concat(variables('prefix'),'-vnetSetup')]",
         "pipDep": "[concat(variables('prefix'),'-pipSetup')]",
         "nsgDep": "[concat(variables('prefix'),'-nsgSetup')]",
-        "gatewayDep": "[concat(variables('prefix'),'-vnetGatewaySetup')]"
+        "gatewayDep": "[concat(variables('prefix'),'-vnetGatewaySetup')]",
+        "genExtDep": "[concat('Chain-reg1-genExtensionSetup')]",
+        "signerExtDep": "[concat(variables('prefix'),'-sigExtensionSetup')]"
     },
     "resources": [
         {
@@ -135,6 +159,30 @@
                 "parameters": {
                     "signerVMsettings": {
                         "value": "[variables('signerVMsettings')]"
+                    }
+                }
+            }
+        },
+        {
+            "name": "[variables('signerExtDep')]",
+            "apiVersion": "2016-02-01",
+            "type": "Microsoft.Resources/deployments",
+            "dependsOn": [
+                "[variables('signerVmDep')]",
+                "[variables('genExtDep')]"
+            ],
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "[variables('signerExtensionSetupURL')]",
+                    "contentVersion": "1.0.0.0"
+                },
+                "parameters": {
+                    "signerExtensionSettings": {
+                        "value": "[variables('signerExtensionSettings')]"
+                    },
+                    "generatorIp": {
+                        "value": "[reference('Chain-reg1-pipSetup').outputs.generatorIp.value]"
                     }
                 }
             }

@@ -4,7 +4,7 @@
     "parameters": {
         "regionCount": {
             "type": "string",
-            "defaultValue": "2",
+            "defaultValue": "4",
             "allowedValues": [
                 "2",
                 "3",
@@ -171,13 +171,16 @@
             "type": "string",
             "defaultValue": "Ashpassword123"
         },
-        "objectId1": {
+        "objectId": {
             "type": "string",
             "defaultValue": "fd6c1923-5ea7-4b77-ae32-eca1a5445f9a"
         },
-        "objectId2": {
+        "servicePrinciple": {
             "type": "string",
-            "defaultValue": "d9bcf141-62ad-46b1-a22f-fd0b6e2c39a1"
+            "defaultValue": "d4962dd2-e97e-4f3e-aa00-45e202305782"
+        },
+        "secretKey": {
+            "type": "securestring"
         },
         "VPNSharedKey": {
             "type": "string",
@@ -248,11 +251,14 @@
                     "contentVersion": "1.0.0.0"
                 },
                 "parameters": {
-                    "objectId1": {
-                        "value": "[parameters('objectId1')]"
+                    "objectId": {
+                        "value": "[parameters('objectId')]"
                     },
-                    "objectId2": {
-                        "value": "[parameters('objectId2')]"
+                    "servicePrinciple": {
+                        "value": "[parameters('servicePrinciple')]"
+                    },
+                    "secretKey": {
+                        "value": "[parameters('secretKey')]"
                     },
                     "location": {
                         "value": "[parameters('location_1')]"
@@ -292,6 +298,12 @@
                     "contentVersion": "1.0.0.0"
                 },
                 "parameters": {
+                    "servicePrinciple": {
+                        "value": "[parameters('servicePrinciple')]"
+                    },
+                    "secretKey": {
+                        "value": "[parameters('secretKey')]"
+                    },
                     "location": {
                         "value": "[parameters('location_2')]"
                     },
@@ -327,6 +339,12 @@
                     "contentVersion": "1.0.0.0"
                 },
                 "parameters": {
+                    "servicePrinciple": {
+                        "value": "[parameters('servicePrinciple')]"
+                    },
+                    "secretKey": {
+                        "value": "[parameters('secretKey')]"
+                    },
                     "location": {
                         "value": "[parameters('location_3')]"
                     },
@@ -362,6 +380,12 @@
                     "contentVersion": "1.0.0.0"
                 },
                 "parameters": {
+                    "servicePrinciple": {
+                        "value": "[parameters('servicePrinciple')]"
+                    },
+                    "secretKey": {
+                        "value": "[parameters('secretKey')]"
+                    },
                     "location": {
                         "value": "[parameters('location_4')]"
                     },
@@ -397,6 +421,12 @@
                     "contentVersion": "1.0.0.0"
                 },
                 "parameters": {
+                    "servicePrinciple": {
+                        "value": "[parameters('servicePrinciple')]"
+                    },
+                    "secretKey": {
+                        "value": "[parameters('secretKey')]"
+                    },
                     "location": {
                         "value": "[parameters('location_5')]"
                     },

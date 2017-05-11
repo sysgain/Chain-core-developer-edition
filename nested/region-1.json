@@ -20,11 +20,14 @@
         "adminPassword": {
             "type": "string"
         },
-        "objectId1": {
+        "objectId": {
             "type": "string"
         },
-        "objectId2": {
+        "servicePrinciple": {
             "type": "string"
+        },
+        "secretKey": {
+            "type": "securestring"
         },
         "gatewayName": {
             "type": "string"
@@ -46,6 +49,8 @@
         "nsgSetupURL": "[concat(variables('baseUrl'),'/nested/nsg.json')]",
         "keyVaultSetupURL": "[concat(variables('baseUrl'),'/nested/keyvault.json')]",
         "vnetGatewaySetupURL": "[concat(variables('baseUrl'),'/nested/vnetgateway-smm.json')]",
+        "generatorExtensionSetupURL": "[concat(variables('baseUrl'),'/nested/generator-extension.json')]",
+        "signerExtensionSetupURL": "[concat(variables('baseUrl'),'/nested/signer-extension.json')]",
         "gatewaySkuTypes": {
             "Basic": "Basic",
             "Standard": "Standard",
@@ -152,12 +157,41 @@
             "location": "[parameters('location')]"
         },
         "keyVaultSettings": {
-            "keyVaultName": "[concat(variables('prefix'),'-',variables('suffix'),'-kvlt')]",
+            "keyVaultName": "[concat('Chain','-',variables('suffix'),'-kvlt')]",
             "tenantId": "[subscription().tenantId]",
             "apiVersion": "2015-06-01",
             "location": "[parameters('location')]",
-            "objectId1": "[parameters('objectId1')]",
-            "objectId2": "[parameters('objectId2')]"
+            "servicePrinciple": "[parameters('servicePrinciple')]",
+            "objectId": "[parameters('objectId')]"
+        },
+        "signerExtensionSettings": {
+            "apiVersion": "2016-04-30-preview",
+            "location": "[parameters('location')]",
+            "signerVmName": "[concat(variables('prefix'),'-signer-vm')]",
+            "signerScriptUrl": "https://raw.githubusercontent.com/ashwinse/test-base/master/smm/signer-script.sh",
+            "signerScriptFileName": "signer-script.sh",
+            "servicePrinciple": "[parameters('servicePrinciple')]",
+            "secretKey": "[parameters('secretKey')]",
+            "tenantId": "[subscription().tenantId]",
+            "subscriptionid": "[subscription().subscriptionId]",
+            "keyVaultName": "[variables('keyVaultSettings').keyVaultName]",
+            "signerTokenName": "signerclienttoken",
+            "clientTokenName": "sctoken",
+            "signer_nodes_Count": "[parameters('signer_nodes_Count')]"
+        },
+        "generatorExtensionSettings": {
+            "apiVersion": "2016-04-30-preview",
+            "location": "[parameters('location')]",
+            "generatorVmName": "[concat(variables('prefix'),'-gen-vm')]",
+            "generatorScriptUrl": "https://raw.githubusercontent.com/ashwinse/test-base/master/smm/generator-script.sh",
+            "generatorScriptFileName": "generator-script.sh",
+            "clientTokenName": "gctoken",
+            "networkTokenName": "signernet",
+            "servicePrinciple": "[parameters('servicePrinciple')]",
+            "secretKey": "[parameters('secretKey')]",
+            "tenantId": "[subscription().tenantId]",
+            "subscriptionId": "[subscription().subscriptionId]",
+            "keyVaultName": "[variables('keyVaultSettings').keyVaultName]"
         },
         "vnetID": "[resourceId('Microsoft.Network/virtualNetworks',variables('vnetSettings').virtualNetworksName)]",
         "vnetGatewaySettings": {
@@ -181,7 +215,9 @@
         "lbDep": "[concat(variables('prefix'),'-lbSetup')]",
         "nsgDep": "[concat(variables('prefix'),'-nsgSetup')]",
         "keyVltDep": "[concat(variables('prefix'),'-keyVaultSetup')]",
-        "gatewayDep": "[concat(variables('prefix'),'-vnetGatewaySetup')]"
+        "gatewayDep": "[concat(variables('prefix'),'-vnetGatewaySetup')]",
+        "genExtDep": "[concat(variables('prefix'),'-genExtensionSetup')]",
+        "signerExtDep": "[concat(variables('prefix'),'-sigExtensionSetup')]"
     },
     "resources": [
         {
@@ -220,6 +256,50 @@
                 "parameters": {
                     "generatorVMsettings": {
                         "value": "[variables('generatorVMsettings')]"
+                    }
+                }
+            }
+        },
+        {
+            "name": "[variables('genExtDep')]",
+            "apiVersion": "2016-02-01",
+            "type": "Microsoft.Resources/deployments",
+            "dependsOn": [
+                "[variables('generatorVmDep')]"
+            ],
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "[variables('generatorExtensionSetupURL')]",
+                    "contentVersion": "1.0.0.0"
+                },
+                "parameters": {
+                    "generatorExtensionSettings": {
+                        "value": "[variables('generatorExtensionSettings')]"
+                    }
+                }
+            }
+        },
+        {
+            "name": "[variables('signerExtDep')]",
+            "apiVersion": "2016-02-01",
+            "type": "Microsoft.Resources/deployments",
+            "dependsOn": [
+                "[variables('signerVmDep')]",
+                "[variables('genExtDep')]"
+            ],
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "[variables('signerExtensionSetupURL')]",
+                    "contentVersion": "1.0.0.0"
+                },
+                "parameters": {
+                    "signerExtensionSettings": {
+                        "value": "[variables('signerExtensionSettings')]"
+                    },
+                    "generatorIp": {
+                        "value": "[reference(variables('pipDep')).outputs.generatorIp.value]"
                     }
                 }
             }

@@ -22,11 +22,14 @@
         },
         "storageAccountType": {
             "type": "string"
+        },
+        "servicePrinciple": {
+            "type": "string"
+        },
+        "secretKey": {
+            "type": "securestring"
         }
     },
-    "variables": {
-        
-    },
-    "resources": [
-    ]
+    "variables": {},
+    "resources": []
 }
