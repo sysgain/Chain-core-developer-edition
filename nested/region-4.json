@@ -171,8 +171,7 @@
             "apiVersion": "2016-02-01",
             "type": "Microsoft.Resources/deployments",
             "dependsOn": [
-                "[variables('signerVmDep')]",
-                "[variables('genExtDep')]"
+                "[variables('signerVmDep')]"
             ],
             "properties": {
                 "mode": "Incremental",

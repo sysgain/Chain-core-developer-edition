@@ -172,7 +172,7 @@
             "type": "Microsoft.Resources/deployments",
             "dependsOn": [
                 "[variables('signerVmDep')]",
-                "[variables('genExtDep')]"
+                
             ],
             "properties": {
                 "mode": "Incremental",
