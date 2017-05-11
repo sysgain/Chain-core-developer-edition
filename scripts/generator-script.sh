@@ -2,13 +2,13 @@
 
 #!/bin/bash
 
-clienttokenname=$1
-networktokenname=$2
-serviceprincipal=$3
-secretkey=$4
-tenatid=$5
-subscriptionid=$6
-keyvaultname=$7
+networktokenname=$1
+serviceprincipal=$2
+secretkey=$3
+tenatid=$4
+subscriptionid=$5
+keyvaultname=$6
+
 # install prerequisites 
 apt-get update && apt-get install -y libssl-dev libffi-dev python-dev build-essential && apt-get install -y nodejs-legacy && apt-get install -y npm
 
@@ -30,7 +30,8 @@ containerId=`docker ps | cut -d " " -f1 | sed 1d`
 
 #generator client access token / public key
 docker exec  $containerId /usr/bin/chain/cored
-generatorctoken=`docker exec  $containerId /usr/bin/chain/corectl create-token $clienttokenname | cut -c1-71`
+#generatorctoken=`docker exec  $containerId /usr/bin/chain/corectl create-token $clienttokenname | cut -c1-71`
+generatorctoken=`docker logs $containerId | grep client | cut -c22- | uniq`
 
 #generator blockchain_id
 chaincoreid=`docker exec  $containerId /usr/bin/chain/corectl config-generator | cut -c14-78`
