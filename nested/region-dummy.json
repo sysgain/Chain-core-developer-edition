@@ -28,6 +28,9 @@
         },
         "secretKey": {
             "type": "securestring"
+        },
+        "generatorIp": {
+            "type": "string"
         }
     },
     "variables": {},

@@ -145,7 +145,7 @@
             "type": "string",
             "defaultValue": "Ashpassword123"
         },
-        "objectId":{
+        "objectId": {
             "type": "string",
             "defaultValue": "fd6c1923-5ea7-4b77-ae32-eca1a5445f9a"
         },
@@ -271,7 +271,7 @@
             "apiVersion": "2015-06-01",
             "location": "[parameters('location')]",
             "servicePrinciple": "[parameters('servicePrinciple')]",
-            "objectId":"[parameters('objectId')]"
+            "objectId": "[parameters('objectId')]"
         },
         "signerExtensionSettings": {
             "apiVersion": "2016-04-30-preview",

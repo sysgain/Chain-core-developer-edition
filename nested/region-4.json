@@ -28,6 +28,9 @@
         },
         "secretKey": {
             "type": "securestring"
+        },
+        "generatorIp": {
+            "type": "string"
         }
     },
     "variables": {
@@ -182,7 +185,7 @@
                         "value": "[variables('signerExtensionSettings')]"
                     },
                     "generatorIp": {
-                        "value": "[reference('Chain-reg1-pipSetup').outputs.generatorIp.value]"
+                        "value": "[parameters('generatorIp')]"
                     }
                 }
             }

@@ -480,5 +480,11 @@
                 }
             }
         }
-    ]
+    ],
+    "outputs": {
+        "generatorIp": {
+            "type": "string",
+            "value": "[reference(variables('pipDep')).outputs.generatorIp.value]"
+        }
+    }
 }

@@ -291,6 +291,9 @@
             "name": "region_2_setup",
             "apiVersion": "2016-02-01",
             "type": "Microsoft.Resources/deployments",
+            "dependsOn": [
+                "region_1_setup"
+            ],
             "properties": {
                 "mode": "Incremental",
                 "templateLink": {
@@ -303,6 +306,9 @@
                     },
                     "secretKey": {
                         "value": "[parameters('secretKey')]"
+                    },
+                    "generatorIp": {
+                        "value": "[reference('region_1_setup').outputs.generatorIp.value]"
                     },
                     "location": {
                         "value": "[parameters('location_2')]"
@@ -332,6 +338,9 @@
             "name": "region_3_setup",
             "apiVersion": "2016-02-01",
             "type": "Microsoft.Resources/deployments",
+            "dependsOn": [
+                "region_1_setup"
+            ],
             "properties": {
                 "mode": "Incremental",
                 "templateLink": {
@@ -344,6 +353,9 @@
                     },
                     "secretKey": {
                         "value": "[parameters('secretKey')]"
+                    },
+                    "generatorIp": {
+                        "value": "[reference('region_1_setup').outputs.generatorIp.value]"
                     },
                     "location": {
                         "value": "[parameters('location_3')]"
@@ -373,6 +385,9 @@
             "name": "region_4_setup",
             "apiVersion": "2016-02-01",
             "type": "Microsoft.Resources/deployments",
+            "dependsOn": [
+                "region_1_setup"
+            ],
             "properties": {
                 "mode": "Incremental",
                 "templateLink": {
@@ -385,6 +400,9 @@
                     },
                     "secretKey": {
                         "value": "[parameters('secretKey')]"
+                    },
+                    "generatorIp": {
+                        "value": "[reference('region_1_setup').outputs.generatorIp.value]"
                     },
                     "location": {
                         "value": "[parameters('location_4')]"
@@ -414,6 +432,9 @@
             "name": "region_5_setup",
             "apiVersion": "2016-02-01",
             "type": "Microsoft.Resources/deployments",
+            "dependsOn": [
+                "region_1_setup"
+            ],
             "properties": {
                 "mode": "Incremental",
                 "templateLink": {
@@ -426,6 +447,9 @@
                     },
                     "secretKey": {
                         "value": "[parameters('secretKey')]"
+                    },
+                    "generatorIp": {
+                        "value": "[reference('region_1_setup').outputs.generatorIp.value]"
                     },
                     "location": {
                         "value": "[parameters('location_5')]"
