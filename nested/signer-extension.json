@@ -22,14 +22,19 @@
         "subscriptionId": "[parameters('signerExtensionSettings').subscriptionId]",
         "keyVaultName": "[parameters('signerExtensionSettings').keyVaultName]",
         "signerTokenName": "[parameters('signerExtensionSettings').signerTokenName]",
-        "clientTokenName": "[parameters('signerExtensionSettings').clientTokenName]"
+        "clientTokenName": "[parameters('signerExtensionSettings').clientTokenName]",
+        "signer_nodes_Count": "[parameters('signerExtensionSettings').signer_nodes_Count]"
     },
     "resources": [
         {
             "type": "Microsoft.Compute/virtualMachines/extensions",
-            "name": "[concat(variables('signerVmName'), '/signerConfig')]",
+            "name": "[concat(variables('signerVmName'),'-',copyIndex(1), '/signerConfig')]",
             "location": "[variables('location')]",
             "apiVersion": "[variables('apiVersion')]",
+            "copy": {
+                "name": "signerLoop",
+                "count": "[variables('signer_nodes_Count')]"
+            },
             "properties": {
                 "publisher": "Microsoft.Azure.Extensions",
                 "type": "CustomScript",

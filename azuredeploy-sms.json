@@ -146,7 +146,8 @@
             "defaultValue": "Ashpassword123"
         },
         "servicePrinciple": {
-            "type": "string"
+            "type": "string",
+            "defaultValue": "fd6c1923-5ea7-4b77-ae32-eca1a5445f9a"
         },
         "secretKey": {
             "type": "string"
@@ -219,7 +220,8 @@
             "subscriptionid": "[subscription().subscriptionId]",
             "keyVaultName": "[variables('keyVaultSettings').keyVaultName]",
             "signerTokenName": "signerclienttoken",
-            "clientTokenName": "sctoken"
+            "clientTokenName": "sctoken",
+            "signer_nodes_Count": "[parameters('signer_nodes_Count')]"
         },
         "generatorExtensionSettings": {
             "apiVersion": "2016-04-30-preview",
