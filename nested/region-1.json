@@ -146,7 +146,7 @@
             "signer_nodes_Count": "[parameters('signer_nodes_Count')]",
             "signerPipDns": "[concat('signer-',variables('suffix'))]",
             "apiVersion": "2016-03-30",
-            "publicIPAllocationMethod": "Dynamic",
+            "publicIPAllocationMethod": "Static",
             "gatewayIpName": "[concat(variables('prefix'),'-gateway-pip')]",
             "gatewayPipDns": "[concat('gateway-reg1-',variables('suffix'))]"
         },
