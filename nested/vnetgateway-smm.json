@@ -1,0 +1,49 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "vnetGatewaySettings": {
+            "type": "object"
+        }
+    },
+    "variables": {
+        "gatewayName": "[parameters('vnetGatewaySettings').gatewayName]",
+        "apiVersion": "[parameters('vnetGatewaySettings').apiVersion]",
+        "location": "[parameters('vnetGatewaySettings').location]",
+        "gatewaySubnetID": "[parameters('vnetGatewaySettings').gatewaySubnetID]",
+        "gatewayPipID": "[parameters('vnetGatewaySettings').gatewayPipID]",
+        "gatewayIpConfig": "[parameters('vnetGatewaySettings').gatewayIpConfig]",
+        "vpnType": "[parameters('vnetGatewaySettings').vpnType]",
+        "sku": "[parameters('vnetGatewaySettings').sku]"
+    },
+    "resources": [
+        {
+            "name": "[variables('gatewayName')]",
+            "type": "Microsoft.Network/virtualNetworkGateways",
+            "apiVersion": "[variables('apiVersion')]",
+            "location": "[variables('location')]",
+            "properties": {
+                "gatewayType": "Vpn",
+                "vpnType": "[variables('vpnType')]",
+                "ipConfigurations": [
+                    {
+                        "properties": {
+                            "privateIPAllocationMethod": "Dynamic",
+                            "subnet": {
+                                "id": "[variables('gatewaySubnetID')]"
+                            },
+                            "publicIPAddress": {
+                                "id": "[variables('gatewayPipID')]"
+                            }
+                        },
+                        "name": "[variables('gatewayIpConfig')]"
+                    }
+                ],
+                "sku": {
+                    "name": "[variables('sku')]",
+                    "tier": "[variables('sku')]"
+                }
+            }
+        }
+    ]
+}

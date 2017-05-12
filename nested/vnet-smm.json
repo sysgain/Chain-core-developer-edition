@@ -1,0 +1,47 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "vnetSettings": {
+            "type": "object"
+        }
+    },
+    "variables": {
+            "virtualNetworksName": "[parameters('vnetSettings').virtualNetworksName]",
+            "location":"[parameters('vnetSettings').location]",
+            "gatewaySubnetRange":"[parameters('vnetSettings').gatewaySubnetRange]",
+            "signerSubnetName": "[parameters('vnetSettings').signerSubnetName]",
+            "vnetRange":"[parameters('vnetSettings').vnetRange]",
+            "subnet2Range":"[parameters('vnetSettings').subnet2Range]",
+            "apiVersion":"[parameters('vnetSettings').apiVersion]"
+    },
+    "resources": [
+        {
+            "type": "Microsoft.Network/virtualNetworks",
+            "name": "[variables('virtualNetworksName')]",
+            "apiVersion": "[variables('apiVersion')]",
+            "location": "[variables('location')]",
+            "properties": {
+                "addressSpace": {
+                    "addressPrefixes": [
+                        "[variables('vnetRange')]"
+                    ]
+                },
+                "subnets": [
+                    {
+                        "name": "[variables('signerSubnetName')]",
+                        "properties": {
+                            "addressPrefix": "[variables('subnet2Range')]"
+                        }
+                    },
+                    {
+                        "name": "GatewaySubnet",
+                        "properties": {
+                            "addressPrefix": "[variables('gatewaySubnetRange')]"
+                        }
+                    }
+                ]
+            }
+        }
+    ]
+}

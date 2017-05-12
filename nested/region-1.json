@@ -1,0 +1,488 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "location": {
+            "type": "string"
+        },
+        "generatorVmSize": {
+            "type": "string"
+        },
+        "signerVmSize": {
+            "type": "string"
+        },
+        "signer_nodes_Count": {
+            "type": "int"
+        },
+        "adminUsername": {
+            "type": "string"
+        },
+        "adminPassword": {
+            "type": "string"
+        },
+        "objectId": {
+            "type": "string"
+        },
+        "servicePrinciple": {
+            "type": "string"
+        },
+        "secretKey": {
+            "type": "securestring"
+        },
+        "gatewayName": {
+            "type": "string"
+        },
+        "storageAccountType": {
+            "type": "string"
+        }
+    },
+    "variables": {
+        "baseUrl": "https://raw.githubusercontent.com/sysgain/Chain-core-developer-edition/chain-core-dev",
+        "signerVMsSetupURL": "[concat(variables('baseUrl'),'/nested/signer-vm.json')]",
+        "generatorVMsetupURL": "[concat(variables('baseUrl'),'/nested/generator-vm.json')]",
+        "generatorNICsetupURL": "[concat(variables('baseUrl'),'/nested/generator-nic.json')]",
+        "signerNICsetupURL": "[concat(variables('baseUrl'),'/nested/signer-nic.json')]",
+        "avaialabilitySetSetupURL": "[concat(variables('baseUrl'),'/nested/availabilitySet.json')]",
+        "vnetSetupURL": "[concat(variables('baseUrl'),'/nested/vnet-reg1-smm.json')]",
+        "pipSetupURL": "[concat(variables('baseUrl'),'/nested/pip-reg1-smm.json')]",
+        "lbSetupURL": "[concat(variables('baseUrl'),'/nested/lb.json')]",
+        "nsgSetupURL": "[concat(variables('baseUrl'),'/nested/nsg.json')]",
+        "keyVaultSetupURL": "[concat(variables('baseUrl'),'/nested/keyvault.json')]",
+        "vnetGatewaySetupURL": "[concat(variables('baseUrl'),'/nested/vnetgateway-smm.json')]",
+        "generatorExtensionSetupURL": "[concat(variables('baseUrl'),'/nested/generator-extension.json')]",
+        "signerExtensionSetupURL": "[concat(variables('baseUrl'),'/nested/signer-extension.json')]",
+        "gatewaySkuTypes": {
+            "Basic": "Basic",
+            "Standard": "Standard",
+            "HighPerformance": "HighPerformance",
+            "UltraPerformance": "UltraPerformance"
+        },
+        "prefix": "Chain-reg1",
+        "suffix": "[substring(uniqueString(resourceGroup().id) ,0, 5)]",
+        "availabilitySetsName": "[concat(variables('prefix'),'-avset')]",
+        "signerVMsettings": {
+            "suffix": "[variables('suffix')]",
+            "availabilitySetsName": "[variables('availabilitySetsName')]",
+            "signerNicName": "[concat(variables('prefix'),'-signer-nic')]",
+            "signerVmName": "[concat(variables('prefix'),'-signer-vm')]",
+            "apiVersion": "2016-04-30-preview",
+            "publisher": "Canonical",
+            "offer": "UbuntuServer",
+            "sku": "16.04-LTS",
+            "version": "latest",
+            "diskSizeGB": 30,
+            "signerScript1Url": "",
+            "signerScript1FileName": "",
+            "signerScriptUrl2": "",
+            "signerScript2FileName": "",
+            "location": "[parameters('location')]",
+            "signer_nodes_Count": "[parameters('signer_nodes_Count')]",
+            "adminUsername": "[parameters('adminUsername')]",
+            "adminPassword": "[parameters('adminPassword')]",
+            "signerVmSize": "[parameters('signerVmSize')]",
+            "storageAccountType": "[parameters('storageAccountType')]"
+        },
+        "generatorVMsettings": {
+            "suffix": "[variables('suffix')]",
+            "location": "[parameters('location')]",
+            "generatorNicName": "[concat(variables('prefix'),'-nic')]",
+            "publisher": "Canonical",
+            "offer": "UbuntuServer",
+            "sku": "16.04-LTS",
+            "version": "latest",
+            "diskSizeGB": 30,
+            "generatorScriptUrl": "",
+            "generatorScriptFileName": "",
+            "generatorVmName": "[concat(variables('prefix'),'-gen-vm')]",
+            "apiVersion": "2016-04-30-preview",
+            "adminUsername": "[parameters('adminUsername')]",
+            "adminPassword": "[parameters('adminPassword')]",
+            "generatorVmSize": "[parameters('generatorVmSize')]",
+            "storageAccountType": "[parameters('storageAccountType')]"
+        },
+        "generatorNicSettings": {
+            "location": "[parameters('location')]",
+            "generatorNicName": "[concat(variables('prefix'),'-nic')]",
+            "privateIPAllocationMethod": "Dynamic",
+            "apiVersion": "2016-03-30",
+            "virtualNetworksName": "[variables('vnetSettings').virtualNetworksName]",
+            "generatorSubnetName": "[variables('vnetSettings').generatorSubnetName]",
+            "chainLoadBalancerName": "[variables('lbSettings').chainLoadBalancerName]",
+            "generatorNsgName": "[variables('nsgSettings').generatorNsgName]"
+        },
+        "signerNicSettings": {
+            "location": "[parameters('location')]",
+            "signerNicName": "[concat(variables('prefix'),'-signer-nic')]",
+            "signer_nodes_Count": "[parameters('signer_nodes_Count')]",
+            "privateIPAllocationMethod": "Dynamic",
+            "apiVersion": "2016-03-30",
+            "signerVMIpName": "[variables('pipSettings').signerVMIpName]",
+            "virtualNetworksName": "[variables('vnetSettings').virtualNetworksName]",
+            "signerSubnetName": "[variables('vnetSettings').signerSubnetName]",
+            "signerNsgName": "[variables('nsgSettings').signerNsgName]"
+        },
+        "lbSettings": {
+            "chainLoadBalancerName": "[concat(variables('prefix'),'-lb')]",
+            "location": "[parameters('location')]",
+            "generatorLbIpName": "[variables('pipSettings').generatorLbIpName]",
+            "apiVersion": "2016-03-30"
+        },
+        "vnetSettings": {
+            "virtualNetworksName": "[concat(variables('prefix'),'-vnet')]",
+            "location": "[parameters('location')]",
+            "generatorSubnetName": "gen-subnet",
+            "signerSubnetName": "signer-subnet",
+            "vnetRange": "10.1.0.0/16",
+            "subnet1Range": "10.1.1.0/24",
+            "subnet2Range": "10.1.2.0/24",
+            "gatewaySubnetRange": "10.1.0.0/24",
+            "apiVersion": "2016-03-30"
+        },
+        "pipSettings": {
+            "generatorLbIpName": "[concat(variables('prefix'),'-lb-pip')]",
+            "lbPipDns": "[concat('generator-',variables('suffix'))]",
+            "location": "[parameters('location')]",
+            "signerVMIpName": "[concat(variables('prefix'),'-signer-pip')]",
+            "signer_nodes_Count": "[parameters('signer_nodes_Count')]",
+            "signerPipDns": "[concat('signer-',variables('suffix'))]",
+            "apiVersion": "2016-03-30",
+            "publicIPAllocationMethod": "Static",
+            "gatewayIpName": "[concat(variables('prefix'),'-gateway-pip')]",
+            "gatewayPipDns": "[concat('gateway-reg1-',variables('suffix'))]"
+        },
+        "nsgSettings": {
+            "generatorNsgName": "[concat(variables('prefix'),'-nsg')]",
+            "signerNsgName": "[concat(variables('prefix'),'-signer-nsg')]",
+            "apiVersion": "2016-03-30",
+            "location": "[parameters('location')]"
+        },
+        "keyVaultSettings": {
+            "keyVaultName": "[concat('Chain','-',variables('suffix'),'-kvlt')]",
+            "tenantId": "[subscription().tenantId]",
+            "apiVersion": "2015-06-01",
+            "location": "[parameters('location')]",
+            "servicePrinciple": "[parameters('servicePrinciple')]",
+            "objectId": "[parameters('objectId')]"
+        },
+        "signerExtensionSettings": {
+            "apiVersion": "2016-04-30-preview",
+            "location": "[parameters('location')]",
+            "signerVmName": "[concat(variables('prefix'),'-signer-vm')]",
+            "signerScriptUrl": "[concat(variables('baseUrl'),'/scripts/signer-script.sh')]",
+            "signerScriptFileName": "signer-script.sh",
+            "servicePrinciple": "[parameters('servicePrinciple')]",
+            "secretKey": "[parameters('secretKey')]",
+            "tenantId": "[subscription().tenantId]",
+            "subscriptionid": "[subscription().subscriptionId]",
+            "keyVaultName": "[variables('keyVaultSettings').keyVaultName]",
+            "signerTokenName": "scrg1t",
+            "signer_nodes_Count": "[parameters('signer_nodes_Count')]"
+        },
+        "generatorExtensionSettings": {
+            "apiVersion": "2016-04-30-preview",
+            "location": "[parameters('location')]",
+            "generatorVmName": "[concat(variables('prefix'),'-gen-vm')]",
+            "generatorScriptUrl": "[concat(variables('baseUrl'),'/scripts/generator-script.sh')]",
+            "generatorScriptFileName": "generator-script.sh",
+            "networkTokenName": "signet",
+            "servicePrinciple": "[parameters('servicePrinciple')]",
+            "secretKey": "[parameters('secretKey')]",
+            "tenantId": "[subscription().tenantId]",
+            "subscriptionId": "[subscription().subscriptionId]",
+            "keyVaultName": "[variables('keyVaultSettings').keyVaultName]"
+        },
+        "vnetID": "[resourceId('Microsoft.Network/virtualNetworks',variables('vnetSettings').virtualNetworksName)]",
+        "vnetGatewaySettings": {
+            "gatewayName": "[parameters('gatewayName')]",
+            "apiVersion": "2016-09-01",
+            "location": "[parameters('location')]",
+            "gatewayIpName": "[variables('pipSettings').gatewayIpName]",
+            "gatewaySubnetID": "[concat(variables('vnetID'),'/subnets/GatewaySubnet')]",
+            "gatewayPipID": "[resourceId('Microsoft.Network/publicIPAddresses', variables('pipSettings').gatewayIpName)]",
+            "gatewayIpConfig": "[concat(variables('prefix'),'-gateway-ipconfig')]",
+            "vpnType": "RouteBased",
+            "sku": "[variables('gatewaySkuTypes').Basic]"
+        },
+        "signerVmDep": "[concat(variables('prefix'),'-signerVMsSetup')]",
+        "signerNicDep": "[concat(variables('prefix'),'-signerNICSetup')]",
+        "generatorVmDep": "[concat(variables('prefix'),'-generatorVMSetup')]",
+        "generatorNicDep": "[concat(variables('prefix'),'-generatorNICSetup')]",
+        "availSetDep": "[concat(variables('prefix'),'-avaialabilitySetSetup')]",
+        "vnetDep": "[concat(variables('prefix'),'-vnetSetup')]",
+        "pipDep": "[concat(variables('prefix'),'-pipSetup')]",
+        "lbDep": "[concat(variables('prefix'),'-lbSetup')]",
+        "nsgDep": "[concat(variables('prefix'),'-nsgSetup')]",
+        "keyVltDep": "[concat(variables('prefix'),'-keyVaultSetup')]",
+        "gatewayDep": "[concat(variables('prefix'),'-vnetGatewaySetup')]",
+        "genExtDep": "[concat(variables('prefix'),'-genExtensionSetup')]",
+        "signerExtDep": "[concat(variables('prefix'),'-sigExtensionSetup')]"
+    },
+    "resources": [
+        {
+            "name": "[variables('signerVmDep')]",
+            "apiVersion": "2016-02-01",
+            "type": "Microsoft.Resources/deployments",
+            "dependsOn": [
+                "[variables('signerNicDep')]"
+            ],
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "[variables('signerVMsSetupURL')]",
+                    "contentVersion": "1.0.0.0"
+                },
+                "parameters": {
+                    "signerVMsettings": {
+                        "value": "[variables('signerVMsettings')]"
+                    }
+                }
+            }
+        },
+        {
+            "name": "[variables('generatorVmDep')]",
+            "apiVersion": "2016-02-01",
+            "type": "Microsoft.Resources/deployments",
+            "dependsOn": [
+                "[variables('generatorNicDep')]"
+            ],
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "[variables('generatorVMsetupURL')]",
+                    "contentVersion": "1.0.0.0"
+                },
+                "parameters": {
+                    "generatorVMsettings": {
+                        "value": "[variables('generatorVMsettings')]"
+                    }
+                }
+            }
+        },
+        {
+            "name": "[variables('genExtDep')]",
+            "apiVersion": "2016-02-01",
+            "type": "Microsoft.Resources/deployments",
+            "dependsOn": [
+                "[variables('generatorVmDep')]"
+            ],
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "[variables('generatorExtensionSetupURL')]",
+                    "contentVersion": "1.0.0.0"
+                },
+                "parameters": {
+                    "generatorExtensionSettings": {
+                        "value": "[variables('generatorExtensionSettings')]"
+                    }
+                }
+            }
+        },
+        {
+            "name": "[variables('signerExtDep')]",
+            "apiVersion": "2016-02-01",
+            "type": "Microsoft.Resources/deployments",
+            "dependsOn": [
+                "[variables('signerVmDep')]",
+                "[variables('genExtDep')]"
+            ],
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "[variables('signerExtensionSetupURL')]",
+                    "contentVersion": "1.0.0.0"
+                },
+                "parameters": {
+                    "signerExtensionSettings": {
+                        "value": "[variables('signerExtensionSettings')]"
+                    },
+                    "generatorIp": {
+                        "value": "[reference(variables('pipDep')).outputs.generatorIp.value]"
+                    }
+                }
+            }
+        },
+        {
+            "name": "[variables('generatorNicDep')]",
+            "apiVersion": "2016-02-01",
+            "type": "Microsoft.Resources/deployments",
+            "dependsOn": [
+                "[variables('vnetDep')]",
+                "[variables('nsgDep')]",
+                "[variables('lbDep')]"
+            ],
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "[variables('generatorNICsetupURL')]",
+                    "contentVersion": "1.0.0.0"
+                },
+                "parameters": {
+                    "generatorNicSettings": {
+                        "value": "[variables('generatorNicSettings')]"
+                    }
+                }
+            }
+        },
+        {
+            "name": "[variables('signerNicDep')]",
+            "apiVersion": "2016-02-01",
+            "type": "Microsoft.Resources/deployments",
+            "dependsOn": [
+                "[variables('pipDep')]",
+                "[variables('vnetDep')]",
+                "[variables('nsgDep')]"
+            ],
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "[variables('signerNICsetupURL')]",
+                    "contentVersion": "1.0.0.0"
+                },
+                "parameters": {
+                    "signerNicSettings": {
+                        "value": "[variables('signerNicSettings')]"
+                    }
+                }
+            }
+        },
+        {
+            "name": "[variables('availSetDep')]",
+            "apiVersion": "2016-02-01",
+            "type": "Microsoft.Resources/deployments",
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "[variables('avaialabilitySetSetupURL')]",
+                    "contentVersion": "1.0.0.0"
+                },
+                "parameters": {
+                    "availabilitySetsName": {
+                        "value": "[variables('availabilitySetsName')]"
+                    },
+                    "location": {
+                        "value": "[parameters('location')]"
+                    },
+                    "apiVersion": {
+                        "value": "2016-04-30-preview"
+                    }
+                }
+            }
+        },
+        {
+            "name": "[variables('vnetDep')]",
+            "apiVersion": "2016-02-01",
+            "type": "Microsoft.Resources/deployments",
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "[variables('vnetSetupURL')]",
+                    "contentVersion": "1.0.0.0"
+                },
+                "parameters": {
+                    "vnetSettings": {
+                        "value": "[variables('vnetSettings')]"
+                    }
+                }
+            }
+        },
+        {
+            "name": "[variables('pipDep')]",
+            "apiVersion": "2016-02-01",
+            "type": "Microsoft.Resources/deployments",
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "[variables('pipSetupURL')]",
+                    "contentVersion": "1.0.0.0"
+                },
+                "parameters": {
+                    "pipSettings": {
+                        "value": "[variables('pipSettings')]"
+                    }
+                }
+            }
+        },
+        {
+            "name": "[variables('lbDep')]",
+            "dependsOn": [
+                "[variables('pipDep')]"
+            ],
+            "apiVersion": "2016-02-01",
+            "type": "Microsoft.Resources/deployments",
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "[variables('lbSetupURL')]",
+                    "contentVersion": "1.0.0.0"
+                },
+                "parameters": {
+                    "lbSettings": {
+                        "value": "[variables('lbSettings')]"
+                    }
+                }
+            }
+        },
+        {
+            "name": "[variables('nsgDep')]",
+            "apiVersion": "2016-02-01",
+            "type": "Microsoft.Resources/deployments",
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "[variables('nsgSetupURL')]",
+                    "contentVersion": "1.0.0.0"
+                },
+                "parameters": {
+                    "nsgSettings": {
+                        "value": "[variables('nsgSettings')]"
+                    }
+                }
+            }
+        },
+        {
+            "name": "[variables('keyVltDep')]",
+            "apiVersion": "2016-02-01",
+            "type": "Microsoft.Resources/deployments",
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "[variables('keyVaultSetupURL')]",
+                    "contentVersion": "1.0.0.0"
+                },
+                "parameters": {
+                    "keyVaultSettings": {
+                        "value": "[variables('keyVaultSettings')]"
+                    }
+                }
+            }
+        },
+        {
+            "name": "[variables('gatewayDep')]",
+            "apiVersion": "2016-02-01",
+            "type": "Microsoft.Resources/deployments",
+            "dependsOn": [
+                "[variables('vnetDep')]",
+                "[variables('pipDep')]"
+            ],
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "[variables('vnetGatewaySetupURL')]",
+                    "contentVersion": "1.0.0.0"
+                },
+                "parameters": {
+                    "vnetGatewaySettings": {
+                        "value": "[variables('vnetGatewaySettings')]"
+                    }
+                }
+            }
+        }
+    ],
+    "outputs": {
+        "generatorIp": {
+            "type": "string",
+            "value": "[reference(variables('pipDep')).outputs.generatorIp.value]"
+        }
+    }
+}
