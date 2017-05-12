@@ -138,7 +138,7 @@
                             "sku": "16.04-LTS"
                         },
                         "visible": true,
-                        "count": "[steps('Size').signerVmCount]"
+                        "count": "[steps('vmSize').signerVmCount]"
                     },
                     {
                         "name": "signerVmCount",
