@@ -150,11 +150,11 @@
                             "allowedValues": [
                                 {
                                     "label": "1",
-                                    "value": "1"
+                                    "value": "[int('1')]"
                                 },
                                 {
                                     "label": "2",
-                                    "value": "2"
+                                    "value": "[int('1')]"
                                 },
                                 {
                                     "label": "3",
@@ -265,7 +265,7 @@
             "location":"[location()]",
             "generatorVmSize":"[steps('vmSize').generatorVmSize]",
             "signerVmSize":"[steps('vmSize').signerVmSize]",
-            "signer_nodes_Count":"[int(steps('vmSize').signerVmCount)]",
+            "signer_nodes_Count":"[steps('vmSize').signerVmCount]",
             "adminUsername":"[basics('basics').adminUsername]",
             "adminPassword":"[basics('basics').adminPassword]",
             "objectId":"[steps('keyVaultSet').objId]",
