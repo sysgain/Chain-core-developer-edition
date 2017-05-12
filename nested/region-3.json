@@ -78,7 +78,7 @@
             "apiVersion": "2016-04-30-preview",
             "location": "[parameters('location')]",
             "signerVmName": "[concat(variables('prefix'),'-signer-vm')]",
-            "signerScriptUrl": "https://raw.githubusercontent.com/ashwinse/test-base/master/smm/signer-script.sh",
+            "signerScriptUrl": "[concat(variables('baseUrl'),'/scripts/signer-script.sh')]",
             "signerScriptFileName": "signer-script.sh",
             "servicePrinciple": "[parameters('servicePrinciple')]",
             "secretKey": "[parameters('secretKey')]",
@@ -142,7 +142,6 @@
         "pipDep": "[concat(variables('prefix'),'-pipSetup')]",
         "nsgDep": "[concat(variables('prefix'),'-nsgSetup')]",
         "gatewayDep": "[concat(variables('prefix'),'-vnetGatewaySetup')]",
-       
         "signerExtDep": "[concat(variables('prefix'),'-sigExtensionSetup')]"
     },
     "resources": [
@@ -171,8 +170,7 @@
             "apiVersion": "2016-02-01",
             "type": "Microsoft.Resources/deployments",
             "dependsOn": [
-                "[variables('signerVmDep')]",
-                
+                "[variables('signerVmDep')]"
             ],
             "properties": {
                 "mode": "Incremental",
