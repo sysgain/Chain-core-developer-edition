@@ -175,7 +175,7 @@
             "tenantId": "[subscription().tenantId]",
             "subscriptionid": "[subscription().subscriptionId]",
             "keyVaultName": "[variables('keyVaultSettings').keyVaultName]",
-            "signerTokenName": "screg1t",
+            "signerTokenName": "scrg1t",
             "signer_nodes_Count": "[parameters('signer_nodes_Count')]"
         },
         "generatorExtensionSettings": {
