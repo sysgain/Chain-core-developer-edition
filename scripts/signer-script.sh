@@ -25,7 +25,7 @@ az login --service-principal -u $serviceprincipal -p $secretkey --tenant $tenati
 az account set -s $subscriptionid
 
 generatornetworktoken=`az keyvault secret show --name networkToken --vault-name $keyvaultname | grep "value" | cut -d "\"" -f4`
-blockchainid=`az keyvault secret show --name chaincoreid --vault-name $keyvaultname | grep "value" | cut -d "\"" -f4`
+blockchainid=`az keyvault secret show --name blockchainid --vault-name $keyvaultname | grep "value" | cut -d "\"" -f4`
 
 
 # run chaincore docker image
@@ -33,16 +33,17 @@ docker run -d -p 1999:1999 chaincore/developer:latest
 sleep 30
 containerId=`docker ps | cut -d " " -f1 | sed 1d`
 
-#generator client access token / public key
-docker exec  $containerId /usr/bin/chain/cored
+#signer client access token / public key
+docker exec -itd $containerId /usr/bin/chain/cored
 #signerctoken=`docker exec  $containerId /usr/bin/chain/corectl create-token $clienttokenname | cut -c1-71`
 signerctoken=`docker logs $containerId | grep client | cut -c22- | uniq`
 
 signerctoken1=`echo $signerctoken | cut -c8-`
-docker exec  $containerId /usr/bin/chain/corectl config -t $generatornetworktoken -k $signerctoken1 $blockchainid http://$generatornodeip:1999
-#generator blockchain_id
+#signer config
+response=`docker exec -it $containerId /usr/bin/chain/corectl config -t $generatornetworktoken -k $signerctoken1 $blockchainid http://$generatornodeip:1999`
 
+echo $response
 
-sudo docker restart $containerId
+docker restart $containerId
 
 az keyvault secret set --name $signerclienttokenkeyname --vault-name $keyvaultname --value $signerctoken

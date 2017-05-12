@@ -53,7 +53,7 @@
     "outputs": {
         "gatewayIp":{
             "type": "string",
-            "value": "[reference(resourceId('Microsoft.Network/publicIPAddresses', variables('gatewayIpName'))).ipAddress]"
+            "value": "[reference(resourceId('Microsoft.Network/publicIPAddresses', variables('gatewayIpName'))).dnsSettings.fqdn]"
         }
     }
 }

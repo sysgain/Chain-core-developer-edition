@@ -29,18 +29,18 @@ containerId=`docker ps | cut -d " " -f1 | sed 1d`
 
 
 #generator client access token / public key
-docker exec  $containerId /usr/bin/chain/cored
+docker exec -itd $containerId /usr/bin/chain/cored
 #generatorctoken=`docker exec  $containerId /usr/bin/chain/corectl create-token $clienttokenname | cut -c1-71`
 generatorctoken=`docker logs $containerId | grep client | cut -c22- | uniq`
 
 #generator blockchain_id
-chaincoreid=`docker exec  $containerId /usr/bin/chain/corectl config-generator | cut -c14-78`
+chaincoreid=`docker exec $containerId /usr/bin/chain/corectl config-generator | cut -c14-78`
 
-sudo docker restart $containerId
+docker restart $containerId
 sleep 30
 #a network token that will be used by remote signers
 
-networkToken=`docker exec  $containerId /usr/bin/chain/corectl create-token -net $networktokenname | cut -c1-71`
+networkToken=`docker exec $containerId /usr/bin/chain/corectl create-token -net $networktokenname | cut -c1-71`
 
 
 az login --service-principal -u $serviceprincipal -p $secretkey --tenant $tenatid
@@ -50,4 +50,4 @@ az keyvault secret set --name genclientToken --vault-name $keyvaultname --value 
 
 az keyvault secret set --name networkToken   --vault-name $keyvaultname --value $networkToken
 
-az keyvault secret set --name chaincoreid   --vault-name $keyvaultname --value $chaincoreid
+az keyvault secret set --name blockchainid   --vault-name $keyvaultname --value $chaincoreid
