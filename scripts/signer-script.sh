@@ -19,8 +19,8 @@ secretkey=$3
 tenatid=$4
 subscriptionid=$5
 keyvaultname=$6
-signerclienttoken=$7
-clienttokenname=$8 
+signerclienttokenkeyname=$7
+ 
 az login --service-principal -u $serviceprincipal -p $secretkey --tenant $tenatid
 az account set -s $subscriptionid
 
@@ -34,16 +34,15 @@ sleep 30
 containerId=`docker ps | cut -d " " -f1 | sed 1d`
 
 #generator client access token / public key
-cclength=`echo $clienttokenname | wc -c`
-cclength1=`expr $cclength + 1`
 docker exec  $containerId /usr/bin/chain/cored
-signerctoken=`docker exec  $containerId /usr/bin/chain/corectl create-token $clienttokenname | cut -c1-71`
+#signerctoken=`docker exec  $containerId /usr/bin/chain/corectl create-token $clienttokenname | cut -c1-71`
+signerctoken=`docker logs $containerId | grep client | cut -c22- | uniq`
 
-signerctoken1=`echo $signerctoken | cut -c$cclength1-`
+signerctoken1=`echo $signerctoken | cut -c8-`
 docker exec  $containerId /usr/bin/chain/corectl config -t $generatornetworktoken -k $signerctoken1 $blockchainid http://$generatornodeip:1999
 #generator blockchain_id
 
 
 sudo docker restart $containerId
 
-az keyvault secret set --name $signerclienttoken --vault-name $keyvaultname --value $signerctoken
+az keyvault secret set --name $signerclienttokenkeyname --vault-name $keyvaultname --value $signerctoken
