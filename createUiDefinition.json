@@ -1,0 +1,50 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/0.1.2-preview/CreateUIDefinition.MultiVm.json",
+    "handler": "Microsoft.Compute.MultiVm",
+    "version": "0.1.2-preview",
+    "parameters": {
+        "basics": [
+            {
+                "name": "Basics",
+                "type": "Microsoft.Common.Section",
+                "label": "Basic configuration",
+                "elements": [
+                    {
+                        "name": "adminUsername",
+                        "type": "Microsoft.Compute.UserNameTextBox",
+                        "label": "User name",
+                        "toolTip": "Admin username for the virtual machines. Same Credientials is to SSH to the box.",
+                        "constraints": {
+                            "required": true,
+                            "regex": "^[a-z0-9A-Z]{4,20}$",
+                            "validationMessage": "Only alphanumeric characters are allowed, and the value must be 4-20 characters long."
+                        },
+                        "osPlatform": "Linux",
+                        "visible": true
+                    },
+                    {
+                        "name": "adminPassword",
+                        "type": "Microsoft.Common.PasswordBox",
+                        "label": {
+                            "password": "Password",
+                            "confirmPassword": "Confirm password"
+                        },
+                        "toolTip": "",
+                        "constraints": {
+                            "required": true,
+                            "regex": "",
+                            "validationMessage": ""
+                        },
+                        "options": {
+                            "hideConfirmation": false
+                        },
+                        "visible": true
+                    }
+                ],
+                "visible": true
+            }
+        ],
+        "steps": [],
+        "outputs": {}
+    }
+}
