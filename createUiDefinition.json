@@ -47,9 +47,9 @@
         "steps": [
             {
                 "name": "vmSize",
-                "bladeTitle": "Choose Block VM's Size",
+                "bladeTitle": "Choose Block VMs Size",
                 "bladeSubtitle": "Choose virtual machine size",
-                "label": "Choose Block VM's Size1",
+                "label": "Choose Block VMs Size1",
                 "subLabel": {
                     "preValidation": "Required",
                     "postValidation": "Done"
