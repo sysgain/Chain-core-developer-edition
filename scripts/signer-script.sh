@@ -40,7 +40,7 @@ signerctoken=`docker logs $containerId | grep client | cut -c22- | uniq`
 
 signerctoken1=`echo $signerctoken | cut -c8-`
 #signer config
-response=`docker exec -it $containerId /usr/bin/chain/corectl config -t $generatornetworktoken -k $signerctoken1 $blockchainid http://$generatornodeip:1999`
+response=`docker exec $containerId /usr/bin/chain/corectl config -t $generatornetworktoken -k $signerctoken1 $blockchainid http://$generatornodeip:1999`
 
 echo $response
 
