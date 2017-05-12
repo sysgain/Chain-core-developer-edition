@@ -189,12 +189,61 @@
                         "visible": true
                     },
                     {
-                        "name": "storageAccount",
-                        "type": "Microsoft.Storage.StorageAccountSelector",
-                        "label": "Managed OS Disk type",
-                        "defaultValue": {
-                            "type": "Standard_LRS"
-                        }
+                        "name": "managedDiskType",
+                        "type": "Microsoft.Common.Section",
+                        "label": "Managed Disk Type",
+                        "elements": [
+                            {
+                                "name": "storageAccount",
+                                "type": "Microsoft.Storage.StorageAccountSelector",
+                                "label": "Managed OS Disk type",
+                                "defaultValue": {
+                                    "type": "Standard_LRS"
+                                }
+                            }
+                        ],
+                        "visible": true
+                    }
+                ]
+            },
+            {
+                "name": "keyVaultSet",
+                "label": "Key Vault Settings",
+                "bladeTitle": "Key Vault Configure",
+                "subLabel": {
+                    "preValidation": "Required",
+                    "postValidation": "Done"
+                },
+                "elements": [
+                    {
+                        "name": "objId",
+                        "type": "Microsoft.Common.TextBox",
+                        "label": "Object ID",
+                        "toolTip": "Object ID for new Key Vault Owner",
+                        "constraints": {
+                            "required": true
+                        },
+                        "visible": true
+                    },
+                    {
+                        "name": "srvPri",
+                        "type": "Microsoft.Common.TextBox",
+                        "label": "Service Principle",
+                        "toolTip": "Service Principle of your Microsoft Azure Account",
+                        "constraints": {
+                            "required": true
+                        },
+                        "visible": true
+                    },
+                    {
+                        "name": "secretKey",
+                        "type": "Microsoft.Common.TextBox",
+                        "label": "Shared secret key",
+                        "toolTip": "Shared secret key of your Service Principle",
+                        "constraints": {
+                            "required": true
+                        },
+                        "visible": true
                     }
                 ]
             }
