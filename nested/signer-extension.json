@@ -22,7 +22,6 @@
         "subscriptionId": "[parameters('signerExtensionSettings').subscriptionId]",
         "keyVaultName": "[parameters('signerExtensionSettings').keyVaultName]",
         "signerTokenName": "[parameters('signerExtensionSettings').signerTokenName]",
-        "clientTokenName": "[parameters('signerExtensionSettings').clientTokenName]",
         "signer_nodes_Count": "[parameters('signerExtensionSettings').signer_nodes_Count]"
     },
     "resources": [
@@ -46,7 +45,7 @@
                     ]
                 },
                 "protectedSettings": {
-                    "commandToExecute": "[concat('sh ', variables('signerScriptFileName'), ' \"', variables('generatorIp'), '\" \"', variables('servicePrinciple'), '\" \"', variables('secretKey'), '\" \"', variables('tenantId'), '\" \"', variables('subscriptionId'), '\" \"', variables('keyVaultName'), '\" \"', variables('signerTokenName'), '\" \"', variables('clientTokenName'), '\"')]"
+                    "commandToExecute": "[concat('sh ', variables('signerScriptFileName'), ' \"', variables('generatorIp'), '\" \"', variables('servicePrinciple'), '\" \"', variables('secretKey'), '\" \"', variables('tenantId'), '\" \"', variables('subscriptionId'), '\" \"', variables('keyVaultName'), '\" \"', variables('signerTokenName'),copyIndex(1), '\"')]"
                 }
             }
         }

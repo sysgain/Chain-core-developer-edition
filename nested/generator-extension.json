@@ -12,7 +12,7 @@
         "generatorVmName": "[parameters('generatorExtensionSettings').generatorVmName]",
         "generatorScriptUrl": "[parameters('generatorExtensionSettings').generatorScriptUrl]",
         "generatorScriptFileName": "[parameters('generatorExtensionSettings').generatorScriptFileName]",
-        "clientTokenName": "[parameters('generatorExtensionSettings').clientTokenName]",
+        
         "networkTokenName": "[parameters('generatorExtensionSettings').networkTokenName]",
         "servicePrinciple": "[parameters('generatorExtensionSettings').servicePrinciple]",
         "secretKey": "[parameters('generatorExtensionSettings').secretKey]",
@@ -37,7 +37,7 @@
                     ]
                 },
                 "protectedSettings": {
-                    "commandToExecute": "[concat('sh ', variables('generatorScriptFileName'), ' \"', variables('clientTokenName'), '\" \"', variables('networkTokenName'), '\" \"', variables('servicePrinciple'), '\" \"', variables('secretKey'), '\" \"', variables('tenantId'), '\" \"', variables('subscriptionId'), '\" \"', variables('keyVaultName'), '\"')]"
+                    "commandToExecute": "[concat('sh ', variables('generatorScriptFileName'), ' \"', variables('networkTokenName'), '\" \"', variables('servicePrinciple'), '\" \"', variables('secretKey'), '\" \"', variables('tenantId'), '\" \"', variables('subscriptionId'), '\" \"', variables('keyVaultName'), '\"')]"
                 }
             }
         }

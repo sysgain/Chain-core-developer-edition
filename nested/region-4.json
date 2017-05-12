@@ -85,8 +85,7 @@
             "tenantId": "[subscription().tenantId]",
             "subscriptionid": "[subscription().subscriptionId]",
             "keyVaultName": "[concat('Chain','-',variables('suffix'),'-kvlt')]",
-            "signerTokenName": "signerclienttoken",
-            "clientTokenName": "sctoken",
+            "signerTokenName": "signerctokenreg3",
             "signer_nodes_Count": "[parameters('signer_nodes_Count')]"
         },
         "signerNicSettings": {
@@ -142,7 +141,6 @@
         "pipDep": "[concat(variables('prefix'),'-pipSetup')]",
         "nsgDep": "[concat(variables('prefix'),'-nsgSetup')]",
         "gatewayDep": "[concat(variables('prefix'),'-vnetGatewaySetup')]",
-       
         "signerExtDep": "[concat(variables('prefix'),'-sigExtensionSetup')]"
     },
     "resources": [

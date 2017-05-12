@@ -175,8 +175,7 @@
             "tenantId": "[subscription().tenantId]",
             "subscriptionid": "[subscription().subscriptionId]",
             "keyVaultName": "[variables('keyVaultSettings').keyVaultName]",
-            "signerTokenName": "signerclienttoken",
-            "clientTokenName": "sctoken",
+            "signerTokenName": "signerctokenreg1",
             "signer_nodes_Count": "[parameters('signer_nodes_Count')]"
         },
         "generatorExtensionSettings": {
@@ -185,7 +184,6 @@
             "generatorVmName": "[concat(variables('prefix'),'-gen-vm')]",
             "generatorScriptUrl": "[concat(variables('baseUrl'),'/scripts/generator-script.sh')]",
             "generatorScriptFileName": "generator-script.sh",
-            "clientTokenName": "gctoken",
             "networkTokenName": "signernet",
             "servicePrinciple": "[parameters('servicePrinciple')]",
             "secretKey": "[parameters('secretKey')]",
