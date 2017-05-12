@@ -191,15 +191,28 @@
                     {
                         "name": "managedDiskType",
                         "type": "Microsoft.Common.Section",
-                        "label": "Managed Disk Type",
+                        "label": "Storage settings",
                         "elements": [
                             {
-                                "name": "storageAccount",
-                                "type": "Microsoft.Storage.StorageAccountSelector",
-                                "label": "Managed OS Disk type",
-                                "defaultValue": {
-                                    "type": "Standard_LRS"
-                                }
+                                "name": "mngDiskType",
+                                "type": "Microsoft.Common.DropDown",
+                                "label": "Managed storage type",
+                                "toolTip": "Managed Storage Type for managed OS disks",
+                                "defaultValue": "Standard_LRS",
+                                "constraints": {
+                                    "required": true,
+                                    "allowedValues": [
+                                        {
+                                            "label": "Standard_LRS",
+                                            "value": "Standard_LRS"
+                                        },
+                                        {
+                                            "label": "Premium_LRS",
+                                            "value": "Premium_LRS"
+                                        }
+                                    ]
+                                },
+                                "visible": true
                             }
                         ],
                         "visible": true
