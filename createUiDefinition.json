@@ -241,8 +241,8 @@
                     {
                         "name": "srvPri",
                         "type": "Microsoft.Common.TextBox",
-                        "label": "Service Principle",
-                        "toolTip": "Service Principle of your Microsoft Azure Account",
+                        "label": "Service principal",
+                        "toolTip": "Service Principal of your Microsoft Azure Account",
                         "constraints": {
                             "required": true
                         },
@@ -252,7 +252,7 @@
                         "name": "secretKey",
                         "type": "Microsoft.Common.TextBox",
                         "label": "Shared secret key",
-                        "toolTip": "Shared secret key of your Service Principle",
+                        "toolTip": "Shared secret key of your Service Principal",
                         "constraints": {
                             "required": true
                         },
