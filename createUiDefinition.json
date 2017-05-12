@@ -13,6 +13,7 @@
                         "name": "adminUsername",
                         "type": "Microsoft.Compute.UserNameTextBox",
                         "label": "User name",
+                        "defaultValue": "blockuser",
                         "toolTip": "Admin username for the virtual machines. Same Credientials is to SSH to the box.",
                         "constraints": {
                             "required": true,
