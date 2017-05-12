@@ -49,8 +49,7 @@
             {
                 "name": "vmSize",
                 "bladeTitle": "Choose Block VMs Size",
-                "bladeSubtitle": "Choose virtual machine size",
-                "label": "Choose Block VMs Size1",
+                "label": "Block VMs Size",
                 "subLabel": {
                     "preValidation": "Required",
                     "postValidation": "Done"
@@ -188,6 +187,14 @@
                             ]
                         },
                         "visible": true
+                    },
+                    {
+                        "name": "storageAccount",
+                        "type": "Microsoft.Storage.StorageAccountSelector",
+                        "label": "Managed OS Disk type",
+                        "defaultValue": {
+                            "type": "Standard_LRS"
+                        }
                     }
                 ]
             }
