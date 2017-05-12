@@ -85,7 +85,7 @@
             "tenantId": "[subscription().tenantId]",
             "subscriptionid": "[subscription().subscriptionId]",
             "keyVaultName": "[concat('Chain','-',variables('suffix'),'-kvlt')]",
-            "signerTokenName": "signerctokenreg2",
+            "signerTokenName": "screg2t",
             "signer_nodes_Count": "[parameters('signer_nodes_Count')]"
         },
         "signerNicSettings": {
