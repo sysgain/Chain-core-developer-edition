@@ -7,7 +7,7 @@
             {
                 "name": "Basics",
                 "type": "Microsoft.Common.Section",
-                "label": "Basic configuration",
+                "label": "Basic configurations",
                 "elements": [
                     {
                         "name": "adminUsername",
@@ -29,10 +29,10 @@
                             "password": "Password",
                             "confirmPassword": "Confirm password"
                         },
-                        "toolTip": "",
+                        "toolTip": "Admin User Password",
                         "constraints": {
                             "required": true,
-                            "regex": "",
+                            "regex": "^[a-z0-9A-Z]{5,20}$",
                             "validationMessage": ""
                         },
                         "options": {
