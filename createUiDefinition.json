@@ -46,10 +46,10 @@
         ],
         "steps": [
             {
-                "name": "Size",
-                "bladeTitle": "Size",
+                "name": "vmSize",
+                "bladeTitle": "Choose Block VM's Size",
                 "bladeSubtitle": "Choose virtual machine size",
-                "label": "Size",
+                "label": "Choose Block VM's Size1",
                 "subLabel": {
                     "preValidation": "Required",
                     "postValidation": "Done"
