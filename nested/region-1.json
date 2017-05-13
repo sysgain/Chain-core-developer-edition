@@ -138,7 +138,7 @@
             "location": "[parameters('location')]",
             "signerVMIpName": "[concat(variables('prefix'),'-signer-pip')]",
             "signer_nodes_Count": "[parameters('signer_nodes_Count')]",
-            "signerPipDns": "[concat('signer-',variables('suffix'))]",
+            "signerPipDns": "[concat('signer-reg1-',variables('suffix'))]",
             "apiVersion": "2016-03-30",
             "publicIPAllocationMethod": "Static",
             "gatewayIpName": "[concat(variables('prefix'),'-gateway-pip')]",
