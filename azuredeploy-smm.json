@@ -129,7 +129,7 @@
             "type": "securestring"
         },
         "VPNSharedKey": {
-            "type": "string",
+            "type": "securestring",
             "defaultValue": "Ashpassword123"
         },
         "storageAccountType": {
