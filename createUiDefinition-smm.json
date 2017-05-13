@@ -391,7 +391,7 @@
                                 }
                             ]
                         },
-                        "visible": "[equals(steps('regCnt').regionCnt, '3')]"
+                        "visible": "[greateOrequals(steps('regCnt').regionCnt, '3')]"
                     },
                     {
                         "name": "loc4",
@@ -456,7 +456,7 @@
                                 }
                             ]
                         },
-                        "visible": "[equals(steps('regCnt').regionCnt, '4')]"
+                        "visible": "[greateOrequals(steps('regCnt').regionCnt, '4')]"
                     },
                     {
                         "name": "loc5",
@@ -521,7 +521,7 @@
                                 }
                             ]
                         },
-                        "visible": "[equals(steps('regCnt').regionCnt, '5')]"
+                        "visible": "[greateOrequals(steps('regCnt').regionCnt, '5')]"
                     }
                 ]
             },
