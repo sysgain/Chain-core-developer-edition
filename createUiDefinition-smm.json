@@ -465,7 +465,7 @@
                         "toolTip": "Select the fifth region.",
                         "defaultValue": "South Central US",
                         "constraints": {
-                            "required": "[greaterOrEquals(steps('regCnt').regionCnt, '5')]",
+                            "required": "[equals(steps('regCnt').regionCnt, '5')]",
                             "allowedValues": [
                                 {
                                     "label": "East US",
@@ -521,7 +521,7 @@
                                 }
                             ]
                         },
-                        "visible": "[greaterOrEquals(steps('regCnt').regionCnt, '5')]"
+                        "visible": "[equals(steps('regCnt').regionCnt, '5')]"
                     }
                 ]
             },
