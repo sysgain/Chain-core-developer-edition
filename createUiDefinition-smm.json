@@ -150,6 +150,7 @@
                         "name": "signerVmCount",
                         "type": "Microsoft.Common.DropDown",
                         "label": "Number of Block Signer VMs",
+                        "defaultValue": "2",
                         "toolTip": "Number of Block Signer VMs in the Blockchain network",
                         "constraints": {
                             "allowedValues": [
@@ -267,7 +268,7 @@
                         "type": "Microsoft.Common.DropDown",
                         "label": "Second Location",
                         "toolTip": "Select the second region.",
-                        "defaultValue": "centralus",
+                        "defaultValue": "Central US",
                         "constraints": {
                             "required": true,
                             "allowedValues": [
@@ -332,7 +333,7 @@
                         "type": "Microsoft.Common.DropDown",
                         "label": "Third Location",
                         "toolTip": "Select the third region.",
-                        "defaultValue": "eastus",
+                        "defaultValue": "East US",
                         "constraints": {
                             "required": "[equals(steps('regCnt').regionCnt, '3')]",
                             "allowedValues": [
@@ -397,7 +398,7 @@
                         "type": "Microsoft.Common.DropDown",
                         "label": "Fourth Location",
                         "toolTip": "Select the fourth region.",
-                        "defaultValue": "eastus2",
+                        "defaultValue": "East US 2",
                         "constraints": {
                             "required": "[equals(steps('regCnt').regionCnt, '4')]",
                             "allowedValues": [
@@ -462,7 +463,7 @@
                         "type": "Microsoft.Common.DropDown",
                         "label": "Fifth Location",
                         "toolTip": "Select the fifth region.",
-                        "defaultValue": "southcentralus",
+                        "defaultValue": "South Central US",
                         "constraints": {
                             "required": "[equals(steps('regCnt').regionCnt, '5')]",
                             "allowedValues": [

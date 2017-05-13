@@ -150,6 +150,7 @@
                         "name": "signerVmCount",
                         "type": "Microsoft.Common.DropDown",
                         "label": "Number of Block Signer VMs",
+                        "defaultValue": "2",
                         "toolTip": "Number of Block Signer VMs in the Blockchain network",
                         "constraints": {
                             "allowedValues": [
