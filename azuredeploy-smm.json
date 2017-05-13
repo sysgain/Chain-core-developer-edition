@@ -14,7 +14,7 @@
         },
         "location_1": {
             "type": "string",
-            "defaultValue": "westus"
+            "defaultValue": "[resourceGroup().location]"
         },
         "location_2": {
             "type": "string",
