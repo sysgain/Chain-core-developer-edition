@@ -36,7 +36,7 @@ containerId=`docker ps | cut -d " " -f1 | sed 1d`
 #signer client access token / public key
 docker exec -itd $containerId /usr/bin/chain/cored
 #signerctoken=`docker exec  $containerId /usr/bin/chain/corectl create-token $clienttokenname | cut -c1-71`
-signerctoken=`docker logs $containerId | grep client | cut -c22- | uniq`
+signerctoken=`docker logs $containerId | grep "^client:" | uniq`
 
 signerctoken1=`echo $signerctoken | cut -c8-`
 #signer config
