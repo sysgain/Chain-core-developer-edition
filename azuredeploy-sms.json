@@ -90,7 +90,7 @@
             "defaultValue": "ashuser"
         },
         "adminPassword": {
-            "type": "string",
+            "type": "securestring",
             "defaultValue": "Ashpassword123"
         },
         "objectId": {
