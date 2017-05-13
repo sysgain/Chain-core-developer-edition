@@ -108,7 +108,7 @@
         }
     },
     "variables": {
-        "baseUrl": "https://raw.githubusercontent.com/sysgain/Chain-core-developer-edition/chain-core-dev",
+        "baseUrl": "https://raw.githubusercontent.com/sysgain/Chain-core-developer-edition/master",
         "signerVMsSetupURL": "[concat(variables('baseUrl'),'/nested/signer-vm.json')]",
         "generatorVMsetupURL": "[concat(variables('baseUrl'),'/nested/generator-vm.json')]",
         "generatorNICsetupURL": "[concat(variables('baseUrl'),'/nested/generator-nic.json')]",
