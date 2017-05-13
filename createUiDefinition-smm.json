@@ -335,7 +335,7 @@
                         "toolTip": "Select the third region.",
                         "defaultValue": "East US",
                         "constraints": {
-                            "required": "[equals(steps('regCnt').regionCnt, '3')]",
+                            "required": "[greaterOrequals(steps('regCnt').regionCnt, '3')]",
                             "allowedValues": [
                                 {
                                     "label": "East US",
@@ -391,7 +391,7 @@
                                 }
                             ]
                         },
-                        "visible": "[greateOrequals(steps('regCnt').regionCnt, '3')]"
+                        "visible": "[greaterOrequals(steps('regCnt').regionCnt, '3')]"
                     },
                     {
                         "name": "loc4",
@@ -400,7 +400,7 @@
                         "toolTip": "Select the fourth region.",
                         "defaultValue": "East US 2",
                         "constraints": {
-                            "required": "[equals(steps('regCnt').regionCnt, '4')]",
+                            "required": "[greaterOrequals(steps('regCnt').regionCnt, '4')]",
                             "allowedValues": [
                                 {
                                     "label": "East US",
@@ -456,7 +456,7 @@
                                 }
                             ]
                         },
-                        "visible": "[greateOrequals(steps('regCnt').regionCnt, '4')]"
+                        "visible": "[greaterOrequals(steps('regCnt').regionCnt, '4')]"
                     },
                     {
                         "name": "loc5",
@@ -465,7 +465,7 @@
                         "toolTip": "Select the fifth region.",
                         "defaultValue": "South Central US",
                         "constraints": {
-                            "required": "[equals(steps('regCnt').regionCnt, '5')]",
+                            "required": "[greaterOrequals(steps('regCnt').regionCnt, '5')]",
                             "allowedValues": [
                                 {
                                     "label": "East US",
@@ -521,7 +521,7 @@
                                 }
                             ]
                         },
-                        "visible": "[greateOrequals(steps('regCnt').regionCnt, '5')]"
+                        "visible": "[greaterOrequals(steps('regCnt').regionCnt, '5')]"
                     }
                 ]
             },
