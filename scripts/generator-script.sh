@@ -31,10 +31,10 @@ containerId=`docker ps | cut -d " " -f1 | sed 1d`
 #generator client access token / public key
 docker exec -itd $containerId /usr/bin/chain/cored
 #generatorctoken=`docker exec  $containerId /usr/bin/chain/corectl create-token $clienttokenname | cut -c1-71`
-generatorctoken=`docker logs $containerId | grep client | cut -c22- | uniq`
+generatorctoken=`docker logs $containerId | grep "^client:" | uniq`
 
 #generator blockchain_id
-chaincoreid=`docker exec $containerId /usr/bin/chain/corectl config-generator | cut -c14-78`
+chaincoreid=`docker exec $containerId /usr/bin/chain/corectl config-generator`
 
 docker restart $containerId
 sleep 30
