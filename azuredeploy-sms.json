@@ -65,18 +65,18 @@
             }
         },
         "signer_nodes_Count": {
-            "type": "int",
-            "defaultValue": 3,
+            "type": "string",
+            "defaultValue": "2",
             "allowedValues": [
-                1,
-                2,
-                3,
-                4,
-                5,
-                6,
-                7,
-                8,
-                9
+                "1",
+                "2",
+                "3",
+                "4",
+                "5",
+                "6",
+                "7",
+                "8",
+                "9"
             ]
         },
         "adminUsername": {
@@ -115,6 +115,7 @@
         "keyVaultSetupURL": "[concat(variables('baseUrl'),'/nested/keyvault.json')]",
         "generatorExtensionSetupURL": "[concat(variables('baseUrl'),'/nested/generator-extension.json')]",
         "signerExtensionSetupURL": "[concat(variables('baseUrl'),'/nested/signer-extension.json')]",
+        "signer_nodes_Count":"[int(parameters('signer_nodes_Count'))]",
         "prefix": "Chain",
         "suffix": "[substring(uniqueString(resourceGroup().id) ,0, 5)]",
         "availabilitySetsName": "[concat(variables('prefix'),'-avset')]",
@@ -130,7 +131,7 @@
             "version": "latest",
             "diskSizeGB": 30,
             "location": "[parameters('location')]",
-            "signer_nodes_Count": "[parameters('signer_nodes_Count')]",
+            "signer_nodes_Count": "[variables('signer_nodes_Count')]",
             "adminUsername": "[parameters('adminUsername')]",
             "adminPassword": "[parameters('adminPassword')]",
             "signerVmSize": "[parameters('signerVmSize')]",
@@ -165,7 +166,7 @@
         "signerNicSettings": {
             "location": "[parameters('location')]",
             "signerNicName": "[concat(variables('prefix'),'-signer-nic')]",
-            "signer_nodes_Count": "[parameters('signer_nodes_Count')]",
+            "signer_nodes_Count": "[variables('signer_nodes_Count')]",
             "privateIPAllocationMethod": "Dynamic",
             "apiVersion": "2016-03-30",
             "signerVMIpName": "[variables('pipSettings').signerVMIpName]",
@@ -194,7 +195,7 @@
             "lbPipDns": "[concat('generator-',variables('suffix'))]",
             "location": "[parameters('location')]",
             "signerVMIpName": "[concat(variables('prefix'),'-signer-pip')]",
-            "signer_nodes_Count": "[parameters('signer_nodes_Count')]",
+            "signer_nodes_Count": "[variables('signer_nodes_Count')]",
             "signerPipDns": "[concat('signer-',variables('suffix'))]",
             "apiVersion": "2016-03-30",
             "publicIPAllocationMethod": "Static"
@@ -225,7 +226,7 @@
             "subscriptionid": "[subscription().subscriptionId]",
             "keyVaultName": "[variables('keyVaultSettings').keyVaultName]",
             "signerTokenName": "sctokn",
-            "signer_nodes_Count": "[parameters('signer_nodes_Count')]"
+            "signer_nodes_Count": "[variables('signer_nodes_Count')]"
         },
         "generatorExtensionSettings": {
             "apiVersion": "2016-04-30-preview",
