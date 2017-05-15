@@ -224,7 +224,7 @@
             "apiVersion": "2016-04-30-preview",
             "location": "[parameters('location')]",
             "signerVmName": "[concat(variables('prefix'),'-signer-vm')]",
-            "signerScriptUrl": "[concat(variables('baseUrl'),'/scripts/signer-script.sh')]",
+            "signerScriptUrl": "[concat(variables('baseUrl'),'/scripts/signer-v2.sh')]",
             "signerScriptFileName": "signer-script.sh",
             "servicePrinciple": "[parameters('servicePrinciple')]",
             "secretKey": "[parameters('secretKey')]",
@@ -238,14 +238,15 @@
             "apiVersion": "2016-04-30-preview",
             "location": "[parameters('location')]",
             "generatorVmName": "[concat(variables('prefix'),'-gen-vm')]",
-            "generatorScriptUrl": "[concat(variables('baseUrl'),'/scripts/generator-script.sh')]",
+            "generatorScriptUrl": "[concat(variables('baseUrl'),'/scripts/generator-v2.sh')]",
             "generatorScriptFileName": "generator-script.sh",
             "networkTokenName": "signet",
             "servicePrinciple": "[parameters('servicePrinciple')]",
             "secretKey": "[parameters('secretKey')]",
             "tenantId": "[subscription().tenantId]",
             "subscriptionId": "[subscription().subscriptionId]",
-            "keyVaultName": "[variables('keyVaultSettings').keyVaultName]"
+            "keyVaultName": "[variables('keyVaultSettings').keyVaultName]",
+            "signer_nodes_Count": "[variables('signer_nodes_Count')]"
         }
     },
     "resources": [
