@@ -1,5 +1,4 @@
-#script to generate signin key and netwowrk token
-#Usage : sh signer-script.sh <ip/dnsname of the signer VM>
+
 
 #!/bin/bash
 

@@ -138,6 +138,7 @@
         }
     },
     "variables": {
+        "baseUrl":"https://aztdrepo.blob.core.windows.net/chaincore-developer",
         "signer_nodes_Count": "[int(parameters('signer_nodes_Count'))]",
         "regionCount2": {
             "region_1_setupURL": "[concat(variables('baseUrl'),'/nested/region-1.json')]",
@@ -171,7 +172,7 @@
             "region_5_setupURL": "[concat(variables('baseUrl'),'/nested/region-5.json')]",
             "gateways_connection_setupURL": "[concat(variables('baseUrl'),'/nested/connections5reg.json')]"
         },
-        "baseUrl": "https://raw.githubusercontent.com/sysgain/Chain-core-developer-edition/master",
+
         "connectionSettings": {
             "gatewayNameReg1": "Chain-reg1-gateway",
             "gatewayNameReg2": "Chain-reg2-gateway",
@@ -230,6 +231,9 @@
                     },
                     "storageAccountType": {
                         "value": "[parameters('storageAccountType')]"
+                    },
+                    "baseUrl":{
+                        "value": "[variables('baseUrl')]"
                     }
                 }
             }
@@ -277,6 +281,9 @@
                     },
                     "storageAccountType": {
                         "value": "[parameters('storageAccountType')]"
+                    },
+                    "baseUrl":{
+                        "value": "[variables('baseUrl')]"
                     }
                 }
             }
@@ -324,6 +331,9 @@
                     },
                     "storageAccountType": {
                         "value": "[parameters('storageAccountType')]"
+                    },
+                    "baseUrl":{
+                        "value": "[variables('baseUrl')]"
                     }
                 }
             }
@@ -371,6 +381,9 @@
                     },
                     "storageAccountType": {
                         "value": "[parameters('storageAccountType')]"
+                    },
+                    "baseUrl":{
+                        "value": "[variables('baseUrl')]"
                     }
                 }
             }
@@ -418,6 +431,9 @@
                     },
                     "storageAccountType": {
                         "value": "[parameters('storageAccountType')]"
+                    },
+                    "baseUrl":{
+                        "value": "[variables('baseUrl')]"
                     }
                 }
             }

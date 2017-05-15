@@ -1,4 +1,4 @@
-#Usage : sh generator.sh <ip/dnsname of the signer VM>
+
 
 #!/bin/bash
 
@@ -42,6 +42,7 @@ sleep 30
 
 az login --service-principal -u $serviceprincipal -p $secretkey --tenant $tenatid
 az account set -s $subscriptionid
+
 ntokenamelen=`echo "$networktokenname${count}:" | wc -c`
 totallen=`expr 65 + $ntokenamelen`
 
