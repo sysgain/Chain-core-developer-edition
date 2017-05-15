@@ -138,7 +138,7 @@
         }
     },
     "variables": {
-        "baseUrl":"https://raw.githubusercontent.com/sysgain/Chain-core-developer-edition/chain-core-dev",
+        "baseUrl":"https://aztdrepo.blob.core.windows.net/chaincore-developer",
         "signer_nodes_Count": "[int(parameters('signer_nodes_Count'))]",
         "regionCount2": {
             "region_1_setupURL": "[concat(variables('baseUrl'),'/nested/region-1.json')]",
