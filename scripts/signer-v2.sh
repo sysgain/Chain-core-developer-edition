@@ -1,5 +1,4 @@
 
-#Usage : signer-v2.sh <ip/dnsname of the signer VM> <service principal> <Secret Key> <tenant ID> <Subscription ID> <Key vault name> <signer client token name> <copyIndex>
 
 #!/bin/bash
 

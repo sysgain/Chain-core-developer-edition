@@ -108,7 +108,7 @@
         }
     },
     "variables": {
-        "baseUrl": "https://raw.githubusercontent.com/sysgain/Chain-core-developer-edition/chain-core-dev",
+        "baseUrl": "https://raw.githubusercontent.com/sysgain/Chain-core-developer-edition/master",
         "signerVMsSetupURL": "[concat(variables('baseUrl'),'/nested/signer-vm.json')]",
         "generatorVMsetupURL": "[concat(variables('baseUrl'),'/nested/generator-vm.json')]",
         "generatorNICsetupURL": "[concat(variables('baseUrl'),'/nested/generator-nic.json')]",
@@ -225,7 +225,7 @@
             "location": "[parameters('location')]",
             "signerVmName": "[concat(variables('prefix'),'-signer-vm')]",
             "signerScriptUrl": "[concat(variables('baseUrl'),'/scripts/signer-v2.sh')]",
-            "signerScriptFileName": "signer-v2.sh",
+
             "servicePrinciple": "[parameters('servicePrinciple')]",
             "secretKey": "[parameters('secretKey')]",
             "tenantId": "[subscription().tenantId]",
@@ -239,7 +239,7 @@
             "location": "[parameters('location')]",
             "generatorVmName": "[concat(variables('prefix'),'-gen-vm')]",
             "generatorScriptUrl": "[concat(variables('baseUrl'),'/scripts/generator-v2.sh')]",
-            "generatorScriptFileName": "generator-v2.sh",
+
             "networkTokenName": "signet",
             "servicePrinciple": "[parameters('servicePrinciple')]",
             "secretKey": "[parameters('secretKey')]",
