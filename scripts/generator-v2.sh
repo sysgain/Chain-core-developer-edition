@@ -1,5 +1,3 @@
-
-
 #!/bin/bash
 
 networktokenname=$1
