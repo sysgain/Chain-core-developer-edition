@@ -31,10 +31,13 @@
         },
         "generatorIp": {
             "type": "string"
+        },
+        "baseUrl":{
+            "type": "string"
         }
     },
     "variables": {
-        "baseUrl": "https://raw.githubusercontent.com/sysgain/Chain-core-developer-edition/chain-core-dev",
+        "baseUrl": "[parameters('baseUrl')]",
         "signerVMsSetupURL": "[concat(variables('baseUrl'),'/nested/signer-vm.json')]",
         "signerNICsetupURL": "[concat(variables('baseUrl'),'/nested/signer-nic.json')]",
         "avaialabilitySetSetupURL": "[concat(variables('baseUrl'),'/nested/availabilitySet.json')]",

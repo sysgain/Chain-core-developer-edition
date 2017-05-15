@@ -31,6 +31,9 @@
         },
         "generatorIp": {
             "type": "string"
+        },
+        "baseUrl":{
+            "type": "string"
         }
     },
     "variables": {},
