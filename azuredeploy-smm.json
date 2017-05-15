@@ -172,6 +172,7 @@
             "region_5_setupURL": "[concat(variables('baseUrl'),'/nested/region-5.json')]",
             "gateways_connection_setupURL": "[concat(variables('baseUrl'),'/nested/connections5reg.json')]"
         },
+
         "connectionSettings": {
             "gatewayNameReg1": "Chain-reg1-gateway",
             "gatewayNameReg2": "Chain-reg2-gateway",
