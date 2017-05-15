@@ -42,7 +42,6 @@ sleep 30
 
 az login --service-principal -u $serviceprincipal -p $secretkey --tenant $tenatid
 az account set -s $subscriptionid
-ntokenlen=65
 ntokenamelen=`echo "$networktokenname${count}:" | wc -c`
 totallen=`expr 65 + $ntokenamelen`
 
