@@ -108,7 +108,7 @@
         }
     },
     "variables": {
-        "baseUrl": "https://aztdrepo.blob.core.windows.net/chaincore-developer",
+        "baseUrl": "https://raw.githubusercontent.com/sysgain/Chain-core-developer-edition/chain-core-dev",
         "signerVMsSetupURL": "[concat(variables('baseUrl'),'/nested/signer-vm.json')]",
         "generatorVMsetupURL": "[concat(variables('baseUrl'),'/nested/generator-vm.json')]",
         "generatorNICsetupURL": "[concat(variables('baseUrl'),'/nested/generator-nic.json')]",
