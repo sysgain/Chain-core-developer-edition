@@ -45,7 +45,7 @@
                     ]
                 },
                 "protectedSettings": {
-                    "commandToExecute": "[concat('sh ', variables('signerScriptFileName'), ' \"', variables('generatorIp'), '\" \"', variables('servicePrinciple'), '\" \"', variables('secretKey'), '\" \"', variables('tenantId'), '\" \"', variables('subscriptionId'), '\" \"', variables('keyVaultName'), '\" \"', variables('signerTokenName'),copyIndex(1), '\"')]"
+                    "commandToExecute": "[concat('sh ', variables('signerScriptFileName'), ' \"', variables('generatorIp'), '\" \"', variables('servicePrinciple'), '\" \"', variables('secretKey'), '\" \"', variables('tenantId'), '\" \"', variables('subscriptionId'), '\" \"', variables('keyVaultName'), '\" \"', variables('signerTokenName'),'\" \"',copyIndex(1), '\"')]"
                 }
             }
         }
