@@ -198,7 +198,8 @@
       "networkApiVersion": "2016-03-30",
       "keyVaultApiVersion": "2015-06-01",
       "gatewayApiVersion": "2016-09-01",
-      "deploymentApiVersion": "2016-02-01"
+      "deploymentApiVersion": "2016-02-01",
+      "dockerApiVersion": "2015-05-01-preview"
     },
     "keyVaultSettings": {
       "keyVaultName": "[concat('keyVlt_',variables('suffix'))]",
@@ -222,6 +223,7 @@
         "diskSizeGB": 30,
         "generatorVmName": "[concat(variables('prefix'),'-gen-vm')]",
         "apiVersion": "[variables('apiVersion').computeApiVersion]",
+        "dockerApiVersion": "[variables('apiVersion').dockerApiVersion]",
         "adminUsername": "[parameters('adminUsername')]",
         "adminPassword": "[parameters('adminPassword')]",
         "generatorVmSize": "[parameters('generatorVmSize')]",
@@ -272,6 +274,7 @@
         "signerNicName": "[concat(variables('prefix'),'-signer-nic')]",
         "signerVmName": "[concat(variables('prefix'),'-signer-vm')]",
         "apiVersion": "[variables('apiVersion').computeApiVersion]",
+        "dockerApiVersion": "[variables('apiVersion').dockerApiVersion]",
         "publisher": "Canonical",
         "offer": "UbuntuServer",
         "sku": "16.04-LTS",
