@@ -1,55 +1,57 @@
 {
-    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
-    "contentVersion": "1.0.0.0",
-    "parameters": {
-        "signerNicSettings": {
-            "type": "object"
-        }
+  "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "signerNicSettings": {
+      "type": "object"
     },
-    "variables": {
-        "location":"[parameters('signerNicSettings').location]",
-        "signerNicName": "[parameters('signerNicSettings').signerNicName]",
-        "signer_nodes_Count":"[parameters('signerNicSettings').signer_nodes_Count]",
-        "signerVMIpName":"[parameters('signerNicSettings').signerVMIpName]",
-        "virtualNetworksName":"[parameters('signerNicSettings').virtualNetworksName]",
-        "signerSubnetName":"[parameters('signerNicSettings').signerSubnetName]",
-        "signerNsgName":"[parameters('signerNicSettings').signerNsgName]",
-        "privateIPAllocationMethod": "[parameters('signerNicSettings').privateIPAllocationMethod]",
-        "apiVersion": "[parameters('signerNicSettings').apiVersion]"
-    },
-    "resources": [
-      {
-            "type": "Microsoft.Network/networkInterfaces",
-            "name": "[concat(variables('signerNicName'),'-',copyIndex(1))]",
-            "apiVersion": "[variables('apiVersion')]",
-            "location": "[variables('location')]",
-            "copy": {
-                "name": "signerLoop",
-                "count": "[variables('signer_nodes_Count')]"
-            },
+    "location": {
+      "type": "string"
+    }
+  },
+  "variables": {
+    "signerNicName": "[parameters('signerNicSettings').signerNicName]",
+    "signer_nodes_Count": "[parameters('signerNicSettings').signer_nodes_Count]",
+    "signerVMIpName": "[parameters('signerNicSettings').signerVMIpName]",
+    "virtualNetworksName": "[parameters('signerNicSettings').virtualNetworksName]",
+    "signerSubnetName": "[parameters('signerNicSettings').signerSubnetName]",
+    "signerNsgName": "[parameters('signerNicSettings').signerNsgName]",
+    "privateIPAllocationMethod": "[parameters('signerNicSettings').privateIPAllocationMethod]",
+    "apiVersion": "[parameters('signerNicSettings').apiVersion]"
+  },
+  "resources": [
+    {
+      "type": "Microsoft.Network/networkInterfaces",
+      "name": "[concat(variables('signerNicName'),'-',copyIndex(1))]",
+      "apiVersion": "[variables('apiVersion')]",
+      "location": "[parameters('location')]",
+      "copy": {
+        "name": "signerLoop",
+        "count": "[variables('signer_nodes_Count')]"
+      },
+      "properties": {
+        "ipConfigurations": [
+          {
+            "name": "ipconfig1",
             "properties": {
-                "ipConfigurations": [
-                    {
-                        "name": "ipconfig1",
-                        "properties": {
-                            "privateIPAllocationMethod": "[variables('privateIPAllocationMethod')]",
-                            "publicIPAddress": {
-                                "id": "[resourceId('Microsoft.Network/publicIPAddresses', concat(variables('signerVMIpName'),'-',copyIndex(1)))]"
-                            },
-                            "subnet": {
-                                "id": "[concat(resourceId('Microsoft.Network/virtualNetworks', variables('virtualNetworksName')), '/subnets/',variables('signerSubnetName'))]"
-                            }
-                        }
-                    }
-                ],
-                "dnsSettings": {
-                    "dnsServers": []
-                },
-                "enableIPForwarding": false,
-                "networkSecurityGroup": {
-                    "id": "[resourceId('Microsoft.Network/networkSecurityGroups', variables('signerNsgName'))]"
-                }
+              "privateIPAllocationMethod": "[variables('privateIPAllocationMethod')]",
+              "publicIPAddress": {
+                "id": "[resourceId('Microsoft.Network/publicIPAddresses', concat(variables('signerVMIpName'),'-',copyIndex(1)))]"
+              },
+              "subnet": {
+                "id": "[concat(resourceId('Microsoft.Network/virtualNetworks', variables('virtualNetworksName')), '/subnets/',variables('signerSubnetName'))]"
+              }
             }
+          }
+        ],
+        "dnsSettings": {
+          "dnsServers": []
+        },
+        "enableIPForwarding": false,
+        "networkSecurityGroup": {
+          "id": "[resourceId('Microsoft.Network/networkSecurityGroups', variables('signerNsgName'))]"
         }
-    ]
+      }
+    }
+  ]
 }
