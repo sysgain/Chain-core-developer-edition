@@ -348,7 +348,7 @@
                 "apiVersion": "[variables('apiVersion').networkApiVersion]"
             }
         },
-        "singleRegionDep": "singleRegionSetup",
+        "singleRegionDep": "singleRegionSetup"
         
     },
     "resources": [
@@ -382,6 +382,9 @@
                 "parameters": {
                     "location":{
                         "value": "[parameters('location_1')]"
+                    },
+                    "prefix":{
+                        "value": "[variables('prefix')]"
                     },
                     "nestedURls": {
                         "value": "[variables('nestedURls')]"
