@@ -49,6 +49,9 @@
             "name": "generatorSetup",
             "apiVersion": "[parameters('apiVersion').deploymentApiVersion]",
             "type": "Microsoft.Resources/deployments",
+            "dependsOn": [
+                "[variables('vnetDep')]"
+            ],
             "properties": {
                 "mode": "Incremental",
                 "templateLink": {
@@ -57,7 +60,7 @@
                 },
                 "parameters": {
                     "prefix":{
-                        "type": "[parameters('prefix')]"
+                        "value": "[parameters('prefix')]"
                     },
                     "location": {
                         "value": "[parameters('location')]"
@@ -78,6 +81,9 @@
             "name": "signerSetup",
             "apiVersion": "[parameters('apiVersion').deploymentApiVersion]",
             "type": "Microsoft.Resources/deployments",
+            "dependsOn": [
+                "[variables('vnetDep')]"
+            ],
             "properties": {
                 "mode": "Incremental",
                 "templateLink": {

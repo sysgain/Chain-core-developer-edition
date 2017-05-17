@@ -2,6 +2,9 @@
     "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
     "contentVersion": "1.0.0.0",
     "parameters": {
+        "prefix":{
+            "type": "string"
+        },
         "location": {
             "type": "string"
         },
@@ -17,7 +20,7 @@
                     
     },
     "variables": {
-        "prefix":"",
+        "prefix":"chain",
         "generatorVmDep": "[concat(variables('prefix'),'-generatorVMSetup')]",
         "generatorNicDep": "[concat(variables('prefix'),'-generatorNICSetup')]",
         "availSetDep": "[concat(variables('prefix'),'-avaialabilitySetSetup')]",
@@ -29,35 +32,27 @@
     "resources": [
         {
             "name": "[variables('availSetDep')]",
-            "apiVersion": "2016-02-01",
+            "apiVersion": "[parameters('apiVersion').deploymentApiVersion]",
             "type": "Microsoft.Resources/deployments",
             "properties": {
                 "mode": "Incremental",
                 "templateLink": {
-                    "uri": "[variables('avaialabilitySetSetupURL')]",
+                    "uri": "[parameters('nestedURls').avaialabilitySetSetupURL]",
                     "contentVersion": "1.0.0.0"
                 },
                 "parameters": {
-                    "availabilitySetsName": {
-                        "value": "[variables('availabilitySetsName')]"
-                    },
-                    "location": {
-                        "value": "[parameters('location')]"
-                    },
-                    "apiVersion": {
-                        "value": "2016-04-30-preview"
-                    }
+                    
                 }
             }
         },
         {
             "name": "[variables('pipDep')]",
-            "apiVersion": "2016-02-01",
+            "apiVersion": "[parameters('apiVersion').deploymentApiVersion]",
             "type": "Microsoft.Resources/deployments",
             "properties": {
                 "mode": "Incremental",
                 "templateLink": {
-                    "uri": "[variables('pipSetupURL')]",
+                    "uri": "[parameters('nestedURls').generatorPipLbSetupURL]",
                     "contentVersion": "1.0.0.0"
                 },
                 "parameters": {
@@ -68,16 +63,16 @@
             }
         },
         {
-            "name": "lb",
+            "name": "[variables('lbDep')]",
             "dependsOn": [
                 "[variables('pipDep')]"
             ],
-            "apiVersion": "2016-02-01",
+            "apiVersion": "[parameters('apiVersion').deploymentApiVersion]",
             "type": "Microsoft.Resources/deployments",
             "properties": {
                 "mode": "Incremental",
                 "templateLink": {
-                    "uri": "[variables('lbSetupURL')]",
+                    "uri": "[parameters('nestedURls').generatorPipLbSetupURL]",
                     "contentVersion": "1.0.0.0"
                 },
                 "parameters": {
@@ -89,12 +84,12 @@
         },
         {
             "name": "[variables('nsgDep')]",
-            "apiVersion": "2016-02-01",
+            "apiVersion": "[parameters('apiVersion').deploymentApiVersion]",
             "type": "Microsoft.Resources/deployments",
             "properties": {
                 "mode": "Incremental",
                 "templateLink": {
-                    "uri": "[variables('nsgSetupURL')]",
+                    "uri": "[parameters('nestedURls').generatorPipLbSetupURL]",
                     "contentVersion": "1.0.0.0"
                 },
                 "parameters": {
@@ -106,7 +101,7 @@
         },
         {
             "name": "[variables('generatorNicDep')]",
-            "apiVersion": "2016-02-01",
+            "apiVersion": "[parameters('apiVersion').deploymentApiVersion]",
             "type": "Microsoft.Resources/deployments",
             "dependsOn": [
                 "[variables('vnetDep')]",
@@ -116,7 +111,7 @@
             "properties": {
                 "mode": "Incremental",
                 "templateLink": {
-                    "uri": "[variables('generatorNICsetupURL')]",
+                    "uri": "[parameters('nestedURls').generatorPipLbSetupURL]",
                     "contentVersion": "1.0.0.0"
                 },
                 "parameters": {
@@ -128,7 +123,7 @@
         },
         {
             "name": "[variables('generatorVmDep')]",
-            "apiVersion": "2016-02-01",
+            "apiVersion": "[parameters('apiVersion').deploymentApiVersion]",
             "type": "Microsoft.Resources/deployments",
             "dependsOn": [
                 "[variables('generatorNicDep')]"
@@ -136,7 +131,7 @@
             "properties": {
                 "mode": "Incremental",
                 "templateLink": {
-                    "uri": "[variables('generatorVMsetupURL')]",
+                    "uri": "[parameters('nestedURls').generatorPipLbSetupURL]",
                     "contentVersion": "1.0.0.0"
                 },
                 "parameters": {
@@ -148,7 +143,7 @@
         },
         {
             "name": "[variables('genExtDep')]",
-            "apiVersion": "2016-02-01",
+            "apiVersion": "[parameters('apiVersion').deploymentApiVersion]",
             "type": "Microsoft.Resources/deployments",
             "dependsOn": [
                 "[variables('generatorVmDep')]"
@@ -156,7 +151,7 @@
             "properties": {
                 "mode": "Incremental",
                 "templateLink": {
-                    "uri": "[variables('generatorExtensionSetupURL')]",
+                    "uri": "[parameters('nestedURls').generatorPipLbSetupURL]",
                     "contentVersion": "1.0.0.0"
                 },
                 "parameters": {
