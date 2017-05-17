@@ -163,8 +163,8 @@
             "vnetSetupURL": "[concat(variables('baseUrl'),'/nested/vnet.json')]",
             "keyVaultSetupURL": "[concat(variables('baseUrl'),'/nested/keyvault.json')]",
             "avaialabilitySetSetupURL": "[concat(variables('baseUrl'),'/nested/availabilitySet.json')]",
-            "signerScriptUrl": "[concat(variables('baseUrl'),'/scripts/signer-v2.sh')]",
-            "generatorScriptUrl": "[concat(variables('baseUrl'),'/scripts/generator-v2.sh')]"
+            "signerScriptUrl": "[concat(variables('baseUrl'),'/scripts/signer-script.sh')]",
+            "generatorScriptUrl": "[concat(variables('baseUrl'),'/scripts/generator-script.sh')]"
         },
         "apiVersion": {
             "computeApiVersion": "2016-04-30-preview",
