@@ -2,15 +2,18 @@
     "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
     "contentVersion": "1.0.0.0",
     "parameters": {
-       "lbSettings":{
+       "genlbSettings":{
            "type": "object"
-       }
+       },
+       "location":{
+            "type":"string"
+        }
     },
     "variables": {
-            "chainLoadBalancerName": "[parameters('lbSettings').chainLoadBalancerName]",
-            "location":"[parameters('lbSettings').location]",
-            "apiVersion": "[parameters('lbSettings').apiVersion]",
-            "generatorLbIpName":"[parameters('lbSettings').generatorLbIpName]",
+            "chainLoadBalancerName": "[parameters('genlbSettings').chainLoadBalancerName]",
+            "location":"[parameters('location')]",
+            "apiVersion": "[parameters('genlbSettings').apiVersion]",
+            "generatorLbIpName":"[parameters('genlbSettings').generatorLbIpName]",
             "lbid": "[resourceId('Microsoft.Network/loadBalancers',variables('chainLoadBalancerName'))]",
             "lbIpConfigId": "[concat(variables('lbid'),'/frontendIPConfigurations/LoadBalancerFrontEnd')]",
             "lbBkpoolId": "[concat(variables('lbid'),'/backendAddressPools/lb-bkpool')]",

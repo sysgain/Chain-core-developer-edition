@@ -148,12 +148,12 @@
             "generatorNicSetupURL": "[concat(variables('baseUrl'),'/nested/generator-nic.json')]",
             "generatorLbSetupURL": "[concat(variables('baseUrl'),'/nested/generator-lb.json')]",
             "generatorPipLbSetupURL": "[concat(variables('baseUrl'),'/nested/generator-pip.json')]",
-            "generatorNsgSetupURL": "[concat(variables('baseUrl'),'/nested/nsg.json')]",
+            "nsgSetupURL": "[concat(variables('baseUrl'),'/nested/nsg.json')]",
             "generatorSetupURL": "[concat(variables('baseUrl'),'/nested/generatorSetup.json')]",
             "signerVMsSetupURL": "[concat(variables('baseUrl'),'/nested/signer-vm.json')]",
             "signerExtensionSetupURL": "[concat(variables('baseUrl'),'/nested/signer-extension.json')]",
             "signerNICsetupURL": "[concat(variables('baseUrl'),'/nested/signer-nic.json')]",
-            "signerNsgSetupURL": "[concat(variables('baseUrl'),'/nested/nsg.json')]",
+            
             "signerPipSetupURL": "[concat(variables('baseUrl'),'/nested/signer-pip.json')]",
             "gatewaySetupURL": "[concat(variables('baseUrl'),'/nested/gateway.json')]",
             "gatewayPipSetupURL": "[concat(variables('baseUrl'),'/nested/gateway-pip.json')]",
@@ -180,6 +180,10 @@
             "objectId": "[parameters('objectId')]",
             "apiVersion": "[variables('apiVersion').keyVaultApiVersion]"
         },
+        "nsgSettings": {
+                "nsgName": "[concat(variables('prefix'),'-nsg')]",
+                "apiVersion": "[variables('apiVersion').networkApiVersion]"
+        },
         "generatorSettings": {
             "genVMsettings": {
                 "suffix": "[variables('suffix')]",
@@ -203,7 +207,7 @@
                 "virtualNetworksName": "[variables('vnetSettings').region1.virtualNetworksName]",
                 "generatorSubnetName": "[variables('vnetSettings').region1.generatorSubnetName]",
                 "chainLoadBalancerName": "[variables('generatorSettings').genlbSettings.chainLoadBalancerName]",
-                "generatorNsgName": "[variables('generatorSettings').genNsgSettings.nsgName]"
+                "generatorNsgName": "[variables('nsgSettings').nsgName]"
             },
             "genlbSettings": {
                 "chainLoadBalancerName": "[concat(variables('prefix'),'-lb')]",
@@ -216,10 +220,7 @@
                 "apiVersion": "[variables('apiVersion').networkApiVersion]",
                 "publicIPAllocationMethod": "Dynamic"
             },
-            "genNsgSettings": {
-                "nsgName": "[concat(variables('prefix'),'-nsg')]",
-                "apiVersion": "[variables('apiVersion').networkApiVersion]"
-            },
+            
             "genExtensionSettings": {
                 "apiVersion": "[variables('apiVersion').computeApiVersion]",
                 "generatorVmName": "[concat(variables('prefix'),'-gen-vm')]",
@@ -264,7 +265,7 @@
                 "signerVMIpName": "[variables('signerSettings').signerPipSettings.signerVMIpName]",
                 "virtualNetworksName": "[variables('vnetSettings').region1.virtualNetworksName]",
                 "signerSubnetName": "[variables('vnetSettings').region1.signerSubnetName]",
-                "signerNsgName": "[variables('signerSettings').signerNsgSettings.nsgName]"
+                "signerNsgName": "[variables('nsgSettings').nsgName]"
             },
             "signerPipSettings": {
                 "signerVMIpName": "[concat(variables('prefix'),'-signer-pip')]",
@@ -273,10 +274,7 @@
                 "apiVersion": "[variables('apiVersion').networkApiVersion]",
                 "publicIPAllocationMethod": "Dynamic"
             },
-            "signerNsgSettings": {
-                "nsgName": "[concat(variables('prefix'),'-nsg')]",
-                "apiVersion": "[variables('apiVersion').networkApiVersion]"
-            },
+            
             "signerExtensionSettings": {
                 "apiVersion": "[variables('apiVersion').computeApiVersion]",
                 "signerVmName": "[concat(variables('prefix'),'-signer-vm')]",
@@ -370,6 +368,7 @@
             }
         },
         {
+            
             "name": "[variables('singleRegionDep')]",
             "apiVersion": "[variables('apiVersion').deploymentApiVersion]",
             "type": "Microsoft.Resources/deployments",
@@ -400,6 +399,9 @@
                     },
                     "signerSettings": {
                         "value": "[variables('signerSettings')]"
+                    },
+                    "nsgSettings": {
+                        "value": "[variables('nsgSettings')]"
                     }
                 }
             }

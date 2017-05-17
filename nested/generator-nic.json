@@ -2,19 +2,22 @@
     "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
     "contentVersion": "1.0.0.0",
     "parameters": {
-        "generatorNicSettings": {
+        "genNicSettings": {
             "type": "object"
+        },
+        "location":{
+            "type":"string"
         }
     },
     "variables": {
-        "location": "[parameters('generatorNicSettings').location]",
-        "generatorNicName": "[parameters('generatorNicSettings').generatorNicName]",
-        "virtualNetworksName": "[parameters('generatorNicSettings').virtualNetworksName]",
-        "generatorSubnetName": "[parameters('generatorNicSettings').generatorSubnetName]",
-        "chainLoadBalancerName": "[parameters('generatorNicSettings').chainLoadBalancerName]",
-        "generatorNsgName": "[parameters('generatorNicSettings').generatorNsgName]",
-        "privateIPAllocationMethod": "[parameters('generatorNicSettings').privateIPAllocationMethod]",
-        "apiVersion": "[parameters('generatorNicSettings').apiVersion]"
+        "location": "[parameters('location')]",
+        "generatorNicName": "[parameters('genNicSettings').generatorNicName]",
+        "virtualNetworksName": "[parameters('genNicSettings').virtualNetworksName]",
+        "generatorSubnetName": "[parameters('genNicSettings').generatorSubnetName]",
+        "chainLoadBalancerName": "[parameters('genNicSettings').chainLoadBalancerName]",
+        "generatorNsgName": "[parameters('genNicSettings').generatorNsgName]",
+        "privateIPAllocationMethod": "[parameters('genNicSettings').privateIPAllocationMethod]",
+        "apiVersion": "[parameters('genNicSettings').apiVersion]"
     },
     "resources": [
         {

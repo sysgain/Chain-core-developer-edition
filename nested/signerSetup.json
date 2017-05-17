@@ -22,14 +22,14 @@
         "prefix": "[parameters('prefix')]",
         "generatorVmDep": "[concat(variables('prefix'),'-generatorVMSetup')]",
         "generatorNicDep": "[concat(variables('prefix'),'-generatorNICSetup')]",
-        "generatorPipLbDep": "[concat(variables('prefix'),'-genPipSetup')]",
-        "generatorlbDep": "[concat(variables('prefix'),'-genLbSetup')]",
-        
-        "generatorExtDep": "[concat(variables('prefix'),'-genExtensionSetup')]"
+        "pipDep": "[concat(variables('prefix'),'-pipSetup')]",
+        "lbDep": "[concat(variables('prefix'),'-lbSetup')]",
+        "nsgDep": "[concat(variables('prefix'),'-nsgSetup')]",
+        "genExtDep": "[concat(variables('prefix'),'-genExtensionSetup')]"
     },
     "resources": [
         {
-            "name": "[variables('generatorPipLbDep')]",
+            "name": "[variables('pipDep')]",
             "apiVersion": "[parameters('apiVersion').deploymentApiVersion]",
             "type": "Microsoft.Resources/deployments",
             "properties": {
@@ -41,17 +41,14 @@
                 "parameters": {
                     "genPipSettings": {
                         "value": "[parameters('generatorSettings').genPipSettings]"
-                    },
-                    "location":{
-                        "value":"[parameters('location')]"
                     }
                 }
             }
         },
         {
-            "name": "[variables('generatorlbDep')]",
+            "name": "[variables('lbDep')]",
             "dependsOn": [
-                "[variables('generatorPipLbDep')]"
+                "[variables('pipDep')]"
             ],
             "apiVersion": "[parameters('apiVersion').deploymentApiVersion]",
             "type": "Microsoft.Resources/deployments",
@@ -64,21 +61,34 @@
                 "parameters": {
                     "genlbSettings": {
                         "value": "[parameters('generatorSettings').genlbSettings]"
-                    },
-                    "location":{
-                        "value":"[parameters('location')]"
                     }
                 }
             }
         },
-        
+        {
+            "name": "[variables('nsgDep')]",
+            "apiVersion": "[parameters('apiVersion').deploymentApiVersion]",
+            "type": "Microsoft.Resources/deployments",
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "[parameters('nestedURls').generatorNsgSetupURL]",
+                    "contentVersion": "1.0.0.0"
+                },
+                "parameters": {
+                    "genNsgSettings": {
+                        "value": "[parameters('generatorSettings').genNsgSettings]"
+                    }
+                }
+            }
+        },
         {
             "name": "[variables('generatorNicDep')]",
             "apiVersion": "[parameters('apiVersion').deploymentApiVersion]",
             "type": "Microsoft.Resources/deployments",
             "dependsOn": [
-                
-                "[variables('generatorlbDep')]"
+                "[variables('nsgDep')]",
+                "[variables('lbDep')]"
             ],
             "properties": {
                 "mode": "Incremental",
@@ -89,9 +99,6 @@
                 "parameters": {
                     "genNicSettings": {
                         "value": "[parameters('generatorSettings').genNicSettings]"
-                    },
-                    "location":{
-                        "value":"[parameters('location')]"
                     }
                 }
             }
@@ -112,15 +119,12 @@
                 "parameters": {
                     "genVMsettings": {
                         "value": "[parameters('generatorSettings').genVMsettings]"
-                    },
-                    "location":{
-                        "value":"[parameters('location')]"
                     }
                 }
             }
         },
         {
-            "name": "[variables('generatorExtDep')]",
+            "name": "[variables('genExtDep')]",
             "apiVersion": "[parameters('apiVersion').deploymentApiVersion]",
             "type": "Microsoft.Resources/deployments",
             "dependsOn": [
@@ -135,9 +139,6 @@
                 "parameters": {
                     "genExtensionSettings": {
                         "value": "[parameters('generatorSettings').genExtensionSettings]"
-                    },
-                    "location":{
-                        "value":"[parameters('location')]"
                     }
                 }
             }

@@ -22,10 +22,15 @@
         },
         "signerSettings": {
             "type": "object"
-        }
+        },
+        "nsgSettings": {
+            "type": "object"
+        },
+        
     },
     "variables": {
-        "vnetDep": "vnetSetup"
+        "vnetDep": "vnetSetup",
+        "nsgDep": "nsgSetup"
     },
     "resources": [
         {
@@ -41,6 +46,26 @@
                 "parameters": {
                     "vnetSettings": {
                         "value": "[parameters('vnetSettings')]"
+                    }
+                }
+            }
+        },
+        {
+            "name": "[variables('nsgDep')]",
+            "apiVersion": "[parameters('apiVersion').deploymentApiVersion]",
+            "type": "Microsoft.Resources/deployments",
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "[parameters('nestedURls').nsgSetupURL]",
+                    "contentVersion": "1.0.0.0"
+                },
+                "parameters": {
+                    "nsgSettings": {
+                        "value": "[parameters('nsgSettings')]"
+                    },
+                    "location":{
+                        "value":"[parameters('location')]"
                     }
                 }
             }
@@ -92,7 +117,7 @@
                 },
                 "parameters": {
                     "prefix":{
-                        "type": "[parameters('prefix')]"
+                        "value": "[parameters('prefix')]"
                     },
                     "location": {
                         "value": "[parameters('location')]"

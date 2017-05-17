@@ -4,6 +4,9 @@
     "parameters": {
         "generatorVMsettings": {
             "type": "object"
+        },
+        "location":{
+            "type":"string"
         }
     },
     "variables": {
