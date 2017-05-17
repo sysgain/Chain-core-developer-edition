@@ -112,6 +112,13 @@
                 "9"
             ]
         },
+        "adminUsername": {
+      "type": "string",
+      "defaultValue": "ashuser",
+      "metadata": {
+        "description": "Username for VM login"
+      }
+    },
         "adminPassword": {
       "type": "securestring",
       "defaultValue": "Ashpassword123",
