@@ -1,6 +1,3 @@
-#script to generate signin key and netwowrk token
-#Usage : sh signer-script.sh <ip/dnsname of the signer VM>
-
 #!/bin/bash
 
 # install prerequisites 
@@ -20,30 +17,35 @@ tenatid=$4
 subscriptionid=$5
 keyvaultname=$6
 signerclienttokenkeyname=$7
+copyIndex=$8
  
 az login --service-principal -u $serviceprincipal -p $secretkey --tenant $tenatid
 az account set -s $subscriptionid
+networkToken="networkTokenSignerVM${copyIndex}"
+echo "networkToken: $networkToken"
+generatornetworktoken=`az keyvault secret show --name $networkToken --vault-name $keyvaultname | grep "value" | cut -d "\"" -f4`
+blockchainid=`az keyvault secret show --name blockchainId --vault-name $keyvaultname | grep "value" | cut -d "\"" -f4`
 
-generatornetworktoken=`az keyvault secret show --name networkToken --vault-name $keyvaultname | grep "value" | cut -d "\"" -f4`
-blockchainid=`az keyvault secret show --name blockchainid --vault-name $keyvaultname | grep "value" | cut -d "\"" -f4`
+echo "generatoretworktoken is $generatornetworktoken"
 
-
-# run chaincore docker image
+# Pull chaincore docker image
+docker pull chaincore/developer:latest
+# Run chaincore docker container
 docker run -d -p 1999:1999 chaincore/developer:latest
-sleep 30
+sleep 40
 containerId=`docker ps | cut -d " " -f1 | sed 1d`
 
-#signer client access token / public key
 docker exec -itd $containerId /usr/bin/chain/cored
-#signerctoken=`docker exec  $containerId /usr/bin/chain/corectl create-token $clienttokenname | cut -c1-71`
-signerctoken=`docker logs $containerId | grep "^client:" | uniq`
 
+# Retrieve client token from docker logs
+signerctoken=`docker logs $containerId | grep "^client:" | uniq`
 signerctoken1=`echo $signerctoken | cut -c8-`
-#signer config
+
+# Signer config
 response=`docker exec $containerId /usr/bin/chain/corectl config -t $generatornetworktoken -k $signerctoken1 $blockchainid http://$generatornodeip:1999`
 
 echo $response
 
 docker restart $containerId
 
-az keyvault secret set --name $signerclienttokenkeyname --vault-name $keyvaultname --value $signerctoken
+az keyvault secret set --name $signerclienttokenkeyname$copyIndex --vault-name $keyvaultname --value $signerctoken
