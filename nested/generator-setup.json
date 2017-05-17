@@ -130,7 +130,7 @@
           "contentVersion": "1.0.0.0"
         },
         "parameters": {
-          "genExtensionSettings": {
+          "generatorExtensionSettings": {
             "value": "[parameters('generatorSettings').genExtensionSettings]"
           },
           "location": {
