@@ -1,5 +1,3 @@
-#Usage : sh generator.sh <ip/dnsname of the signer VM>
-
 #!/bin/bash
 
 networktokenname=$1
@@ -8,6 +6,7 @@ secretkey=$3
 tenatid=$4
 subscriptionid=$5
 keyvaultname=$6
+nodecount=$7
 
 # install prerequisites 
 apt-get update && apt-get install -y libssl-dev libffi-dev python-dev build-essential && apt-get install -y nodejs-legacy && apt-get install -y npm
@@ -20,34 +19,38 @@ sudo apt-get update && sudo apt-get install azure-cli
 sudo apt-get update && sudo apt-get install azure-cli
 
 
-# pull chaincore docker image
+# Pull chaincore docker image
 docker pull chaincore/developer:latest
-# run chaincore docker image
+# Run chaincore docker container
 docker run -d -p 1999:1999 chaincore/developer:latest
-sleep 60
+sleep 40
 containerId=`docker ps | cut -d " " -f1 | sed 1d`
+count=1
 
 
-#generator client access token / public key
 docker exec -itd $containerId /usr/bin/chain/cored
-#generatorctoken=`docker exec  $containerId /usr/bin/chain/corectl create-token $clienttokenname | cut -c1-71`
+# Retrieve client token from docker logs
 generatorctoken=`docker logs $containerId | grep "^client:" | uniq`
 
-#generator blockchain_id
+# Generator blockchain_id
 chaincoreid=`docker exec $containerId /usr/bin/chain/corectl config-generator`
 
 docker restart $containerId
 sleep 30
-#a network token that will be used by remote signers
-
-networkToken=`docker exec $containerId /usr/bin/chain/corectl create-token -net $networktokenname | cut -c1-71`
-
 
 az login --service-principal -u $serviceprincipal -p $secretkey --tenant $tenatid
 az account set -s $subscriptionid
 
-az keyvault secret set --name genclientToken --vault-name $keyvaultname --value $generatorctoken
+ntokenamelen=`echo "$networktokenname${count}:" | wc -c`
+totallen=`expr 65 + $ntokenamelen`
 
-az keyvault secret set --name networkToken   --vault-name $keyvaultname --value $networkToken
+while [ $count -le $nodecount ]
+do
+  #a network token that will be used by remote signers
+  networkToken=`docker exec $containerId /usr/bin/chain/corectl create-token -net $networktokenname${count} | cut -c1-$totallen`
+  az keyvault secret set --name networkTokenSignerVM${count}   --vault-name $keyvaultname --value $networkToken
+  count=`expr $count + 1`
+done
 
-az keyvault secret set --name blockchainid   --vault-name $keyvaultname --value $chaincoreid
+az keyvault secret set --name genClientToken --vault-name $keyvaultname --value $generatorctoken
+az keyvault secret set --name blockchainId   --vault-name $keyvaultname --value $chaincoreid
