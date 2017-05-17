@@ -444,7 +444,7 @@
           },
           "counter": {
             "value": 1
-          }
+          },
           "generatorIp": {
             "value": ""
           }
@@ -452,7 +452,7 @@
       }
     },
     {
-      "condition": "[greater(parameters('regionCount'),1)]"
+      "condition": "[greater(parameters('regionCount'),1)]",
       "name": "[concat(variables('multiRegionDep'),copyIndex(2))]",
       "apiVersion": "[variables('apiVersion').deploymentApiVersion]",
       "type": "Microsoft.Resources/deployments",
@@ -490,7 +490,7 @@
           },
           "counter": {
             "value": "[copyIndex(2)]"
-          }
+          },
           "generatorIp": {
             "value": ""
           }
