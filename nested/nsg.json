@@ -4,19 +4,21 @@
     "parameters": {
         "nsgSettings": {
             "type": "object"
+        },
+        "location": {
+            "type": "string"
         }
     },
     "variables": {
         "nsgName": "[parameters('nsgSettings').nsgName]",
-        "apiVersion": "[parameters('nsgSettings').apiVersion]",
-        "location": "[parameters('nsgSettings').location]"
+        "apiVersion": "[parameters('nsgSettings').apiVersion]"
     },
     "resources": [
         {
             "type": "Microsoft.Network/networkSecurityGroups",
             "name": "[variables('nsgName')]",
             "apiVersion": "[variables('apiVersion')]",
-            "location": "[variables('location')]",
+            "location": "[parameters('location')]",
             "properties": {
                 "securityRules": [
                     {
