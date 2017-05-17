@@ -112,34 +112,55 @@
                 "9"
             ]
         },
-        "adminUsername": {
-            "type": "string",
-            "defaultValue": "ashuser"
-        },
         "adminPassword": {
-            "type": "securestring",
-            "defaultValue": "Ashpassword123"
-        },
-        "objectId": {
-            "type": "string"
-        },
-        "servicePrinciple": {
-            "type": "string"
-        },
-        "secretKey": {
-            "type": "securestring"
-        },
-        "VPNSharedKey": {
-            "type": "securestring",
-            "defaultValue": "Ashpassword123"
-        },
-        "storageAccountType": {
-            "type": "string",
-            "defaultValue": "Standard_LRS"
-        }
+      "type": "securestring",
+      "defaultValue": "Ashpassword123",
+      "metadata": {
+        "description": "Password VM login"
+      }
+    },
+    "objectId": {
+      "type": "string",
+      "metadata": {
+        "description": "Azure access control user objectId for Service principal"
+      }
+    },
+    "servicePrinciple": {
+      "type": "string",
+      "metadata": {
+        "description": "Service principal objectId"
+      }
+    },
+    "secretKey": {
+      "type": "securestring",
+      "metadata": {
+        "description": "Service principal secret key"
+      }
+    },
+    "VPNSharedKey": {
+      "type": "securestring",
+      "defaultValue": "Ashpassword123",
+      "metadata": {
+        "description": "VPN shared key is used by VPN's. It could be any passphrase"
+      }
+    },
+    "storageAccountType": {
+      "type": "string",
+      "defaultValue": "Standard_LRS",
+      "metadata": {
+        "description": "Storage account type"
+      }
+    },
+    "artifactsBaseUrl": {
+      "type": "string",
+      "defaultValue": "https://aztdrepo.blob.core.windows.net/chaincore-developer",
+      "metadata": {
+        "artifactsBaseUrl": "Base URL of the Publisher Template gallery package"
+      }
+    }
     },
     "variables": {
-        "baseUrl": "https://raw.githubusercontent.com/sysgain/Chain-core-developer-edition/chain-core-dev-v2",
+        "baseUrl": "[parameters('artifactsBaseUrl')]",
         "prefix": "chain",
         "suffix": "[substring(uniqueString(resourceGroup().id) ,0, 5)]",
         "nestedURls": {
