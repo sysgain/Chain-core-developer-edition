@@ -51,7 +51,7 @@
       "value": "Standard_LRS"
     },
     "artifactsBaseUrl": {
-      "value": "https://aztdrepo.blob.core.windows.net/chaincore-developer"
+      "value": "https://raw.githubusercontent.com/sysgain/Chain-core-developer-edition/chain-core-dev-v2"
     }
   }
 }
