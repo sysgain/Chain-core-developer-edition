@@ -7,6 +7,9 @@
         },
         "vnetSettings": {
             "type": "object"
+        },
+        "apiVersion":{
+            "type": "object"
         }
     },
     "variables": {
@@ -15,7 +18,7 @@
     "resources": [
         {
             "name": "[variables('vnetDep')]",
-            "apiVersion": "[variables('apiVersions').deploymentApiVersion]",
+            "apiVersion": "[parameters('apiVersion').deploymentApiVersion]",
             "type": "Microsoft.Resources/deployments",
             "properties": {
                 "mode": "Incremental",

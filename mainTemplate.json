@@ -300,6 +300,9 @@
                     },
                     "vnetSettings":{
                         "value":"[variables('vnetSettings').region1]"
+                    },
+                    "apiVersion":{
+                        "value":"[variables('apiVersion')]"
                     }
                 }
             }
