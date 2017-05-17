@@ -179,7 +179,7 @@
         },
         "suffix": "[substring(uniqueString(resourceGroup().id) ,0, 5)]",
         "keyVaultSettings": {
-            "keyVaultName": "[concat(variables('prefix').prefix_loc_1,'_',variables('suffix'),'_kvlt')]",
+            "keyVaultName": "[concat('keyVlt_',variables('suffix'))]",
             "tenantId": "[subscription().tenantId]",
             "location": "[parameters('location_1')]",
             "objectId": "[parameters('objectId')]",
