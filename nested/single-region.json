@@ -25,6 +25,9 @@
     },
     "nsgSettings": {
       "type": "object"
+    },
+    "generatorIp": {
+      "type": "string"
     }
   },
   "variables": {
@@ -132,6 +135,9 @@
           },
           "signerSettings": {
             "value": "[parameters('signerSettings')]"
+          },
+          "generatorIp": {
+            "type": "[parameters('generatorIp')]"
           }
         }
       }
