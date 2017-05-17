@@ -173,7 +173,7 @@
             "signerScriptUrl": "[concat(variables('baseUrl'),'/scripts/signer-v2.sh')]",
             "generatorScriptUrl": "[concat(variables('baseUrl'),'/scripts/generator-v2.sh')]"
         },
-        "apiVersions":{
+        "apiVersion":{
             "computeApiVersion":"2016-04-30-preview",
             "networkApiVersion":"2016-03-30",
             "keyVaultApiVersion":"2015-06-01",
@@ -193,7 +193,7 @@
             "tenantId": "[subscription().tenantId]",
             "location": "[parameters('location_1')]",
             "objectId": "[parameters('objectId')]",
-            "apiVersion": "[variables('apiVersions').keyVaultApiVersion]"
+            "apiVersion": "[variables('apiVersion').keyVaultApiVersion]"
         },
         "vnetSettings": {
             "region1":{
@@ -206,7 +206,7 @@
                 "subnet1Range": "10.1.1.0/24",
                 "subnet2Range": "10.1.2.0/24",
                 "gatewaySubnetRange": "10.1.0.0/24",
-                "apiVersion": "[variables('apiVersions').networkApiVersion]"
+                "apiVersion": "[variables('apiVersion').networkApiVersion]"
             },
             "region2":{
                 "regionCount":"[parameters('regionCount')]",
@@ -218,7 +218,7 @@
                 "subnet1Range": "10.2.1.0/24",
                 "subnet2Range": "10.2.2.0/24",
                 "gatewaySubnetRange": "10.2.0.0/24",
-                "apiVersion": "[variables('apiVersions').networkApiVersion]"
+                "apiVersion": "[variables('apiVersion').networkApiVersion]"
             },
             "region3":{
                 "regionCount":"[parameters('regionCount')]",
@@ -230,7 +230,7 @@
                 "subnet1Range": "10.3.1.0/24",
                 "subnet2Range": "10.3.2.0/24",
                 "gatewaySubnetRange": "10.3.0.0/24",
-                "apiVersion": "[variables('apiVersions').networkApiVersion]"
+                "apiVersion": "[variables('apiVersion').networkApiVersion]"
             },
             "region4":{
                 "regionCount":"[parameters('regionCount')]",
@@ -242,7 +242,7 @@
                 "subnet1Range": "10.4.1.0/24",
                 "subnet2Range": "10.4.2.0/24",
                 "gatewaySubnetRange": "10.4.0.0/24",
-                "apiVersion": "[variables('apiVersions').networkApiVersion]"
+                "apiVersion": "[variables('apiVersion').networkApiVersion]"
             },
             "region5":{
                 "regionCount":"[parameters('regionCount')]",
@@ -254,14 +254,14 @@
                 "subnet1Range": "10.5.1.0/24",
                 "subnet2Range": "10.5.2.0/24",
                 "gatewaySubnetRange": "10.5.0.0/24",
-                "apiVersion": "[variables('apiVersions').networkApiVersion]"
+                "apiVersion": "[variables('apiVersion').networkApiVersion]"
             }
         },
         
         "keyVaultDep": "[concat(variables('prefix').prefix_loc_1,'_keyVaultSetup')]",
 
         "singleRegionDep":"singleRegionSetup",
-        "multiRegionDep":"multiRegionSetup",
+        "multiRegionDep":"multiRegionSetup"
         
 
 
@@ -269,7 +269,7 @@
     "resources": [
         {
             "name": "[variables('keyVaultDep')]",
-            "apiVersion": "[variables('apiVersions').deploymentApiVersion]",
+            "apiVersion": "[variables('apiVersion').deploymentApiVersion]",
             "type": "Microsoft.Resources/deployments",
             "properties": {
                 "mode": "Incremental",
@@ -286,7 +286,7 @@
         },
         {
             "name": "[variables('singleRegionDep')]",
-            "apiVersion": "[variables('apiVersions').deploymentApiVersion]",
+            "apiVersion": "[variables('apiVersion').deploymentApiVersion]",
             "type": "Microsoft.Resources/deployments",
             "properties": {
                 "mode": "Incremental",
@@ -306,7 +306,7 @@
         },
         {
             "name": "[variables('multiRegionDep')]",
-            "apiVersion": "[variables('apiVersions').deploymentApiVersion]",
+            "apiVersion": "[variables('apiVersion').deploymentApiVersion]",
             "type": "Microsoft.Resources/deployments",
             "properties": {
                 "mode": "Incremental",
@@ -318,7 +318,7 @@
                     
                 }
             }
-        },
+        }
         
 
 

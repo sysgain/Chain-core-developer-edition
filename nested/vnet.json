@@ -7,9 +7,9 @@
         }
     },
     "variables": {
-        "regionCount":"[parameters('vnetSettings')]",
+        "regionCount":"[parameters('vnetSettings').regionCount]",
         "virtualNetworksName": "[parameters('vnetSettings').virtualNetworksName]",
-        "location": "[parameters('vnetSettings').location_1]",
+        "location": "[parameters('vnetSettings').location]",
         "generatorSubnetName": "[parameters('vnetSettings').generatorSubnetName]",
         "signerSubnetName": "[parameters('vnetSettings').signerSubnetName]",
         "vnetRange": "[parameters('vnetSettings').vnetRange]",
