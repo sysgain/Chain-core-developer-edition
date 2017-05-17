@@ -4,6 +4,9 @@
     "parameters": {
         "signerVMsettings": {
             "type": "object"
+        },
+        "location": {
+            "type": "string"
         }
     },
     "variables": {
@@ -12,7 +15,6 @@
         "availabilitySetsName": "[concat(parameters('signerVMsettings').availabilitySetsName)]",
         "signerNicName": "[concat(parameters('signerVMsettings').signerNicName)]",
         "signerVmName": "[concat(parameters('signerVMsettings').signerVmName)]",
-        "location": "[parameters('signerVMsettings').location]",
         "signer_nodes_Count": "[parameters('signerVMsettings').signer_nodes_Count]",
         "adminUsername": "[parameters('signerVMsettings').adminUsername]",
         "adminPassword": "[parameters('signerVMsettings').adminPassword]",
@@ -30,7 +32,7 @@
             "type": "Microsoft.Compute/virtualMachines",
             "name": "[concat(variables('signerVmName'),'-',copyIndex(1))]",
             "apiVersion": "[variables('apiVersion')]",
-            "location": "[variables('location')]",
+            "location": "[parameters('location')]",
             "copy": {
                 "name": "signerLoop",
                 "count": "[variables('signer_nodes_Count')]"
@@ -83,7 +85,7 @@
                     "type": "extensions",
                     "name": "DockerExtension",
                     "apiVersion": "[variables('dockerApiVersion')]",
-                    "location": "[variables('location')]",
+                    "location": "[parameters('location')]",
                     "dependsOn": [
                         "[concat('Microsoft.Compute/virtualMachines/', variables('signerVmName'),'-',copyIndex(1))]"
                     ],
