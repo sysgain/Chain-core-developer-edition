@@ -7,11 +7,13 @@
         },
         "generatorIp": {
             "type": "string"
+        },
+        "location": {
+            "type": "string"
         }
     },
     "variables": {
         "apiVersion": "[parameters('signerExtensionSettings').apiVersion]",
-        "location": "[parameters('signerExtensionSettings').location]",
         "signerVmName": "[parameters('signerExtensionSettings').signerVmName]",
         "signerScriptUrl": "[parameters('signerExtensionSettings').signerScriptUrl]",
         "signerScriptFileName": "[parameters('signerExtensionSettings').signerScriptFileName]",
@@ -28,7 +30,7 @@
         {
             "type": "Microsoft.Compute/virtualMachines/extensions",
             "name": "[concat(variables('signerVmName'),'-',copyIndex(1), '/signerConfig')]",
-            "location": "[variables('location')]",
+            "location": "[parameters('location')]",
             "apiVersion": "[variables('apiVersion')]",
             "copy": {
                 "name": "signerLoop",
