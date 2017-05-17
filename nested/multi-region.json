@@ -22,6 +22,12 @@
     },
     "nsgSettings": {
       "type": "object"
+    },
+    "counter": {
+      "type": "int"
+    },
+    "generatorIp": {
+      "type": "string"
     }
   },
   "variables": {
@@ -42,6 +48,12 @@
         "parameters": {
           "vnetSettings": {
             "value": "[parameters('vnetSettings')]"
+          },
+          "counter": {
+            "value": "[parameters('counter')]"
+          },
+          "location": {
+            "value": "[parameters('location')]"
           }
         }
       }
@@ -94,7 +106,11 @@
           },
           "signerSettings": {
             "value": "[parameters('signerSettings')]"
+          },
+          "generatorIp": {
+            "type": "[parameters('generatorIp')]"
           }
+
         }
       }
     }
