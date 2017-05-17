@@ -24,23 +24,24 @@ az account set -s $subscriptionid
 networkToken="networkTokenSignerVM${copyIndex}"
 echo "networkToken: $networkToken"
 generatornetworktoken=`az keyvault secret show --name $networkToken --vault-name $keyvaultname | grep "value" | cut -d "\"" -f4`
-blockchainid=`az keyvault secret show --name blockchainid --vault-name $keyvaultname | grep "value" | cut -d "\"" -f4`
+blockchainid=`az keyvault secret show --name blockchainId --vault-name $keyvaultname | grep "value" | cut -d "\"" -f4`
 
-echo "generatornetworktoken: $generatornetworktoken"
-# run chaincore docker image
+echo "generatoretworktoken is $generatornetworktoken"
+
+# Pull chaincore docker image
+docker pull chaincore/developer:latest
+# Run chaincore docker container
 docker run -d -p 1999:1999 chaincore/developer:latest
-sleep 30
+sleep 40
 containerId=`docker ps | cut -d " " -f1 | sed 1d`
 
-#signer client access token / public key
 docker exec -itd $containerId /usr/bin/chain/cored
-#signerctoken=`docker exec  $containerId /usr/bin/chain/corectl create-token $clienttokenname | cut -c1-71`
-signerctoken=`docker logs $containerId | grep "^client:" | uniq`
 
+# Retrieve client token from docker logs
+signerctoken=`docker logs $containerId | grep "^client:" | uniq`
 signerctoken1=`echo $signerctoken | cut -c8-`
 
-echo "signerToken: $signerctoken1"
-#signer config
+# Signer config
 response=`docker exec $containerId /usr/bin/chain/corectl config -t $generatornetworktoken -k $signerctoken1 $blockchainid http://$generatornodeip:1999`
 
 echo $response
