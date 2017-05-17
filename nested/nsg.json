@@ -7,20 +7,20 @@
         }
     },
     "variables": {
-        "generatorNsgName": "[parameters('nsgSettings').generatorNsgName]",
+        "nsgName": "[parameters('nsgSettings').nsgName]",
         "apiVersion": "[parameters('nsgSettings').apiVersion]",
         "location": "[parameters('nsgSettings').location]"
     },
     "resources": [
         {
             "type": "Microsoft.Network/networkSecurityGroups",
-            "name": "[variables('generatorNsgName')]",
+            "name": "[variables('nsgName')]",
             "apiVersion": "[variables('apiVersion')]",
             "location": "[variables('location')]",
             "properties": {
                 "securityRules": [
                     {
-                        "name": "web",
+                        "name": "web-console",
                         "properties": {
                             "protocol": "*",
                             "sourcePortRange": "*",

@@ -4,12 +4,16 @@
     "parameters": {
         "vnetSettings": {
             "type": "object"
+        },
+        "location":{
+            "type": "string"
         }
     },
     "variables": {
         "regionCount":"[parameters('vnetSettings').regionCount]",
+        
         "virtualNetworksName": "[parameters('vnetSettings').virtualNetworksName]",
-        "location": "[parameters('vnetSettings').location]",
+        "location": "[parameters('location')]",
         "generatorSubnetName": "[parameters('vnetSettings').generatorSubnetName]",
         "signerSubnetName": "[parameters('vnetSettings').signerSubnetName]",
         "vnetRange": "[parameters('vnetSettings').vnetRange]",
