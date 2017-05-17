@@ -7,8 +7,6 @@
         }
     },
     "variables": {
-        "generatorLbIpName": "[parameters('pipSettings').generatorLbIpName]",
-        "lbPipDns": "[parameters('pipSettings').lbPipDns]",
         "location": "[parameters('pipSettings').location]",
         "signerVMIpName": "[parameters('pipSettings').signerVMIpName]",
         "signer_nodes_Count": "[parameters('pipSettings').signer_nodes_Count]",
@@ -17,20 +15,6 @@
         "publicIPAllocationMethod": "[parameters('pipSettings').publicIPAllocationMethod]"
     },
     "resources": [
-        {
-            "type": "Microsoft.Network/publicIPAddresses",
-            "name": "[variables('generatorLbIpName')]",
-            "apiVersion": "[variables('apiVersion')]",
-            "location": "[variables('location')]",
-            "properties": {
-                "publicIPAllocationMethod": "[variables('publicIPAllocationMethod')]",
-                "idleTimeoutInMinutes": 4,
-                "dnsSettings": {
-                    "domainNameLabel": "[variables('lbPipDns')]"
-                }
-            },
-            "dependsOn": []
-        },
         {
             "type": "Microsoft.Network/publicIPAddresses",
             "name": "[concat(variables('signerVMIpName'),'-',copyIndex(1))]",
@@ -49,11 +33,5 @@
             },
             "dependsOn": []
         }
-    ],
-    "outputs": {
-        "generatorIp":{
-            "type": "string",
-            "value": "[reference(resourceId('Microsoft.Network/publicIPAddresses', variables('generatorLbIpName'))).ipAddress]"
-        }
-    }
+    ]
 }

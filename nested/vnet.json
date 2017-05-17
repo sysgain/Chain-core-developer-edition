@@ -7,14 +7,15 @@
         }
     },
     "variables": {
-            "virtualNetworksName": "[parameters('vnetSettings').virtualNetworksName]",
-            "location":"[parameters('vnetSettings').location]",
-            "generatorSubnetName": "[parameters('vnetSettings').generatorSubnetName]",
-            "signerSubnetName": "[parameters('vnetSettings').signerSubnetName]",
-            "vnetRange":"[parameters('vnetSettings').vnetRange]",
-            "subnet1Range":"[parameters('vnetSettings').subnet1Range]",
-            "subnet2Range":"[parameters('vnetSettings').subnet2Range]",
-            "apiVersion":"[parameters('vnetSettings').apiVersion]"
+        "virtualNetworksName": "[parameters('vnetSettings').virtualNetworksName]",
+        "location": "[parameters('vnetSettings').location]",
+        "generatorSubnetName": "[parameters('vnetSettings').generatorSubnetName]",
+        "signerSubnetName": "[parameters('vnetSettings').signerSubnetName]",
+        "vnetRange": "[parameters('vnetSettings').vnetRange]",
+        "subnet1Range": "[parameters('vnetSettings').subnet1Range]",
+        "subnet2Range": "[parameters('vnetSettings').subnet2Range]",
+        "apiVersion": "[parameters('vnetSettings').apiVersion]",
+        "gatewaySubnetRange": "[parameters('vnetSettings').gatewaySubnetRange]"
     },
     "resources": [
         {
@@ -39,6 +40,66 @@
                         "name": "[variables('signerSubnetName')]",
                         "properties": {
                             "addressPrefix": "[variables('subnet2Range')]"
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "type": "Microsoft.Network/virtualNetworks",
+            "name": "[variables('virtualNetworksName')]",
+            "apiVersion": "[variables('apiVersion')]",
+            "location": "[variables('location')]",
+            "properties": {
+                "addressSpace": {
+                    "addressPrefixes": [
+                        "[variables('vnetRange')]"
+                    ]
+                },
+                "subnets": [
+                    {
+                        "name": "[variables('signerSubnetName')]",
+                        "properties": {
+                            "addressPrefix": "[variables('subnet2Range')]"
+                        }
+                    },
+                    {
+                        "name": "GatewaySubnet",
+                        "properties": {
+                            "addressPrefix": "[variables('gatewaySubnetRange')]"
+                        }
+                    }
+                ]
+            }
+        },
+        {
+            "type": "Microsoft.Network/virtualNetworks",
+            "name": "[variables('virtualNetworksName')]",
+            "apiVersion": "[variables('apiVersion')]",
+            "location": "[variables('location')]",
+            "properties": {
+                "addressSpace": {
+                    "addressPrefixes": [
+                        "[variables('vnetRange')]"
+                    ]
+                },
+                "subnets": [
+                    {
+                        "name": "[variables('generatorSubnetName')]",
+                        "properties": {
+                            "addressPrefix": "[variables('subnet1Range')]"
+                        }
+                    },
+                    {
+                        "name": "[variables('signerSubnetName')]",
+                        "properties": {
+                            "addressPrefix": "[variables('subnet2Range')]"
+                        }
+                    },
+                    {
+                        "name": "GatewaySubnet",
+                        "properties": {
+                            "addressPrefix": "[variables('gatewaySubnetRange')]"
                         }
                     }
                 ]

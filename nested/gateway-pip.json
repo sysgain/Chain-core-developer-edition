@@ -7,14 +7,16 @@
         }
     },
     "variables": {
+        "generatorLbIpName": "[parameters('pipSettings').generatorLbIpName]",
+        "lbPipDns": "[parameters('pipSettings').lbPipDns]",
         "location": "[parameters('pipSettings').location]",
         "signerVMIpName": "[parameters('pipSettings').signerVMIpName]",
         "signer_nodes_Count": "[parameters('pipSettings').signer_nodes_Count]",
         "signerPipDns": "[parameters('pipSettings').signerPipDns]",
+        "gatewayPipDns": "[parameters('pipSettings').gatewayPipDns]",
         "apiVersion": "[parameters('pipSettings').apiVersion]",
         "publicIPAllocationMethod": "[parameters('pipSettings').publicIPAllocationMethod]",
-        "gatewayIpName": "[parameters('pipSettings').gatewayIpName]",
-        "gatewayPipDns": "[parameters('pipSettings').gatewayPipDns]"
+        "gatewayIpName": "[parameters('pipSettings').gatewayIpName]"
     },
     "resources": [
         {
@@ -30,30 +32,6 @@
                 }
             },
             "dependsOn": []
-        },
-        {
-            "type": "Microsoft.Network/publicIPAddresses",
-            "name": "[concat(variables('signerVMIpName'),'-',copyIndex(1))]",
-            "apiVersion": "[variables('apiVersion')]",
-            "location": "[variables('location')]",
-            "copy": {
-                "name": "signerLoop",
-                "count": "[variables('signer_nodes_Count')]"
-            },
-            "properties": {
-                "publicIPAllocationMethod": "[variables('publicIPAllocationMethod')]",
-                "idleTimeoutInMinutes": 4,
-                "dnsSettings": {
-                    "domainNameLabel": "[concat(variables('signerPipDns'),'-',copyIndex(1))]"
-                }
-            },
-            "dependsOn": []
         }
-    ],
-    "outputs": {
-        "gatewayIp":{
-            "type": "string",
-            "value": "[reference(resourceId('Microsoft.Network/publicIPAddresses', variables('gatewayIpName'))).dnsSettings.fqdn]"
-        }
-    }
+    ]
 }
