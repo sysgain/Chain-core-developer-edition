@@ -170,6 +170,7 @@
     "baseUrl": "[parameters('artifactsBaseUrl')]",
     "prefix": "chain",
     "suffix": "[substring(uniqueString(resourceGroup().id) ,0, 5)]",
+    "multiTemplate": ["multi-dummy.json","multi-region.json","multi-region.json","multi-region.json","multi-region.json"],
     "nestedURls": {
       "generatorVmSetupURL": "[concat(variables('baseUrl'),'/nested/generator-vm.json')]",
       "generatorExtensionSetupURL": "[concat(variables('baseUrl'),'/nested/generator-extension.json')]",
@@ -187,7 +188,7 @@
       "gatewayPipSetupURL": "[concat(variables('baseUrl'),'/nested/gateway-pip.json')]",
       "connectionsSetupURl": "[concat(variables('baseUrl'),'/nested/connections.json')]",
       "singleRegionSetupURL": "[concat(variables('baseUrl'),'/nested/single-region.json')]",
-      "multiRegionSetupURL": "[concat(variables('baseUrl'),'/nested/multi-region.json')]",
+      "multiRegionSetupURL": "[concat(variables('baseUrl'),'/nested/',variables('multiTemplate')[sub(int(parameters('regionCount')),1)])]",
       "vnetSetupURL": "[concat(variables('baseUrl'),'/nested/vnet.json')]",
       "keyVaultSetupURL": "[concat(variables('baseUrl'),'/nested/keyvault.json')]",
       "avaialabilitySetSetupURL": "[concat(variables('baseUrl'),'/nested/availability-set.json')]",
