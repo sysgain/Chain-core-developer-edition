@@ -1,60 +1,91 @@
 {
-    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
-    "contentVersion": "1.0.0.0",
-    "parameters": {
-        "vnetSettings": {
-            "type": "object"
+  "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "vnetSettings": {
+      "type": "object"
+    },
+    "location": {
+      "type": "string"
+    },
+    "counter": {
+      "type": "int"
+    }
+  },
+  "variables": {
+    "regionCount": "[parameters('vnetSettings').regionCount]",
+    "virtualNetworksName": "[parameters('vnetSettings').virtualNetworksName]",
+    "location": "[parameters('location')]",
+    "generatorSubnetName": "[parameters('vnetSettings').generatorSubnetName]",
+    "signerSubnetName": "[parameters('vnetSettings').signerSubnetName]",
+    "vnetRange": "[parameters('vnetSettings').vnetRange]",
+    "subnet1Range": "[parameters('vnetSettings').subnet1Range]",
+    "subnet2Range": "[parameters('vnetSettings').subnet2Range]",
+    "apiVersion": "[parameters('vnetSettings').apiVersion]",
+    "gatewaySubnetRange": "[parameters('vnetSettings').gatewaySubnetRange]"
+  },
+  "resources": [
+    {
+      "condition": "[equals(parameters('counter'),1)]",
+      "type": "Microsoft.Network/virtualNetworks",
+      "name": "[variables('virtualNetworksName')]",
+      "apiVersion": "[variables('apiVersion')]",
+      "location": "[variables('location')]",
+      "properties": {
+        "addressSpace": {
+          "addressPrefixes": [
+            "[variables('vnetRange')]"
+          ]
         },
-        "location":{
-            "type": "string"
-        }
-    },
-    "variables": {
-        "regionCount":"[parameters('vnetSettings').regionCount]",
-        
-        "virtualNetworksName": "[parameters('vnetSettings').virtualNetworksName]",
-        "location": "[parameters('location')]",
-        "generatorSubnetName": "[parameters('vnetSettings').generatorSubnetName]",
-        "signerSubnetName": "[parameters('vnetSettings').signerSubnetName]",
-        "vnetRange": "[parameters('vnetSettings').vnetRange]",
-        "subnet1Range": "[parameters('vnetSettings').subnet1Range]",
-        "subnet2Range": "[parameters('vnetSettings').subnet2Range]",
-        "apiVersion": "[parameters('vnetSettings').apiVersion]",
-        "gatewaySubnetRange": "[parameters('vnetSettings').gatewaySubnetRange]"
-    },
-    "resources": [
-        {
-            "type": "Microsoft.Network/virtualNetworks",
-            "name": "[variables('virtualNetworksName')]",
-            "apiVersion": "[variables('apiVersion')]",
-            "location": "[variables('location')]",
+        "subnets": [
+          {
+            "name": "[variables('generatorSubnetName')]",
             "properties": {
-                "addressSpace": {
-                    "addressPrefixes": [
-                        "[variables('vnetRange')]"
-                    ]
-                },
-                "subnets": [
-                    {
-                        "name": "[variables('generatorSubnetName')]",
-                        "properties": {
-                            "addressPrefix": "[variables('subnet1Range')]"
-                        }
-                    },
-                    {
-                        "name": "[variables('signerSubnetName')]",
-                        "properties": {
-                            "addressPrefix": "[variables('subnet2Range')]"
-                        }
-                    },
-                    {
-                        "name": "GatewaySubnet",
-                        "properties": {
-                            "addressPrefix": "[variables('gatewaySubnetRange')]"
-                        }
-                    }
-                ]
+              "addressPrefix": "[variables('subnet1Range')]"
             }
-        }
-    ]
+          },
+          {
+            "name": "[variables('signerSubnetName')]",
+            "properties": {
+              "addressPrefix": "[variables('subnet2Range')]"
+            }
+          },
+          {
+            "name": "GatewaySubnet",
+            "properties": {
+              "addressPrefix": "[variables('gatewaySubnetRange')]"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "condition": "[greater(parameters('counter'),1)]",
+      "type": "Microsoft.Network/virtualNetworks",
+      "name": "[variables('virtualNetworksName')]",
+      "apiVersion": "[variables('apiVersion')]",
+      "location": "[variables('location')]",
+      "properties": {
+        "addressSpace": {
+          "addressPrefixes": [
+            "[variables('vnetRange')]"
+          ]
+        },
+        "subnets": [
+          {
+            "name": "[variables('signerSubnetName')]",
+            "properties": {
+              "addressPrefix": "[variables('subnet2Range')]"
+            }
+          },
+          {
+            "name": "GatewaySubnet",
+            "properties": {
+              "addressPrefix": "[variables('gatewaySubnetRange')]"
+            }
+          }
+        ]
+      }
+    }
+  ]
 }
