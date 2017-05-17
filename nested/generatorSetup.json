@@ -2,7 +2,7 @@
     "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
     "contentVersion": "1.0.0.0",
     "parameters": {
-        "prefix":{
+        "prefix": {
             "type": "string"
         },
         "location": {
@@ -17,34 +17,17 @@
         "generatorSettings": {
             "type": "object"
         }
-                    
     },
     "variables": {
-        "prefix":"chain",
+        "prefix": "[parameters('prefix')]",
         "generatorVmDep": "[concat(variables('prefix'),'-generatorVMSetup')]",
         "generatorNicDep": "[concat(variables('prefix'),'-generatorNICSetup')]",
-        "availSetDep": "[concat(variables('prefix'),'-avaialabilitySetSetup')]",
         "pipDep": "[concat(variables('prefix'),'-pipSetup')]",
         "lbDep": "[concat(variables('prefix'),'-lbSetup')]",
         "nsgDep": "[concat(variables('prefix'),'-nsgSetup')]",
         "genExtDep": "[concat(variables('prefix'),'-genExtensionSetup')]"
     },
     "resources": [
-        {
-            "name": "[variables('availSetDep')]",
-            "apiVersion": "[parameters('apiVersion').deploymentApiVersion]",
-            "type": "Microsoft.Resources/deployments",
-            "properties": {
-                "mode": "Incremental",
-                "templateLink": {
-                    "uri": "[parameters('nestedURls').avaialabilitySetSetupURL]",
-                    "contentVersion": "1.0.0.0"
-                },
-                "parameters": {
-                    
-                }
-            }
-        },
         {
             "name": "[variables('pipDep')]",
             "apiVersion": "[parameters('apiVersion').deploymentApiVersion]",
@@ -56,8 +39,8 @@
                     "contentVersion": "1.0.0.0"
                 },
                 "parameters": {
-                    "pipSettings": {
-                        "value": "[variables('pipSettings')]"
+                    "genPipSettings": {
+                        "value": "[parameters('generatorSettings').genPipSettings]"
                     }
                 }
             }
@@ -72,12 +55,12 @@
             "properties": {
                 "mode": "Incremental",
                 "templateLink": {
-                    "uri": "[parameters('nestedURls').generatorPipLbSetupURL]",
+                    "uri": "[parameters('nestedURls').generatorLbSetupURL]",
                     "contentVersion": "1.0.0.0"
                 },
                 "parameters": {
-                    "lbSettings": {
-                        "value": "[variables('lbSettings')]"
+                    "genlbSettings": {
+                        "value": "[parameters('generatorSettings').genlbSettings]"
                     }
                 }
             }
@@ -89,12 +72,12 @@
             "properties": {
                 "mode": "Incremental",
                 "templateLink": {
-                    "uri": "[parameters('nestedURls').generatorPipLbSetupURL]",
+                    "uri": "[parameters('nestedURls').generatorNsgSetupURL]",
                     "contentVersion": "1.0.0.0"
                 },
                 "parameters": {
-                    "nsgSettings": {
-                        "value": "[variables('nsgSettings')]"
+                    "genNsgSettings": {
+                        "value": "[parameters('generatorSettings').genNsgSettings]"
                     }
                 }
             }
@@ -104,19 +87,18 @@
             "apiVersion": "[parameters('apiVersion').deploymentApiVersion]",
             "type": "Microsoft.Resources/deployments",
             "dependsOn": [
-                "[variables('vnetDep')]",
                 "[variables('nsgDep')]",
                 "[variables('lbDep')]"
             ],
             "properties": {
                 "mode": "Incremental",
                 "templateLink": {
-                    "uri": "[parameters('nestedURls').generatorPipLbSetupURL]",
+                    "uri": "[parameters('nestedURls').generatorNicSetupURL]",
                     "contentVersion": "1.0.0.0"
                 },
                 "parameters": {
-                    "generatorNicSettings": {
-                        "value": "[variables('generatorNicSettings')]"
+                    "genNicSettings": {
+                        "value": "[parameters('generatorSettings').genNicSettings]"
                     }
                 }
             }
@@ -131,12 +113,12 @@
             "properties": {
                 "mode": "Incremental",
                 "templateLink": {
-                    "uri": "[parameters('nestedURls').generatorPipLbSetupURL]",
+                    "uri": "[parameters('nestedURls').generatorVmSetupURL]",
                     "contentVersion": "1.0.0.0"
                 },
                 "parameters": {
-                    "generatorVMsettings": {
-                        "value": "[variables('generatorVMsettings')]"
+                    "genVMsettings": {
+                        "value": "[parameters('generatorSettings').genVMsettings]"
                     }
                 }
             }
@@ -151,15 +133,15 @@
             "properties": {
                 "mode": "Incremental",
                 "templateLink": {
-                    "uri": "[parameters('nestedURls').generatorPipLbSetupURL]",
+                    "uri": "[parameters('nestedURls').generatorExtensionSetupURL]",
                     "contentVersion": "1.0.0.0"
                 },
                 "parameters": {
-                    "generatorExtensionSettings": {
-                        "value": "[variables('generatorExtensionSettings')]"
+                    "genExtensionSettings": {
+                        "value": "[parameters('generatorSettings').genExtensionSettings]"
                     }
                 }
             }
-        },
+        }
     ]
 }
