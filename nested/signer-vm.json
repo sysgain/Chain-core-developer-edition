@@ -22,7 +22,8 @@
         "offer": "[parameters('signerVMsettings').offer]",
         "sku": "[parameters('signerVMsettings').sku]",
         "version": "[parameters('signerVMsettings').version]",
-        "diskSizeGB": "[parameters('signerVMsettings').diskSizeGB]"
+        "diskSizeGB": "[parameters('signerVMsettings').diskSizeGB]",
+        "dockerApiVersion": "[parameters('vmSettings').dockerApiVersion]"
     },
     "resources": [
         {
@@ -81,7 +82,7 @@
                 {
                     "type": "extensions",
                     "name": "DockerExtension",
-                    "apiVersion": "2015-05-01-preview",
+                    "apiVersion": "[variables('dockerApiVersion')]",
                     "location": "[variables('location')]",
                     "dependsOn": [
                         "[concat('Microsoft.Compute/virtualMachines/', variables('signerVmName'),'-',copyIndex(1))]"
