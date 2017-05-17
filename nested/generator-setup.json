@@ -1,146 +1,143 @@
 {
-    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
-    "contentVersion": "1.0.0.0",
-    "parameters": {
-        "prefix": {
-            "type": "string"
-        },
-        "location": {
-            "type": "string"
-        },
-        "nestedURls": {
-            "type": "object"
-        },
-        "apiVersion": {
-            "type": "object"
-        },
-        "generatorSettings": {
-            "type": "object"
-        }
+  "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "prefix": {
+      "type": "string"
     },
-    "variables": {
-        "prefix": "[parameters('prefix')]",
-        "generatorVmDep": "[concat(variables('prefix'),'-generatorVMSetup')]",
-        "generatorNicDep": "[concat(variables('prefix'),'-generatorNICSetup')]",
-        "generatorPipLbDep": "[concat(variables('prefix'),'-genPipSetup')]",
-        "generatorlbDep": "[concat(variables('prefix'),'-genLbSetup')]",
-        
-        "generatorExtDep": "[concat(variables('prefix'),'-genExtensionSetup')]"
+    "location": {
+      "type": "string"
     },
-    "resources": [
-        {
-            "name": "[variables('generatorPipLbDep')]",
-            "apiVersion": "[parameters('apiVersion').deploymentApiVersion]",
-            "type": "Microsoft.Resources/deployments",
-            "properties": {
-                "mode": "Incremental",
-                "templateLink": {
-                    "uri": "[parameters('nestedURls').generatorPipLbSetupURL]",
-                    "contentVersion": "1.0.0.0"
-                },
-                "parameters": {
-                    "genPipSettings": {
-                        "value": "[parameters('generatorSettings').genPipSettings]"
-                    },
-                    "location":{
-                        "value":"[parameters('location')]"
-                    }
-                }
-            }
+    "nestedURls": {
+      "type": "object"
+    },
+    "apiVersion": {
+      "type": "object"
+    },
+    "generatorSettings": {
+      "type": "object"
+    }
+  },
+  "variables": {
+    "prefix": "[parameters('prefix')]",
+    "generatorVmDep": "[concat(variables('prefix'),'-generatorVMSetup')]",
+    "generatorNicDep": "[concat(variables('prefix'),'-generatorNICSetup')]",
+    "generatorPipLbDep": "[concat(variables('prefix'),'-genPipSetup')]",
+    "generatorlbDep": "[concat(variables('prefix'),'-genLbSetup')]",
+    "generatorExtDep": "[concat(variables('prefix'),'-genExtensionSetup')]"
+  },
+  "resources": [
+    {
+      "name": "[variables('generatorPipLbDep')]",
+      "apiVersion": "[parameters('apiVersion').deploymentApiVersion]",
+      "type": "Microsoft.Resources/deployments",
+      "properties": {
+        "mode": "Incremental",
+        "templateLink": {
+          "uri": "[parameters('nestedURls').generatorPipLbSetupURL]",
+          "contentVersion": "1.0.0.0"
         },
-        {
-            "name": "[variables('generatorlbDep')]",
-            "dependsOn": [
-                "[variables('generatorPipLbDep')]"
-            ],
-            "apiVersion": "[parameters('apiVersion').deploymentApiVersion]",
-            "type": "Microsoft.Resources/deployments",
-            "properties": {
-                "mode": "Incremental",
-                "templateLink": {
-                    "uri": "[parameters('nestedURls').generatorLbSetupURL]",
-                    "contentVersion": "1.0.0.0"
-                },
-                "parameters": {
-                    "genlbSettings": {
-                        "value": "[parameters('generatorSettings').genlbSettings]"
-                    },
-                    "location":{
-                        "value":"[parameters('location')]"
-                    }
-                }
-            }
-        },
-        
-        {
-            "name": "[variables('generatorNicDep')]",
-            "apiVersion": "[parameters('apiVersion').deploymentApiVersion]",
-            "type": "Microsoft.Resources/deployments",
-            "dependsOn": [
-                
-                "[variables('generatorlbDep')]"
-            ],
-            "properties": {
-                "mode": "Incremental",
-                "templateLink": {
-                    "uri": "[parameters('nestedURls').generatorNicSetupURL]",
-                    "contentVersion": "1.0.0.0"
-                },
-                "parameters": {
-                    "genNicSettings": {
-                        "value": "[parameters('generatorSettings').genNicSettings]"
-                    },
-                    "location":{
-                        "value":"[parameters('location')]"
-                    }
-                }
-            }
-        },
-        {
-            "name": "[variables('generatorVmDep')]",
-            "apiVersion": "[parameters('apiVersion').deploymentApiVersion]",
-            "type": "Microsoft.Resources/deployments",
-            "dependsOn": [
-                "[variables('generatorNicDep')]"
-            ],
-            "properties": {
-                "mode": "Incremental",
-                "templateLink": {
-                    "uri": "[parameters('nestedURls').generatorVmSetupURL]",
-                    "contentVersion": "1.0.0.0"
-                },
-                "parameters": {
-                    "genVMsettings": {
-                        "value": "[parameters('generatorSettings').genVMsettings]"
-                    },
-                    "location":{
-                        "value":"[parameters('location')]"
-                    }
-                }
-            }
-        },
-        {
-            "name": "[variables('generatorExtDep')]",
-            "apiVersion": "[parameters('apiVersion').deploymentApiVersion]",
-            "type": "Microsoft.Resources/deployments",
-            "dependsOn": [
-                "[variables('generatorVmDep')]"
-            ],
-            "properties": {
-                "mode": "Incremental",
-                "templateLink": {
-                    "uri": "[parameters('nestedURls').generatorExtensionSetupURL]",
-                    "contentVersion": "1.0.0.0"
-                },
-                "parameters": {
-                    "genExtensionSettings": {
-                        "value": "[parameters('generatorSettings').genExtensionSettings]"
-                    },
-                    "location":{
-                        "value":"[parameters('location')]"
-                    }
-                }
-            }
+        "parameters": {
+          "genPipSettings": {
+            "value": "[parameters('generatorSettings').genPipSettings]"
+          },
+          "location": {
+            "value": "[parameters('location')]"
+          }
         }
-    ]
+      }
+    },
+    {
+      "name": "[variables('generatorlbDep')]",
+      "dependsOn": [
+        "[variables('generatorPipLbDep')]"
+      ],
+      "apiVersion": "[parameters('apiVersion').deploymentApiVersion]",
+      "type": "Microsoft.Resources/deployments",
+      "properties": {
+        "mode": "Incremental",
+        "templateLink": {
+          "uri": "[parameters('nestedURls').generatorLbSetupURL]",
+          "contentVersion": "1.0.0.0"
+        },
+        "parameters": {
+          "genlbSettings": {
+            "value": "[parameters('generatorSettings').genlbSettings]"
+          },
+          "location": {
+            "value": "[parameters('location')]"
+          }
+        }
+      }
+    },
+    {
+      "name": "[variables('generatorNicDep')]",
+      "apiVersion": "[parameters('apiVersion').deploymentApiVersion]",
+      "type": "Microsoft.Resources/deployments",
+      "dependsOn": [
+        "[variables('generatorlbDep')]"
+      ],
+      "properties": {
+        "mode": "Incremental",
+        "templateLink": {
+          "uri": "[parameters('nestedURls').generatorNicSetupURL]",
+          "contentVersion": "1.0.0.0"
+        },
+        "parameters": {
+          "genNicSettings": {
+            "value": "[parameters('generatorSettings').genNicSettings]"
+          },
+          "location": {
+            "value": "[parameters('location')]"
+          }
+        }
+      }
+    },
+    {
+      "name": "[variables('generatorVmDep')]",
+      "apiVersion": "[parameters('apiVersion').deploymentApiVersion]",
+      "type": "Microsoft.Resources/deployments",
+      "dependsOn": [
+        "[variables('generatorNicDep')]"
+      ],
+      "properties": {
+        "mode": "Incremental",
+        "templateLink": {
+          "uri": "[parameters('nestedURls').generatorVmSetupURL]",
+          "contentVersion": "1.0.0.0"
+        },
+        "parameters": {
+          "generatorVMsettings": {
+            "value": "[parameters('generatorSettings').genVMsettings]"
+          },
+          "location": {
+            "value": "[parameters('location')]"
+          }
+        }
+      }
+    },
+    {
+      "name": "[variables('generatorExtDep')]",
+      "apiVersion": "[parameters('apiVersion').deploymentApiVersion]",
+      "type": "Microsoft.Resources/deployments",
+      "dependsOn": [
+        "[variables('generatorVmDep')]"
+      ],
+      "properties": {
+        "mode": "Incremental",
+        "templateLink": {
+          "uri": "[parameters('nestedURls').generatorExtensionSetupURL]",
+          "contentVersion": "1.0.0.0"
+        },
+        "parameters": {
+          "genExtensionSettings": {
+            "value": "[parameters('generatorSettings').genExtensionSettings]"
+          },
+          "location": {
+            "value": "[parameters('location')]"
+          }
+        }
+      }
+    }
+  ]
 }
