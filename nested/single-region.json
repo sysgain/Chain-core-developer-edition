@@ -28,7 +28,7 @@
     },
     "counter": {
       "type": "int"
-    }
+    },
     "generatorIp": {
       "type": "string"
     }
