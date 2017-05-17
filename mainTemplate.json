@@ -139,56 +139,46 @@
         }
     },
     "variables": {
-        "baseUrl":"https://raw.githubusercontent.com/sysgain/Chain-core-developer-edition/chain-core-dev-v2",
-        "nestedURls":{
-            
+        "baseUrl": "https://raw.githubusercontent.com/sysgain/Chain-core-developer-edition/chain-core-dev-v2",
+        "nestedURls": {
             "generatorVmSetupURL": "[concat(variables('baseUrl'),'/nested/generator-vm.json')]",
             "generatorExtensionSetupURL": "[concat(variables('baseUrl'),'/nested/generator-extension.json')]",
             "generatorNicSetupURL": "[concat(variables('baseUrl'),'/nested/generator-nic.json')]",
             "generatorLbSetupURL": "[concat(variables('baseUrl'),'/nested/generator-lb.json')]",
             "generatorPipLbSetupURL": "[concat(variables('baseUrl'),'/nested/generator-pip.json')]",
             "generatorNsgSetupURL": "[concat(variables('baseUrl'),'/nested/generator-nsg.json')]",
-            
-            
             "signerVMsSetupURL": "[concat(variables('baseUrl'),'/nested/signer-vm.json')]",
             "signerExtensionSetupURL": "[concat(variables('baseUrl'),'/nested/signer-extension.json')]",
             "signerNICsetupURL": "[concat(variables('baseUrl'),'/nested/signer-nic.json')]",
             "signerNsgSetupURL": "[concat(variables('baseUrl'),'/nested/signer-nsg.json')]",
             "signerPipSetupURL": "[concat(variables('baseUrl'),'/nested/signer-pip.json')]",
-
             "gatewaySetupURL": "[concat(variables('baseUrl'),'/nested/gateway.json')]",
             "gatewayPipSetupURL": "[concat(variables('baseUrl'),'/nested/gateway-pip.json')]",
-            "connectionsSetupURl":"[concat(variables('baseUrl'),'/nested/connections.json')]",
-
-            "singleRegionSetupURL":"[concat(variables('baseUrl'),'/nested/singleRegion.json')]",
-            "multiRegionSetupURL":"[concat(variables('baseUrl'),'/nested/multiRegion.json')]",
-
-
+            "connectionsSetupURl": "[concat(variables('baseUrl'),'/nested/connections.json')]",
+            "singleRegionSetupURL": "[concat(variables('baseUrl'),'/nested/singleRegion.json')]",
+            "multiRegionSetupURL": "[concat(variables('baseUrl'),'/nested/multiRegion.json')]",
             "vnetSetupURL": "[concat(variables('baseUrl'),'/nested/vnet.json')]",
-            
-            
             "keyVaultSetupURL": "[concat(variables('baseUrl'),'/nested/keyvault.json')]",
             "avaialabilitySetSetupURL": "[concat(variables('baseUrl'),'/nested/availabilitySet.json')]",
-            
             "signerScriptUrl": "[concat(variables('baseUrl'),'/scripts/signer-v2.sh')]",
             "generatorScriptUrl": "[concat(variables('baseUrl'),'/scripts/generator-v2.sh')]"
         },
-        "apiVersion":{
-            "computeApiVersion":"2016-04-30-preview",
-            "networkApiVersion":"2016-03-30",
-            "keyVaultApiVersion":"2015-06-01",
-            "gatewayApiVersion":"2016-09-01",
-            "deploymentApiVersion":"2016-02-01"
+        "apiVersion": {
+            "computeApiVersion": "2016-04-30-preview",
+            "networkApiVersion": "2016-03-30",
+            "keyVaultApiVersion": "2015-06-01",
+            "gatewayApiVersion": "2016-09-01",
+            "deploymentApiVersion": "2016-02-01"
         },
-        "prefix":{
-            "prefix_loc_1":"chain",
-            "prefix_loc_2":"chain_reg2",
-            "prefix_loc_3":"chain_reg3",
-            "prefix_loc_4":"chain_reg4",
-            "prefix_loc_5":"chain_reg5"                
+        "prefix": {
+            "prefix_loc_1": "chain",
+            "prefix_loc_2": "chain_reg2",
+            "prefix_loc_3": "chain_reg3",
+            "prefix_loc_4": "chain_reg4",
+            "prefix_loc_5": "chain_reg5"
         },
-        "suffix":"[substring(uniqueString(resourceGroup().id) ,0, 5)]",
-        "keyVaultSettings":{
+        "suffix": "[substring(uniqueString(resourceGroup().id) ,0, 5)]",
+        "keyVaultSettings": {
             "keyVaultName": "[concat(variables('prefix').prefix_loc_1,'_',variables('suffix'),'_kvlt')]",
             "tenantId": "[subscription().tenantId]",
             "location": "[parameters('location_1')]",
@@ -196,8 +186,8 @@
             "apiVersion": "[variables('apiVersion').keyVaultApiVersion]"
         },
         "vnetSettings": {
-            "region1":{
-                "regionCount":"[parameters('regionCount')]",
+            "region1": {
+                "regionCount": "[parameters('regionCount')]",
                 "virtualNetworksName": "[concat(variables('prefix').prefix_loc_1,'_vnet')]",
                 "location": "[parameters('location_1')]",
                 "generatorSubnetName": "gen-subnet",
@@ -208,8 +198,8 @@
                 "gatewaySubnetRange": "10.1.0.0/24",
                 "apiVersion": "[variables('apiVersion').networkApiVersion]"
             },
-            "region2":{
-                "regionCount":"[parameters('regionCount')]",
+            "region2": {
+                "regionCount": "[parameters('regionCount')]",
                 "virtualNetworksName": "[concat(variables('prefix').prefix_loc_2,'_vnet')]",
                 "location": "[parameters('location_2')]",
                 "generatorSubnetName": "gen-subnet",
@@ -220,8 +210,8 @@
                 "gatewaySubnetRange": "10.2.0.0/24",
                 "apiVersion": "[variables('apiVersion').networkApiVersion]"
             },
-            "region3":{
-                "regionCount":"[parameters('regionCount')]",
+            "region3": {
+                "regionCount": "[parameters('regionCount')]",
                 "virtualNetworksName": "[concat(variables('prefix').prefix_loc_3,'_vnet')]",
                 "location": "[parameters('location_3')]",
                 "generatorSubnetName": "gen-subnet",
@@ -232,8 +222,8 @@
                 "gatewaySubnetRange": "10.3.0.0/24",
                 "apiVersion": "[variables('apiVersion').networkApiVersion]"
             },
-            "region4":{
-                "regionCount":"[parameters('regionCount')]",
+            "region4": {
+                "regionCount": "[parameters('regionCount')]",
                 "virtualNetworksName": "[concat(variables('prefix').prefix_loc_4,'_vnet')]",
                 "location": "[parameters('location_4')]",
                 "generatorSubnetName": "gen-subnet",
@@ -244,8 +234,8 @@
                 "gatewaySubnetRange": "10.4.0.0/24",
                 "apiVersion": "[variables('apiVersion').networkApiVersion]"
             },
-            "region5":{
-                "regionCount":"[parameters('regionCount')]",
+            "region5": {
+                "regionCount": "[parameters('regionCount')]",
                 "virtualNetworksName": "[concat(variables('prefix').prefix_loc_5,'_vnet')]",
                 "location": "[parameters('location_5')]",
                 "generatorSubnetName": "gen-subnet",
@@ -257,14 +247,9 @@
                 "apiVersion": "[variables('apiVersion').networkApiVersion]"
             }
         },
-        
         "keyVaultDep": "[concat(variables('prefix').prefix_loc_1,'_keyVaultSetup')]",
-
-        "singleRegionDep":"singleRegionSetup",
-        "multiRegionDep":"multiRegionSetup"
-        
-
-
+        "singleRegionDep": "singleRegionSetup",
+        "multiRegionDep": "multiRegionSetup"
     },
     "resources": [
         {
@@ -295,14 +280,14 @@
                     "contentVersion": "1.0.0.0"
                 },
                 "parameters": {
-                    "nestedURls":{
-                        "value":"[variables('nestedURls')]"
+                    "nestedURls": {
+                        "value": "[variables('nestedURls')]"
                     },
-                    "vnetSettings":{
-                        "value":"[variables('vnetSettings').region1]"
+                    "vnetSettings": {
+                        "value": "[variables('vnetSettings').region1]"
                     },
-                    "apiVersion":{
-                        "value":"[variables('apiVersion')]"
+                    "apiVersion": {
+                        "value": "[variables('apiVersion')]"
                     }
                 }
             }
@@ -317,15 +302,9 @@
                     "uri": "[variables('nestedURLs').multiRegionSetupURL]",
                     "contentVersion": "1.0.0.0"
                 },
-                "parameters": {
-                    
-                }
+                "parameters": {}
             }
         }
-        
-
-
     ],
-    "outputs": {
-    }
+    "outputs": {}
 }
