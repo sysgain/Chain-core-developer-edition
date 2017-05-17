@@ -26,7 +26,6 @@
   },
   "resources": [
     {
-      "condition": "[equals(parameters('counter'),1)]",
       "type": "Microsoft.Network/virtualNetworks",
       "name": "[variables('virtualNetworksName')]",
       "apiVersion": "[variables('apiVersion')]",
@@ -44,34 +43,6 @@
               "addressPrefix": "[variables('subnet1Range')]"
             }
           },
-          {
-            "name": "[variables('signerSubnetName')]",
-            "properties": {
-              "addressPrefix": "[variables('subnet2Range')]"
-            }
-          },
-          {
-            "name": "GatewaySubnet",
-            "properties": {
-              "addressPrefix": "[variables('gatewaySubnetRange')]"
-            }
-          }
-        ]
-      }
-    },
-    {
-      "condition": "[greater(parameters('counter'),1)]",
-      "type": "Microsoft.Network/virtualNetworks",
-      "name": "[variables('virtualNetworksName')]",
-      "apiVersion": "[variables('apiVersion')]",
-      "location": "[variables('location')]",
-      "properties": {
-        "addressSpace": {
-          "addressPrefixes": [
-            "[variables('vnetRange')]"
-          ]
-        },
-        "subnets": [
           {
             "name": "[variables('signerSubnetName')]",
             "properties": {
