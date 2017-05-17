@@ -65,6 +65,9 @@
         "parameters": {
           "nsgSettings": {
             "value": "[parameters('nsgSettings')]"
+          },
+          "location": {
+            "value": "[parameters('location')]"
           }
         }
       }
