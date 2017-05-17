@@ -2,7 +2,7 @@
   "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
   "contentVersion": "1.0.0.0",
   "parameters": {
-    "pipSettings": {
+    "signerPipSettings": {
       "type": "object"
     },
     "location": {
@@ -10,11 +10,11 @@
     }
   },
   "variables": {
-    "signerVMIpName": "[parameters('pipSettings').signerVMIpName]",
-    "signer_nodes_Count": "[parameters('pipSettings').signer_nodes_Count]",
-    "signerPipDns": "[parameters('pipSettings').signerPipDns]",
-    "apiVersion": "[parameters('pipSettings').apiVersion]",
-    "publicIPAllocationMethod": "[parameters('pipSettings').publicIPAllocationMethod]"
+    "signerVMIpName": "[parameters('signerPipSettings').signerVMIpName]",
+    "signer_nodes_Count": "[parameters('signerPipSettings').signer_nodes_Count]",
+    "signerPipDns": "[parameters('signerPipSettings').signerPipDns]",
+    "apiVersion": "[parameters('signerPipSettings').apiVersion]",
+    "publicIPAllocationMethod": "[parameters('signerPipSettings').publicIPAllocationMethod]"
   },
   "resources": [
     {
