@@ -1,0 +1,102 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "prefix": {
+      "type": "string"
+    },
+    "location": {
+      "type": "string"
+    },
+    "nestedURls": {
+      "type": "object"
+    },
+    "apiVersion": {
+      "type": "object"
+    },
+    "vnetSettings": {
+      "type": "object"
+    },
+    "signerSettings": {
+      "type": "object"
+    },
+    "nsgSettings": {
+      "type": "object"
+    }
+  },
+  "variables": {
+    "vnetDep": "vnetSetup",
+    "nsgDep": "nsgSetup"
+  },
+  "resources": [
+    {
+      "name": "[variables('vnetDep')]",
+      "apiVersion": "[parameters('apiVersion').deploymentApiVersion]",
+      "type": "Microsoft.Resources/deployments",
+      "properties": {
+        "mode": "Incremental",
+        "templateLink": {
+          "uri": "[parameters('nestedURLs').vnetSetupURL]",
+          "contentVersion": "1.0.0.0"
+        },
+        "parameters": {
+          "vnetSettings": {
+            "value": "[parameters('vnetSettings')]"
+          }
+        }
+      }
+    },
+    {
+      "name": "[variables('nsgDep')]",
+      "apiVersion": "[parameters('apiVersion').deploymentApiVersion]",
+      "type": "Microsoft.Resources/deployments",
+      "properties": {
+        "mode": "Incremental",
+        "templateLink": {
+          "uri": "[parameters('nestedURls').nsgSetupURL]",
+          "contentVersion": "1.0.0.0"
+        },
+        "parameters": {
+          "nsgSettings": {
+            "value": "[parameters('nsgSettings')]"
+          },
+          "location": {
+            "value": "[parameters('location')]"
+          }
+        }
+      }
+    },
+    {
+      "name": "signerSetup",
+      "apiVersion": "[parameters('apiVersion').deploymentApiVersion]",
+      "type": "Microsoft.Resources/deployments",
+      "dependsOn": [
+        "[variables('vnetDep')]"
+      ],
+      "properties": {
+        "mode": "Incremental",
+        "templateLink": {
+          "uri": "[parameters('nestedURLs').signerSetupURL]",
+          "contentVersion": "1.0.0.0"
+        },
+        "parameters": {
+          "prefix": {
+            "value": "[parameters('prefix')]"
+          },
+          "location": {
+            "value": "[parameters('location')]"
+          },
+          "nestedURls": {
+            "value": "[parameters('nestedURls')]"
+          },
+          "apiVersion": {
+            "value": "[parameters('apiVersion')]"
+          },
+          "signerSettings": {
+            "value": "[parameters('signerSettings')]"
+          }
+        }
+      }
+    }
+  ]
+}
