@@ -10,7 +10,7 @@
         }
     },
     "variables": {
-        "availabilitySetsName": "[parameters('availSetSettings').availabilitySetsName]",
+        "availabilitySetsName": "[concat(parameters('availSetSettings').availabilitySetsName,'-',parameters('location'))]",
         "apiVersion": "[parameters('availSetSettings').apiVersion]"
     },
     "resources": [

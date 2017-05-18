@@ -10,8 +10,8 @@
         }
     },
     "variables": {
-        "generatorIpName": "[parameters('genPipSettings').generatorIpName]",
-        "pipDns": "[parameters('genPipSettings').pipDns]",
+        "generatorIpName": "[concat(parameters('genPipSettings').generatorIpName,'-',parameters('location'))]",
+        "pipDns": "[concat(parameters('genPipSettings').pipDns,'-',parameters('location'))]",
         "location": "[parameters('location')]",
         "apiVersion": "[parameters('genPipSettings').apiVersion]",
         "publicIPAllocationMethod": "[parameters('genPipSettings').publicIPAllocationMethod]"

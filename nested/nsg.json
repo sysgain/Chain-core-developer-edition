@@ -10,13 +10,13 @@
         }
     },
     "variables": {
-        "nsgName": "[parameters('nsgSettings').nsgName]",
+        "nsgName": "[concat(parameters('nsgSettings').nsgName,'-',parameters('location'))]",
         "apiVersion": "[parameters('nsgSettings').apiVersion]"
     },
     "resources": [
         {
             "type": "Microsoft.Network/networkSecurityGroups",
-            "name": "[concat(variables('nsgName'),'-',parameters('location'))]",
+            "name": "[variables('nsgName')]",
             "apiVersion": "[variables('apiVersion')]",
             "location": "[parameters('location')]",
             "properties": {

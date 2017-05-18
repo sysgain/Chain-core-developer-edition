@@ -12,9 +12,9 @@
     "variables": {
         "suffix": "[concat(parameters('vmSettings').suffix)]",
         "apiVersion": "[concat(parameters('vmSettings').apiVersion)]",
-        "availabilitySetsName": "[concat(parameters('vmSettings').availabilitySetsName)]",
-        "nicName": "[concat(parameters('vmSettings').nicName)]",
-        "vmName": "[concat(parameters('vmSettings').vmName)]",
+        "availabilitySetsName": "[concat(parameters('vmSettings').availabilitySetsName,'-',parameters('location'))]",
+        "nicName": "[concat(parameters('vmSettings').nicName,'-',parameters('location'))]",
+        "vmName": "[concat(parameters('vmSettings').vmName,'-',parameters('location'))]",
         "nodeCount": "[parameters('vmSettings').nodeCount]",
         "adminUsername": "[parameters('vmSettings').adminUsername]",
         "adminPassword": "[parameters('vmSettings').adminPassword]",
@@ -32,7 +32,7 @@
     "resources": [
         {
             "type": "Microsoft.Compute/virtualMachines",
-            "name": "[concat(variables('vmName'),'-',copyIndex(1),'-',parameters('location'))]",
+            "name": "[concat(variables('vmName'),'-',copyIndex(1))]",
             "apiVersion": "[variables('apiVersion')]",
             "location": "[parameters('location')]",
             "copy": {
@@ -41,7 +41,7 @@
             },
             "properties": {
                 "availabilitySet": {
-                    "id": "[resourceId('Microsoft.Compute/availabilitySets',concat(variables('availabilitySetsName'),'-',parameters('location')))]"
+                    "id": "[resourceId('Microsoft.Compute/availabilitySets',variables('availabilitySetsName'))]"
                 },
                 "hardwareProfile": {
                     "vmSize": "[variables('vmSize')]"
@@ -55,7 +55,7 @@
                     },
                     "osDisk": {
                         "osType": "Linux",
-                        "name": "[concat(variables('vmName'),'-',copyIndex(1),'-',parameters('location'),'-',variables('suffix'),'-osDisk')]",
+                        "name": "[concat(variables('vmName'),'-',copyIndex(1),'-',variables('suffix'),'-osDisk')]",
                         "createOption": "FromImage",
                         "caching": "ReadWrite",
                         "managedDisk": {
@@ -77,7 +77,7 @@
                 "networkProfile": {
                     "networkInterfaces": [
                         {
-                            "id": "[resourceId('Microsoft.Network/networkInterfaces', concat(variables('nicName'),'-',copyIndex(1),'-',parameters('location')))]"
+                            "id": "[resourceId('Microsoft.Network/networkInterfaces', concat(variables('nicName'),'-',copyIndex(1)))]"
                         }
                     ]
                 }
@@ -89,7 +89,7 @@
                     "apiVersion": "[variables('dockerApiVersion')]",
                     "location": "[parameters('location')]",
                     "dependsOn": [
-                        "[concat('Microsoft.Compute/virtualMachines/', variables('vmName'),'-',copyIndex(1),'-',parameters('location'))]"
+                        "[concat('Microsoft.Compute/virtualMachines/', variables('vmName'),'-',copyIndex(1))]"
                     ],
                     "properties": {
                         "publisher": "Microsoft.Azure.Extensions",

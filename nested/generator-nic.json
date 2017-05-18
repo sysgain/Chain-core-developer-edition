@@ -11,13 +11,13 @@
     },
     "variables": {
         "location": "[parameters('location')]",
-        "generatorNicName": "[parameters('genNicSettings').generatorNicName]",
-        "virtualNetworksName": "[parameters('genNicSettings').virtualNetworksName]",
+        "generatorNicName": "[concat(parameters('genNicSettings').generatorNicName,'-',parameters('location'))]",
+        "virtualNetworksName": "[concat(parameters('genNicSettings').virtualNetworksName,'-',parameters('location'))]",
         "generatorSubnetName": "[parameters('genNicSettings').generatorSubnetName]",
-        "generatorNsgName": "[parameters('genNicSettings').generatorNsgName]",
+        "generatorNsgName": "[concat(parameters('genNicSettings').generatorNsgName,'-',parameters('location'))]",
         "privateIPAllocationMethod": "[parameters('genNicSettings').privateIPAllocationMethod]",
         "apiVersion": "[parameters('genNicSettings').apiVersion]",
-        "generatorIpName": "[parameters('genNicSettings').generatorIpName]"
+        "generatorIpName": "[concat(parameters('genNicSettings').generatorIpName,'-',parameters('location'))]"
     },
     "resources": [
         {

@@ -11,7 +11,7 @@
     },
     "variables": {
         "apiVersion": "[parameters('genExtensionSettings').apiVersion]",
-        "generatorVmName": "[parameters('genExtensionSettings').generatorVmName]",
+        "generatorVmName": "[concat(parameters('genExtensionSettings').generatorVmName,'-',parameters('location'))]",
         "generatorScriptUrl": "[parameters('genExtensionSettings').generatorScriptUrl]",
         "generatorScriptFileName": "[parameters('genExtensionSettings').generatorScriptFileName]",
         "networkTokenName": "[parameters('genExtensionSettings').networkTokenName]",

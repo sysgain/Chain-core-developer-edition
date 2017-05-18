@@ -10,16 +10,16 @@
     }
   },
   "variables": {
-    "pipName": "[parameters('pipSettings').pipName]",
+    "pipName": "[concat(parameters('pipSettings').pipName,'-',parameters('location'))]",
     "nodeCount": "[parameters('pipSettings').nodeCount]",
-    "pipDns": "[parameters('pipSettings').pipDns]",
+    "pipDns": "[concat(parameters('pipSettings').pipDns,'-',parameters('location'))]",
     "apiVersion": "[parameters('pipSettings').apiVersion]",
     "publicIPAllocationMethod": "[parameters('pipSettings').publicIPAllocationMethod]"
   },
   "resources": [
     {
       "type": "Microsoft.Network/publicIPAddresses",
-      "name": "[concat(variables('pipName'),'-',copyIndex(1),'-',parameters('location'))]",
+      "name": "[concat(variables('pipName'),'-',copyIndex(1))]",
       "apiVersion": "[variables('apiVersion')]",
       "location": "[parameters('location')]",
       "copy": {
@@ -30,7 +30,7 @@
         "publicIPAllocationMethod": "[variables('publicIPAllocationMethod')]",
         "idleTimeoutInMinutes": 4,
         "dnsSettings": {
-          "domainNameLabel": "[concat(variables('pipDns'),'-',parameters('location'),'-',copyIndex(1))]"
+          "domainNameLabel": "[concat(variables('pipDns'),'-',copyIndex(1))]"
         }
       },
       "dependsOn": []

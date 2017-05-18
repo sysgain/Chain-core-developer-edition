@@ -11,9 +11,9 @@
     },
     "variables": {
         "regionCount": "[parameters('vnetSettings').regionCount]",
-        "virtualNetworksName": "[parameters('vnetSettings').virtualNetworksName]",
+        "virtualNetworksName": "[concat(parameters('vnetSettings').virtualNetworksName,'-',parameters('location'))]",
         "location": "[parameters('location')]",
-        "signerSubnetName": "[parameters('vnetSettings').signerSubnetName]",
+        "subnetName": "[parameters('vnetSettings').subnetName]",
         "vnetRange": "[parameters('vnetSettings').vnetRange]",
         "subnet2Range": "[parameters('vnetSettings').subnet2Range]",
         "apiVersion": "[parameters('vnetSettings').apiVersion]",
@@ -22,7 +22,7 @@
     "resources": [
         {
             "type": "Microsoft.Network/virtualNetworks",
-            "name": "[concat(variables('virtualNetworksName'),'-',parameters('location'))]",
+            "name": "[variables('virtualNetworksName')]",
             "apiVersion": "[variables('apiVersion')]",
             "location": "[variables('location')]",
             "properties": {
@@ -33,7 +33,7 @@
                 },
                 "subnets": [
                     {
-                        "name": "[variables('signerSubnetName')]",
+                        "name": "[variables('subnetName')]",
                         "properties": {
                             "addressPrefix": "[variables('subnet2Range')]"
                         }

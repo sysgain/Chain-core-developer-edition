@@ -190,7 +190,7 @@
         "baseUrl": "[parameters('artifactsBaseUrl')]",
         "signerNodeCount": "[int(parameters('signerNodeCount'))]",
         "participantNodeCount": "[int(parameters('participantNodeCount'))]",
-        "prefix": "chain",
+        "prefix": "chn",
         "suffix": "[substring(uniqueString(resourceGroup().id) ,0, 5)]",
         "multiTemplate": [
             "multi-dummy.json",
@@ -226,7 +226,7 @@
             "gatewaySetupURL": "[concat(variables('baseUrl'),'/nested/gateway.json')]",
             "gatewayPipSetupURL": "[concat(variables('baseUrl'),'/nested/gateway-pip.json')]",
             "connectionsSetupURl": "[concat(variables('baseUrl'),'/nested/connections.json')]",
-            "singleRegionSetupURL": "[concat(variables('baseUrl'),'/nested/single-region.json')]",
+            "oneRegionSetupURL": "[concat(variables('baseUrl'),'/nested/one-region.json')]",
             "multiRegionSetupURL": "[concat(variables('baseUrl'),'/nested/',variables('multiTemplate')[sub(int(parameters('regionCount')),1)])]",
             "vnetSetupURL": "[concat(variables('baseUrl'),'/nested/vnet.json')]",
             "vnetmultiSetupURL": "[concat(variables('baseUrl'),'/nested/vnetmulti.json')]",
@@ -238,9 +238,9 @@
         "vnetSettings": {
             "region1": {
                 "regionCount": "[parameters('regionCount')]",
-                "virtualNetworksName": "[concat(variables('prefix'),'_vnet_reg_',parameters('regionCount'))]",
+                "virtualNetworksName": "[concat(variables('prefix'),'_vnet')]",
                 "generatorSubnetName": "gen-subnet",
-                "signerSubnetName": "signer-subnet",
+                "subnetName": "subnet",
                 "vnetRange": "10.1.0.0/16",
                 "subnet1Range": "10.1.1.0/24",
                 "subnet2Range": "10.1.2.0/24",
@@ -251,7 +251,7 @@
                 "regionCount": "[parameters('regionCount')]",
                 "virtualNetworksName": "[concat(variables('prefix'),'_vnet')]",
                 "generatorSubnetName": "gen-subnet",
-                "signerSubnetName": "signer-subnet",
+                "subnetName": "subnet",
                 "vnetRange": "10.2.0.0/16",
                 "subnet1Range": "10.2.1.0/24",
                 "subnet2Range": "10.2.2.0/24",
@@ -262,7 +262,7 @@
                 "regionCount": "[parameters('regionCount')]",
                 "virtualNetworksName": "[concat(variables('prefix'),'_vnet')]",
                 "generatorSubnetName": "gen-subnet",
-                "signerSubnetName": "signer-subnet",
+                "subnetName": "subnet",
                 "vnetRange": "10.3.0.0/16",
                 "subnet1Range": "10.3.1.0/24",
                 "subnet2Range": "10.3.2.0/24",
@@ -273,7 +273,7 @@
                 "regionCount": "[parameters('regionCount')]",
                 "virtualNetworksName": "[concat(variables('prefix'),'_vnet')]",
                 "generatorSubnetName": "gen-subnet",
-                "signerSubnetName": "signer-subnet",
+                "subnetName": "subnet",
                 "vnetRange": "10.4.0.0/16",
                 "subnet1Range": "10.4.1.0/24",
                 "subnet2Range": "10.4.2.0/24",
@@ -284,7 +284,7 @@
                 "regionCount": "[parameters('regionCount')]",
                 "virtualNetworksName": "[concat(variables('prefix'),'_vnet')]",
                 "generatorSubnetName": "gen-subnet",
-                "signerSubnetName": "signer-subnet",
+                "subnetName": "subnet",
                 "vnetRange": "10.5.0.0/16",
                 "subnet1Range": "10.5.1.0/24",
                 "subnet2Range": "10.5.2.0/24",
@@ -391,7 +391,7 @@
                 "apiVersion": "[variables('apiVersion').networkApiVersion]",
                 "pipName": "[variables('signerIpName')]",
                 "virtualNetworksName": "[variables('vnetSettings').region1.virtualNetworksName]",
-                "signerSubnetName": "[variables('vnetSettings').region1.signerSubnetName]",
+                "signerSubnetName": "[variables('vnetSettings').region1.subnetName]",
                 "nsgName": "[variables('nsgSettings').nsgName]"
             },
             "signerPipSettings": {
@@ -447,7 +447,7 @@
                 "apiVersion": "[variables('apiVersion').networkApiVersion]",
                 "pipName": "[variables('partIpName')]",
                 "virtualNetworksName": "[variables('vnetSettings').region1.virtualNetworksName]",
-                "signerSubnetName": "[variables('vnetSettings').region1.signerSubnetName]",
+                "subnetName": "[variables('vnetSettings').region1.subnetName]",
                 "nsgName": "[variables('nsgSettings').nsgName]"
             },
             "partPipSettings": {
@@ -458,7 +458,7 @@
                 "publicIPAllocationMethod": "Dynamic"
             }
         },
-        "singleRegionDep": "singleRegionSetup",
+        "oneRegionDep": "oneRegionSetup",
         "multiRegionDep": "multiRegionSetup",
         "locationsArray": [
             "[parameters('location_1')]",
@@ -487,13 +487,13 @@
             }
         },
         {
-            "name": "[variables('singleRegionDep')]",
+            "name": "[variables('oneRegionDep')]",
             "apiVersion": "[variables('apiVersion').deploymentApiVersion]",
             "type": "Microsoft.Resources/deployments",
             "properties": {
                 "mode": "Incremental",
                 "templateLink": {
-                    "uri": "[variables('nestedURLs').singleRegionSetupURL]",
+                    "uri": "[variables('nestedURLs').oneRegionSetupURL]",
                     "contentVersion": "1.0.0.0"
                 },
                 "parameters": {
@@ -533,7 +533,7 @@
             "apiVersion": "[variables('apiVersion').deploymentApiVersion]",
             "type": "Microsoft.Resources/deployments",
             "dependsOn": [
-                "[variables('singleRegionDep')]"
+                "[variables('oneRegionDep')]"
             ],
             "copy": {
                 "name": "multiregionLoop",
@@ -568,7 +568,7 @@
                         "value": "[variables('nsgSettings')]"
                     },
                     "generatorIp": {
-                        "value": "[reference(variables('singleRegionDep')).outputs.generatorIp.value]"
+                        "value": "[reference(variables('oneRegionDep')).outputs.generatorIp.value]"
                     }
                 }
             }
