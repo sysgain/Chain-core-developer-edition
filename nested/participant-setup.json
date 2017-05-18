@@ -23,10 +23,10 @@
     },
     "variables": {
         "prefix": "[parameters('prefix')]",
-        "partVmDep": "[concat(variables('prefix'),'-signerVmSetup-',parameters('location'))]",
-        "partNicDep": "[concat(variables('prefix'),'-signerNicSetup-',parameters('location'))]",
-        "partPipDep": "[concat(variables('prefix'),'-signerPipSetup-',parameters('location'))]",
-        "partAvailDep": "[concat(variables('prefix'),'-signerAvailSetup-',parameters('location'))]"
+        "partVmDep": "[concat(variables('prefix'),'-partVmSetup-',parameters('location'))]",
+        "partNicDep": "[concat(variables('prefix'),'-partNicSetup-',parameters('location'))]",
+        "partPipDep": "[concat(variables('prefix'),'-partPipSetup-',parameters('location'))]",
+        "partAvailDep": "[concat(variables('prefix'),'-partAvailSetup-',parameters('location'))]"
     },
     "resources": [
         {
