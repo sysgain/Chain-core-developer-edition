@@ -14,7 +14,7 @@
                         "type": "Microsoft.Compute.UserNameTextBox",
                         "label": "User name",
                         "defaultValue": "blockuser",
-                        "toolTip": "Admin username for the virtual machines. Same Credientials is to SSH to the box.",
+                        "toolTip": "Virtual Machine Admin User",
                         "constraints": {
                             "required": true,
                             "regex": "^[a-z0-9A-Z]{4,20}$",
@@ -34,8 +34,8 @@
                         },
                         "toolTip": {
                             "authenticationType": "Authentication Type for the admin user",
-                            "password": "OS Admin User Password",
-                            "sshPublicKey": "SSH Public Key for the Admin User"
+                            "password": "Virtual Machine Admin Password",
+                            "sshPublicKey": "Virtual Machine SSH Public Key"
                         },
                         "constraints": {
                             "required": true
