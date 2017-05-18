@@ -548,16 +548,13 @@
         },
         {
             
-            "name": "[concat(variables('multiRegionDep'),copyIndex(2))]",
+            "name": "[variables('multiRegionDep')]",
             "apiVersion": "[variables('apiVersion').deploymentApiVersion]",
             "type": "Microsoft.Resources/deployments",
             "dependsOn": [
                 "[variables('oneRegionDep')]"
             ],
-            "copy": {
-                "name": "multiregionLoop",
-                "count": "[sub(int(parameters('regionCount')),1)]"
-            },
+            
             "properties": {
                 "mode": "Incremental",
                 "templateLink": {
@@ -566,10 +563,13 @@
                 },
                 "parameters": {
                     "location": {
-                        "value": "[variables('locationsArray')[copyIndex(1)]]"
+                        "value": "[variables('locationsArray')]"
                     },
                     "prefix": {
                         "value": "[variables('prefix')]"
+                    },
+                    "regionCount":{
+                        "value": "[parameters('regionCount')]"
                     },
                     "nestedURls": {
                         "value": "[variables('nestedURls')]"
@@ -578,7 +578,7 @@
                         "value": "[variables('apiVersion')]"
                     },
                     "vnetSettings": {
-                        "value": "[variables('vnetRegionArray')[copyIndex(1)]]"
+                        "value": "[variables('vnetSettings')]"
                     },
                     "signerSettings": {
                         "value": "[variables('signerSettings')]"
