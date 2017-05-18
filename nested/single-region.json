@@ -181,5 +181,11 @@
                 }
             }
         }
-    ]
+    ],
+    "outputs": {
+        "generatorIp":{
+            "type": "string",
+            "value": "[reference(variables('generatorDep')).outputs.generatorIp.value]"
+        }
+    }
 }

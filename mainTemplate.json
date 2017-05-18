@@ -217,6 +217,7 @@
             "generatorNicSetupURL": "[concat(variables('baseUrl'),'/nested/generator-nic.json')]",
             "generatorPipSetupURL": "[concat(variables('baseUrl'),'/nested/generator-pip.json')]",
             "nsgSetupURL": "[concat(variables('baseUrl'),'/nested/nsg.json')]",
+            
             "generatorSetupURL": "[concat(variables('baseUrl'),'/nested/generator-setup.json')]",
             "signerSetupURL": "[concat(variables('baseUrl'),'/nested/signer-setup.json')]",
             "partSetupURL": "[concat(variables('baseUrl'),'/nested/participant-setup.json')]",
@@ -230,6 +231,7 @@
             "singleRegionSetupURL": "[concat(variables('baseUrl'),'/nested/single-region.json')]",
             "multiRegionSetupURL": "[concat(variables('baseUrl'),'/nested/',variables('multiTemplate')[sub(int(parameters('regionCount')),1)])]",
             "vnetSetupURL": "[concat(variables('baseUrl'),'/nested/vnet.json')]",
+            "vnetmultiSetupURL": "[concat(variables('baseUrl'),'/nested/vnetmulti.json')]",
             "keyVaultSetupURL": "[concat(variables('baseUrl'),'/nested/keyvault.json')]",
             "avaialabilitySetSetupURL": "[concat(variables('baseUrl'),'/nested/availability-set.json')]",
             "signerScriptUrl": "[concat(variables('baseUrl'),'/scripts/signer-script.sh')]",
