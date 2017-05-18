@@ -29,7 +29,7 @@
     "resources": [
         {
             "type": "Microsoft.Compute/virtualMachines/extensions",
-            "name": "[concat(variables('signerVmName'),'-',copyIndex(1), '/signerConfig')]",
+            "name": "[concat(variables('signerVmName'),'-',copyIndex(1),'-',parameters('location'), '/signerConfig')]",
             "location": "[parameters('location')]",
             "apiVersion": "[variables('apiVersion')]",
             "copy": {

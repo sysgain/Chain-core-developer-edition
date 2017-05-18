@@ -54,9 +54,6 @@
                     "vnetSettings": {
                         "value": "[parameters('vnetSettings')]"
                     },
-                    "counter": {
-                        "value": "[parameters('counter')]"
-                    },
                     "location": {
                         "value": "[parameters('location')]"
                     }

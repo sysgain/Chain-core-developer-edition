@@ -32,7 +32,7 @@
     "resources": [
         {
             "type": "Microsoft.Compute/virtualMachines",
-            "name": "[concat(variables('vmName'),'-',copyIndex(1))]",
+            "name": "[concat(variables('vmName'),'-',copyIndex(1),'-',parameters('location'))]",
             "apiVersion": "[variables('apiVersion')]",
             "location": "[parameters('location')]",
             "copy": {
@@ -41,7 +41,7 @@
             },
             "properties": {
                 "availabilitySet": {
-                    "id": "[resourceId('Microsoft.Compute/availabilitySets',variables('availabilitySetsName'))]"
+                    "id": "[resourceId('Microsoft.Compute/availabilitySets',variables('availabilitySetsName'),'-',parameters('location'))]"
                 },
                 "hardwareProfile": {
                     "vmSize": "[variables('vmSize')]"
@@ -55,7 +55,7 @@
                     },
                     "osDisk": {
                         "osType": "Linux",
-                        "name": "[concat(variables('vmName'),'-',copyIndex(1),'-',variables('suffix'),'-osDisk')]",
+                        "name": "[concat(variables('vmName'),'-',copyIndex(1),'-',parameters('location'),'-',variables('suffix'),'-osDisk')]",
                         "createOption": "FromImage",
                         "caching": "ReadWrite",
                         "managedDisk": {
@@ -77,7 +77,7 @@
                 "networkProfile": {
                     "networkInterfaces": [
                         {
-                            "id": "[resourceId('Microsoft.Network/networkInterfaces', concat(variables('nicName'),'-',copyIndex(1)))]"
+                            "id": "[resourceId('Microsoft.Network/networkInterfaces', concat(variables('nicName'),'-',copyIndex(1),'-',parameters('location')))]"
                         }
                     ]
                 }
@@ -89,7 +89,7 @@
                     "apiVersion": "[variables('dockerApiVersion')]",
                     "location": "[parameters('location')]",
                     "dependsOn": [
-                        "[concat('Microsoft.Compute/virtualMachines/', variables('vmName'),'-',copyIndex(1))]"
+                        "[concat('Microsoft.Compute/virtualMachines/', variables('vmName'),'-',copyIndex(1),'-',parameters('location'))]"
                     ],
                     "properties": {
                         "publisher": "Microsoft.Azure.Extensions",

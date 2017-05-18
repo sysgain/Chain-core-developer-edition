@@ -22,7 +22,7 @@
     "resources": [
         {
             "type": "Microsoft.Network/virtualNetworks",
-            "name": "[variables('virtualNetworksName')]",
+            "name": "[concat(variables('virtualNetworksName'),'-',parameters('location'))]",
             "apiVersion": "[variables('apiVersion')]",
             "location": "[variables('location')]",
             "properties": {
