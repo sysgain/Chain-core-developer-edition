@@ -5,13 +5,13 @@
         "genPipSettings": {
             "type": "object"
         },
-        "location":{
-            "type":"string"
+        "location": {
+            "type": "string"
         }
     },
     "variables": {
-        "generatorLbIpName": "[parameters('genPipSettings').generatorLbIpName]",
-        "lbPipDns": "[parameters('genPipSettings').lbPipDns]",
+        "generatorIpName": "[parameters('genPipSettings').generatorIpName]",
+        "pipDns": "[parameters('genPipSettings').pipDns]",
         "location": "[parameters('location')]",
         "apiVersion": "[parameters('genPipSettings').apiVersion]",
         "publicIPAllocationMethod": "[parameters('genPipSettings').publicIPAllocationMethod]"
@@ -19,23 +19,23 @@
     "resources": [
         {
             "type": "Microsoft.Network/publicIPAddresses",
-            "name": "[variables('generatorLbIpName')]",
+            "name": "[variables('generatorIpName')]",
             "apiVersion": "[variables('apiVersion')]",
             "location": "[variables('location')]",
             "properties": {
                 "publicIPAllocationMethod": "[variables('publicIPAllocationMethod')]",
                 "idleTimeoutInMinutes": 4,
                 "dnsSettings": {
-                    "domainNameLabel": "[variables('lbPipDns')]"
+                    "domainNameLabel": "[variables('pipDns')]"
                 }
             },
             "dependsOn": []
         }
     ],
     "outputs": {
-        "generatorIp":{
+        "generatorIp": {
             "type": "string",
-            "value": "[reference(resourceId('Microsoft.Network/publicIPAddresses', variables('generatorLbIpName'))).dnsSettings.fqdn]"
+            "value": "[reference(resourceId('Microsoft.Network/publicIPAddresses', variables('generatorIpName'))).dnsSettings.fqdn]"
         }
     }
 }

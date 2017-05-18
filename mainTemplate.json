@@ -1,503 +1,518 @@
 {
-  "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
-  "contentVersion": "1.0.0.0",
-  "parameters": {
-    "regionCount": {
-      "type": "string",
-      "defaultValue": "1",
-      "allowedValues": [
-        "1",
-        "2",
-        "3",
-        "4",
-        "5"
-      ]
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "regionCount": {
+            "type": "string",
+            "defaultValue": "1",
+            "allowedValues": [
+                "1",
+                "2",
+                "3",
+                "4",
+                "5"
+            ]
+        },
+        "location_1": {
+            "type": "string",
+            "defaultValue": "westus"
+        },
+        "location_2": {
+            "type": "string",
+            "defaultValue": "centralus"
+        },
+        "location_3": {
+            "type": "string",
+            "defaultValue": "eastus"
+        },
+        "location_4": {
+            "type": "string",
+            "defaultValue": "eastus2"
+        },
+        "location_5": {
+            "type": "string",
+            "defaultValue": "southcentralus"
+        },
+        "generatorVmSize": {
+            "type": "string",
+            "defaultValue": "Standard_DS1_V2",
+            "allowedValues": [
+                "Standard_DS1",
+                "Standard_DS1_V2",
+                "Standard_DS2",
+                "Standard_DS2_V2",
+                "Standard_DS3",
+                "Standard_DS3_V2",
+                "Standard_DS4",
+                "Standard_DS4_V2",
+                "Standard_DS5_V2",
+                "Standard_DS11",
+                "Standard_DS11_V2",
+                "Standard_DS12",
+                "Standard_DS12_V2",
+                "Standard_DS13",
+                "Standard_DS13_V2",
+                "Standard_DS14",
+                "Standard_DS14_V2",
+                "Standard_DS15_V2",
+                "Standard_F1S",
+                "Standard_F2S",
+                "Standard_F4S",
+                "Standard_F8S",
+                "Standard_F16S"
+            ],
+            "metadata": {
+                "description": "Generator VM size"
+            }
+        },
+        "signerVmSize": {
+            "type": "string",
+            "defaultValue": "Standard_DS1_V2",
+            "allowedValues": [
+                "Standard_DS1",
+                "Standard_DS1_V2",
+                "Standard_DS2",
+                "Standard_DS2_V2",
+                "Standard_DS3",
+                "Standard_DS3_V2",
+                "Standard_DS4",
+                "Standard_DS4_V2",
+                "Standard_DS5_V2",
+                "Standard_DS11",
+                "Standard_DS11_V2",
+                "Standard_DS12",
+                "Standard_DS12_V2",
+                "Standard_DS13",
+                "Standard_DS13_V2",
+                "Standard_DS14",
+                "Standard_DS14_V2",
+                "Standard_DS15_V2",
+                "Standard_F1S",
+                "Standard_F2S",
+                "Standard_F4S",
+                "Standard_F8S",
+                "Standard_F16S"
+            ],
+            "metadata": {
+                "description": "Signer Node VM(s) size"
+            }
+        },
+        "signerNodeCount": {
+            "type": "string",
+            "defaultValue": "2",
+            "allowedValues": [
+                "1",
+                "2",
+                "3",
+                "4",
+                "5",
+                "6",
+                "7",
+                "8",
+                "9"
+            ]
+        },
+        "passwordOrSshKey": {
+            "type": "string",
+            "defaultValue": "password",
+            "allowedValues": [
+                "sshKey",
+                "password"
+            ],
+            "metadata": {
+                "description": "User name for the Virtual Machine."
+            }
+        },
+        "adminUsername": {
+            "type": "string",
+            "defaultValue": "ashuser",
+            "metadata": {
+                "description": "Username for VM login"
+            }
+        },
+        "sshPublicKey": {
+            "type": "string"
+        },
+        "adminPassword": {
+            "type": "securestring",
+            "defaultValue": "Ashpassword123",
+            "metadata": {
+                "description": "Password VM login"
+            }
+        },
+        "objectId": {
+            "type": "string",
+            "metadata": {
+                "description": "Azure access control user objectId for Service principal"
+            }
+        },
+        "servicePrinciple": {
+            "type": "string",
+            "metadata": {
+                "description": "Service principal objectId"
+            }
+        },
+        "secretKey": {
+            "type": "securestring",
+            "metadata": {
+                "description": "Service principal secret key"
+            }
+        },
+        "VPNSharedKey": {
+            "type": "securestring",
+            "defaultValue": "Ashpassword123",
+            "metadata": {
+                "description": "VPN shared key is used by VPN's. It could be any passphrase"
+            }
+        },
+        "storageAccountType": {
+            "type": "string",
+            "defaultValue": "Standard_LRS",
+            "metadata": {
+                "description": "Storage account type"
+            }
+        },
+        "artifactsBaseUrl": {
+            "type": "string",
+            "defaultValue": "https://raw.githubusercontent.com/sysgain/Chain-core-developer-edition/chain-core-dev-v2",
+            "metadata": {
+                "artifactsBaseUrl": "Base URL of the Publisher Template gallery package"
+            }
+        }
     },
-    "location_1": {
-      "type": "string",
-      "defaultValue": "westus"
-    },
-    "location_2": {
-      "type": "string",
-      "defaultValue": "centralus"
-    },
-    "location_3": {
-      "type": "string",
-      "defaultValue": "eastus"
-    },
-    "location_4": {
-      "type": "string",
-      "defaultValue": "eastus2"
-    },
-    "location_5": {
-      "type": "string",
-      "defaultValue": "southcentralus"
-    },
-    "generatorVmSize": {
-      "type": "string",
-      "defaultValue": "Standard_DS1_V2",
-      "allowedValues": [
-        "Standard_DS1",
-        "Standard_DS1_V2",
-        "Standard_DS2",
-        "Standard_DS2_V2",
-        "Standard_DS3",
-        "Standard_DS3_V2",
-        "Standard_DS4",
-        "Standard_DS4_V2",
-        "Standard_DS5_V2",
-        "Standard_DS11",
-        "Standard_DS11_V2",
-        "Standard_DS12",
-        "Standard_DS12_V2",
-        "Standard_DS13",
-        "Standard_DS13_V2",
-        "Standard_DS14",
-        "Standard_DS14_V2",
-        "Standard_DS15_V2",
-        "Standard_F1S",
-        "Standard_F2S",
-        "Standard_F4S",
-        "Standard_F8S",
-        "Standard_F16S"
-      ],
-      "metadata": {
-        "description": "Generator VM size"
-      }
-    },
-    "signerVmSize": {
-      "type": "string",
-      "defaultValue": "Standard_DS1_V2",
-      "allowedValues": [
-        "Standard_DS1",
-        "Standard_DS1_V2",
-        "Standard_DS2",
-        "Standard_DS2_V2",
-        "Standard_DS3",
-        "Standard_DS3_V2",
-        "Standard_DS4",
-        "Standard_DS4_V2",
-        "Standard_DS5_V2",
-        "Standard_DS11",
-        "Standard_DS11_V2",
-        "Standard_DS12",
-        "Standard_DS12_V2",
-        "Standard_DS13",
-        "Standard_DS13_V2",
-        "Standard_DS14",
-        "Standard_DS14_V2",
-        "Standard_DS15_V2",
-        "Standard_F1S",
-        "Standard_F2S",
-        "Standard_F4S",
-        "Standard_F8S",
-        "Standard_F16S"
-      ],
-      "metadata": {
-        "description": "Signer Node VM(s) size"
-      }
-    },
-    "signerNodeCount": {
-      "type": "string",
-      "defaultValue": "2",
-      "allowedValues": [
-        "1",
-        "2",
-        "3",
-        "4",
-        "5",
-        "6",
-        "7",
-        "8",
-        "9"
-      ]
-    },
-    "adminUsername": {
-      "type": "string",
-      "defaultValue": "ashuser",
-      "metadata": {
-        "description": "Username for VM login"
-      }
-    },
-    "adminPassword": {
-      "type": "securestring",
-      "defaultValue": "Ashpassword123",
-      "metadata": {
-        "description": "Password VM login"
-      }
-    },
-    "objectId": {
-      "type": "string",
-      "metadata": {
-        "description": "Azure access control user objectId for Service principal"
-      }
-    },
-    "servicePrinciple": {
-      "type": "string",
-      "metadata": {
-        "description": "Service principal objectId"
-      }
-    },
-    "secretKey": {
-      "type": "securestring",
-      "metadata": {
-        "description": "Service principal secret key"
-      }
-    },
-    "VPNSharedKey": {
-      "type": "securestring",
-      "defaultValue": "Ashpassword123",
-      "metadata": {
-        "description": "VPN shared key is used by VPN's. It could be any passphrase"
-      }
-    },
-    "storageAccountType": {
-      "type": "string",
-      "defaultValue": "Standard_LRS",
-      "metadata": {
-        "description": "Storage account type"
-      }
-    },
-    "artifactsBaseUrl": {
-      "type": "string",
-      "defaultValue": "https://raw.githubusercontent.com/sysgain/Chain-core-developer-edition/chain-core-dev-v2",
-      "metadata": {
-        "artifactsBaseUrl": "Base URL of the Publisher Template gallery package"
-      }
-    }
-  },
-  "variables": {
-    "baseUrl": "[parameters('artifactsBaseUrl')]",
-    "prefix": "chain",
-    "suffix": "[substring(uniqueString(resourceGroup().id) ,0, 5)]",
-    "multiTemplate": ["multi-dummy.json","multi-region.json","multi-region.json","multi-region.json","multi-region.json"],
-    "nestedURls": {
-      "generatorVmSetupURL": "[concat(variables('baseUrl'),'/nested/generator-vm.json')]",
-      "generatorExtensionSetupURL": "[concat(variables('baseUrl'),'/nested/generator-extension.json')]",
-      "generatorNicSetupURL": "[concat(variables('baseUrl'),'/nested/generator-nic.json')]",
-      "generatorLbSetupURL": "[concat(variables('baseUrl'),'/nested/generator-lb.json')]",
-      "generatorPipLbSetupURL": "[concat(variables('baseUrl'),'/nested/generator-pip.json')]",
-      "nsgSetupURL": "[concat(variables('baseUrl'),'/nested/nsg.json')]",
-      "generatorSetupURL": "[concat(variables('baseUrl'),'/nested/generator-setup.json')]",
-      "signerSetupURL": "[concat(variables('baseUrl'),'/nested/signer-setup.json')]",
-      "signerVMsSetupURL": "[concat(variables('baseUrl'),'/nested/signer-vm.json')]",
-      "signerExtensionSetupURL": "[concat(variables('baseUrl'),'/nested/signer-extension.json')]",
-      "signerNICsetupURL": "[concat(variables('baseUrl'),'/nested/signer-nic.json')]",
-      "signerPipSetupURL": "[concat(variables('baseUrl'),'/nested/signer-pip.json')]",
-      "gatewaySetupURL": "[concat(variables('baseUrl'),'/nested/gateway.json')]",
-      "gatewayPipSetupURL": "[concat(variables('baseUrl'),'/nested/gateway-pip.json')]",
-      "connectionsSetupURl": "[concat(variables('baseUrl'),'/nested/connections.json')]",
-      "singleRegionSetupURL": "[concat(variables('baseUrl'),'/nested/single-region.json')]",
-      "multiRegionSetupURL": "[concat(variables('baseUrl'),'/nested/',variables('multiTemplate')[sub(int(parameters('regionCount')),1)])]",
-      "vnetSetupURL": "[concat(variables('baseUrl'),'/nested/vnet.json')]",
-      "keyVaultSetupURL": "[concat(variables('baseUrl'),'/nested/keyvault.json')]",
-      "avaialabilitySetSetupURL": "[concat(variables('baseUrl'),'/nested/availability-set.json')]",
-      "signerScriptUrl": "[concat(variables('baseUrl'),'/scripts/signer-script.sh')]",
-      "generatorScriptUrl": "[concat(variables('baseUrl'),'/scripts/generator-script.sh')]"
-    },
-    "apiVersion": {
-      "computeApiVersion": "2016-04-30-preview",
-      "networkApiVersion": "2016-03-30",
-      "keyVaultApiVersion": "2015-06-01",
-      "gatewayApiVersion": "2016-09-01",
-      "deploymentApiVersion": "2016-02-01",
-      "dockerApiVersion": "2015-05-01-preview"
-    },
-    "keyVaultSettings": {
-      "keyVaultName": "[concat('keyVlt_',variables('suffix'))]",
-      "tenantId": "[subscription().tenantId]",
-      "location": "[parameters('location_1')]",
-      "objectId": "[parameters('objectId')]",
-      "apiVersion": "[variables('apiVersion').keyVaultApiVersion]"
-    },
-    "nsgSettings": {
-      "nsgName": "[concat(variables('prefix'),'-nsg')]",
-      "apiVersion": "[variables('apiVersion').networkApiVersion]"
-    },
-    "generatorSettings": {
-      "genVMsettings": {
-        "suffix": "[variables('suffix')]",
-        "generatorNicName": "[concat(variables('prefix'),'-nic')]",
-        "publisher": "Canonical",
-        "offer": "UbuntuServer",
-        "sku": "16.04-LTS",
-        "version": "latest",
-        "diskSizeGB": 30,
+    "variables": {
+        "baseUrl": "[parameters('artifactsBaseUrl')]",
+        "prefix": "chain",
+        "suffix": "[substring(uniqueString(resourceGroup().id) ,0, 5)]",
+        "multiTemplate": [
+            "multi-dummy.json",
+            "multi-region.json",
+            "multi-region.json",
+            "multi-region.json",
+            "multi-region.json"
+        ],
+        "generatorNicName": "[concat(variables('prefix'),'-gen-nic')]",
         "generatorVmName": "[concat(variables('prefix'),'-gen-vm')]",
-        "apiVersion": "[variables('apiVersion').computeApiVersion]",
-        "dockerApiVersion": "[variables('apiVersion').dockerApiVersion]",
-        "adminUsername": "[parameters('adminUsername')]",
-        "adminPassword": "[parameters('adminPassword')]",
-        "generatorVmSize": "[parameters('generatorVmSize')]",
-        "storageAccountType": "[parameters('storageAccountType')]"
-      },
-      "genNicSettings": {
-        "generatorNicName": "[concat(variables('prefix'),'-nic')]",
-        "privateIPAllocationMethod": "Dynamic",
-        "apiVersion": "[variables('apiVersion').networkApiVersion]",
-        "virtualNetworksName": "[variables('vnetSettings').region1.virtualNetworksName]",
-        "generatorSubnetName": "[variables('vnetSettings').region1.generatorSubnetName]",
-        "chainLoadBalancerName": "[variables('chainLoadBalancerName')]",
-        "generatorNsgName": "[variables('nsgSettings').nsgName]"
-      },
-      "genlbSettings": {
-        "chainLoadBalancerName": "[variables('chainLoadBalancerName')]",
-        "generatorLbIpName": "[variables('generatorLbIpName')]",
-        "apiVersion": "[variables('apiVersion').networkApiVersion]"
-      },
-      "genPipSettings": {
-        "generatorLbIpName": "[variables('generatorLbIpName')]",
-        "lbPipDns": "[concat('generator-',variables('suffix'))]",
-        "apiVersion": "[variables('apiVersion').networkApiVersion]",
-        "publicIPAllocationMethod": "Dynamic"
-      },
-      "genExtensionSettings": {
-        "apiVersion": "[variables('apiVersion').computeApiVersion]",
-        "generatorVmName": "[concat(variables('prefix'),'-gen-vm')]",
-        "generatorScriptUrl": "[variables('nestedURls').generatorScriptUrl]",
-        "generatorScriptFileName": "generator-v2.sh",
-        "networkTokenName": "signet",
-        "servicePrinciple": "[parameters('servicePrinciple')]",
-        "secretKey": "[parameters('secretKey')]",
-        "tenantId": "[subscription().tenantId]",
-        "subscriptionId": "[subscription().subscriptionId]",
-        "keyVaultName": "[variables('keyVaultSettings').keyVaultName]",
-        "signerNodeCount": "[parameters('signerNodeCount')]"
-      }
-    },
-    "signerSettings": {
-      "signerAvailSetSettings": {
-        "availabilitySetsName": "[variables('availabilitySetsName')]",
-        "apiVersion": "[variables('apiVersion').computeApiVersion]"
-      },
-      "signerVMsettings": {
-        "suffix": "[variables('suffix')]",
-        "availabilitySetsName": "[variables('availabilitySetsName')]",
         "signerNicName": "[concat(variables('prefix'),'-signer-nic')]",
         "signerVmName": "[concat(variables('prefix'),'-signer-vm')]",
-        "apiVersion": "[variables('apiVersion').computeApiVersion]",
-        "dockerApiVersion": "[variables('apiVersion').dockerApiVersion]",
-        "publisher": "Canonical",
-        "offer": "UbuntuServer",
-        "sku": "16.04-LTS",
-        "version": "latest",
-        "diskSizeGB": 30,
-        "signerNodeCount": "[parameters('signerNodeCount')]",
-        "adminUsername": "[parameters('adminUsername')]",
-        "adminPassword": "[parameters('adminPassword')]",
-        "signerVmSize": "[parameters('signerVmSize')]",
-        "storageAccountType": "[parameters('storageAccountType')]"
-      },
-      "signerNicSettings": {
-        "signerNicName": "[concat(variables('prefix'),'-signer-nic')]",
-        "signerNodeCount": "[parameters('signerNodeCount')]",
-        "privateIPAllocationMethod": "Dynamic",
-        "apiVersion": "[variables('apiVersion').networkApiVersion]",
-        "signerVMIpName": "[variables('signerVMIpName')]",
-        "virtualNetworksName": "[variables('vnetSettings').region1.virtualNetworksName]",
-        "signerSubnetName": "[variables('vnetSettings').region1.signerSubnetName]",
-        "signerNsgName": "[variables('nsgSettings').nsgName]"
-      },
-      "signerPipSettings": {
-        "signerVMIpName": "[variables('signerVMIpName')]",
-        "signerNodeCount": "[parameters('signerNodeCount')]",
-        "signerPipDns": "[concat('signer-',variables('suffix'))]",
-        "apiVersion": "[variables('apiVersion').networkApiVersion]",
-        "publicIPAllocationMethod": "Dynamic"
-      },
-      "signerExtensionSettings": {
-        "apiVersion": "[variables('apiVersion').computeApiVersion]",
-        "signerVmName": "[concat(variables('prefix'),'-signer-vm')]",
-        "signerScriptUrl": "[variables('nestedURls').signerScriptUrl]",
-        "signerScriptFileName": "signer-v2.sh",
-        "servicePrinciple": "[parameters('servicePrinciple')]",
-        "secretKey": "[parameters('secretKey')]",
-        "tenantId": "[subscription().tenantId]",
-        "subscriptionid": "[subscription().subscriptionId]",
-        "keyVaultName": "[variables('keyVaultSettings').keyVaultName]",
-        "signerTokenName": "sigClientToken",
-        "signerNodeCount": "[parameters('signerNodeCount')]"
-      }
-    },
-    "vnetSettings": {
-      "region1": {
-        "regionCount": "[parameters('regionCount')]",
-        "virtualNetworksName": "[concat(variables('prefix'),'_vnet')]",
-        "generatorSubnetName": "gen-subnet",
-        "signerSubnetName": "signer-subnet",
-        "vnetRange": "10.1.0.0/16",
-        "subnet1Range": "10.1.1.0/24",
-        "subnet2Range": "10.1.2.0/24",
-        "gatewaySubnetRange": "10.1.0.0/24",
-        "apiVersion": "[variables('apiVersion').networkApiVersion]"
-      },
-      "region2": {
-        "regionCount": "[parameters('regionCount')]",
-        "virtualNetworksName": "[concat(variables('prefix'),'_vnet')]",
-        "generatorSubnetName": "gen-subnet",
-        "signerSubnetName": "signer-subnet",
-        "vnetRange": "10.2.0.0/16",
-        "subnet1Range": "10.2.1.0/24",
-        "subnet2Range": "10.2.2.0/24",
-        "gatewaySubnetRange": "10.2.0.0/24",
-        "apiVersion": "[variables('apiVersion').networkApiVersion]"
-      },
-      "region3": {
-        "regionCount": "[parameters('regionCount')]",
-        "virtualNetworksName": "[concat(variables('prefix'),'_vnet')]",
-        "generatorSubnetName": "gen-subnet",
-        "signerSubnetName": "signer-subnet",
-        "vnetRange": "10.3.0.0/16",
-        "subnet1Range": "10.3.1.0/24",
-        "subnet2Range": "10.3.2.0/24",
-        "gatewaySubnetRange": "10.3.0.0/24",
-        "apiVersion": "[variables('apiVersion').networkApiVersion]"
-      },
-      "region4": {
-        "regionCount": "[parameters('regionCount')]",
-        "virtualNetworksName": "[concat(variables('prefix'),'_vnet')]",
-        "generatorSubnetName": "gen-subnet",
-        "signerSubnetName": "signer-subnet",
-        "vnetRange": "10.4.0.0/16",
-        "subnet1Range": "10.4.1.0/24",
-        "subnet2Range": "10.4.2.0/24",
-        "gatewaySubnetRange": "10.4.0.0/24",
-        "apiVersion": "[variables('apiVersion').networkApiVersion]"
-      },
-      "region5": {
-        "regionCount": "[parameters('regionCount')]",
-        "virtualNetworksName": "[concat(variables('prefix'),'_vnet')]",
-        "generatorSubnetName": "gen-subnet",
-        "signerSubnetName": "signer-subnet",
-        "vnetRange": "10.5.0.0/16",
-        "subnet1Range": "10.5.1.0/24",
-        "subnet2Range": "10.5.2.0/24",
-        "gatewaySubnetRange": "10.5.0.0/24",
-        "apiVersion": "[variables('apiVersion').networkApiVersion]"
-      }
-    },
-    "generatorLbIpName": "[concat(variables('prefix'),'-lb-pip')]",
-    "chainLoadBalancerName": "[concat(variables('prefix'),'-lb')]",
-    "availabilitySetsName": "[concat(variables('prefix'),'-avset')]",
-    "signerVMIpName": "[concat(variables('prefix'),'-signer-pip')]",
-    "singleRegionDep": "singleRegionSetup",
-    "multiRegionDep": "multiRegionSetup",
-    "locationsArray": [
-      "parameters('location_1')",
-      "parameters('location_2')",
-      "parameters('location_3')",
-      "parameters('location_4')",
-      "parameters('location_5')"
-    ]
-  },
-  "resources": [
-    {
-      "name": "keyVaultSetup",
-      "apiVersion": "[variables('apiVersion').deploymentApiVersion]",
-      "type": "Microsoft.Resources/deployments",
-      "properties": {
-        "mode": "Incremental",
-        "templateLink": {
-          "uri": "[variables('nestedURLs').keyVaultSetupURL]",
-          "contentVersion": "1.0.0.0"
+        "availabilitySetsName": "[concat(variables('prefix'),'-avset')]",
+        "signerVMIpName": "[concat(variables('prefix'),'-signer-pip')]",
+        "generatorIpName": "[concat(variables('prefix'),'-gen-pip')]",
+        "nestedURls": {
+            "generatorVmSetupURL": "[concat(variables('baseUrl'),'/nested/generator-vm.json')]",
+            "generatorExtensionSetupURL": "[concat(variables('baseUrl'),'/nested/generator-extension.json')]",
+            "generatorNicSetupURL": "[concat(variables('baseUrl'),'/nested/generator-nic.json')]",
+            "generatorPipSetupURL": "[concat(variables('baseUrl'),'/nested/generator-pip.json')]",
+            "nsgSetupURL": "[concat(variables('baseUrl'),'/nested/nsg.json')]",
+            "generatorSetupURL": "[concat(variables('baseUrl'),'/nested/generator-setup.json')]",
+            "signerSetupURL": "[concat(variables('baseUrl'),'/nested/signer-setup.json')]",
+            "signerVMsSetupURL": "[concat(variables('baseUrl'),'/nested/signer-vm.json')]",
+            "signerExtensionSetupURL": "[concat(variables('baseUrl'),'/nested/signer-extension.json')]",
+            "signerNICsetupURL": "[concat(variables('baseUrl'),'/nested/signer-nic.json')]",
+            "signerPipSetupURL": "[concat(variables('baseUrl'),'/nested/signer-pip.json')]",
+            "gatewaySetupURL": "[concat(variables('baseUrl'),'/nested/gateway.json')]",
+            "gatewayPipSetupURL": "[concat(variables('baseUrl'),'/nested/gateway-pip.json')]",
+            "connectionsSetupURl": "[concat(variables('baseUrl'),'/nested/connections.json')]",
+            "singleRegionSetupURL": "[concat(variables('baseUrl'),'/nested/single-region.json')]",
+            "multiRegionSetupURL": "[concat(variables('baseUrl'),'/nested/',variables('multiTemplate')[sub(int(parameters('regionCount')),1)])]",
+            "vnetSetupURL": "[concat(variables('baseUrl'),'/nested/vnet.json')]",
+            "keyVaultSetupURL": "[concat(variables('baseUrl'),'/nested/keyvault.json')]",
+            "avaialabilitySetSetupURL": "[concat(variables('baseUrl'),'/nested/availability-set.json')]",
+            "signerScriptUrl": "[concat(variables('baseUrl'),'/scripts/signer-script.sh')]",
+            "generatorScriptUrl": "[concat(variables('baseUrl'),'/scripts/generator-script.sh')]"
         },
-        "parameters": {
-          "keyVaultSettings": {
-            "value": "[variables('keyVaultSettings')]"
-          }
-        }
-      }
-    },
-    {
-      "name": "[variables('singleRegionDep')]",
-      "apiVersion": "[variables('apiVersion').deploymentApiVersion]",
-      "type": "Microsoft.Resources/deployments",
-      "properties": {
-        "mode": "Incremental",
-        "templateLink": {
-          "uri": "[variables('nestedURLs').singleRegionSetupURL]",
-          "contentVersion": "1.0.0.0"
+        "apiVersion": {
+            "computeApiVersion": "2016-04-30-preview",
+            "networkApiVersion": "2016-03-30",
+            "keyVaultApiVersion": "2015-06-01",
+            "gatewayApiVersion": "2016-09-01",
+            "deploymentApiVersion": "2016-02-01",
+            "dockerApiVersion": "2015-05-01-preview"
         },
-        "parameters": {
-          "location": {
-            "value": "[parameters('location_1')]"
-          },
-          "prefix": {
-            "value": "[variables('prefix')]"
-          },
-          "nestedURls": {
-            "value": "[variables('nestedURls')]"
-          },
-          "apiVersion": {
-            "value": "[variables('apiVersion')]"
-          },
-          "vnetSettings": {
-            "value": "[variables('vnetSettings').region1]"
-          },
-          "generatorSettings": {
-            "value": "[variables('generatorSettings')]"
-          },
-          "signerSettings": {
-            "value": "[variables('signerSettings')]"
-          },
-          "nsgSettings": {
-            "value": "[variables('nsgSettings')]"
-          },
-          "counter": {
-            "value": 1
-          },
-          "generatorIp": {
-            "value": ""
-          }
-        }
-      }
-    },
-    {
-      "condition": "[greater(parameters('regionCount'),1)]",
-      "name": "[concat(variables('multiRegionDep'),copyIndex(2))]",
-      "apiVersion": "[variables('apiVersion').deploymentApiVersion]",
-      "type": "Microsoft.Resources/deployments",
-      "copy": {
-        "name": "multiregionLoop",
-        "count": "[sub(int(parameters('regionCount')),1)]"
-      },
-      "properties": {
-        "mode": "Incremental",
-        "templateLink": {
-          "uri": "[variables('nestedURLs').multiRegionSetupURL]",
-          "contentVersion": "1.0.0.0"
+        "keyVaultSettings": {
+            "keyVaultName": "[concat('keyVlt_',variables('suffix'))]",
+            "tenantId": "[subscription().tenantId]",
+            "location": "[parameters('location_1')]",
+            "objectId": "[parameters('objectId')]",
+            "apiVersion": "[variables('apiVersion').keyVaultApiVersion]"
         },
-        "parameters": {
-          "location": {
-            "value": "[variables('locationsArray')[copyIndex(1)]]"
-          },
-          "prefix": {
-            "value": "[variables('prefix')]"
-          },
-          "nestedURls": {
-            "value": "[variables('nestedURls')]"
-          },
-          "apiVersion": {
-            "value": "[variables('apiVersion')]"
-          },
-          "vnetSettings": {
-            "value": "[concat(variables('vnetSettings').region,copyIndex(2))]"
-          },
-          "signerSettings": {
-            "value": "[variables('signerSettings')]"
-          },
-          "nsgSettings": {
-            "value": "[variables('nsgSettings')]"
-          },
-          "counter": {
-            "value": "[copyIndex(2)]"
-          },
-          "generatorIp": {
-            "value": ""
-          }
+        "nsgSettings": {
+            "nsgName": "[concat(variables('prefix'),'-nsg')]",
+            "apiVersion": "[variables('apiVersion').networkApiVersion]"
+        },
+        "generatorSettings": {
+            "genVMsettings": {
+                "suffix": "[variables('suffix')]",
+                "generatorNicName": "[variables('generatorNicName')]",
+                "publisher": "Canonical",
+                "offer": "UbuntuServer",
+                "sku": "16.04-LTS",
+                "version": "latest",
+                "diskSizeGB": 30,
+                "generatorVmName": "[variables('generatorVmName')]",
+                "apiVersion": "[variables('apiVersion').computeApiVersion]",
+                "dockerApiVersion": "[variables('apiVersion').dockerApiVersion]",
+                "adminUsername": "[parameters('adminUsername')]",
+                "adminPassword": "[parameters('adminPassword')]",
+                "generatorVmSize": "[parameters('generatorVmSize')]",
+                "storageAccountType": "[parameters('storageAccountType')]",
+                "passwordOrSshKey": "[parameters('passwordOrSshKey')]",
+                "sshPublicKey": "[parameters('sshPublicKey')]"
+            },
+            "genNicSettings": {
+                "generatorNicName": "[variables('generatorNicName')]",
+                "privateIPAllocationMethod": "Dynamic",
+                "apiVersion": "[variables('apiVersion').networkApiVersion]",
+                "virtualNetworksName": "[variables('vnetSettings').region1.virtualNetworksName]",
+                "generatorSubnetName": "[variables('vnetSettings').region1.generatorSubnetName]",
+                "generatorIpName": "[variables('generatorIpName')]",
+                "generatorNsgName": "[variables('nsgSettings').nsgName]"
+            },
+            "genPipSettings": {
+                "generatorIpName": "[variables('generatorIpName')]",
+                "pipDns": "[concat('generator-',variables('suffix'))]",
+                "apiVersion": "[variables('apiVersion').networkApiVersion]",
+                "publicIPAllocationMethod": "Dynamic"
+            },
+            "genExtensionSettings": {
+                "apiVersion": "[variables('apiVersion').computeApiVersion]",
+                "generatorVmName": "[variables('generatorVmName')]",
+                "generatorScriptUrl": "[variables('nestedURls').generatorScriptUrl]",
+                "generatorScriptFileName": "generator-v2.sh",
+                "networkTokenName": "signet",
+                "servicePrinciple": "[parameters('servicePrinciple')]",
+                "secretKey": "[parameters('secretKey')]",
+                "tenantId": "[subscription().tenantId]",
+                "subscriptionId": "[subscription().subscriptionId]",
+                "keyVaultName": "[variables('keyVaultSettings').keyVaultName]",
+                "signerNodeCount": "[parameters('signerNodeCount')]"
+            }
+        },
+        "signerSettings": {
+            "signerAvailSetSettings": {
+                "availabilitySetsName": "[variables('availabilitySetsName')]",
+                "apiVersion": "[variables('apiVersion').computeApiVersion]"
+            },
+            "signerVMsettings": {
+                "suffix": "[variables('suffix')]",
+                "availabilitySetsName": "[variables('availabilitySetsName')]",
+                "signerNicName": "[variables('signerNicName')]",
+                "signerVmName": "[variables('signerVmName')]",
+                "apiVersion": "[variables('apiVersion').computeApiVersion]",
+                "dockerApiVersion": "[variables('apiVersion').dockerApiVersion]",
+                "publisher": "Canonical",
+                "offer": "UbuntuServer",
+                "sku": "16.04-LTS",
+                "version": "latest",
+                "diskSizeGB": 30,
+                "signerNodeCount": "[parameters('signerNodeCount')]",
+                "adminUsername": "[parameters('adminUsername')]",
+                "adminPassword": "[parameters('adminPassword')]",
+                "signerVmSize": "[parameters('signerVmSize')]",
+                "storageAccountType": "[parameters('storageAccountType')]",
+                "passwordOrSshKey": "[parameters('passwordOrSshKey')]",
+                "sshPublicKey": "[parameters('sshPublicKey')]"
+            },
+            "signerNicSettings": {
+                "signerNicName": "[variables('signerNicName')]",
+                "signerNodeCount": "[parameters('signerNodeCount')]",
+                "privateIPAllocationMethod": "Dynamic",
+                "apiVersion": "[variables('apiVersion').networkApiVersion]",
+                "signerVMIpName": "[variables('signerVMIpName')]",
+                "virtualNetworksName": "[variables('vnetSettings').region1.virtualNetworksName]",
+                "signerSubnetName": "[variables('vnetSettings').region1.signerSubnetName]",
+                "signerNsgName": "[variables('nsgSettings').nsgName]"
+            },
+            "signerPipSettings": {
+                "signerVMIpName": "[variables('signerVMIpName')]",
+                "signerNodeCount": "[parameters('signerNodeCount')]",
+                "signerPipDns": "[concat('signer-',variables('suffix'))]",
+                "apiVersion": "[variables('apiVersion').networkApiVersion]",
+                "publicIPAllocationMethod": "Dynamic"
+            },
+            "signerExtensionSettings": {
+                "apiVersion": "[variables('apiVersion').computeApiVersion]",
+                "signerVmName": "[concat(variables('prefix'),'-signer-vm')]",
+                "signerScriptUrl": "[variables('nestedURls').signerScriptUrl]",
+                "signerScriptFileName": "signer-v2.sh",
+                "servicePrinciple": "[parameters('servicePrinciple')]",
+                "secretKey": "[parameters('secretKey')]",
+                "tenantId": "[subscription().tenantId]",
+                "subscriptionid": "[subscription().subscriptionId]",
+                "keyVaultName": "[variables('keyVaultSettings').keyVaultName]",
+                "signerTokenName": "sigClientToken",
+                "signerNodeCount": "[parameters('signerNodeCount')]"
+            }
+        },
+        "vnetSettings": {
+            "region1": {
+                "regionCount": "[parameters('regionCount')]",
+                "virtualNetworksName": "[concat(variables('prefix'),'_vnet')]",
+                "generatorSubnetName": "gen-subnet",
+                "signerSubnetName": "signer-subnet",
+                "vnetRange": "10.1.0.0/16",
+                "subnet1Range": "10.1.1.0/24",
+                "subnet2Range": "10.1.2.0/24",
+                "gatewaySubnetRange": "10.1.0.0/24",
+                "apiVersion": "[variables('apiVersion').networkApiVersion]"
+            },
+            "region2": {
+                "regionCount": "[parameters('regionCount')]",
+                "virtualNetworksName": "[concat(variables('prefix'),'_vnet')]",
+                "generatorSubnetName": "gen-subnet",
+                "signerSubnetName": "signer-subnet",
+                "vnetRange": "10.2.0.0/16",
+                "subnet1Range": "10.2.1.0/24",
+                "subnet2Range": "10.2.2.0/24",
+                "gatewaySubnetRange": "10.2.0.0/24",
+                "apiVersion": "[variables('apiVersion').networkApiVersion]"
+            },
+            "region3": {
+                "regionCount": "[parameters('regionCount')]",
+                "virtualNetworksName": "[concat(variables('prefix'),'_vnet')]",
+                "generatorSubnetName": "gen-subnet",
+                "signerSubnetName": "signer-subnet",
+                "vnetRange": "10.3.0.0/16",
+                "subnet1Range": "10.3.1.0/24",
+                "subnet2Range": "10.3.2.0/24",
+                "gatewaySubnetRange": "10.3.0.0/24",
+                "apiVersion": "[variables('apiVersion').networkApiVersion]"
+            },
+            "region4": {
+                "regionCount": "[parameters('regionCount')]",
+                "virtualNetworksName": "[concat(variables('prefix'),'_vnet')]",
+                "generatorSubnetName": "gen-subnet",
+                "signerSubnetName": "signer-subnet",
+                "vnetRange": "10.4.0.0/16",
+                "subnet1Range": "10.4.1.0/24",
+                "subnet2Range": "10.4.2.0/24",
+                "gatewaySubnetRange": "10.4.0.0/24",
+                "apiVersion": "[variables('apiVersion').networkApiVersion]"
+            },
+            "region5": {
+                "regionCount": "[parameters('regionCount')]",
+                "virtualNetworksName": "[concat(variables('prefix'),'_vnet')]",
+                "generatorSubnetName": "gen-subnet",
+                "signerSubnetName": "signer-subnet",
+                "vnetRange": "10.5.0.0/16",
+                "subnet1Range": "10.5.1.0/24",
+                "subnet2Range": "10.5.2.0/24",
+                "gatewaySubnetRange": "10.5.0.0/24",
+                "apiVersion": "[variables('apiVersion').networkApiVersion]"
+            }
+        },
+        "singleRegionDep": "oneRegionSetup",
+        "multiRegionDep": "multiRegionSetup",
+        "locationsArray": [
+            "parameters('location_1')",
+            "parameters('location_2')",
+            "parameters('location_3')",
+            "parameters('location_4')",
+            "parameters('location_5')"
+        ]
+    },
+    "resources": [
+        {
+            "name": "keyVaultSetup",
+            "apiVersion": "[variables('apiVersion').deploymentApiVersion]",
+            "type": "Microsoft.Resources/deployments",
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "[variables('nestedURLs').keyVaultSetupURL]",
+                    "contentVersion": "1.0.0.0"
+                },
+                "parameters": {
+                    "keyVaultSettings": {
+                        "value": "[variables('keyVaultSettings')]"
+                    }
+                }
+            }
+        },
+        {
+            "name": "[variables('singleRegionDep')]",
+            "apiVersion": "[variables('apiVersion').deploymentApiVersion]",
+            "type": "Microsoft.Resources/deployments",
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "[variables('nestedURLs').singleRegionSetupURL]",
+                    "contentVersion": "1.0.0.0"
+                },
+                "parameters": {
+                    "location": {
+                        "value": "[parameters('location_1')]"
+                    },
+                    "prefix": {
+                        "value": "[variables('prefix')]"
+                    },
+                    "nestedURls": {
+                        "value": "[variables('nestedURls')]"
+                    },
+                    "apiVersion": {
+                        "value": "[variables('apiVersion')]"
+                    },
+                    "vnetSettings": {
+                        "value": "[variables('vnetSettings').region1]"
+                    },
+                    "generatorSettings": {
+                        "value": "[variables('generatorSettings')]"
+                    },
+                    "signerSettings": {
+                        "value": "[variables('signerSettings')]"
+                    },
+                    "nsgSettings": {
+                        "value": "[variables('nsgSettings')]"
+                    }
+                }
+            }
+        },
+        {
+            "condition": "[greater(parameters('regionCount'),1)]",
+            "name": "[concat(variables('multiRegionDep'),copyIndex(2))]",
+            "apiVersion": "[variables('apiVersion').deploymentApiVersion]",
+            "type": "Microsoft.Resources/deployments",
+            "copy": {
+                "name": "multiregionLoop",
+                "count": "[sub(int(parameters('regionCount')),1)]"
+            },
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "[variables('nestedURLs').multiRegionSetupURL]",
+                    "contentVersion": "1.0.0.0"
+                },
+                "parameters": {
+                    "location": {
+                        "value": "[variables('locationsArray')[copyIndex(1)]]"
+                    },
+                    "prefix": {
+                        "value": "[variables('prefix')]"
+                    },
+                    "nestedURls": {
+                        "value": "[variables('nestedURls')]"
+                    },
+                    "apiVersion": {
+                        "value": "[variables('apiVersion')]"
+                    },
+                    "vnetSettings": {
+                        "value": "[concat(variables('vnetSettings').region,copyIndex(2))]"
+                    },
+                    "signerSettings": {
+                        "value": "[variables('signerSettings')]"
+                    },
+                    "nsgSettings": {
+                        "value": "[variables('nsgSettings')]"
+                    },
+                    "counter": {
+                        "value": "[copyIndex(2)]"
+                    },
+                    "generatorIp": {
+                        "value": ""
+                    }
+                }
+            }
         }
-      }
-    }
-  ],
-  "outputs": {}
+    ],
+    "outputs": {}
 }

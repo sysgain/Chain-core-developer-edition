@@ -2,7 +2,7 @@
     "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
     "contentVersion": "1.0.0.0",
     "parameters": {
-        "generatorVMsettings": {
+        "genVMsettings": {
             "type": "object"
         },
         "location":{
@@ -10,26 +10,29 @@
         }
     },
     "variables": {
-        "suffix": "[parameters('generatorVMsettings').suffix]",
-        "generatorNicName": "[parameters('generatorVMsettings').generatorNicName]",
-        "generatorVmName": "[parameters('generatorVMsettings').generatorVmName]",
-        "adminPassword": "[parameters('generatorVMsettings').adminPassword]",
-        "adminUsername": "[parameters('generatorVMsettings').adminUsername]",
-        "generatorVmSize": "[parameters('generatorVMsettings').generatorVmSize]",
-        "apiVersion": "[parameters('generatorVMsettings').apiVersion]",
-        "storageAccountType": "[parameters('generatorVMsettings').storageAccountType]",
-        "publisher": "[parameters('generatorVMsettings').publisher]",
-        "offer": "[parameters('generatorVMsettings').offer]",
-        "sku": "[parameters('generatorVMsettings').sku]",
-        "version": "[parameters('generatorVMsettings').version]",
-        "diskSizeGB": "[parameters('generatorVMsettings').diskSizeGB]"
+        "suffix": "[parameters('genVMsettings').suffix]",
+        "location":"[parameters('location')]",
+        "generatorNicName": "[parameters('genVMsettings').generatorNicName]",
+        "generatorVmName": "[parameters('genVMsettings').generatorVmName]",
+        "adminPassword": "[parameters('genVMsettings').adminPassword]",
+        "adminUsername": "[parameters('genVMsettings').adminUsername]",
+        "generatorVmSize": "[parameters('genVMsettings').generatorVmSize]",
+        "apiVersion": "[parameters('genVMsettings').apiVersion]",
+        "storageAccountType": "[parameters('genVMsettings').storageAccountType]",
+        "publisher": "[parameters('genVMsettings').publisher]",
+        "offer": "[parameters('genVMsettings').offer]",
+        "sku": "[parameters('genVMsettings').sku]",
+        "version": "[parameters('genVMsettings').version]",
+        "diskSizeGB": "[parameters('genVMsettings').diskSizeGB]",
+        "passwordOrSshKey":"[parameters('genVMsettings').diskSizeGB]",
+        "sshPublicKey": "[parameters('genVMsettings').sshPublicKey]"
     },
     "resources": [
         {
             "type": "Microsoft.Compute/virtualMachines",
             "name": "[variables('generatorVmName')]",
             "apiVersion": "[variables('apiVersion')]",
-            "location": "[parameters('location')]",
+            "location": "[variables('location')]",
             "properties": {
                 "hardwareProfile": {
                     "vmSize": "[variables('generatorVmSize')]"
@@ -61,6 +64,78 @@
                         "disablePasswordAuthentication": false
                     },
                     "secrets": []
+                },
+                "networkProfile": {
+                    "networkInterfaces": [
+                        {
+                            "id": "[resourceId('Microsoft.Network/networkInterfaces', variables('generatorNicName'))]"
+                        }
+                    ]
+                }
+            },
+            "resources": [
+                {
+                    "type": "extensions",
+                    "name": "DockerExtension",
+                    "apiVersion": "2015-05-01-preview",
+                    "location": "[parameters('location')]",
+                    "dependsOn": [
+                        "[concat('Microsoft.Compute/virtualMachines/', variables('generatorVmName'))]"
+                    ],
+                    "properties": {
+                        "publisher": "Microsoft.Azure.Extensions",
+                        "type": "DockerExtension",
+                        "typeHandlerVersion": "1.1",
+                        "autoUpgradeMinorVersion": true,
+                        "settings": {},
+                        "protectedSettings": {}
+                    }
+                }
+            ]
+        },
+        {
+            "condition": "[equals(variables('passwordOrSshKey'),'sshKey')]",
+            "type": "Microsoft.Compute/virtualMachines",
+            "name": "[variables('generatorVmName')]",
+            "apiVersion": "[variables('apiVersion')]",
+            "location": "[variables('location')]",
+            "properties": {
+                "hardwareProfile": {
+                    "vmSize": "[variables('generatorVmSize')]"
+                },
+                "storageProfile": {
+                    "imageReference": {
+                        "publisher": "[variables('publisher')]",
+                        "offer": "[variables('offer')]",
+                        "sku": "[variables('sku')]",
+                        "version": "[variables('version')]"
+                    },
+                    "osDisk": {
+                        "osType": "Linux",
+                        "name": "[concat(variables('generatorVmName'),'-',variables('suffix'),'-osDisk')]",
+                        "createOption": "FromImage",
+                        "caching": "ReadWrite",
+                        "managedDisk": {
+                            "storageAccountType": "[variables('storageAccountType')]"
+                        },
+                        "diskSizeGB": "[variables('diskSizeGB')]"
+                    },
+                    "dataDisks": []
+                },
+                "osProfile": {
+                    "computerName": "[variables('generatorVmName')]",
+                    "adminUsername": "[variables('adminUsername')]",
+                    "linuxConfiguration": {
+                        "disablePasswordAuthentication": true,
+                        "ssh": {
+                            "publicKeys": [
+                                {
+                                    "path": "[concat('/home/', variables('adminUsername'), '/.ssh/authorized_keys')]",
+                                    "keyData": "[variables('sshPublicKey')]"
+                                }
+                            ]
+                        }
+                    }
                 },
                 "networkProfile": {
                     "networkInterfaces": [

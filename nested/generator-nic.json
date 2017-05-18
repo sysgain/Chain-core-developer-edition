@@ -5,8 +5,8 @@
         "genNicSettings": {
             "type": "object"
         },
-        "location":{
-            "type":"string"
+        "location": {
+            "type": "string"
         }
     },
     "variables": {
@@ -14,10 +14,10 @@
         "generatorNicName": "[parameters('genNicSettings').generatorNicName]",
         "virtualNetworksName": "[parameters('genNicSettings').virtualNetworksName]",
         "generatorSubnetName": "[parameters('genNicSettings').generatorSubnetName]",
-        "chainLoadBalancerName": "[parameters('genNicSettings').chainLoadBalancerName]",
         "generatorNsgName": "[parameters('genNicSettings').generatorNsgName]",
         "privateIPAllocationMethod": "[parameters('genNicSettings').privateIPAllocationMethod]",
-        "apiVersion": "[parameters('genNicSettings').apiVersion]"
+        "apiVersion": "[parameters('genNicSettings').apiVersion]",
+        "generatorIpName": "[parameters('genNicSettings').generatorIpName]"
     },
     "resources": [
         {
@@ -34,16 +34,9 @@
                             "subnet": {
                                 "id": "[concat(resourceId('Microsoft.Network/virtualNetworks', variables('virtualNetworksName')), '/subnets/', variables('generatorSubnetName'))]"
                             },
-                            "loadBalancerBackendAddressPools": [
-                                {
-                                    "id": "[concat(resourceId('Microsoft.Network/loadBalancers', variables('chainLoadBalancerName')), '/backendAddressPools/lb-bkpool')]"
-                                }
-                            ],
-                            "loadBalancerInboundNatRules": [
-                                {
-                                    "id": "[concat(resourceId('Microsoft.Network/loadBalancers', variables('chainLoadBalancerName')), '/inboundNatRules/ssh')]"
-                                }
-                            ]
+                            "publicIPAddress": {
+                                "id": "[resourceId('Microsoft.Network/publicIPAddresses', variables('generatorIpName'))]"
+                            }
                         }
                     }
                 ],

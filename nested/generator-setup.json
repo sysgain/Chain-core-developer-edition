@@ -22,13 +22,13 @@
     "prefix": "[parameters('prefix')]",
     "generatorVmDep": "[concat(variables('prefix'),'-generatorVMSetup')]",
     "generatorNicDep": "[concat(variables('prefix'),'-generatorNICSetup')]",
-    "generatorPipLbDep": "[concat(variables('prefix'),'-genPipSetup')]",
+    "generatorPipDep": "[concat(variables('prefix'),'-genPipSetup')]",
     "generatorlbDep": "[concat(variables('prefix'),'-genLbSetup')]",
     "generatorExtDep": "[concat(variables('prefix'),'-genExtensionSetup')]"
   },
   "resources": [
     {
-      "name": "[variables('generatorPipLbDep')]",
+      "name": "[variables('generatorPipDep')]",
       "apiVersion": "[parameters('apiVersion').deploymentApiVersion]",
       "type": "Microsoft.Resources/deployments",
       "properties": {
@@ -47,29 +47,7 @@
         }
       }
     },
-    {
-      "name": "[variables('generatorlbDep')]",
-      "dependsOn": [
-        "[variables('generatorPipLbDep')]"
-      ],
-      "apiVersion": "[parameters('apiVersion').deploymentApiVersion]",
-      "type": "Microsoft.Resources/deployments",
-      "properties": {
-        "mode": "Incremental",
-        "templateLink": {
-          "uri": "[parameters('nestedURls').generatorLbSetupURL]",
-          "contentVersion": "1.0.0.0"
-        },
-        "parameters": {
-          "genlbSettings": {
-            "value": "[parameters('generatorSettings').genlbSettings]"
-          },
-          "location": {
-            "value": "[parameters('location')]"
-          }
-        }
-      }
-    },
+    
     {
       "name": "[variables('generatorNicDep')]",
       "apiVersion": "[parameters('apiVersion').deploymentApiVersion]",
@@ -107,7 +85,7 @@
           "contentVersion": "1.0.0.0"
         },
         "parameters": {
-          "generatorVMsettings": {
+          "genVMsettings": {
             "value": "[parameters('generatorSettings').genVMsettings]"
           },
           "location": {
@@ -130,7 +108,7 @@
           "contentVersion": "1.0.0.0"
         },
         "parameters": {
-          "generatorExtensionSettings": {
+          "genExtensionSettings": {
             "value": "[parameters('generatorSettings').genExtensionSettings]"
           },
           "location": {
