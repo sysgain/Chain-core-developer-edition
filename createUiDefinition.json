@@ -108,8 +108,8 @@
                     {
                         "name": "signerVmSize",
                         "type": "Microsoft.Compute.SizeSelector",
-                        "label": "Block Signer VM size",
-                        "toolTip": "Block Signer VM size",
+                        "label": "Block Signer and Participant VM size",
+                        "toolTip": "Block Signer and Participant VM size",
                         "recommendedSizes": [
                             "Standard_DS1_v2",
                             "Standard_DS2_v2",
@@ -182,9 +182,9 @@
                     {
                         "name": "partVmCount",
                         "type": "Microsoft.Common.DropDown",
-                        "label": "Number of Block Signer VMs",
+                        "label": "Number of participant VMs",
                         "defaultValue": "2",
-                        "toolTip": "Number of Block participant VMs in the Blockchain network",
+                        "toolTip": "Number of participant VMs in the Blockchain network",
                         "constraints": {
                             "allowedValues": [
                                 {
