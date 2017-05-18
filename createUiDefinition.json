@@ -184,7 +184,7 @@
                         "type": "Microsoft.Common.DropDown",
                         "label": "Number of Block Signer VMs",
                         "defaultValue": "2",
-                        "toolTip": "Number of Block Signer VMs in the Blockchain network",
+                        "toolTip": "Number of Block participant VMs in the Blockchain network",
                         "constraints": {
                             "allowedValues": [
                                 {
@@ -352,7 +352,7 @@
                         "toolTip": "Select the second region.",
                         "defaultValue": "Central US",
                         "constraints": {
-                            "required": true,
+                            "required": "[greaterOrEquals(steps('regCnt').regionCnt, '2')]",
                             "allowedValues": [
                                 {
                                     "label": "East US",
@@ -408,7 +408,7 @@
                                 }
                             ]
                         },
-                        "visible": true
+                        "visible": "[greaterOrEquals(steps('regCnt').regionCnt, '2')]"
                     },
                     {
                         "name": "loc3",
