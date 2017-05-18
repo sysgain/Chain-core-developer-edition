@@ -478,6 +478,13 @@
             "[parameters('location_3')]",
             "[parameters('location_4')]",
             "[parameters('location_5')]"
+        ],
+        "vnetRegionArray": [
+            "[variables('vnetSettings').region1]",
+            "[variables('vnetSettings').region2]",
+            "[variables('vnetSettings').region3]",
+            "[variables('vnetSettings').region4]",
+            "[variables('vnetSettings').region5]"
         ]
     },
     "resources": [
@@ -571,7 +578,7 @@
                         "value": "[variables('apiVersion')]"
                     },
                     "vnetSettings": {
-                        "value": "[concat(variables('vnetSettings').region,copyIndex(2))]"
+                        "value": "[variables('vnetRegionArray')[copyIndex(1)]]"
                     },
                     "signerSettings": {
                         "value": "[variables('signerSettings')]"
