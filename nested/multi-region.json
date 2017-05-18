@@ -1,176 +1,172 @@
 {
-    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
-    "contentVersion": "1.0.0.0",
-    "parameters": {
-        "prefix": {
-            "type": "string"
-        },
-        "location": {
-            "type": "array"
-        },
-        "nestedURls": {
-            "type": "object"
-        },
-        "apiVersion": {
-            "type": "object"
-        },
-        "vnetSettings": {
-            "type": "object"
-        },
-        "signerSettings": {
-            "type": "object"
-        },
-        "participantSettings": {
-            "type": "object"
-        },
-        "nsgSettings": {
-            "type": "object"
-        },
-        "generatorIp": {
-            "type": "string"
-        },
-        "regionCount":{
-            "type": "string"
-        }
+  "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "prefix": {
+      "type": "string"
     },
-    "variables": {
-        "vnetDep": "[concat('vnetSetup-',parameters('location'))]",
-        "nsgDep": "[concat('nsgSetup-',parameters('location'))]",
-        "signerDep": "[concat('signerSetup-',parameters('location'))]",
-        "participantSetup": "[concat('participantSetup-',parameters('location'))]",
-        "vnetRegionArray": [
-            "[parameters('vnetSettings').region1]",
-            "[parameters('vnetSettings').region2]",
-            "[parameters('vnetSettings').region3]",
-            "[parameters('vnetSettings').region4]",
-            "[parameters('vnetSettings').region5]"
-        ]
+    "location": {
+      "type": "array"
     },
-    "resources": [
-        {
-            "name": "[concat(variables('vnetDep'),copyIndex(1))]",
-            "apiVersion": "[parameters('apiVersion').deploymentApiVersion]",
-            "type": "Microsoft.Resources/deployments",
-            "copy": {
-                "name": "multiregionLoop",
-                "count": "[sub(int(parameters('regionCount')),1)]"
-            },
-            "properties": {
-                "mode": "Incremental",
-                "templateLink": {
-                    "uri": "[parameters('nestedURLs').vnetmultiSetupURL]",
-                    "contentVersion": "1.0.0.0"
-                },
-                "parameters": {
-                    "vnetSettings": {
-                        "value": "[variables('vnetRegionArray')[copyIndex(1)]]"
-                    },
-                    "location": {
-                        "value": "[parameters('location')[copyIndex(1)]]"
-                    }
-                }
-            }
-        },
-        {
-            "name": "[concat(variables('nsgDep'),copyIndex(1))]",
-            "apiVersion": "[parameters('apiVersion').deploymentApiVersion]",
-            "type": "Microsoft.Resources/deployments",
-            "copy": {
-                "name": "multiregionLoop",
-                "count": "[sub(int(parameters('regionCount')),1)]"
-            },
-            "properties": {
-                "mode": "Incremental",
-                "templateLink": {
-                    "uri": "[parameters('nestedURls').nsgSetupURL]",
-                    "contentVersion": "1.0.0.0"
-                },
-                "parameters": {
-                    "nsgSettings": {
-                        "value": "[parameters('nsgSettings')]"
-                    },
-                    "location": {
-                        "value": "[parameters('location')[copyIndex(1)]]"
-                    }
-                }
-            }
-        },
-        {
-            "name": "[concat(variables('signerDep'),copyIndex(1))]",
-            "apiVersion": "[parameters('apiVersion').deploymentApiVersion]",
-            "type": "Microsoft.Resources/deployments",
-            "copy": {
-                "name": "multiregionLoop",
-                "count": "[sub(int(parameters('regionCount')),1)]"
-            },
-            "dependsOn": [
-                "[concat(variables('nsgDep'),copyIndex(1))]",
-                "[concat(variables('vnetDep'),copyIndex(1))]"
-            ],
-            "properties": {
-                "mode": "Incremental",
-                "templateLink": {
-                    "uri": "[parameters('nestedURLs').signerSetupURL]",
-                    "contentVersion": "1.0.0.0"
-                },
-                "parameters": {
-                    "prefix": {
-                        "value": "[parameters('prefix')]"
-                    },
-                    "location": {
-                        "value": "[parameters('location')[copyIndex(1)]]"
-                    },
-                    "nestedURls": {
-                        "value": "[parameters('nestedURls')]"
-                    },
-                    "apiVersion": {
-                        "value": "[parameters('apiVersion')]"
-                    },
-                    "signerSettings": {
-                        "value": "[parameters('signerSettings')]"
-                    },
-                    "generatorIp": {
-                        "value": "[parameters('generatorIp')]"
-                    }
-                }
-            }
-        },
-        {
-            "name": "[concat(variables('participantSetup'),copyIndex(1))]",
-            "apiVersion": "[parameters('apiVersion').deploymentApiVersion]",
-            "type": "Microsoft.Resources/deployments",
-            "copy": {
-                "name": "multiregionLoop",
-                "count": "[sub(int(parameters('regionCount')),1)]"
-            },
-            "dependsOn": [
-                "[concat(variables('nsgDep'),copyIndex(1))]",
-                "[concat(variables('vnetDep'),copyIndex(1))]"
-            ],
-            "properties": {
-                "mode": "Incremental",
-                "templateLink": {
-                    "uri": "[parameters('nestedURLs').partSetupURL]",
-                    "contentVersion": "1.0.0.0"
-                },
-                "parameters": {
-                    "prefix": {
-                        "value": "[parameters('prefix')]"
-                    },
-                    "location": {
-                        "value": "[parameters('location')[copyIndex(1)]]"
-                    },
-                    "nestedURls": {
-                        "value": "[parameters('nestedURls')]"
-                    },
-                    "apiVersion": {
-                        "value": "[parameters('apiVersion')]"
-                    },
-                    "partSettings": {
-                        "value": "[parameters('participantSettings')]"
-                    }
-                }
-            }
-        }
+    "nestedURls": {
+      "type": "object"
+    },
+    "apiVersion": {
+      "type": "object"
+    },
+    "vnetSettings": {
+      "type": "object"
+    },
+    "signerSettings": {
+      "type": "object"
+    },
+    "participantSettings": {
+      "type": "object"
+    },
+    "nsgSettings": {
+      "type": "object"
+    },
+    "generatorIp": {
+      "type": "string"
+    },
+    "regionCount": {
+      "type": "string"
+    }
+  },
+  "variables": {
+    "vnetRegionArray": [
+      "[parameters('vnetSettings').region1]",
+      "[parameters('vnetSettings').region2]",
+      "[parameters('vnetSettings').region3]",
+      "[parameters('vnetSettings').region4]",
+      "[parameters('vnetSettings').region5]"
     ]
+  },
+  "resources": [
+    {
+      "name": "[concat('vnetSetup-',parameters('location')[copyIndex(1)])]",
+      "apiVersion": "[parameters('apiVersion').deploymentApiVersion]",
+      "type": "Microsoft.Resources/deployments",
+      "copy": {
+        "name": "multiregionLoop",
+        "count": "[sub(int(parameters('regionCount')),1)]"
+      },
+      "properties": {
+        "mode": "Incremental",
+        "templateLink": {
+          "uri": "[parameters('nestedURLs').vnetmultiSetupURL]",
+          "contentVersion": "1.0.0.0"
+        },
+        "parameters": {
+          "vnetSettings": {
+            "value": "[variables('vnetRegionArray')[copyIndex(1)]]"
+          },
+          "location": {
+            "value": "[parameters('location')[copyIndex(1)]]"
+          }
+        }
+      }
+    },
+    {
+      "name": "[concat('nsgSetup',parameters('location')[copyIndex(1)])]",
+      "apiVersion": "[parameters('apiVersion').deploymentApiVersion]",
+      "type": "Microsoft.Resources/deployments",
+      "copy": {
+        "name": "multiregionLoop",
+        "count": "[sub(int(parameters('regionCount')),1)]"
+      },
+      "properties": {
+        "mode": "Incremental",
+        "templateLink": {
+          "uri": "[parameters('nestedURls').nsgSetupURL]",
+          "contentVersion": "1.0.0.0"
+        },
+        "parameters": {
+          "nsgSettings": {
+            "value": "[parameters('nsgSettings')]"
+          },
+          "location": {
+            "value": "[parameters('location')[copyIndex(1)]]"
+          }
+        }
+      }
+    },
+    {
+      "name": "[concat('signerSetup-',parameters('location')[copyIndex(1)])]",
+      "apiVersion": "[parameters('apiVersion').deploymentApiVersion]",
+      "type": "Microsoft.Resources/deployments",
+      "copy": {
+        "name": "multiregionLoop",
+        "count": "[sub(int(parameters('regionCount')),1)]"
+      },
+      "dependsOn": [
+        "[concat(variables('nsgDep'),copyIndex(1))]",
+        "[concat(variables('vnetDep'),copyIndex(1))]"
+      ],
+      "properties": {
+        "mode": "Incremental",
+        "templateLink": {
+          "uri": "[parameters('nestedURLs').signerSetupURL]",
+          "contentVersion": "1.0.0.0"
+        },
+        "parameters": {
+          "prefix": {
+            "value": "[parameters('prefix')]"
+          },
+          "location": {
+            "value": "[parameters('location')[copyIndex(1)]]"
+          },
+          "nestedURls": {
+            "value": "[parameters('nestedURls')]"
+          },
+          "apiVersion": {
+            "value": "[parameters('apiVersion')]"
+          },
+          "signerSettings": {
+            "value": "[parameters('signerSettings')]"
+          },
+          "generatorIp": {
+            "value": "[parameters('generatorIp')]"
+          }
+        }
+      }
+    },
+    {
+      "name": "[concat('participantSetup-',parameters('location')[copyIndex(1)])]",
+      "apiVersion": "[parameters('apiVersion').deploymentApiVersion]",
+      "type": "Microsoft.Resources/deployments",
+      "copy": {
+        "name": "multiregionLoop",
+        "count": "[sub(int(parameters('regionCount')),1)]"
+      },
+      "dependsOn": [
+        "[concat(variables('nsgDep'),copyIndex(1))]",
+        "[concat(variables('vnetDep'),copyIndex(1))]"
+      ],
+      "properties": {
+        "mode": "Incremental",
+        "templateLink": {
+          "uri": "[parameters('nestedURLs').partSetupURL]",
+          "contentVersion": "1.0.0.0"
+        },
+        "parameters": {
+          "prefix": {
+            "value": "[parameters('prefix')]"
+          },
+          "location": {
+            "value": "[parameters('location')[copyIndex(1)]]"
+          },
+          "nestedURls": {
+            "value": "[parameters('nestedURls')]"
+          },
+          "apiVersion": {
+            "value": "[parameters('apiVersion')]"
+          },
+          "partSettings": {
+            "value": "[parameters('participantSettings')]"
+          }
+        }
+      }
+    }
+  ]
 }
