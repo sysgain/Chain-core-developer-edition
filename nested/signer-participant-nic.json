@@ -14,7 +14,7 @@
         "nodeCount": "[parameters('nicSettings').nodeCount]",
         "pipName": "[concat(parameters('nicSettings').pipName,'-',parameters('location'))]",
         "virtualNetworksName": "[concat(parameters('nicSettings').virtualNetworksName,'-',parameters('location'))]",
-        "subnetName": "[parameters('nicSettings').signerSubnetName]",
+        "subnetName": "[parameters('nicSettings').subnetName]",
         "nsgName": "[concat(parameters('nicSettings').nsgName,'-',parameters('location'))]",
         "privateIPAllocationMethod": "[parameters('nicSettings').privateIPAllocationMethod]",
         "apiVersion": "[parameters('nicSettings').apiVersion]"

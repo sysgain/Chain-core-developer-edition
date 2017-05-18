@@ -403,7 +403,7 @@
                 "apiVersion": "[variables('apiVersion').networkApiVersion]",
                 "pipName": "[variables('signerIpName')]",
                 "virtualNetworksName": "[variables('vnetSettings').region1.virtualNetworksName]",
-                "signerSubnetName": "[variables('vnetSettings').region1.subnetName]",
+                "subnetName": "[variables('vnetSettings').region1.subnetName]",
                 "nsgName": "[variables('nsgSettings').nsgName]"
             },
             "signerPipSettings": {
