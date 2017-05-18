@@ -38,13 +38,10 @@
                             "sshPublicKey": "SSH Public Key for the Admin User"
                         },
                         "constraints": {
-                            "required": true,
-                            "customPasswordRegex": "^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]{8,}$",
-                            "customValidationMessage": "The password must contain at least 8 characters, with at least 1 letter and 1 number."
+                            "required": true
                         },
                         "options": {
-                            "hideConfirmation": false,
-                            "hidePassword": false
+                            "hideConfirmation": false
                         },
                         "osPlatform": "Linux",
                         "visible": true
