@@ -41,7 +41,7 @@
             },
             "properties": {
                 "availabilitySet": {
-                    "id": "[resourceId('Microsoft.Compute/availabilitySets',variables('availabilitySetsName'),'-',parameters('location'))]"
+                    "id": "[resourceId('Microsoft.Compute/availabilitySets',concat(variables('availabilitySetsName'),'-',parameters('location')))]"
                 },
                 "hardwareProfile": {
                     "vmSize": "[variables('vmSize')]"

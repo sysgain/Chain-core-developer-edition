@@ -532,6 +532,9 @@
             "name": "[concat(variables('multiRegionDep'),copyIndex(2))]",
             "apiVersion": "[variables('apiVersion').deploymentApiVersion]",
             "type": "Microsoft.Resources/deployments",
+            "dependsOn": [
+                "[variables('singleRegionDep')]"
+            ],
             "copy": {
                 "name": "multiregionLoop",
                 "count": "[sub(int(parameters('regionCount')),1)]"

@@ -49,7 +49,7 @@
         },
         "enableIPForwarding": false,
         "networkSecurityGroup": {
-          "id": "[resourceId('Microsoft.Network/networkSecurityGroups', variables('nsgName'),'-',parameters('location'))]"
+          "id": "[resourceId('Microsoft.Network/networkSecurityGroups', concat(variables('nsgName'),'-',parameters('location')))]"
         }
       }
     }
