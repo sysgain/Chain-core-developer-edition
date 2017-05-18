@@ -57,7 +57,7 @@
             "properties": {
                 "mode": "Incremental",
                 "templateLink": {
-                    "uri": "[parameters('nestedURls').signerPipSetupURL]",
+                    "uri": "[parameters('nestedURls').pipSetupURL]",
                     "contentVersion": "1.0.0.0"
                 },
                 "parameters": {
@@ -80,7 +80,7 @@
             "properties": {
                 "mode": "Incremental",
                 "templateLink": {
-                    "uri": "[parameters('nestedURls').signerNICsetupURL]",
+                    "uri": "[parameters('nestedURls').nicSetupURL]",
                     "contentVersion": "1.0.0.0"
                 },
                 "parameters": {
@@ -104,7 +104,7 @@
             "properties": {
                 "mode": "Incremental",
                 "templateLink": {
-                    "uri": "[parameters('nestedURls').signerVMsSetupURL]",
+                    "uri": "[parameters('nestedURls').vmsSetupURL]",
                     "contentVersion": "1.0.0.0"
                 },
                 "parameters": {
