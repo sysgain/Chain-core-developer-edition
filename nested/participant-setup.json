@@ -16,9 +16,6 @@
         },
         "partSettings": {
             "type": "object"
-        },
-        "generatorIp": {
-            "type": "string"
         }
     },
     "variables": {
