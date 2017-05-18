@@ -401,7 +401,7 @@
                 "apiVersion": "[variables('apiVersion').networkApiVersion]"
             }
         },
-        "singleRegionDep": "oneRegionSetup",
+        "singleRegionDep": "singleRegionSetup",
         "multiRegionDep": "multiRegionSetup",
         "locationsArray": [
             "parameters('location_1')",
@@ -463,52 +463,6 @@
                     },
                     "nsgSettings": {
                         "value": "[variables('nsgSettings')]"
-                    }
-                }
-            }
-        },
-        {
-            "condition": "[greater(parameters('regionCount'),1)]",
-            "name": "[concat(variables('multiRegionDep'),copyIndex(2))]",
-            "apiVersion": "[variables('apiVersion').deploymentApiVersion]",
-            "type": "Microsoft.Resources/deployments",
-            "copy": {
-                "name": "multiregionLoop",
-                "count": "[sub(int(parameters('regionCount')),1)]"
-            },
-            "properties": {
-                "mode": "Incremental",
-                "templateLink": {
-                    "uri": "[variables('nestedURLs').multiRegionSetupURL]",
-                    "contentVersion": "1.0.0.0"
-                },
-                "parameters": {
-                    "location": {
-                        "value": "[variables('locationsArray')[copyIndex(1)]]"
-                    },
-                    "prefix": {
-                        "value": "[variables('prefix')]"
-                    },
-                    "nestedURls": {
-                        "value": "[variables('nestedURls')]"
-                    },
-                    "apiVersion": {
-                        "value": "[variables('apiVersion')]"
-                    },
-                    "vnetSettings": {
-                        "value": "[concat(variables('vnetSettings').region,copyIndex(2))]"
-                    },
-                    "signerSettings": {
-                        "value": "[variables('signerSettings')]"
-                    },
-                    "nsgSettings": {
-                        "value": "[variables('nsgSettings')]"
-                    },
-                    "counter": {
-                        "value": "[copyIndex(2)]"
-                    },
-                    "generatorIp": {
-                        "value": ""
                     }
                 }
             }

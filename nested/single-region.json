@@ -1,152 +1,164 @@
 {
-  "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
-  "contentVersion": "1.0.0.0",
-  "parameters": {
-    "prefix": {
-      "type": "string"
-    },
-    "location": {
-      "type": "string"
-    },
-    "nestedURls": {
-      "type": "object"
-    },
-    "apiVersion": {
-      "type": "object"
-    },
-    "vnetSettings": {
-      "type": "object"
-    },
-    "generatorSettings": {
-      "type": "object"
-    },
-    "signerSettings": {
-      "type": "object"
-    },
-    "nsgSettings": {
-      "type": "object"
-    },
-    "counter": {
-      "type": "int"
-    },
-    "generatorIp": {
-      "type": "string"
-    }
-  },
-  "variables": {
-    "vnetDep": "vnetSetup",
-    "nsgDep": "nsgSetup"
-  },
-  "resources": [
-    {
-      "name": "[variables('vnetDep')]",
-      "apiVersion": "[parameters('apiVersion').deploymentApiVersion]",
-      "type": "Microsoft.Resources/deployments",
-      "properties": {
-        "mode": "Incremental",
-        "templateLink": {
-          "uri": "[parameters('nestedURLs').vnetSetupURL]",
-          "contentVersion": "1.0.0.0"
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "prefix": {
+            "type": "string"
         },
-        "parameters": {
-          "vnetSettings": {
-            "value": "[parameters('vnetSettings')]"
-          },
-          "counter": {
-            "value": "[parameters('counter')]"
-          },
-          "location": {
-            "value": "[parameters('location')]"
-          }
-        }
-      }
-    },
-    {
-      "name": "[variables('nsgDep')]",
-      "apiVersion": "[parameters('apiVersion').deploymentApiVersion]",
-      "type": "Microsoft.Resources/deployments",
-      "properties": {
-        "mode": "Incremental",
-        "templateLink": {
-          "uri": "[parameters('nestedURls').nsgSetupURL]",
-          "contentVersion": "1.0.0.0"
+        "location": {
+            "type": "string"
         },
-        "parameters": {
-          "nsgSettings": {
-            "value": "[parameters('nsgSettings')]"
-          },
-          "location": {
-            "value": "[parameters('location')]"
-          }
-        }
-      }
-    },
-    {
-      "name": "generatorSetup",
-      "apiVersion": "[parameters('apiVersion').deploymentApiVersion]",
-      "type": "Microsoft.Resources/deployments",
-      "dependsOn": [
-        "[variables('vnetDep')]"
-      ],
-      "properties": {
-        "mode": "Incremental",
-        "templateLink": {
-          "uri": "[parameters('nestedURLs').generatorSetupURL]",
-          "contentVersion": "1.0.0.0"
+        "nestedURls": {
+            "type": "object"
         },
-        "parameters": {
-          "prefix": {
-            "value": "[parameters('prefix')]"
-          },
-          "location": {
-            "value": "[parameters('location')]"
-          },
-          "nestedURls": {
-            "value": "[parameters('nestedURls')]"
-          },
-          "apiVersion": {
-            "value": "[parameters('apiVersion')]"
-          },
-          "generatorSettings": {
-            "value": "[parameters('generatorSettings')]"
-          }
-        }
-      }
-    },
-    {
-      "name": "signerSetup",
-      "apiVersion": "[parameters('apiVersion').deploymentApiVersion]",
-      "type": "Microsoft.Resources/deployments",
-      "dependsOn": [
-        "[variables('vnetDep')]"
-      ],
-      "properties": {
-        "mode": "Incremental",
-        "templateLink": {
-          "uri": "[parameters('nestedURLs').signerSetupURL]",
-          "contentVersion": "1.0.0.0"
+        "apiVersion": {
+            "type": "object"
         },
-        "parameters": {
-          "prefix": {
-            "value": "[parameters('prefix')]"
-          },
-          "location": {
-            "value": "[parameters('location')]"
-          },
-          "nestedURls": {
-            "value": "[parameters('nestedURls')]"
-          },
-          "apiVersion": {
-            "value": "[parameters('apiVersion')]"
-          },
-          "signerSettings": {
-            "value": "[parameters('signerSettings')]"
-          },
-          "generatorIp": {
-            "type": "[parameters('generatorIp')]"
-          }
+        "vnetSettings": {
+            "type": "object"
+        },
+        "generatorSettings": {
+            "type": "object"
+        },
+        "signerSettings": {
+            "type": "object"
+        },
+        "nsgSettings": {
+            "type": "object"
         }
-      }
-    }
-  ]
+    },
+    "variables": {
+        "vnetDep": "vnetSetup",
+        "nsgDep": "nsgSetup",
+        "generatorPipDep": "[concat(parameters('prefix'),'-genPipSetup')]"
+    },
+    "resources": [
+        {
+            "name": "[variables('vnetDep')]",
+            "apiVersion": "[parameters('apiVersion').deploymentApiVersion]",
+            "type": "Microsoft.Resources/deployments",
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "[parameters('nestedURLs').vnetSetupURL]",
+                    "contentVersion": "1.0.0.0"
+                },
+                "parameters": {
+                    "vnetSettings": {
+                        "value": "[parameters('vnetSettings')]"
+                    },
+                    "location": {
+                        "value": "[parameters('location')]"
+                    }
+                }
+            }
+        },
+        {
+            "name": "[variables('nsgDep')]",
+            "apiVersion": "[parameters('apiVersion').deploymentApiVersion]",
+            "type": "Microsoft.Resources/deployments",
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "[parameters('nestedURls').nsgSetupURL]",
+                    "contentVersion": "1.0.0.0"
+                },
+                "parameters": {
+                    "nsgSettings": {
+                        "value": "[parameters('nsgSettings')]"
+                    },
+                    "location": {
+                        "value": "[parameters('location')]"
+                    }
+                }
+            }
+        },
+        {
+            "name": "[variables('generatorPipDep')]",
+            "apiVersion": "[parameters('apiVersion').deploymentApiVersion]",
+            "type": "Microsoft.Resources/deployments",
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "[parameters('nestedURls').generatorPipLbSetupURL]",
+                    "contentVersion": "1.0.0.0"
+                },
+                "parameters": {
+                    "genPipSettings": {
+                        "value": "[parameters('generatorSettings').genPipSettings]"
+                    },
+                    "location": {
+                        "value": "[parameters('location')]"
+                    }
+                }
+            }
+        },
+        {
+            "name": "generatorSetup",
+            "apiVersion": "[parameters('apiVersion').deploymentApiVersion]",
+            "type": "Microsoft.Resources/deployments",
+            "dependsOn": [
+                "[variables('vnetDep')]"
+            ],
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "[parameters('nestedURLs').generatorSetupURL]",
+                    "contentVersion": "1.0.0.0"
+                },
+                "parameters": {
+                    "prefix": {
+                        "value": "[parameters('prefix')]"
+                    },
+                    "location": {
+                        "value": "[parameters('location')]"
+                    },
+                    "nestedURls": {
+                        "value": "[parameters('nestedURls')]"
+                    },
+                    "apiVersion": {
+                        "value": "[parameters('apiVersion')]"
+                    },
+                    "generatorSettings": {
+                        "value": "[parameters('generatorSettings')]"
+                    }
+                }
+            }
+        },
+        {
+            "name": "signerSetup",
+            "apiVersion": "[parameters('apiVersion').deploymentApiVersion]",
+            "type": "Microsoft.Resources/deployments",
+            "dependsOn": [
+                "[variables('vnetDep')]"
+            ],
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "[parameters('nestedURLs').signerSetupURL]",
+                    "contentVersion": "1.0.0.0"
+                },
+                "parameters": {
+                    "prefix": {
+                        "value": "[parameters('prefix')]"
+                    },
+                    "location": {
+                        "value": "[parameters('location')]"
+                    },
+                    "nestedURls": {
+                        "value": "[parameters('nestedURls')]"
+                    },
+                    "apiVersion": {
+                        "value": "[parameters('apiVersion')]"
+                    },
+                    "signerSettings": {
+                        "value": "[parameters('signerSettings')]"
+                    },
+                    "generatorIp": {
+                        "value": "[reference(variables('generatorPipDep')).outputs.generatorIp.value]"
+                    }
+                }
+            }
+        }
+    ]
 }

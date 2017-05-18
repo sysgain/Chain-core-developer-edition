@@ -1,126 +1,147 @@
 {
-  "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
-  "contentVersion": "1.0.0.0",
-  "parameters": {
-    "prefix": {
-      "type": "string"
-    },
-    "location": {
-      "type": "string"
-    },
-    "nestedURls": {
-      "type": "object"
-    },
-    "apiVersion": {
-      "type": "object"
-    },
-    "signerSettings": {
-      "type": "object"
-    },
-    "generatorIp": {
-      "type": "string"
-    }
-  },
-  "variables": {
-    "prefix": "[parameters('prefix')]",
-    "signerVmDep": "[concat(variables('prefix'),'-signerVMSetup-',parameters('location'))]",
-    "signerNicDep": "[concat(variables('prefix'),'-signerNICSetup-',parameters('location'))]",
-    "pipDep": "[concat(variables('prefix'),'-signerpipSetup-',parameters('location'))]",
-    "nsgDep": "[concat(variables('prefix'),'-signernsgSetup-',parameters('location'))]",
-    "signerExtDep": "[concat(variables('prefix'),'-signergenExtensionSetup-',parameters('location'))]"
-  },
-  "resources": [
-    {
-      "name": "[variables('pipDep')]",
-      "apiVersion": "[parameters('apiVersion').deploymentApiVersion]",
-      "type": "Microsoft.Resources/deployments",
-      "properties": {
-        "mode": "Incremental",
-        "templateLink": {
-          "uri": "[parameters('nestedURls').signerPipSetupURL]",
-          "contentVersion": "1.0.0.0"
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "prefix": {
+            "type": "string"
         },
-        "parameters": {
-          "signerPipSettings": {
-            "value": "[parameters('signerSettings').signerPipSettings]"
-          },
-          "location": {
-            "value": "[parameters('location')]"
-          }
-        }
-      }
-    },
-    {
-      "name": "[variables('signerNicDep')]",
-      "apiVersion": "[parameters('apiVersion').deploymentApiVersion]",
-      "type": "Microsoft.Resources/deployments",
-      "dependsOn": [
-        "[variables('pipDep')]"
-      ],
-      "properties": {
-        "mode": "Incremental",
-        "templateLink": {
-          "uri": "[parameters('nestedURls').signerNICsetupURL]",
-          "contentVersion": "1.0.0.0"
+        "location": {
+            "type": "string"
         },
-        "parameters": {
-          "signerNicSettings": {
-            "value": "[parameters('signerSettings').signerNicSettings]"
-          },
-          "location": {
-            "value": "[parameters('location')]"
-          }
-        }
-      }
-    },
-    {
-      "name": "[variables('signerVmDep')]",
-      "apiVersion": "[parameters('apiVersion').deploymentApiVersion]",
-      "type": "Microsoft.Resources/deployments",
-      "dependsOn": [
-        "[variables('signerNicDep')]"
-      ],
-      "properties": {
-        "mode": "Incremental",
-        "templateLink": {
-          "uri": "[parameters('nestedURls').signerVMsSetupURL]",
-          "contentVersion": "1.0.0.0"
+        "nestedURls": {
+            "type": "object"
         },
-        "parameters": {
-          "signerVMsettings": {
-            "value": "[parameters('signerSettings').signerVMsettings]"
-          },
-          "location": {
-            "value": "[parameters('location')]"
-          }
-        }
-      }
-    },
-    {
-      "name": "[variables('signerExtDep')]",
-      "apiVersion": "[parameters('apiVersion').deploymentApiVersion]",
-      "type": "Microsoft.Resources/deployments",
-      "dependsOn": [
-        "[variables('signerVmDep')]"
-      ],
-      "properties": {
-        "mode": "Incremental",
-        "templateLink": {
-          "uri": "[parameters('nestedURls').signerExtensionSetupURL]",
-          "contentVersion": "1.0.0.0"
+        "apiVersion": {
+            "type": "object"
         },
-        "parameters": {
-          "signerExtensionSettings": {
-            "value": "[parameters('signerSettings').signerExtensionSettings]"
-          },
-          "location": {
-            "value": "[parameters('location')]"
-          },
-          "generatorIp": {
-            "value": "[parameters('generatorIp')]"
-          }
+        "signerSettings": {
+            "type": "object"
+        },
+        "generatorIp": {
+            "type": "string"
         }
-      }
-    }
-  ]
+    },
+    "variables": {
+        "prefix": "[parameters('prefix')]",
+        "signerVmDep": "[concat(variables('prefix'),'-signerVmSetup-',parameters('location'))]",
+        "signerNicDep": "[concat(variables('prefix'),'-signerNicSetup-',parameters('location'))]",
+        "signerPipDep": "[concat(variables('prefix'),'-signerPipSetup-',parameters('location'))]",
+        "signerExtDep": "[concat(variables('prefix'),'-signerExtensionSetup-',parameters('location'))]",
+        "signerAvailDep": "[concat(variables('prefix'),'-signerAvailSetup-',parameters('location'))]"
+    },
+    "resources": [
+        { 
+            "name": "[variables('signerAvailDep')]",
+            "apiVersion": "[parameters('apiVersion').deploymentApiVersion]",
+            "type": "Microsoft.Resources/deployments",
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "[parameters('nestedURls').avaialabilitySetSetupURL]",
+                    "contentVersion": "1.0.0.0"
+                },
+                "parameters": {
+                    "signerAvailSetSettings": {
+                        "value": "[parameters('signerSettings').signerAvailSetSettings]"
+                    },
+                    "location": {
+                        "value": "[parameters('location')]"
+                    }
+                }
+            }
+        },
+        {
+            "name": "[variables('signerPipDep')]",
+            "apiVersion": "[parameters('apiVersion').deploymentApiVersion]",
+            "type": "Microsoft.Resources/deployments",
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "[parameters('nestedURls').signerPipSetupURL]",
+                    "contentVersion": "1.0.0.0"
+                },
+                "parameters": {
+                    "signerPipSettings": {
+                        "value": "[parameters('signerSettings').signerPipSettings]"
+                    },
+                    "location": {
+                        "value": "[parameters('location')]"
+                    }
+                }
+            }
+        },
+        {
+            "name": "[variables('signerNicDep')]",
+            "apiVersion": "[parameters('apiVersion').deploymentApiVersion]",
+            "type": "Microsoft.Resources/deployments",
+            "dependsOn": [
+                "[variables('signerPipDep')]"
+            ],
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "[parameters('nestedURls').signerNICsetupURL]",
+                    "contentVersion": "1.0.0.0"
+                },
+                "parameters": {
+                    "signerNicSettings": {
+                        "value": "[parameters('signerSettings').signerNicSettings]"
+                    },
+                    "location": {
+                        "value": "[parameters('location')]"
+                    }
+                }
+            }
+        },
+        {
+            "name": "[variables('signerVmDep')]",
+            "apiVersion": "[parameters('apiVersion').deploymentApiVersion]",
+            "type": "Microsoft.Resources/deployments",
+            "dependsOn": [
+                "[variables('signerNicDep')]",
+                "[variables('signerAvailDep')]"
+            ],
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "[parameters('nestedURls').signerVMsSetupURL]",
+                    "contentVersion": "1.0.0.0"
+                },
+                "parameters": {
+                    "vmSettings": {
+                        "value": "[parameters('signerSettings').signerVMsettings]"
+                    },
+                    "location": {
+                        "value": "[parameters('location')]"
+                    }
+                }
+            }
+        },
+        {
+            "name": "[variables('signerExtDep')]",
+            "apiVersion": "[parameters('apiVersion').deploymentApiVersion]",
+            "type": "Microsoft.Resources/deployments",
+            "dependsOn": [
+                "[variables('signerVmDep')]"
+            ],
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "[parameters('nestedURls').signerExtensionSetupURL]",
+                    "contentVersion": "1.0.0.0"
+                },
+                "parameters": {
+                    "signerExtensionSettings": {
+                        "value": "[parameters('signerSettings').signerExtensionSettings]"
+                    },
+                    "location": {
+                        "value": "[parameters('location')]"
+                    },
+                    "generatorIp": {
+                        "value": "[parameters('generatorIp')]"
+                    }
+                }
+            }
+        }
+    ]
 }

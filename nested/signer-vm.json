@@ -2,7 +2,7 @@
     "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
     "contentVersion": "1.0.0.0",
     "parameters": {
-        "signerVMsettings": {
+        "vmSettings": {
             "type": "object"
         },
         "location": {
@@ -10,22 +10,24 @@
         }
     },
     "variables": {
-        "suffix": "[concat(parameters('signerVMsettings').suffix)]",
-        "apiVersion": "[concat(parameters('signerVMsettings').apiVersion)]",
-        "availabilitySetsName": "[concat(parameters('signerVMsettings').availabilitySetsName)]",
-        "signerNicName": "[concat(parameters('signerVMsettings').signerNicName)]",
-        "signerVmName": "[concat(parameters('signerVMsettings').signerVmName)]",
-        "signer_nodes_Count": "[parameters('signerVMsettings').signer_nodes_Count]",
-        "adminUsername": "[parameters('signerVMsettings').adminUsername]",
-        "adminPassword": "[parameters('signerVMsettings').adminPassword]",
-        "signerVmSize": "[parameters('signerVMsettings').signerVmSize]",
-        "storageAccountType": "[parameters('signerVMsettings').storageAccountType]",
-        "publisher": "[parameters('signerVMsettings').publisher]",
-        "offer": "[parameters('signerVMsettings').offer]",
-        "sku": "[parameters('signerVMsettings').sku]",
-        "version": "[parameters('signerVMsettings').version]",
-        "diskSizeGB": "[parameters('signerVMsettings').diskSizeGB]",
-        "dockerApiVersion": "[parameters('vmSettings').dockerApiVersion]"
+        "suffix": "[concat(parameters('vmSettings').suffix)]",
+        "apiVersion": "[concat(parameters('vmSettings').apiVersion)]",
+        "availabilitySetsName": "[concat(parameters('vmSettings').availabilitySetsName)]",
+        "signerNicName": "[concat(parameters('vmSettings').signerNicName)]",
+        "signerVmName": "[concat(parameters('vmSettings').signerVmName)]",
+        "count": "[parameters('vmSettings').count]",
+        "adminUsername": "[parameters('vmSettings').adminUsername]",
+        "adminPassword": "[parameters('vmSettings').adminPassword]",
+        "signerVmSize": "[parameters('vmSettings').signerVmSize]",
+        "storageAccountType": "[parameters('vmSettings').storageAccountType]",
+        "publisher": "[parameters('vmSettings').publisher]",
+        "offer": "[parameters('vmSettings').offer]",
+        "sku": "[parameters('vmSettings').sku]",
+        "version": "[parameters('vmSettings').version]",
+        "diskSizeGB": "[parameters('vmSettings').diskSizeGB]",
+        "dockerApiVersion": "[parameters('vmSettings').dockerApiVersion]",
+        "passwordOrSshKey": "[parameters('vmSettings').passwordOrSshKey]",
+        "sshPublicKey": "[parameters('vmSettings').sshPublicKey]"
     },
     "resources": [
         {
@@ -35,7 +37,7 @@
             "location": "[parameters('location')]",
             "copy": {
                 "name": "signerLoop",
-                "count": "[variables('signer_nodes_Count')]"
+                "count": "[variables('count')]"
             },
             "properties": {
                 "availabilitySet": {
