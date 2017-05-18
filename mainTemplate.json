@@ -404,8 +404,8 @@
             "signerExtensionSettings": {
                 "apiVersion": "[variables('apiVersion').computeApiVersion]",
                 "signerVmName": "[variables('signerVmName')]",
-                "scriptUrl": "[variables('nestedURls').signerScriptUrl]",
-                "scriptFileName": "signer-script.sh",
+                "signerScriptUrl": "[variables('nestedURls').signerScriptUrl]",
+                "signerScriptFileName": "signer-script.sh",
                 "servicePrincipal": "[parameters('servicePrincipal')]",
                 "secretKey": "[parameters('secretKey')]",
                 "tenantId": "[subscription().tenantId]",

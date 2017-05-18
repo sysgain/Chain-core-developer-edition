@@ -22,13 +22,37 @@
         "prefix": "[parameters('prefix')]",
         "generatorVmDep": "[concat(variables('prefix'),'-generatorVMSetup-',parameters('location'))]",
         "generatorNicDep": "[concat(variables('prefix'),'-generatorNICSetup-',parameters('location'))]",
-        "generatorExtDep": "[concat(variables('prefix'),'-genExtensionSetup-',parameters('location'))]"
+        "generatorExtDep": "[concat(variables('prefix'),'-genExtensionSetup-',parameters('location'))]",
+        "generatorPipDep": "[concat(parameters('prefix'),'-genPipSetup-',parameters('location'))]"
     },
     "resources": [
+        {
+            "name": "[variables('generatorPipDep')]",
+            "apiVersion": "[parameters('apiVersion').deploymentApiVersion]",
+            "type": "Microsoft.Resources/deployments",
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "[parameters('nestedURls').generatorPipSetupURL]",
+                    "contentVersion": "1.0.0.0"
+                },
+                "parameters": {
+                    "genPipSettings": {
+                        "value": "[parameters('generatorSettings').genPipSettings]"
+                    },
+                    "location": {
+                        "value": "[parameters('location')]"
+                    }
+                }
+            }
+        },
         {
             "name": "[variables('generatorNicDep')]",
             "apiVersion": "[parameters('apiVersion').deploymentApiVersion]",
             "type": "Microsoft.Resources/deployments",
+            "dependsOn": [
+                "[variables('generatorPipDep')]"
+            ],
             "properties": {
                 "mode": "Incremental",
                 "templateLink": {
@@ -91,5 +115,11 @@
                 }
             }
         }
-    ]
+    ],
+    "outputs": {
+        "generatorIp": {
+            "type": "string",
+            "value": "[reference(variables('generatorPipDep')).outputs.generatorIp.value]"
+        }
+    }
 }

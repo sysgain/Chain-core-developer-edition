@@ -33,7 +33,9 @@
     "variables": {
         "vnetDep": "[concat('vnetSetup-',parameters('location'))]",
         "nsgDep": "[concat('nsgSetup-',parameters('location'))]",
-        "generatorPipDep": "[concat(parameters('prefix'),'-genPipSetup-',parameters('location'))]"
+        "generatorDep": "[concat('generatorSetup-',parameters('location'))]",
+        "signerDep": "[concat('signerSetup-',parameters('location'))]",
+        "participantSetup":"[concat('participantSetup-',parameters('location'))]"
     },
     "resources": [
         {
@@ -77,32 +79,12 @@
             }
         },
         {
-            "name": "[variables('generatorPipDep')]",
-            "apiVersion": "[parameters('apiVersion').deploymentApiVersion]",
-            "type": "Microsoft.Resources/deployments",
-            "properties": {
-                "mode": "Incremental",
-                "templateLink": {
-                    "uri": "[parameters('nestedURls').generatorPipSetupURL]",
-                    "contentVersion": "1.0.0.0"
-                },
-                "parameters": {
-                    "genPipSettings": {
-                        "value": "[parameters('generatorSettings').genPipSettings]"
-                    },
-                    "location": {
-                        "value": "[parameters('location')]"
-                    }
-                }
-            }
-        },
-        {
-            "name": "[concat('generatorSetup-',parameters('location'))]",
+            "name": "[variables('generatorDep')]",
             "apiVersion": "[parameters('apiVersion').deploymentApiVersion]",
             "type": "Microsoft.Resources/deployments",
             "dependsOn": [
                 "[variables('vnetDep')]",
-                "[variables('generatorPipDep')]"
+                "[variables('nsgDep')]"
             ],
             "properties": {
                 "mode": "Incremental",
@@ -130,12 +112,13 @@
             }
         },
         {
-            "name": "[concat('signerSetup-',parameters('location'))]",
+            "name": "[variables('signerDep')]",
             "apiVersion": "[parameters('apiVersion').deploymentApiVersion]",
             "type": "Microsoft.Resources/deployments",
             "dependsOn": [
                 "[variables('vnetDep')]",
-                "[variables('generatorPipDep')]"
+                "[variables('nsgDep')]",
+                "[variables('generatorDep')]"
             ],
             "properties": {
                 "mode": "Incremental",
@@ -160,18 +143,17 @@
                         "value": "[parameters('signerSettings')]"
                     },
                     "generatorIp": {
-                        "value": "[reference(variables('generatorPipDep')).outputs.generatorIp.value]"
+                        "value": "[reference(variables('generatorDep')).outputs.generatorIp.value]"
                     }
                 }
             }
         },
         {
-            "name": "[concat('participantSetup-',parameters('location'))]",
+            "name": "[variables('participantSetup')]",
             "apiVersion": "[parameters('apiVersion').deploymentApiVersion]",
             "type": "Microsoft.Resources/deployments",
             "dependsOn": [
-                "[variables('vnetDep')]",
-                "[variables('generatorPipDep')]"
+                "[variables('vnetDep')]"
             ],
             "properties": {
                 "mode": "Incremental",
@@ -194,9 +176,6 @@
                     },
                     "partSettings": {
                         "value": "[parameters('participantSettings')]"
-                    },
-                    "generatorIp": {
-                        "value": "[reference(variables('generatorPipDep')).outputs.generatorIp.value]"
                     }
                 }
             }
