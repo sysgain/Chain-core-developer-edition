@@ -25,20 +25,28 @@
                     },
                     {
                         "name": "adminPassword",
-                        "type": "Microsoft.Common.PasswordBox",
+                        "type": "Microsoft.Compute.CredentialsCombo",
                         "label": {
-                            "password": "Password",
-                            "confirmPassword": "Confirm password"
+                        "authenticationType": "Authentication type",
+                        "password": "Password",
+                        "confirmPassword": "Confirm password",
+                        "sshPublicKey": "SSH public key"
                         },
-                        "toolTip": "Admin User Password",
+                        "toolTip": {
+                        "authenticationType": "",
+                        "password": "",
+                        "sshPublicKey": ""
+                        },
                         "constraints": {
-                            "required": true,
-                            "regex": "^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]{6,}$",
-                            "validationMessage": "The password must contain at least 6 characters, with at least 1 letter and 1 number."
-                        },
+                        "required": true,
+                        "customPasswordRegex": "^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]{8,}$",
+                        "customValidationMessage": "The password must contain at least 8 characters, with at least 1 letter and 1 number."
+                     },
                         "options": {
-                            "hideConfirmation": false
-                        },
+                        "hideConfirmation": false,
+                        "hidePassword": false
+                    },
+                        "osPlatform": "Linux",
                         "visible": true
                     }
                 ],
@@ -61,30 +69,30 @@
                         "label": "Block Generator VM size",
                         "toolTip": "Block Generator VM size",
                         "recommendedSizes": [
-                            "Standard_DS1_V2",
-                            "Standard_DS2_V2",
-                            "Standard_DS3_V2"
+                            "Standard_DS1_v2",
+                            "Standard_DS2_v2",
+                            "Standard_DS3_v2"
                         ],
                         "constraints": {
                             "allowedSizes": [
                                 "Standard_DS1",
-                                "Standard_DS1_V2",
+                                "Standard_DS1_v2",
                                 "Standard_DS2",
-                                "Standard_DS2_V2",
+                                "Standard_DS2_v2",
                                 "Standard_DS3",
-                                "Standard_DS3_V2",
+                                "Standard_DS3_v2",
                                 "Standard_DS4",
-                                "Standard_DS4_V2",
-                                "Standard_DS5_V2",
+                                "Standard_DS4_v2",
+                                "Standard_DS5_v2",
                                 "Standard_DS11",
-                                "Standard_DS11_V2",
+                                "Standard_DS11_v2",
                                 "Standard_DS12",
-                                "Standard_DS12_V2",
+                                "Standard_DS12_v2",
                                 "Standard_DS13",
-                                "Standard_DS13_V2",
+                                "Standard_DS13_v2",
                                 "Standard_DS14",
-                                "Standard_DS14_V2",
-                                "Standard_DS15_V2",
+                                "Standard_DS14_v2",
+                                "Standard_DS15_v2",
                                 "Standard_F1S",
                                 "Standard_F2S",
                                 "Standard_F4S",
@@ -106,30 +114,30 @@
                         "label": "Block Signer VM size",
                         "toolTip": "Block Signer VM size",
                         "recommendedSizes": [
-                            "Standard_DS1_V2",
-                            "Standard_DS2_V2",
-                            "Standard_DS3_V2"
+                            "Standard_DS1_v2",
+                            "Standard_DS2_v2",
+                            "Standard_DS3_v2"
                         ],
                         "constraints": {
                             "allowedSizes": [
                                 "Standard_DS1",
-                                "Standard_DS1_V2",
+                                "Standard_DS1_v2",
                                 "Standard_DS2",
-                                "Standard_DS2_V2",
+                                "Standard_DS2_v2",
                                 "Standard_DS3",
-                                "Standard_DS3_V2",
+                                "Standard_DS3_v2",
                                 "Standard_DS4",
-                                "Standard_DS4_V2",
-                                "Standard_DS5_V2",
+                                "Standard_DS4_v2",
+                                "Standard_DS5_v2",
                                 "Standard_DS11",
-                                "Standard_DS11_V2",
+                                "Standard_DS11_v2",
                                 "Standard_DS12",
-                                "Standard_DS12_V2",
+                                "Standard_DS12_v2",
                                 "Standard_DS13",
-                                "Standard_DS13_V2",
+                                "Standard_DS13_v2",
                                 "Standard_DS14",
-                                "Standard_DS14_V2",
-                                "Standard_DS15_V2",
+                                "Standard_DS14_v2",
+                                "Standard_DS15_v2",
                                 "Standard_F1S",
                                 "Standard_F2S",
                                 "Standard_F4S",
@@ -556,12 +564,13 @@
                     },
                     {
                         "name": "secretKey",
-                        "type": "Microsoft.Common.TextBox",
-                        "label": "Shared secret key",
+                        "type": "Microsoft.Common.PasswordBox",
+                        "label": {"password":"Shared secret key"},
                         "toolTip": "Shared secret key of your Service Principal",
                         "constraints": {
                             "required": true
                         },
+                        "options":{"hideConfirmation": true},
                         "visible": true
                     }
                 ]
