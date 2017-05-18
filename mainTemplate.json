@@ -461,11 +461,11 @@
         "singleRegionDep": "singleRegionSetup",
         "multiRegionDep": "multiRegionSetup",
         "locationsArray": [
-            "parameters('location_1')",
-            "parameters('location_2')",
-            "parameters('location_3')",
-            "parameters('location_4')",
-            "parameters('location_5')"
+            "[parameters('location_1')]",
+            "[parameters('location_2')]",
+            "[parameters('location_3')]",
+            "[parameters('location_4')]",
+            "[parameters('location_5')]"
         ]
     },
     "resources": [
