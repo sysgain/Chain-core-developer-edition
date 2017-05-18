@@ -188,6 +188,8 @@
     },
     "variables": {
         "baseUrl": "[parameters('artifactsBaseUrl')]",
+        "signerNodeCount":"[int(parameters('signerNodeCount'))]",
+        "participantNodeCount":"[int(parameters('participantNodeCount'))]"
         "prefix": "chain",
         "suffix": "[substring(uniqueString(resourceGroup().id) ,0, 5)]",
         "multiTemplate": [
@@ -353,7 +355,7 @@
                 "tenantId": "[subscription().tenantId]",
                 "subscriptionId": "[subscription().subscriptionId]",
                 "keyVaultName": "[variables('keyVaultSettings').keyVaultName]",
-                "signerNodeCount": "[parameters('signerNodeCount')]"
+                "signerNodeCount": "[variables('signerNodeCount')]"
             }
         },
         "signerSettings": {
@@ -373,7 +375,7 @@
                 "sku": "16.04-LTS",
                 "version": "latest",
                 "diskSizeGB": 30,
-                "nodeCount": "[parameters('signerNodeCount')]",
+                "nodeCount": "[variables('signerNodeCount')]",
                 "adminUsername": "[parameters('adminUsername')]",
                 "adminPassword": "[parameters('adminPassword')]",
                 "vmSize": "[parameters('signerVmSize')]",
@@ -383,7 +385,7 @@
             },
             "signerNicSettings": {
                 "nicName": "[variables('signerNicName')]",
-                "nodeCount": "[parameters('signerNodeCount')]",
+                "nodeCount": "[variables('signerNodeCount')]",
                 "privateIPAllocationMethod": "Dynamic",
                 "apiVersion": "[variables('apiVersion').networkApiVersion]",
                 "pipName": "[variables('signerIpName')]",
@@ -393,7 +395,7 @@
             },
             "signerPipSettings": {
                 "pipName": "[variables('signerIpName')]",
-                "nodeCount": "[parameters('signerNodeCount')]",
+                "nodeCount": "[variables('signerNodeCount')]",
                 "pipDns": "[concat('signer-',variables('suffix'))]",
                 "apiVersion": "[variables('apiVersion').networkApiVersion]",
                 "publicIPAllocationMethod": "Dynamic"
@@ -409,7 +411,7 @@
                 "subscriptionid": "[subscription().subscriptionId]",
                 "keyVaultName": "[variables('keyVaultSettings').keyVaultName]",
                 "tokenName": "sigClientToken",
-                "nodeCount": "[parameters('signerNodeCount')]"
+                "nodeCount": "[variables('signerNodeCount')]"
             }
         },
         "participantSettings": {
@@ -429,7 +431,7 @@
                 "sku": "16.04-LTS",
                 "version": "latest",
                 "diskSizeGB": 30,
-                "nodeCount": "[parameters('participantNodeCount')]",
+                "nodeCount": "[variables('participantNodeCount')]",
                 "adminUsername": "[parameters('adminUsername')]",
                 "adminPassword": "[parameters('adminPassword')]",
                 "vmSize": "[parameters('signerVmSize')]",
@@ -439,7 +441,7 @@
             },
             "partNicSettings": {
                 "nicName": "[variables('partNicName')]",
-                "nodeCount": "[parameters('participantNodeCount')]",
+                "nodeCount": "[variables('participantNodeCount')]",
                 "privateIPAllocationMethod": "Dynamic",
                 "apiVersion": "[variables('apiVersion').networkApiVersion]",
                 "pipName": "[variables('partIpName')]",
@@ -449,7 +451,7 @@
             },
             "partPipSettings": {
                 "pipName": "[variables('partIpName')]",
-                "nodeCount": "[parameters('participantNodeCount')]",
+                "nodeCount": "[variables('participantNodeCount')]",
                 "pipDns": "[concat('participant-',variables('suffix'))]",
                 "apiVersion": "[variables('apiVersion').networkApiVersion]",
                 "publicIPAllocationMethod": "Dynamic"
