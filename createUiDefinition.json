@@ -285,7 +285,7 @@
                         "type": "Microsoft.Common.DropDown",
                         "label": "First Location",
                         "toolTip": "Select the first region.",
-                        "defaultValue": "Central US",
+                        "defaultValue": "West US",
                         "constraints": {
                             "required": true,
                             "allowedValues": [
