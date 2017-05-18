@@ -1,0 +1,39 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "prefix": {
+            "type": "string"
+        },
+        "location": {
+            "type": "string"
+        },
+        "nestedURls": {
+            "type": "object"
+        },
+        "apiVersion": {
+            "type": "object"
+        },
+        "vnetSettings": {
+            "type": "object"
+        },
+        "signerSettings": {
+            "type": "object"
+        },
+        "participantSettings": {
+            "type": "object"
+        },
+        "nsgSettings": {
+            "type": "object"
+        },
+        "generatorIp": {
+            "type": "string"
+        }
+    },
+    "variables": {
+
+    },
+    "resources": [
+        
+    ]
+}

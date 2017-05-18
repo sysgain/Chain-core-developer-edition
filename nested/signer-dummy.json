@@ -1,0 +1,35 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "prefix": {
+            "type": "string"
+        },
+        "location": {
+            "type": "string"
+        },
+        "nestedURls": {
+            "type": "object"
+        },
+        "apiVersion": {
+            "type": "object"
+        },
+        "signerSettings": {
+            "type": "object"
+        },
+        "generatorIp": {
+            "type": "string"
+        }
+    },
+    "variables": {
+        "prefix": "[parameters('prefix')]",
+        "signerVmDep": "[concat(variables('prefix'),'-signerVmSetup-',parameters('location'))]",
+        "signerNicDep": "[concat(variables('prefix'),'-signerNicSetup-',parameters('location'))]",
+        "signerPipDep": "[concat(variables('prefix'),'-signerPipSetup-',parameters('location'))]",
+        "signerExtDep": "[concat(variables('prefix'),'-signerExtensionSetup-',parameters('location'))]",
+        "signerAvailDep": "[concat(variables('prefix'),'-signerAvailSetup-',parameters('location'))]"
+    },
+    "resources": [
+        
+    ]
+}

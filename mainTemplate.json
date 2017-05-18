@@ -35,26 +35,26 @@
         },
         "generatorVmSize": {
             "type": "string",
-            "defaultValue": "Standard_DS1_V2",
+            "defaultValue": "Standard_DS1_v2",
             "allowedValues": [
                 "Standard_DS1",
-                "Standard_DS1_V2",
+                "Standard_DS1_v2",
                 "Standard_DS2",
-                "Standard_DS2_V2",
+                "Standard_DS2_v2",
                 "Standard_DS3",
-                "Standard_DS3_V2",
+                "Standard_DS3_v2",
                 "Standard_DS4",
-                "Standard_DS4_V2",
-                "Standard_DS5_V2",
+                "Standard_DS4_v2",
+                "Standard_DS5_v2",
                 "Standard_DS11",
-                "Standard_DS11_V2",
+                "Standard_DS11_v2",
                 "Standard_DS12",
-                "Standard_DS12_V2",
+                "Standard_DS12_v2",
                 "Standard_DS13",
-                "Standard_DS13_V2",
+                "Standard_DS13_v2",
                 "Standard_DS14",
-                "Standard_DS14_V2",
-                "Standard_DS15_V2",
+                "Standard_DS14_v2",
+                "Standard_DS15_v2",
                 "Standard_F1S",
                 "Standard_F2S",
                 "Standard_F4S",
@@ -65,28 +65,28 @@
                 "description": "Generator VM size"
             }
         },
-        "signerVmSize": {
+        "signerAndParticipantVmSize": {
             "type": "string",
-            "defaultValue": "Standard_DS1_V2",
+            "defaultValue": "Standard_DS1_v2",
             "allowedValues": [
                 "Standard_DS1",
-                "Standard_DS1_V2",
+                "Standard_DS1_v2",
                 "Standard_DS2",
-                "Standard_DS2_V2",
+                "Standard_DS2_v2",
                 "Standard_DS3",
-                "Standard_DS3_V2",
+                "Standard_DS3_v2",
                 "Standard_DS4",
-                "Standard_DS4_V2",
-                "Standard_DS5_V2",
+                "Standard_DS4_v2",
+                "Standard_DS5_v2",
                 "Standard_DS11",
-                "Standard_DS11_V2",
+                "Standard_DS11_v2",
                 "Standard_DS12",
-                "Standard_DS12_V2",
+                "Standard_DS12_v2",
                 "Standard_DS13",
-                "Standard_DS13_V2",
+                "Standard_DS13_v2",
                 "Standard_DS14",
-                "Standard_DS14_V2",
-                "Standard_DS15_V2",
+                "Standard_DS14_v2",
+                "Standard_DS15_v2",
                 "Standard_F1S",
                 "Standard_F2S",
                 "Standard_F4S",
@@ -117,7 +117,7 @@
                 "3"
             ]
         },
-        "passwordOrSshKey": {
+        "authenticationType": {
             "type": "string",
             "defaultValue": "password",
             "allowedValues": [
@@ -199,6 +199,18 @@
             "multi-region.json",
             "multi-region.json"
         ],
+        "signerTemplate": [
+            "signer-dummy.json",
+            "signer-setup.json",
+            "signer-setup.json",
+            "signer-setup.json"
+        ],
+        "participantTemplate": [
+            "participant-dummy.json",
+            "participant-setup.json",
+            "participant-setup.json",
+            "participant-setup.json"
+        ],
         "generatorNicName": "[concat(variables('prefix'),'-gen-nic')]",
         "generatorVmName": "[concat(variables('prefix'),'-gen-vm')]",
         "generatorIpName": "[concat(variables('prefix'),'-gen-pip')]",
@@ -217,8 +229,8 @@
             "generatorPipSetupURL": "[concat(variables('baseUrl'),'/nested/generator-pip.json')]",
             "nsgSetupURL": "[concat(variables('baseUrl'),'/nested/nsg.json')]",
             "generatorSetupURL": "[concat(variables('baseUrl'),'/nested/generator-setup.json')]",
-            "signerSetupURL": "[concat(variables('baseUrl'),'/nested/signer-setup.json')]",
-            "partSetupURL": "[concat(variables('baseUrl'),'/nested/participant-setup.json')]",
+            "signerSetupURL": "[concat(variables('baseUrl'),'/nested/',variables('signerTemplate')[variables('signerNodeCount')])]",
+            "partSetupURL": "[concat(variables('baseUrl'),'/nested/',variables('participantTemplate')[variables('participantNodeCount')])]",
             "signerVMsSetupURL": "[concat(variables('baseUrl'),'/nested/signer-vm.json')]",
             "signerExtensionSetupURL": "[concat(variables('baseUrl'),'/nested/signer-extension.json')]",
             "signerNICsetupURL": "[concat(variables('baseUrl'),'/nested/signer-nic.json')]",
@@ -238,7 +250,7 @@
         "vnetSettings": {
             "region1": {
                 "regionCount": "[parameters('regionCount')]",
-                "virtualNetworksName": "[concat(variables('prefix'),'_vnet')]",
+                "virtualNetworksName": "[concat(variables('prefix'),'-vnet')]",
                 "generatorSubnetName": "gen-subnet",
                 "subnetName": "subnet",
                 "vnetRange": "10.1.0.0/16",
@@ -249,7 +261,7 @@
             },
             "region2": {
                 "regionCount": "[parameters('regionCount')]",
-                "virtualNetworksName": "[concat(variables('prefix'),'_vnet')]",
+                "virtualNetworksName": "[concat(variables('prefix'),'-vnet')]",
                 "generatorSubnetName": "gen-subnet",
                 "subnetName": "subnet",
                 "vnetRange": "10.2.0.0/16",
@@ -260,7 +272,7 @@
             },
             "region3": {
                 "regionCount": "[parameters('regionCount')]",
-                "virtualNetworksName": "[concat(variables('prefix'),'_vnet')]",
+                "virtualNetworksName": "[concat(variables('prefix'),'-vnet')]",
                 "generatorSubnetName": "gen-subnet",
                 "subnetName": "subnet",
                 "vnetRange": "10.3.0.0/16",
@@ -271,7 +283,7 @@
             },
             "region4": {
                 "regionCount": "[parameters('regionCount')]",
-                "virtualNetworksName": "[concat(variables('prefix'),'_vnet')]",
+                "virtualNetworksName": "[concat(variables('prefix'),'-vnet')]",
                 "generatorSubnetName": "gen-subnet",
                 "subnetName": "subnet",
                 "vnetRange": "10.4.0.0/16",
@@ -282,7 +294,7 @@
             },
             "region5": {
                 "regionCount": "[parameters('regionCount')]",
-                "virtualNetworksName": "[concat(variables('prefix'),'_vnet')]",
+                "virtualNetworksName": "[concat(variables('prefix'),'-vnet')]",
                 "generatorSubnetName": "gen-subnet",
                 "subnetName": "subnet",
                 "vnetRange": "10.5.0.0/16",
@@ -327,7 +339,7 @@
                 "adminPassword": "[parameters('adminPassword')]",
                 "generatorVmSize": "[parameters('generatorVmSize')]",
                 "storageAccountType": "[parameters('storageAccountType')]",
-                "passwordOrSshKey": "[parameters('passwordOrSshKey')]",
+                "passwordOrSshKey": "[parameters('authenticationType')]",
                 "sshPublicKey": "[parameters('sshPublicKey')]"
             },
             "genNicSettings": {
@@ -379,9 +391,9 @@
                 "nodeCount": "[variables('signerNodeCount')]",
                 "adminUsername": "[parameters('adminUsername')]",
                 "adminPassword": "[parameters('adminPassword')]",
-                "vmSize": "[parameters('signerVmSize')]",
+                "vmSize": "[parameters('signerAndParticipantVmSize')]",
                 "storageAccountType": "[parameters('storageAccountType')]",
-                "passwordOrSshKey": "[parameters('passwordOrSshKey')]",
+                "passwordOrSshKey": "[parameters('authenticationType')]",
                 "sshPublicKey": "[parameters('sshPublicKey')]"
             },
             "signerNicSettings": {
@@ -435,9 +447,9 @@
                 "nodeCount": "[variables('participantNodeCount')]",
                 "adminUsername": "[parameters('adminUsername')]",
                 "adminPassword": "[parameters('adminPassword')]",
-                "vmSize": "[parameters('signerVmSize')]",
+                "vmSize": "[parameters('signerAndParticipantVmSize')]",
                 "storageAccountType": "[parameters('storageAccountType')]",
-                "passwordOrSshKey": "[parameters('passwordOrSshKey')]",
+                "passwordOrSshKey": "[parameters('authenticationType')]",
                 "sshPublicKey": "[parameters('sshPublicKey')]"
             },
             "partNicSettings": {
