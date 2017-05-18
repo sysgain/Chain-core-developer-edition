@@ -153,7 +153,8 @@
             "apiVersion": "[parameters('apiVersion').deploymentApiVersion]",
             "type": "Microsoft.Resources/deployments",
             "dependsOn": [
-                "[variables('vnetDep')]"
+                "[variables('vnetDep')]",
+                "[variables('nsgDep')]"
             ],
             "properties": {
                 "mode": "Incremental",
