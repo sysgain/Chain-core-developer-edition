@@ -24,7 +24,7 @@
         "sku": "[parameters('genVMsettings').sku]",
         "version": "[parameters('genVMsettings').version]",
         "diskSizeGB": "[parameters('genVMsettings').diskSizeGB]",
-        "passwordOrSshKey":"[parameters('genVMsettings').diskSizeGB]",
+        "passwordOrSshKey":"[parameters('genVMsettings').passwordOrSshKey]",
         "sshPublicKey": "[parameters('genVMsettings').sshPublicKey]"
     },
     "resources": [
