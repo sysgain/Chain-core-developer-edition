@@ -63,7 +63,7 @@
                 },
                 "parameters": {
                     "vnetSettings": {
-                        "value": "[parameters('vnetSettings')]"
+                        "value": "[variables('vnetRegionArray')[copyIndex(1)]]"
                     },
                     "location": {
                         "value": "[parameters('location')[copyIndex(1)]]"
