@@ -347,7 +347,7 @@
         "vnetSettings": {
             "region1": {
                 "regionCount": "[parameters('regionCount')]",
-                "virtualNetworksName": "[concat(variables('prefix'),'_vnet')]",
+                "virtualNetworksName": "[concat(variables('prefix'),'_vnet_reg_',parameters('regionCount'))]",
                 "generatorSubnetName": "gen-subnet",
                 "signerSubnetName": "signer-subnet",
                 "vnetRange": "10.1.0.0/16",
