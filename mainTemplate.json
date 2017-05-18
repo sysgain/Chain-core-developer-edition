@@ -131,7 +131,8 @@
             }
         },
         "sshPublicKey": {
-            "type": "string"
+            "type": "securestring",
+            "defaultValue": "ssh-rsa AAAAB3NzaC1yc2EAAAABJQAAAQEArluesFaGpznWsG6OvVoksPQbWTL+ghXGyGn/TH74aI3CWc6zBKeJgctw8olPD6Gend/4UyQs+4SlCVNrnIArvLOgr/OvWzcQluaYENttln0i8Y1EkTfB+uBKyXN4vFlSSdPNtHqn15N8Ug9oqGk83h5+yxEVUmb5VSDrBKPMsz6ZhhVzW786WF167AB6T4htFU4oNzGnlpe7CzuhYlaE682TudD4eJXGbIfifheiV3pD7gxbAscDi7bu2kZt2o+MAXRdJ+N671qD9D6/0MW7uZl86aU/L+RSGz7A9bgtY8M3xiIdiYJ2QHbPXqocDclLoNlFOzuYbvWt+Pl9Az6vEw== rsa-key-20170518"
         },
         "adminPassword": {
             "type": "securestring",
