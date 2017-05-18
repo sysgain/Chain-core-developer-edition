@@ -13,12 +13,12 @@
         "suffix": "[concat(parameters('vmSettings').suffix)]",
         "apiVersion": "[concat(parameters('vmSettings').apiVersion)]",
         "availabilitySetsName": "[concat(parameters('vmSettings').availabilitySetsName)]",
-        "signerNicName": "[concat(parameters('vmSettings').signerNicName)]",
-        "signerVmName": "[concat(parameters('vmSettings').signerVmName)]",
-        "count": "[parameters('vmSettings').count]",
+        "nicName": "[concat(parameters('vmSettings').nicName)]",
+        "vmName": "[concat(parameters('vmSettings').vmName)]",
+        "nodeCount": "[parameters('vmSettings').nodeCount]",
         "adminUsername": "[parameters('vmSettings').adminUsername]",
         "adminPassword": "[parameters('vmSettings').adminPassword]",
-        "signerVmSize": "[parameters('vmSettings').signerVmSize]",
+        "vmSize": "[parameters('vmSettings').vmSize]",
         "storageAccountType": "[parameters('vmSettings').storageAccountType]",
         "publisher": "[parameters('vmSettings').publisher]",
         "offer": "[parameters('vmSettings').offer]",
@@ -32,19 +32,19 @@
     "resources": [
         {
             "type": "Microsoft.Compute/virtualMachines",
-            "name": "[concat(variables('signerVmName'),'-',copyIndex(1))]",
+            "name": "[concat(variables('vmName'),'-',copyIndex(1))]",
             "apiVersion": "[variables('apiVersion')]",
             "location": "[parameters('location')]",
             "copy": {
                 "name": "signerLoop",
-                "count": "[variables('count')]"
+                "count": "[variables('nodeCount')]"
             },
             "properties": {
                 "availabilitySet": {
                     "id": "[resourceId('Microsoft.Compute/availabilitySets',variables('availabilitySetsName'))]"
                 },
                 "hardwareProfile": {
-                    "vmSize": "[variables('signerVmSize')]"
+                    "vmSize": "[variables('vmSize')]"
                 },
                 "storageProfile": {
                     "imageReference": {
@@ -55,7 +55,7 @@
                     },
                     "osDisk": {
                         "osType": "Linux",
-                        "name": "[concat(variables('signerVmName'),'-',copyIndex(1),'-',variables('suffix'),'-osDisk')]",
+                        "name": "[concat(variables('vmName'),'-',copyIndex(1),'-',variables('suffix'),'-osDisk')]",
                         "createOption": "FromImage",
                         "caching": "ReadWrite",
                         "managedDisk": {
@@ -66,7 +66,7 @@
                     "dataDisks": []
                 },
                 "osProfile": {
-                    "computerName": "[concat(variables('signerVmName'),'-',copyIndex(1))]",
+                    "computerName": "[concat(variables('vmName'),'-',copyIndex(1))]",
                     "adminUsername": "[variables('adminUsername')]",
                     "adminPassword": "[variables('adminPassword')]",
                     "linuxConfiguration": {
@@ -77,7 +77,7 @@
                 "networkProfile": {
                     "networkInterfaces": [
                         {
-                            "id": "[resourceId('Microsoft.Network/networkInterfaces', concat(variables('signerNicName'),'-',copyIndex(1)))]"
+                            "id": "[resourceId('Microsoft.Network/networkInterfaces', concat(variables('nicName'),'-',copyIndex(1)))]"
                         }
                     ]
                 }
@@ -89,7 +89,7 @@
                     "apiVersion": "[variables('dockerApiVersion')]",
                     "location": "[parameters('location')]",
                     "dependsOn": [
-                        "[concat('Microsoft.Compute/virtualMachines/', variables('signerVmName'),'-',copyIndex(1))]"
+                        "[concat('Microsoft.Compute/virtualMachines/', variables('vmName'),'-',copyIndex(1))]"
                     ],
                     "properties": {
                         "publisher": "Microsoft.Azure.Extensions",

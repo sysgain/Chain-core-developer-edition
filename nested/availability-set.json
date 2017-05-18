@@ -2,25 +2,25 @@
     "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
     "contentVersion": "1.0.0.0",
     "parameters": {
-        "availabilitySetsName": {
-            "type": "string"
+        "availSetSettings": {
+            "type": "object"
         },
         "location": {
             "type": "string"
-        },
-        "apiVersion":{
-            "type": "string"
         }
     },
-    "variables": {},
+    "variables": {
+        "availabilitySetsName": "[parameters('availSetSettings').availabilitySetsName]",
+        "apiVersion": "[parameters('availSetSettings').apiVersion]"
+    },
     "resources": [
         {
             "type": "Microsoft.Compute/availabilitySets",
             "sku": {
                 "name": "Aligned"
             },
-            "name": "[parameters('availabilitySetsName')]",
-            "apiVersion": "[parameters('apiVersion')]",
+            "name": "[variables('availabilitySetsName')]",
+            "apiVersion": "[variables('apiVersion')]",
             "location": "[parameters('location')]",
             "tags": {},
             "properties": {

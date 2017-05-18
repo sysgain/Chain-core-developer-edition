@@ -25,7 +25,8 @@
         "version": "[parameters('genVMsettings').version]",
         "diskSizeGB": "[parameters('genVMsettings').diskSizeGB]",
         "passwordOrSshKey":"[parameters('genVMsettings').passwordOrSshKey]",
-        "sshPublicKey": "[parameters('genVMsettings').sshPublicKey]"
+        "sshPublicKey": "[parameters('genVMsettings').sshPublicKey]",
+        "dockerApiVersion": "[parameters('genVMsettings').dockerApiVersion]"
     },
     "resources": [
         {
@@ -77,7 +78,7 @@
                 {
                     "type": "extensions",
                     "name": "DockerExtension",
-                    "apiVersion": "2015-05-01-preview",
+                    "apiVersion": "[variables('dockerApiVersion')]",
                     "location": "[parameters('location')]",
                     "dependsOn": [
                         "[concat('Microsoft.Compute/virtualMachines/', variables('generatorVmName'))]"

@@ -14,7 +14,7 @@
         "apiVersion": {
             "type": "object"
         },
-        "signerSettings": {
+        "partSettings": {
             "type": "object"
         },
         "generatorIp": {
@@ -23,15 +23,14 @@
     },
     "variables": {
         "prefix": "[parameters('prefix')]",
-        "signerVmDep": "[concat(variables('prefix'),'-signerVmSetup-',parameters('location'))]",
-        "signerNicDep": "[concat(variables('prefix'),'-signerNicSetup-',parameters('location'))]",
-        "signerPipDep": "[concat(variables('prefix'),'-signerPipSetup-',parameters('location'))]",
-        "signerExtDep": "[concat(variables('prefix'),'-signerExtensionSetup-',parameters('location'))]",
-        "signerAvailDep": "[concat(variables('prefix'),'-signerAvailSetup-',parameters('location'))]"
+        "partVmDep": "[concat(variables('prefix'),'-signerVmSetup-',parameters('location'))]",
+        "partNicDep": "[concat(variables('prefix'),'-signerNicSetup-',parameters('location'))]",
+        "partPipDep": "[concat(variables('prefix'),'-signerPipSetup-',parameters('location'))]",
+        "partAvailDep": "[concat(variables('prefix'),'-signerAvailSetup-',parameters('location'))]"
     },
     "resources": [
-        { 
-            "name": "[variables('signerAvailDep')]",
+        {
+            "name": "[variables('partAvailDep')]",
             "apiVersion": "[parameters('apiVersion').deploymentApiVersion]",
             "type": "Microsoft.Resources/deployments",
             "properties": {
@@ -42,7 +41,7 @@
                 },
                 "parameters": {
                     "availSetSettings": {
-                        "value": "[parameters('signerSettings').signerAvailSetSettings]"
+                        "value": "[parameters('partSettings').partAvailSetSettings]"
                     },
                     "location": {
                         "value": "[parameters('location')]"
@@ -51,7 +50,7 @@
             }
         },
         {
-            "name": "[variables('signerPipDep')]",
+            "name": "[variables('partPipDep')]",
             "apiVersion": "[parameters('apiVersion').deploymentApiVersion]",
             "type": "Microsoft.Resources/deployments",
             "properties": {
@@ -62,7 +61,7 @@
                 },
                 "parameters": {
                     "pipSettings": {
-                        "value": "[parameters('signerSettings').signerPipSettings]"
+                        "value": "[parameters('partSettings').partPipSettings]"
                     },
                     "location": {
                         "value": "[parameters('location')]"
@@ -71,11 +70,11 @@
             }
         },
         {
-            "name": "[variables('signerNicDep')]",
+            "name": "[variables('partNicDep')]",
             "apiVersion": "[parameters('apiVersion').deploymentApiVersion]",
             "type": "Microsoft.Resources/deployments",
             "dependsOn": [
-                "[variables('signerPipDep')]"
+                "[variables('partPipDep')]"
             ],
             "properties": {
                 "mode": "Incremental",
@@ -85,7 +84,7 @@
                 },
                 "parameters": {
                     "nicSettings": {
-                        "value": "[parameters('signerSettings').signerNicSettings]"
+                        "value": "[parameters('partSettings').partNicSettings]"
                     },
                     "location": {
                         "value": "[parameters('location')]"
@@ -94,12 +93,12 @@
             }
         },
         {
-            "name": "[variables('signerVmDep')]",
+            "name": "[variables('partVmDep')]",
             "apiVersion": "[parameters('apiVersion').deploymentApiVersion]",
             "type": "Microsoft.Resources/deployments",
             "dependsOn": [
-                "[variables('signerNicDep')]",
-                "[variables('signerAvailDep')]"
+                "[variables('partNicDep')]",
+                "[variables('partAvailDep')]"
             ],
             "properties": {
                 "mode": "Incremental",
@@ -109,36 +108,10 @@
                 },
                 "parameters": {
                     "vmSettings": {
-                        "value": "[parameters('signerSettings').signerVMsettings]"
+                        "value": "[parameters('partSettings').partVMsettings]"
                     },
                     "location": {
                         "value": "[parameters('location')]"
-                    }
-                }
-            }
-        },
-        {
-            "name": "[variables('signerExtDep')]",
-            "apiVersion": "[parameters('apiVersion').deploymentApiVersion]",
-            "type": "Microsoft.Resources/deployments",
-            "dependsOn": [
-                "[variables('signerVmDep')]"
-            ],
-            "properties": {
-                "mode": "Incremental",
-                "templateLink": {
-                    "uri": "[parameters('nestedURls').signerExtensionSetupURL]",
-                    "contentVersion": "1.0.0.0"
-                },
-                "parameters": {
-                    "signerExtensionSettings": {
-                        "value": "[parameters('signerSettings').signerExtensionSettings]"
-                    },
-                    "location": {
-                        "value": "[parameters('location')]"
-                    },
-                    "generatorIp": {
-                        "value": "[parameters('generatorIp')]"
                     }
                 }
             }

@@ -101,15 +101,20 @@
             "type": "string",
             "defaultValue": "2",
             "allowedValues": [
+                "0",
                 "1",
                 "2",
-                "3",
-                "4",
-                "5",
-                "6",
-                "7",
-                "8",
-                "9"
+                "3"
+            ]
+        },
+        "participantNodeCount":{
+            "type": "string",
+            "defaultValue": "2",
+            "allowedValues": [
+                "0",
+                "1",
+                "2",
+                "3"
             ]
         },
         "passwordOrSshKey": {
@@ -147,7 +152,7 @@
                 "description": "Azure access control user objectId for Service principal"
             }
         },
-        "servicePrinciple": {
+        "servicePrincipal": {
             "type": "string",
             "metadata": {
                 "description": "Service principal objectId"
@@ -196,8 +201,12 @@
         "generatorVmName": "[concat(variables('prefix'),'-gen-vm')]",
         "signerNicName": "[concat(variables('prefix'),'-signer-nic')]",
         "signerVmName": "[concat(variables('prefix'),'-signer-vm')]",
-        "availabilitySetsName": "[concat(variables('prefix'),'-avset')]",
-        "signerVMIpName": "[concat(variables('prefix'),'-signer-pip')]",
+        "availabilitySetsName": "[concat(variables('prefix'),'-signer-avset')]",
+        "signerIpName": "[concat(variables('prefix'),'-signer-pip')]",
+        "partNicName": "[concat(variables('prefix'),'-signer-nic')]",
+        "partVmName": "[concat(variables('prefix'),'-signer-vm')]",
+        "partAvailabilitySetsName": "[concat(variables('prefix'),'-part-avset')]",
+        "partIpName": "[concat(variables('prefix'),'-part-pip')]",
         "generatorIpName": "[concat(variables('prefix'),'-gen-pip')]",
         "nestedURls": {
             "generatorVmSetupURL": "[concat(variables('baseUrl'),'/nested/generator-vm.json')]",
@@ -207,6 +216,7 @@
             "nsgSetupURL": "[concat(variables('baseUrl'),'/nested/nsg.json')]",
             "generatorSetupURL": "[concat(variables('baseUrl'),'/nested/generator-setup.json')]",
             "signerSetupURL": "[concat(variables('baseUrl'),'/nested/signer-setup.json')]",
+            "partSetupURL": "[concat(variables('baseUrl'),'/nested/participant-setup.json')]",
             "signerVMsSetupURL": "[concat(variables('baseUrl'),'/nested/signer-vm.json')]",
             "signerExtensionSetupURL": "[concat(variables('baseUrl'),'/nested/signer-extension.json')]",
             "signerNICsetupURL": "[concat(variables('baseUrl'),'/nested/signer-nic.json')]",
@@ -221,6 +231,63 @@
             "avaialabilitySetSetupURL": "[concat(variables('baseUrl'),'/nested/availability-set.json')]",
             "signerScriptUrl": "[concat(variables('baseUrl'),'/scripts/signer-script.sh')]",
             "generatorScriptUrl": "[concat(variables('baseUrl'),'/scripts/generator-script.sh')]"
+        },
+        "vnetSettings": {
+            "region1": {
+                "regionCount": "[parameters('regionCount')]",
+                "virtualNetworksName": "[concat(variables('prefix'),'_vnet_reg_',parameters('regionCount'))]",
+                "generatorSubnetName": "gen-subnet",
+                "signerSubnetName": "signer-subnet",
+                "vnetRange": "10.1.0.0/16",
+                "subnet1Range": "10.1.1.0/24",
+                "subnet2Range": "10.1.2.0/24",
+                "gatewaySubnetRange": "10.1.0.0/24",
+                "apiVersion": "[variables('apiVersion').networkApiVersion]"
+            },
+            "region2": {
+                "regionCount": "[parameters('regionCount')]",
+                "virtualNetworksName": "[concat(variables('prefix'),'_vnet')]",
+                "generatorSubnetName": "gen-subnet",
+                "signerSubnetName": "signer-subnet",
+                "vnetRange": "10.2.0.0/16",
+                "subnet1Range": "10.2.1.0/24",
+                "subnet2Range": "10.2.2.0/24",
+                "gatewaySubnetRange": "10.2.0.0/24",
+                "apiVersion": "[variables('apiVersion').networkApiVersion]"
+            },
+            "region3": {
+                "regionCount": "[parameters('regionCount')]",
+                "virtualNetworksName": "[concat(variables('prefix'),'_vnet')]",
+                "generatorSubnetName": "gen-subnet",
+                "signerSubnetName": "signer-subnet",
+                "vnetRange": "10.3.0.0/16",
+                "subnet1Range": "10.3.1.0/24",
+                "subnet2Range": "10.3.2.0/24",
+                "gatewaySubnetRange": "10.3.0.0/24",
+                "apiVersion": "[variables('apiVersion').networkApiVersion]"
+            },
+            "region4": {
+                "regionCount": "[parameters('regionCount')]",
+                "virtualNetworksName": "[concat(variables('prefix'),'_vnet')]",
+                "generatorSubnetName": "gen-subnet",
+                "signerSubnetName": "signer-subnet",
+                "vnetRange": "10.4.0.0/16",
+                "subnet1Range": "10.4.1.0/24",
+                "subnet2Range": "10.4.2.0/24",
+                "gatewaySubnetRange": "10.4.0.0/24",
+                "apiVersion": "[variables('apiVersion').networkApiVersion]"
+            },
+            "region5": {
+                "regionCount": "[parameters('regionCount')]",
+                "virtualNetworksName": "[concat(variables('prefix'),'_vnet')]",
+                "generatorSubnetName": "gen-subnet",
+                "signerSubnetName": "signer-subnet",
+                "vnetRange": "10.5.0.0/16",
+                "subnet1Range": "10.5.1.0/24",
+                "subnet2Range": "10.5.2.0/24",
+                "gatewaySubnetRange": "10.5.0.0/24",
+                "apiVersion": "[variables('apiVersion').networkApiVersion]"
+            }
         },
         "apiVersion": {
             "computeApiVersion": "2016-04-30-preview",
@@ -279,9 +346,9 @@
                 "apiVersion": "[variables('apiVersion').computeApiVersion]",
                 "generatorVmName": "[variables('generatorVmName')]",
                 "generatorScriptUrl": "[variables('nestedURls').generatorScriptUrl]",
-                "generatorScriptFileName": "generator-v2.sh",
+                "generatorScriptFileName": "generator-script.sh",
                 "networkTokenName": "signet",
-                "servicePrinciple": "[parameters('servicePrinciple')]",
+                "servicePrincipal": "[parameters('servicePrincipal')]",
                 "secretKey": "[parameters('secretKey')]",
                 "tenantId": "[subscription().tenantId]",
                 "subscriptionId": "[subscription().subscriptionId]",
@@ -297,8 +364,8 @@
             "signerVMsettings": {
                 "suffix": "[variables('suffix')]",
                 "availabilitySetsName": "[variables('availabilitySetsName')]",
-                "signerNicName": "[variables('signerNicName')]",
-                "signerVmName": "[variables('signerVmName')]",
+                "nicName": "[variables('signerNicName')]",
+                "vmName": "[variables('signerVmName')]",
                 "apiVersion": "[variables('apiVersion').computeApiVersion]",
                 "dockerApiVersion": "[variables('apiVersion').dockerApiVersion]",
                 "publisher": "Canonical",
@@ -306,100 +373,86 @@
                 "sku": "16.04-LTS",
                 "version": "latest",
                 "diskSizeGB": 30,
-                "signerNodeCount": "[parameters('signerNodeCount')]",
+                "nodeCount": "[parameters('signerNodeCount')]",
                 "adminUsername": "[parameters('adminUsername')]",
                 "adminPassword": "[parameters('adminPassword')]",
-                "signerVmSize": "[parameters('signerVmSize')]",
+                "vmSize": "[parameters('signerVmSize')]",
                 "storageAccountType": "[parameters('storageAccountType')]",
                 "passwordOrSshKey": "[parameters('passwordOrSshKey')]",
                 "sshPublicKey": "[parameters('sshPublicKey')]"
             },
             "signerNicSettings": {
-                "signerNicName": "[variables('signerNicName')]",
-                "signerNodeCount": "[parameters('signerNodeCount')]",
+                "nicName": "[variables('signerNicName')]",
+                "nodeCount": "[parameters('signerNodeCount')]",
                 "privateIPAllocationMethod": "Dynamic",
                 "apiVersion": "[variables('apiVersion').networkApiVersion]",
-                "signerVMIpName": "[variables('signerVMIpName')]",
+                "pipName": "[variables('signerIpName')]",
                 "virtualNetworksName": "[variables('vnetSettings').region1.virtualNetworksName]",
                 "signerSubnetName": "[variables('vnetSettings').region1.signerSubnetName]",
-                "signerNsgName": "[variables('nsgSettings').nsgName]"
+                "nsgName": "[variables('nsgSettings').nsgName]"
             },
             "signerPipSettings": {
-                "signerVMIpName": "[variables('signerVMIpName')]",
-                "signerNodeCount": "[parameters('signerNodeCount')]",
-                "signerPipDns": "[concat('signer-',variables('suffix'))]",
+                "pipName": "[variables('signerIpName')]",
+                "nodeCount": "[parameters('signerNodeCount')]",
+                "pipDns": "[concat('signer-',variables('suffix'))]",
                 "apiVersion": "[variables('apiVersion').networkApiVersion]",
                 "publicIPAllocationMethod": "Dynamic"
             },
             "signerExtensionSettings": {
                 "apiVersion": "[variables('apiVersion').computeApiVersion]",
-                "signerVmName": "[concat(variables('prefix'),'-signer-vm')]",
-                "signerScriptUrl": "[variables('nestedURls').signerScriptUrl]",
-                "signerScriptFileName": "signer-v2.sh",
-                "servicePrinciple": "[parameters('servicePrinciple')]",
+                "signerVmName": "[variables('signerVmName')]",
+                "scriptUrl": "[variables('nestedURls').signerScriptUrl]",
+                "scriptFileName": "signer-script.sh",
+                "servicePrincipal": "[parameters('servicePrincipal')]",
                 "secretKey": "[parameters('secretKey')]",
                 "tenantId": "[subscription().tenantId]",
                 "subscriptionid": "[subscription().subscriptionId]",
                 "keyVaultName": "[variables('keyVaultSettings').keyVaultName]",
-                "signerTokenName": "sigClientToken",
-                "signerNodeCount": "[parameters('signerNodeCount')]"
+                "tokenName": "sigClientToken",
+                "nodeCount": "[parameters('signerNodeCount')]"
             }
         },
-        "vnetSettings": {
-            "region1": {
-                "regionCount": "[parameters('regionCount')]",
-                "virtualNetworksName": "[concat(variables('prefix'),'_vnet_reg_',parameters('regionCount'))]",
-                "generatorSubnetName": "gen-subnet",
-                "signerSubnetName": "signer-subnet",
-                "vnetRange": "10.1.0.0/16",
-                "subnet1Range": "10.1.1.0/24",
-                "subnet2Range": "10.1.2.0/24",
-                "gatewaySubnetRange": "10.1.0.0/24",
-                "apiVersion": "[variables('apiVersion').networkApiVersion]"
+        "participantSettings": {
+            "partAvailSetSettings": {
+                "availabilitySetsName": "[variables('partAvailabilitySetsName')]",
+                "apiVersion": "[variables('apiVersion').computeApiVersion]"
             },
-            "region2": {
-                "regionCount": "[parameters('regionCount')]",
-                "virtualNetworksName": "[concat(variables('prefix'),'_vnet')]",
-                "generatorSubnetName": "gen-subnet",
-                "signerSubnetName": "signer-subnet",
-                "vnetRange": "10.2.0.0/16",
-                "subnet1Range": "10.2.1.0/24",
-                "subnet2Range": "10.2.2.0/24",
-                "gatewaySubnetRange": "10.2.0.0/24",
-                "apiVersion": "[variables('apiVersion').networkApiVersion]"
+            "partVMsettings": {
+                "suffix": "[variables('suffix')]",
+                "availabilitySetsName": "[variables('partAvailabilitySetsName')]",
+                "nicName": "[variables('partNicName')]",
+                "vmName": "[variables('partVmName')]",
+                "apiVersion": "[variables('apiVersion').computeApiVersion]",
+                "dockerApiVersion": "[variables('apiVersion').dockerApiVersion]",
+                "publisher": "Canonical",
+                "offer": "UbuntuServer",
+                "sku": "16.04-LTS",
+                "version": "latest",
+                "diskSizeGB": 30,
+                "nodeCount": "[parameters('participantNodeCount')]",
+                "adminUsername": "[parameters('adminUsername')]",
+                "adminPassword": "[parameters('adminPassword')]",
+                "vmSize": "[parameters('signerVmSize')]",
+                "storageAccountType": "[parameters('storageAccountType')]",
+                "passwordOrSshKey": "[parameters('passwordOrSshKey')]",
+                "sshPublicKey": "[parameters('sshPublicKey')]"
             },
-            "region3": {
-                "regionCount": "[parameters('regionCount')]",
-                "virtualNetworksName": "[concat(variables('prefix'),'_vnet')]",
-                "generatorSubnetName": "gen-subnet",
-                "signerSubnetName": "signer-subnet",
-                "vnetRange": "10.3.0.0/16",
-                "subnet1Range": "10.3.1.0/24",
-                "subnet2Range": "10.3.2.0/24",
-                "gatewaySubnetRange": "10.3.0.0/24",
-                "apiVersion": "[variables('apiVersion').networkApiVersion]"
+            "partNicSettings": {
+                "nicName": "[variables('partNicName')]",
+                "nodeCount": "[parameters('participantNodeCount')]",
+                "privateIPAllocationMethod": "Dynamic",
+                "apiVersion": "[variables('apiVersion').networkApiVersion]",
+                "pipName": "[variables('partIpName')]",
+                "virtualNetworksName": "[variables('vnetSettings').region1.virtualNetworksName]",
+                "signerSubnetName": "[variables('vnetSettings').region1.signerSubnetName]",
+                "nsgName": "[variables('nsgSettings').nsgName]"
             },
-            "region4": {
-                "regionCount": "[parameters('regionCount')]",
-                "virtualNetworksName": "[concat(variables('prefix'),'_vnet')]",
-                "generatorSubnetName": "gen-subnet",
-                "signerSubnetName": "signer-subnet",
-                "vnetRange": "10.4.0.0/16",
-                "subnet1Range": "10.4.1.0/24",
-                "subnet2Range": "10.4.2.0/24",
-                "gatewaySubnetRange": "10.4.0.0/24",
-                "apiVersion": "[variables('apiVersion').networkApiVersion]"
-            },
-            "region5": {
-                "regionCount": "[parameters('regionCount')]",
-                "virtualNetworksName": "[concat(variables('prefix'),'_vnet')]",
-                "generatorSubnetName": "gen-subnet",
-                "signerSubnetName": "signer-subnet",
-                "vnetRange": "10.5.0.0/16",
-                "subnet1Range": "10.5.1.0/24",
-                "subnet2Range": "10.5.2.0/24",
-                "gatewaySubnetRange": "10.5.0.0/24",
-                "apiVersion": "[variables('apiVersion').networkApiVersion]"
+            "partPipSettings": {
+                "pipName": "[variables('partIpName')]",
+                "nodeCount": "[parameters('participantNodeCount')]",
+                "pipDns": "[concat('participant-',variables('suffix'))]",
+                "apiVersion": "[variables('apiVersion').networkApiVersion]",
+                "publicIPAllocationMethod": "Dynamic"
             }
         },
         "singleRegionDep": "singleRegionSetup",
@@ -461,6 +514,9 @@
                     },
                     "signerSettings": {
                         "value": "[variables('signerSettings')]"
+                    },
+                    "participantSettings": {
+                        "value": "[variables('participantSettings')]"
                     },
                     "nsgSettings": {
                         "value": "[variables('nsgSettings')]"

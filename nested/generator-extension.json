@@ -15,7 +15,7 @@
     "generatorScriptUrl": "[parameters('genExtensionSettings').generatorScriptUrl]",
     "generatorScriptFileName": "[parameters('genExtensionSettings').generatorScriptFileName]",
     "networkTokenName": "[parameters('genExtensionSettings').networkTokenName]",
-    "servicePrinciple": "[parameters('genExtensionSettings').servicePrinciple]",
+    "servicePrincipal": "[parameters('genExtensionSettings').servicePrincipal]",
     "secretKey": "[parameters('genExtensionSettings').secretKey]",
     "tenantId": "[parameters('genExtensionSettings').tenantId]",
     "subscriptionId": "[parameters('genExtensionSettings').subscriptionId]",

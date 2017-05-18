@@ -2,7 +2,7 @@
   "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
   "contentVersion": "1.0.0.0",
   "parameters": {
-    "signerNicSettings": {
+    "nicSettings": {
       "type": "object"
     },
     "location": {
@@ -10,24 +10,24 @@
     }
   },
   "variables": {
-    "signerNicName": "[parameters('signerNicSettings').signerNicName]",
-    "signer_nodes_Count": "[parameters('signerNicSettings').signer_nodes_Count]",
-    "signerVMIpName": "[parameters('signerNicSettings').signerVMIpName]",
-    "virtualNetworksName": "[parameters('signerNicSettings').virtualNetworksName]",
-    "signerSubnetName": "[parameters('signerNicSettings').signerSubnetName]",
-    "signerNsgName": "[parameters('signerNicSettings').signerNsgName]",
-    "privateIPAllocationMethod": "[parameters('signerNicSettings').privateIPAllocationMethod]",
-    "apiVersion": "[parameters('signerNicSettings').apiVersion]"
+    "nicName": "[parameters('nicSettings').nicName]",
+    "nodeCount": "[parameters('nicSettings').nodeCount]",
+    "pipName": "[parameters('nicSettings').pipName]",
+    "virtualNetworksName": "[parameters('nicSettings').virtualNetworksName]",
+    "signerSubnetName": "[parameters('nicSettings').signerSubnetName]",
+    "nsgName": "[parameters('nicSettings').nsgName]",
+    "privateIPAllocationMethod": "[parameters('nicSettings').privateIPAllocationMethod]",
+    "apiVersion": "[parameters('nicSettings').apiVersion]"
   },
   "resources": [
     {
       "type": "Microsoft.Network/networkInterfaces",
-      "name": "[concat(variables('signerNicName'),'-',copyIndex(1))]",
+      "name": "[concat(variables('nicName'),'-',copyIndex(1))]",
       "apiVersion": "[variables('apiVersion')]",
       "location": "[parameters('location')]",
       "copy": {
         "name": "signerLoop",
-        "count": "[variables('signer_nodes_Count')]"
+        "count": "[variables('nodeCount')]"
       },
       "properties": {
         "ipConfigurations": [
@@ -36,7 +36,7 @@
             "properties": {
               "privateIPAllocationMethod": "[variables('privateIPAllocationMethod')]",
               "publicIPAddress": {
-                "id": "[resourceId('Microsoft.Network/publicIPAddresses', concat(variables('signerVMIpName'),'-',copyIndex(1)))]"
+                "id": "[resourceId('Microsoft.Network/publicIPAddresses', concat(variables('pipName'),'-',copyIndex(1)))]"
               },
               "subnet": {
                 "id": "[concat(resourceId('Microsoft.Network/virtualNetworks', variables('virtualNetworksName')), '/subnets/',variables('signerSubnetName'))]"
@@ -49,7 +49,7 @@
         },
         "enableIPForwarding": false,
         "networkSecurityGroup": {
-          "id": "[resourceId('Microsoft.Network/networkSecurityGroups', variables('signerNsgName'))]"
+          "id": "[resourceId('Microsoft.Network/networkSecurityGroups', variables('nsgName'))]"
         }
       }
     }

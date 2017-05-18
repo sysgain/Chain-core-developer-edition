@@ -23,14 +23,17 @@
         "signerSettings": {
             "type": "object"
         },
+        "participantSettings": {
+            "type": "object"
+        },
         "nsgSettings": {
             "type": "object"
         }
     },
     "variables": {
-        "vnetDep": "vnetSetup",
-        "nsgDep": "nsgSetup",
-        "generatorPipDep": "[concat(parameters('prefix'),'-genPipSetup')]"
+        "vnetDep": "[concat('vnetSetup-',parameters('location'))]",
+        "nsgDep": "[concat('nsgSetup-',parameters('location'))]",
+        "generatorPipDep": "[concat(parameters('prefix'),'-genPipSetup-',parameters('location'))]"
     },
     "resources": [
         {
@@ -94,7 +97,7 @@
             }
         },
         {
-            "name": "generatorSetup",
+            "name": "[concat('generatorSetup-',parameters('location'))]",
             "apiVersion": "[parameters('apiVersion').deploymentApiVersion]",
             "type": "Microsoft.Resources/deployments",
             "dependsOn": [
@@ -127,7 +130,7 @@
             }
         },
         {
-            "name": "signerSetup",
+            "name": "[concat('signerSetup-',parameters('location'))]",
             "apiVersion": "[parameters('apiVersion').deploymentApiVersion]",
             "type": "Microsoft.Resources/deployments",
             "dependsOn": [
@@ -155,6 +158,42 @@
                     },
                     "signerSettings": {
                         "value": "[parameters('signerSettings')]"
+                    },
+                    "generatorIp": {
+                        "value": "[reference(variables('generatorPipDep')).outputs.generatorIp.value]"
+                    }
+                }
+            }
+        },
+        {
+            "name": "[concat('participantSetup-',parameters('location'))]",
+            "apiVersion": "[parameters('apiVersion').deploymentApiVersion]",
+            "type": "Microsoft.Resources/deployments",
+            "dependsOn": [
+                "[variables('vnetDep')]",
+                "[variables('generatorPipDep')]"
+            ],
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "[parameters('nestedURLs').partSetupURL]",
+                    "contentVersion": "1.0.0.0"
+                },
+                "parameters": {
+                    "prefix": {
+                        "value": "[parameters('prefix')]"
+                    },
+                    "location": {
+                        "value": "[parameters('location')]"
+                    },
+                    "nestedURls": {
+                        "value": "[parameters('nestedURls')]"
+                    },
+                    "apiVersion": {
+                        "value": "[parameters('apiVersion')]"
+                    },
+                    "partSettings": {
+                        "value": "[parameters('participantSettings')]"
                     },
                     "generatorIp": {
                         "value": "[reference(variables('generatorPipDep')).outputs.generatorIp.value]"
