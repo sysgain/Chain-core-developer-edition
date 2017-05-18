@@ -189,7 +189,7 @@
     "variables": {
         "baseUrl": "[parameters('artifactsBaseUrl')]",
         "signerNodeCount":"[int(parameters('signerNodeCount'))]",
-        "participantNodeCount":"[int(parameters('participantNodeCount'))]"
+        "participantNodeCount":"[int(parameters('participantNodeCount'))]",
         "prefix": "chain",
         "suffix": "[substring(uniqueString(resourceGroup().id) ,0, 5)]",
         "multiTemplate": [
