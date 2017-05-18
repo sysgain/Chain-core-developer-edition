@@ -80,7 +80,7 @@
             "properties": {
                 "mode": "Incremental",
                 "templateLink": {
-                    "uri": "[parameters('nestedURls').generatorPipLbSetupURL]",
+                    "uri": "[parameters('nestedURls').generatorPipSetupURL]",
                     "contentVersion": "1.0.0.0"
                 },
                 "parameters": {
