@@ -543,7 +543,7 @@
                         "name": "objId",
                         "type": "Microsoft.Common.TextBox",
                         "label": "Object ID",
-                        "toolTip": "Object ID for new Key Vault Owner",
+                        "toolTip": "This is the unique ID of the service principal object associates with the application. This ID can be used to perform management operations against the application using Powershell or other programmatic interfaces. This obect ID can be found in the Application properties section.",
                         "constraints": {
                             "required": true
                         },
@@ -553,7 +553,7 @@
                         "name": "srvPri",
                         "type": "Microsoft.Common.TextBox",
                         "label": "Service principal",
-                        "toolTip": "Service Principal of your Microsoft Azure Account",
+                        "toolTip": "Service Principal Application ID",
                         "constraints": {
                             "required": true
                         },
@@ -565,7 +565,7 @@
                         "label": {
                             "password": "Shared secret key"
                         },
-                        "toolTip": "Shared secret key of your Service Principal",
+                        "toolTip": "Service Principal Key",
                         "constraints": {
                             "required": true
                         },
