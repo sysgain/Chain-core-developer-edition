@@ -6,7 +6,7 @@
             "type": "string"
         },
         "location": {
-            "type": "string"
+            "type": "array"
         },
         "nestedURls": {
             "type": "object"
@@ -48,7 +48,7 @@
     },
     "resources": [
         {
-            "name": "[variables('vnetDep')]",
+            "name": "[concat(variables('vnetDep'),copyIndex(1))]",
             "apiVersion": "[parameters('apiVersion').deploymentApiVersion]",
             "type": "Microsoft.Resources/deployments",
             "copy": {
@@ -72,7 +72,7 @@
             }
         },
         {
-            "name": "[variables('nsgDep')]",
+            "name": "[concat(variables('nsgDep'),copyIndex(1))]",
             "apiVersion": "[parameters('apiVersion').deploymentApiVersion]",
             "type": "Microsoft.Resources/deployments",
             "copy": {
@@ -90,13 +90,13 @@
                         "value": "[parameters('nsgSettings')]"
                     },
                     "location": {
-                        "value": "[parameters('location')]"
+                        "value": "[parameters('location')[copyIndex(1)]]"
                     }
                 }
             }
         },
         {
-            "name": "[variables('signerDep')]",
+            "name": "[concat(variables('signerDep'),copyIndex(1))]",
             "apiVersion": "[parameters('apiVersion').deploymentApiVersion]",
             "type": "Microsoft.Resources/deployments",
             "copy": {
@@ -104,8 +104,8 @@
                 "count": "[sub(int(parameters('regionCount')),1)]"
             },
             "dependsOn": [
-                "[variables('vnetDep')]",
-                "[variables('nsgDep')]"
+                "[concat(variables('nsgDep'),copyIndex(1))]",
+                "[concat(variables('vnetDep'),copyIndex(1))]"
             ],
             "properties": {
                 "mode": "Incremental",
@@ -136,7 +136,7 @@
             }
         },
         {
-            "name": "[variables('participantSetup')]",
+            "name": "[concat(variables('participantSetup'),copyIndex(1))]",
             "apiVersion": "[parameters('apiVersion').deploymentApiVersion]",
             "type": "Microsoft.Resources/deployments",
             "copy": {
@@ -144,8 +144,8 @@
                 "count": "[sub(int(parameters('regionCount')),1)]"
             },
             "dependsOn": [
-                "[variables('vnetDep')]",
-                "[variables('nsgDep')]"
+                "[concat(variables('nsgDep'),copyIndex(1))]",
+                "[concat(variables('vnetDep'),copyIndex(1))]"
             ],
             "properties": {
                 "mode": "Incremental",

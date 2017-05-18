@@ -160,6 +160,10 @@
                         "constraints": {
                             "allowedValues": [
                                 {
+                                    "label": "0",
+                                    "value": "0"
+                                },
+                                {
                                     "label": "1",
                                     "value": "1"
                                 },
@@ -170,30 +174,34 @@
                                 {
                                     "label": "3",
                                     "value": "3"
+                                }
+                            ]
+                        },
+                        "visible": true
+                    },
+                    {
+                        "name": "partVmCount",
+                        "type": "Microsoft.Common.DropDown",
+                        "label": "Number of Block Signer VMs",
+                        "defaultValue": "2",
+                        "toolTip": "Number of Block Signer VMs in the Blockchain network",
+                        "constraints": {
+                            "allowedValues": [
+                                {
+                                    "label": "0",
+                                    "value": "0"
                                 },
                                 {
-                                    "label": "4",
-                                    "value": "4"
+                                    "label": "1",
+                                    "value": "1"
                                 },
                                 {
-                                    "label": "5",
-                                    "value": "5"
+                                    "label": "2",
+                                    "value": "2"
                                 },
                                 {
-                                    "label": "6",
-                                    "value": "6"
-                                },
-                                {
-                                    "label": "7",
-                                    "value": "7"
-                                },
-                                {
-                                    "label": "8",
-                                    "value": "8"
-                                },
-                                {
-                                    "label": "9",
-                                    "value": "9"
+                                    "label": "3",
+                                    "value": "3"
                                 }
                             ]
                         },
@@ -249,6 +257,10 @@
                             "required": true,
                             "allowedValues": [
                                 {
+                                    "label": "1",
+                                    "value": "1"
+                                },
+                                {
                                     "label": "2",
                                     "value": "2"
                                 },
@@ -263,6 +275,71 @@
                                 {
                                     "label": "5",
                                     "value": "5"
+                                }
+                            ]
+                        },
+                        "visible": true
+                    },
+                    {
+                        "name": "loc1",
+                        "type": "Microsoft.Common.DropDown",
+                        "label": "First Location",
+                        "toolTip": "Select the first region.",
+                        "defaultValue": "Central US",
+                        "constraints": {
+                            "required": true,
+                            "allowedValues": [
+                                {
+                                    "label": "East US",
+                                    "value": "eastus"
+                                },
+                                {
+                                    "label": "North Central US",
+                                    "value": "northcentralus"
+                                },
+                                {
+                                    "label": "Central US",
+                                    "value": "centralus"
+                                },
+                                {
+                                    "label": "South Central US",
+                                    "value": "southcentralus"
+                                },
+                                {
+                                    "label": "West US",
+                                    "value": "westus"
+                                },
+                                {
+                                    "label": "East US 2",
+                                    "value": "eastus2"
+                                },
+                                {
+                                    "label": "North Europe",
+                                    "value": "northeurope"
+                                },
+                                {
+                                    "label": "West Europe",
+                                    "value": "westeurope"
+                                },
+                                {
+                                    "label": "East Asia",
+                                    "value": "eastasia"
+                                },
+                                {
+                                    "label": "Southeast Asia",
+                                    "value": "southeastasia"
+                                },
+                                {
+                                    "label": "Japan East",
+                                    "value": "japaneast"
+                                },
+                                {
+                                    "label": "Japan West",
+                                    "value": "japanwest"
+                                },
+                                {
+                                    "label": "Brazil South",
+                                    "value": "brazilsouth"
                                 }
                             ]
                         },
@@ -578,7 +655,7 @@
             }
         ],
         "outputs": {
-            "location_1": "[location()]",
+            "location_1": "[steps('regCnt').loc1]",
             "location_2": "[steps('regCnt').loc2]",
             "location_3": "[steps('regCnt').loc3]",
             "location_4": "[steps('regCnt').loc4]",
@@ -586,7 +663,8 @@
             "regionCount": "[steps('regCnt').regionCnt]",
             "generatorVmSize": "[steps('vmSize').generatorVmSize]",
             "signerVmSize": "[steps('vmSize').signerVmSize]",
-            "signer_nodes_Count": "[steps('vmSize').signerVmCount]",
+            "signerNodeCount": "[steps('vmSize').signerVmCount]",
+            "participantNodeCount":"[steps('vmSize').partVmCount]",
             "adminUsername": "[basics('basics').adminUsername]",
             "adminPassword": "[basics('basics').adminPassword]",
             "authenticationType": "[basics('basics').sshOrPassword.authenticationType]",
