@@ -1,47 +1,47 @@
 {
-  "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
-  "contentVersion": "1.0.0.0",
-  "parameters": {
-    "genExtensionSettings": {
-      "type": "object"
-    },
-    "location": {
-      "type": "string"
-    }
-  },
-  "variables": {
-    "apiVersion": "[parameters('genExtensionSettings').apiVersion]",
-    "generatorVmName": "[parameters('genExtensionSettings').generatorVmName]",
-    "generatorScriptUrl": "[parameters('genExtensionSettings').generatorScriptUrl]",
-    "generatorScriptFileName": "[parameters('genExtensionSettings').generatorScriptFileName]",
-    "networkTokenName": "[parameters('genExtensionSettings').networkTokenName]",
-    "servicePrincipal": "[parameters('genExtensionSettings').servicePrincipal]",
-    "secretKey": "[parameters('genExtensionSettings').secretKey]",
-    "tenantId": "[parameters('genExtensionSettings').tenantId]",
-    "subscriptionId": "[parameters('genExtensionSettings').subscriptionId]",
-    "keyVaultName": "[parameters('genExtensionSettings').keyVaultName]",
-    "signerNodeCount": "[parameters('genExtensionSettings').signerNodeCount]"
-  },
-  "resources": [
-    {
-      "type": "Microsoft.Compute/virtualMachines/extensions",
-      "name": "[concat(variables('generatorVmName'), '/generatorConfig')]",
-      "location": "[parameters('location')]",
-      "apiVersion": "[variables('apiVersion')]",
-      "properties": {
-        "publisher": "Microsoft.Azure.Extensions",
-        "type": "CustomScript",
-        "typeHandlerVersion": "2.0",
-        "autoUpgradeMinorVersion": true,
-        "settings": {
-          "fileUris": [
-            "[variables('generatorScriptUrl')]"
-          ]
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "genExtensionSettings": {
+            "type": "object"
         },
-        "protectedSettings": {
-          "commandToExecute": "[concat('sh ', variables('generatorScriptFileName'), ' \"', variables('networkTokenName'), '\" \"', variables('servicePrinciple'), '\" \"', variables('secretKey'), '\" \"', variables('tenantId'), '\" \"', variables('subscriptionId'), '\" \"', variables('keyVaultName'),'\" \"', variables('signerNodeCount'),'\"')]"
+        "location": {
+            "type": "string"
         }
-      }
-    }
-  ]
+    },
+    "variables": {
+        "apiVersion": "[parameters('genExtensionSettings').apiVersion]",
+        "generatorVmName": "[parameters('genExtensionSettings').generatorVmName]",
+        "generatorScriptUrl": "[parameters('genExtensionSettings').generatorScriptUrl]",
+        "generatorScriptFileName": "[parameters('genExtensionSettings').generatorScriptFileName]",
+        "networkTokenName": "[parameters('genExtensionSettings').networkTokenName]",
+        "servicePrincipal": "[parameters('genExtensionSettings').servicePrincipal]",
+        "secretKey": "[parameters('genExtensionSettings').secretKey]",
+        "tenantId": "[parameters('genExtensionSettings').tenantId]",
+        "subscriptionId": "[parameters('genExtensionSettings').subscriptionId]",
+        "keyVaultName": "[parameters('genExtensionSettings').keyVaultName]",
+        "signerNodeCount": "[parameters('genExtensionSettings').signerNodeCount]"
+    },
+    "resources": [
+        {
+            "type": "Microsoft.Compute/virtualMachines/extensions",
+            "name": "[concat(variables('generatorVmName'), '/generatorConfig')]",
+            "location": "[parameters('location')]",
+            "apiVersion": "[variables('apiVersion')]",
+            "properties": {
+                "publisher": "Microsoft.Azure.Extensions",
+                "type": "CustomScript",
+                "typeHandlerVersion": "2.0",
+                "autoUpgradeMinorVersion": true,
+                "settings": {
+                    "fileUris": [
+                        "[variables('generatorScriptUrl')]"
+                    ]
+                },
+                "protectedSettings": {
+                    "commandToExecute": "[concat('sh ', variables('generatorScriptFileName'), ' \"', variables('networkTokenName'), '\" \"', variables('servicePrincipal'), '\" \"', variables('secretKey'), '\" \"', variables('tenantId'), '\" \"', variables('subscriptionId'), '\" \"', variables('keyVaultName'),'\" \"', variables('signerNodeCount'),'\"')]"
+                }
+            }
+        }
+    ]
 }

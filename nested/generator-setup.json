@@ -20,9 +20,9 @@
     },
     "variables": {
         "prefix": "[parameters('prefix')]",
-        "generatorVmDep": "[concat(variables('prefix'),'-generatorVMSetup')]",
-        "generatorNicDep": "[concat(variables('prefix'),'-generatorNICSetup')]",
-        "generatorExtDep": "[concat(variables('prefix'),'-genExtensionSetup')]"
+        "generatorVmDep": "[concat(variables('prefix'),'-generatorVMSetup-',parameters('location'))]",
+        "generatorNicDep": "[concat(variables('prefix'),'-generatorNICSetup-',parameters('location'))]",
+        "generatorExtDep": "[concat(variables('prefix'),'-genExtensionSetup-',parameters('location'))]"
     },
     "resources": [
         {
