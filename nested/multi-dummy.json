@@ -6,7 +6,7 @@
             "type": "string"
         },
         "location": {
-            "type": "string"
+            "type": "array"
         },
         "nestedURls": {
             "type": "object"
@@ -27,6 +27,9 @@
             "type": "object"
         },
         "generatorIp": {
+            "type": "string"
+        },
+        "regionCount":{
             "type": "string"
         }
     },
