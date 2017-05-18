@@ -98,7 +98,8 @@
             "apiVersion": "[parameters('apiVersion').deploymentApiVersion]",
             "type": "Microsoft.Resources/deployments",
             "dependsOn": [
-                "[variables('vnetDep')]"
+                "[variables('vnetDep')]",
+                "[variables('generatorPipDep')]"
             ],
             "properties": {
                 "mode": "Incremental",
@@ -130,7 +131,8 @@
             "apiVersion": "[parameters('apiVersion').deploymentApiVersion]",
             "type": "Microsoft.Resources/deployments",
             "dependsOn": [
-                "[variables('vnetDep')]"
+                "[variables('vnetDep')]",
+                "[variables('generatorPipDep')]"
             ],
             "properties": {
                 "mode": "Incremental",

@@ -230,7 +230,7 @@
             "dockerApiVersion": "2015-05-01-preview"
         },
         "keyVaultSettings": {
-            "keyVaultName": "[concat('keyVlt_',variables('suffix'))]",
+            "keyVaultName": "[concat('key-',variables('suffix'),'-vlt')]",
             "tenantId": "[subscription().tenantId]",
             "location": "[parameters('location_1')]",
             "objectId": "[parameters('objectId')]",
