@@ -263,7 +263,7 @@
         "partAvailabilitySetsName": "[concat(variables('prefix'),'-part-avset')]",
         "partIpName": "[concat(variables('prefix'),'-part-pip')]",
         "nestedURls": {
-            "generatorVmSetupURL": "[concat(variables('baseUrl'),'/nested/generator-vm.json')]",
+            "generatorVmSetupURL": "[concat(variables('baseUrl'),'/nested/generator-vm-',parameters('authenticationType'),'.json')]",
             "generatorExtensionSetupURL": "[concat(variables('baseUrl'),'/nested/generator-extension.json')]",
             "generatorNicSetupURL": "[concat(variables('baseUrl'),'/nested/generator-nic.json')]",
             "pipGtwSetupURL": "[concat(variables('baseUrl'),'/nested/generator-gtwy-pip.json')]",
@@ -275,7 +275,7 @@
             "partSetupURLReg2": "[concat(variables('baseUrl'),'/nested/',variables('participantTemplate')[variables('participantNodeCountReg2')])]",
             "signerSetupURLReg3": "[concat(variables('baseUrl'),'/nested/',variables('signerTemplate')[variables('signerNodeCountReg3')])]",
             "partSetupURLReg3": "[concat(variables('baseUrl'),'/nested/',variables('participantTemplate')[variables('participantNodeCountReg3')])]",
-            "vmsSetupURL": "[concat(variables('baseUrl'),'/nested/signer-participant-vm.json')]",
+            "vmsSetupURL": "[concat(variables('baseUrl'),'/nested/signer-participant-vm-',parameters('authenticationType'),'.json')]",
             "extensionSetupURL": "[concat(variables('baseUrl'),'/nested/signer-participant-extension.json')]",
             "nicSetupURL": "[concat(variables('baseUrl'),'/nested/signer-participant-nic.json')]",
             "pipSetupURL": "[concat(variables('baseUrl'),'/nested/signer-participant-pip.json')]",
