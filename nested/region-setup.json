@@ -94,7 +94,7 @@
             "properties": {
                 "mode": "Incremental",
                 "templateLink": {
-                    "uri": "[parameters('nestedURLs').signerSetupURLReg1]",
+                    "uri": "[parameters('nestedURLs').signerSetupURLReg2]",
                     "contentVersion": "1.0.0.0"
                 },
                 "parameters": {
@@ -133,7 +133,7 @@
             "properties": {
                 "mode": "Incremental",
                 "templateLink": {
-                    "uri": "[parameters('nestedURLs').partSetupURLReg1]",
+                    "uri": "[parameters('nestedURLs').partSetupURLReg2]",
                     "contentVersion": "1.0.0.0"
                 },
                 "parameters": {
