@@ -209,7 +209,7 @@
             "properties": {
                 "mode": "Incremental",
                 "templateLink": {
-                    "uri": "[parameters('nestedURls').pipGtwSetupURL]",
+                    "uri": "[parameters('nestedURls').gatewaySetupURL]",
                     "contentVersion": "1.0.0.0"
                 },
                 "parameters": {
@@ -239,7 +239,7 @@
             "properties": {
                 "mode": "Incremental",
                 "templateLink": {
-                    "uri": "[parameters('nestedURls').pipGtwSetupURL]",
+                    "uri": "[parameters('nestedURls').connectionsSetupURL]",
                     "contentVersion": "1.0.0.0"
                 },
                 "parameters": {

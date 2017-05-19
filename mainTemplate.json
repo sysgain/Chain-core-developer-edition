@@ -143,7 +143,7 @@
             "type": "string",
             "defaultValue": "password",
             "allowedValues": [
-                "sshKey",
+                "sshPublicKey",
                 "password"
             ],
             "metadata": {
@@ -280,7 +280,7 @@
             "nicSetupURL": "[concat(variables('baseUrl'),'/nested/signer-participant-nic.json')]",
             "pipSetupURL": "[concat(variables('baseUrl'),'/nested/signer-participant-pip.json')]",
             "gatewaySetupURL": "[concat(variables('baseUrl'),'/nested/gateway.json')]",
-            "connectionsSetupURl": "[concat(variables('baseUrl'),'/nested/connections.json')]",
+            "connectionsSetupURL": "[concat(variables('baseUrl'),'/nested/connections.json')]",
             "oneRegionSetupURL": "[concat(variables('baseUrl'),'/nested/one-region.json')]",
             "region2SetupURL": "[concat(variables('baseUrl'),'/nested/',variables('regionTemplate')[variables('totalCountReg2')])]",
             "region3SetupURL": "[concat(variables('baseUrl'),'/nested/',variables('regionTemplate')[variables('totalCountReg3')])]",
