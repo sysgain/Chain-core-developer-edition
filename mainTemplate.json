@@ -242,10 +242,12 @@
         "signerTemplate": [
             "signer-dummy.json",
             "signer-setup.json",
+            "signer-setup.json",
             "signer-setup.json"
         ],
         "participantTemplate": [
             "participant-dummy.json",
+            "participant-setup.json",
             "participant-setup.json",
             "participant-setup.json"
         ],

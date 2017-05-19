@@ -34,6 +34,12 @@
         },
         "partNodeCount": {
             "type": "int"
+        },
+        "signerSetupURL":{
+            "type":"string"
+        },
+        "partSetupURL":{
+            "type":"string"
         }
     },
     "variables": {
@@ -94,7 +100,7 @@
             "properties": {
                 "mode": "Incremental",
                 "templateLink": {
-                    "uri": "[parameters('nestedURLs').signerSetupURLReg2]",
+                    "uri": "[parameters('signerSetupURL')]",
                     "contentVersion": "1.0.0.0"
                 },
                 "parameters": {
@@ -133,7 +139,7 @@
             "properties": {
                 "mode": "Incremental",
                 "templateLink": {
-                    "uri": "[parameters('nestedURLs').partSetupURLReg2]",
+                    "uri": "[parameters('partSetupURL')]",
                     "contentVersion": "1.0.0.0"
                 },
                 "parameters": {

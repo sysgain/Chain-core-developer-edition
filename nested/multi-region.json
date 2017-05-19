@@ -95,6 +95,12 @@
                     },
                     "partNodeCount": {
                         "value": "[parameters('partNodeCountReg2')]"
+                    },
+                    "signerSetupURL":{
+                        "value":"[parameters('nestedURls').signerSetupURLReg2]"
+                    },
+                    "partSetupURL":{
+                        "value":"[parameters('nestedURls').partSetupURLReg2]"
                     }
                 }
             }
@@ -142,6 +148,12 @@
                     },
                     "partNodeCount": {
                         "value": "[parameters('partNodeCountReg3')]"
+                    },
+                    "signerSetupURL":{
+                        "value":"[parameters('nestedURls').signerSetupURLReg3]"
+                    },
+                    "partSetupURL":{
+                        "value":"[parameters('nestedURls').partSetupURLReg3]"
                     }
                 }
             }
