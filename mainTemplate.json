@@ -299,12 +299,12 @@
       "pipSetupURL": "[concat(variables('baseUrl'),'/nested/signer-participant-pip.json')]",
       "gatewaySetupURL": [
         "[concat(variables('baseUrl'),'/nested/gateway.json')]",
-        "[concat(variables('baseUrl'),'/nested/',variables('vpnGwtTemplate')[variables('signerNodeCountReg2')])]",
-        "[concat(variables('baseUrl'),'/nested/',variables('vpnGwtTemplate')[variables('signerNodeCountReg3')])]"
+        "[concat(variables('baseUrl'),'/nested/',variables('vpnGwtTemplate')[variables('totalCountReg2')])]",
+        "[concat(variables('baseUrl'),'/nested/',variables('vpnGwtTemplate')[variables('totalCountReg2')])]"
       ],
       "connectionsSetupURl": [
-        "[concat(variables('baseUrl'),'/nested/',variables('connectionsTemplate')[variables('signerNodeCountReg2')])]",
-        "[concat(variables('baseUrl'),'/nested/',variables('connectionsTemplate')[variables('signerNodeCountReg3')])]"
+        "[concat(variables('baseUrl'),'/nested/',variables('connectionsTemplate')[variables('totalCountReg2')])]",
+        "[concat(variables('baseUrl'),'/nested/',variables('connectionsTemplate')[variables('totalCountReg2')])]"
       ],
       "oneRegionSetupURL": "[concat(variables('baseUrl'),'/nested/one-region.json')]",
       "region2SetupURL": "[concat(variables('baseUrl'),'/nested/',variables('regionTemplate')[variables('totalCountReg2')])]",
