@@ -147,7 +147,7 @@
             }
         },
         {
-            "name": "[concat(variables('gatewayPipDep'),'-',parameters('location')[copyIndex(1)])]",
+            "name": "[concat(variables('gatewayPipDep'),'-',parameters('location')[copyIndex(0)])]",
             "apiVersion": "[parameters('apiVersion').deploymentApiVersion]",
             "type": "Microsoft.Resources/deployments",
             "copy":{
@@ -165,7 +165,7 @@
                         "value": "[parameters('gatewayPipSettings')]"
                     },
                     "location": {
-                        "value": "[parameters('location')[copyIndex(1)]]"
+                        "value": "[parameters('location')[copyIndex(0)]]"
                     }
                 }
             }
