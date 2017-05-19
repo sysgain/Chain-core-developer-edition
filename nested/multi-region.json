@@ -41,15 +41,15 @@
         "partNodeCountReg3": {
             "type": "int"
         },
-        "gatewayPipSettings":{
+        "gatewayPipSettings": {
             "type": "object"
         },
-        "regionCount":{
+        "regionCount": {
             "type": "int"
         }
     },
     "variables": {
-        "gatewayPipDep":"gatewayPipSetup",
+        "gatewayPipDep": "gatewayPipSetup",
         "vnetRegionArray": [
             "[parameters('vnetSettings').region1]",
             "[parameters('vnetSettings').region2]",
@@ -101,11 +101,11 @@
                     "partNodeCount": {
                         "value": "[parameters('partNodeCountReg2')]"
                     },
-                    "signerSetupURL":{
-                        "value":"[parameters('nestedURls').signerSetupURLReg2]"
+                    "signerSetupURL": {
+                        "value": "[parameters('nestedURls').signerSetupURLReg2]"
                     },
-                    "partSetupURL":{
-                        "value":"[parameters('nestedURls').partSetupURLReg2]"
+                    "partSetupURL": {
+                        "value": "[parameters('nestedURls').partSetupURLReg2]"
                     }
                 }
             }
@@ -154,11 +154,11 @@
                     "partNodeCount": {
                         "value": "[parameters('partNodeCountReg3')]"
                     },
-                    "signerSetupURL":{
-                        "value":"[parameters('nestedURls').signerSetupURLReg3]"
+                    "signerSetupURL": {
+                        "value": "[parameters('nestedURls').signerSetupURLReg3]"
                     },
-                    "partSetupURL":{
-                        "value":"[parameters('nestedURls').partSetupURLReg3]"
+                    "partSetupURL": {
+                        "value": "[parameters('nestedURls').partSetupURLReg3]"
                     }
                 }
             }
@@ -167,7 +167,7 @@
             "name": "[concat(variables('gatewayPipDep'),'-',parameters('location')[copyIndex(0)])]",
             "apiVersion": "[parameters('apiVersion').deploymentApiVersion]",
             "type": "Microsoft.Resources/deployments",
-            "copy":{
+            "copy": {
                 "name": "regionLoop",
                 "count": "[parameters('regionCount')]"
             },
