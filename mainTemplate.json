@@ -210,7 +210,6 @@
     },
     "variables": {
         "baseUrl": "[parameters('artifactsBaseUrl')]",
-
         "regionCount": "[int(parameters('regionCount'))]",
         "signerNodeCountReg1": "[int(parameters('signerNodeCountReg1'))]",
         "participantNodeCountReg1": "[int(parameters('participantNodeCountReg1'))]",
@@ -221,15 +220,20 @@
         "location_1": "[tolower(replace(parameters('location_1'),' ',''))]",
         "location_2": "[tolower(replace(parameters('location_2'),' ',''))]",
         "location_3": "[tolower(replace(parameters('location_3'),' ',''))]",
-        "signerRegCount":"[add(variables('signerNodeCountReg2'),variables('signerNodeCountReg3'))]",
-        "partRegCount":"[add(variables('participantNodeCountReg2'),variables('participantNodeCountReg3'))]",
-        "totalCount":"[add(variables('signerRegCount'),variables('partRegCount'))]",
+
+
+
+        "signerRegCount": "[add(variables('signerNodeCountReg2'),variables('signerNodeCountReg3'))]",
+        "partRegCount": "[add(variables('participantNodeCountReg2'),variables('participantNodeCountReg3'))]",
+        "totalCount": "[add(variables('signerRegCount'),variables('partRegCount'))]",
+
+
         "prefix": "chn",
         "suffix": "[substring(uniqueString(resourceGroup().id) ,0, 4)]",
         "multiTemplate": [
             "multi-dummy.json",
             "multi-region.json",
-            "multi-region.json",      
+            "multi-region.json",
             "multi-region.json",
             "multi-region.json"
         ],
@@ -269,27 +273,27 @@
             "pipGtwSetupURL": "[concat(variables('baseUrl'),'/nested/generator-gtwy-pip.json')]",
             "nsgSetupURL": "[concat(variables('baseUrl'),'/nested/nsg.json')]",
             "generatorSetupURL": "[concat(variables('baseUrl'),'/nested/generator-setup.json')]",
+
             "signerSetupURLReg1": "[concat(variables('baseUrl'),'/nested/',variables('signerTemplate')[variables('signerNodeCountReg1')])]",
             "partSetupURLReg1": "[concat(variables('baseUrl'),'/nested/',variables('participantTemplate')[variables('participantNodeCountReg1')])]",
             "signerSetupURLReg2": "[concat(variables('baseUrl'),'/nested/',variables('signerTemplate')[variables('signerNodeCountReg2')])]",
             "partSetupURLReg2": "[concat(variables('baseUrl'),'/nested/',variables('participantTemplate')[variables('participantNodeCountReg2')])]",
             "signerSetupURLReg3": "[concat(variables('baseUrl'),'/nested/',variables('signerTemplate')[variables('signerNodeCountReg3')])]",
             "partSetupURLReg3": "[concat(variables('baseUrl'),'/nested/',variables('participantTemplate')[variables('participantNodeCountReg3')])]",
+            
             "vmsSetupURL": "[concat(variables('baseUrl'),'/nested/signer-participant-vm.json')]",
             "extensionSetupURL": "[concat(variables('baseUrl'),'/nested/signer-participant-extension.json')]",
             "nicSetupURL": "[concat(variables('baseUrl'),'/nested/signer-participant-nic.json')]",
             "pipSetupURL": "[concat(variables('baseUrl'),'/nested/signer-participant-pip.json')]",
             "gatewaySetupURL": "[concat(variables('baseUrl'),'/nested/gateway.json')]",
-        
             "connectionsSetupURl": "[concat(variables('baseUrl'),'/nested/connections.json')]",
             "oneRegionSetupURL": "[concat(variables('baseUrl'),'/nested/one-region.json')]",
-
 
             "region2SetupURL": "[concat(variables('baseUrl'),'/nested/',variables('regionTemplate')[variables('regionCount')])]",
             "region3SetupURL": "[concat(variables('baseUrl'),'/nested/',variables('regionTemplate')[sub(variables('regionCount'),1)])]",
             "multiRegionURL": "[concat(variables('baseUrl'),'/nested/',variables('multiTemplate')[variables('totalCount')])]",
 
-
+            
             "vnetSetupURL": "[concat(variables('baseUrl'),'/nested/vnet.json')]",
             "vnetmultiSetupURL": "[concat(variables('baseUrl'),'/nested/vnetmulti.json')]",
             "keyVaultSetupURL": "[concat(variables('baseUrl'),'/nested/keyvault.json')]",
@@ -503,7 +507,7 @@
                 "tokenName": "parClientToken"
             }
         },
-        "gatewayPipSettings":{
+        "gatewayPipSettings": {
             "pipName": "gateway-pip",
             "pipDns": "[concat('gateway-',variables('suffix'))]",
             "apiVersion": "[variables('apiVersion').networkApiVersion]",
@@ -601,7 +605,7 @@
                     },
                     "location": {
                         "value": "[variables('locationsArray')]"
-                    },             
+                    },
                     "nestedURls": {
                         "value": "[variables('nestedURls')]"
                     },
@@ -635,10 +639,10 @@
                     "partNodeCountReg3": {
                         "value": "[variables('participantNodeCountReg3')]"
                     },
-                    "regionCount":{
+                    "regionCount": {
                         "value": "[variables('regionCount')]"
                     },
-                    "gatewayPipSettings":{
+                    "gatewayPipSettings": {
                         "value": "[variables('gatewayPipSettings')]"
                     }
                 }

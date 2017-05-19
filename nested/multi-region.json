@@ -49,7 +49,12 @@
         }
     },
     "variables": {
-        "gatewayPipDep":"gatewayPipSetup"
+        "gatewayPipDep":"gatewayPipSetup",
+        "vnetRegionArray": [
+            "[parameters('vnetSettings').region1]",
+            "[parameters('vnetSettings').region2]",
+            "[parameters('vnetSettings').region3]"
+        ]
     },
     "resources": [
         {
