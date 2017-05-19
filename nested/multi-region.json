@@ -56,7 +56,7 @@
     },
     "variables": {
         "gatewayPipDep": "gatewayPipSetup",
-        "vnetGatewayDep":"vnetGatewaySetup",
+        "vpnGatewayDep":"vpnGatewaySetup",
         "conncetionsDep":"conncetionSetup",
         "vnetRegionArray": [
             "[parameters('vnetSettings').region1]",
@@ -196,7 +196,7 @@
             }
         },
         {
-            "name": "[concat(variables('vnetGatewayDep'),'-',parameters('location')[copyIndex(0)])]",
+            "name": "[concat(variables('vpnGatewayDep'),'-',parameters('location')[copyIndex(0)])]",
             "apiVersion": "[parameters('apiVersion').deploymentApiVersion]",
             "type": "Microsoft.Resources/deployments",
             "dependsOn": [
@@ -230,7 +230,7 @@
             "apiVersion": "[parameters('apiVersion').deploymentApiVersion]",
             "type": "Microsoft.Resources/deployments",
             "dependsOn": [
-                "[concat(variables('vnetGatewayDep'),'-',parameters('location')[copyIndex(0)])]"
+                "[concat(variables('vpnGatewayDep'),'-',parameters('location')[copyIndex(0)])]"
             ],
             "copy": {
                 "name": "regionLoop",
