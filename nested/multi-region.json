@@ -200,7 +200,9 @@
       "apiVersion": "[parameters('apiVersion').deploymentApiVersion]",
       "type": "Microsoft.Resources/deployments",
       "dependsOn": [
-        "[concat(variables('gatewayPipDep'),'-',parameters('location')[copyIndex(0)])]"
+        "[concat(variables('gatewayPipDep'),'-',parameters('location')[copyIndex(0)])]",
+        "Region2",
+        "Region3"
       ],
       "copy": {
         "name": "regionLoop",
