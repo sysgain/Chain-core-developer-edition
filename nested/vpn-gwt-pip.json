@@ -1,0 +1,92 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "location": {
+      "type": "array"
+    },
+    "nestedURls": {
+      "type": "object"
+    },
+    "apiVersion": {
+      "type": "object"
+    },
+    "vnetSettings": {
+      "type": "object"
+    },
+    "gatewayPipSettings": {
+      "type": "object"
+    },
+    "vpnGatewaySettings": {
+      "type": "object"
+    },
+    "regionCount": {
+      "type": "int"
+    }
+  },
+  "variables": {
+    "gatewayPipDep": "gatewayPipSetup",
+    "vpnGatewayDep": "vpnGatewaySetup",
+    "vnetRegionArray": [
+      "[parameters('vnetSettings').region1]",
+      "[parameters('vnetSettings').region2]",
+      "[parameters('vnetSettings').region3]"
+    ]
+  },
+  "resources": [
+    {
+      "name": "[concat(variables('gatewayPipDep'),'-',parameters('location')[copyIndex(0)])]",
+      "apiVersion": "[parameters('apiVersion').deploymentApiVersion]",
+      "type": "Microsoft.Resources/deployments",
+      "copy": {
+        "name": "regionLoop",
+        "count": "[parameters('regionCount')]"
+      },
+      "properties": {
+        "mode": "Incremental",
+        "templateLink": {
+          "uri": "[parameters('nestedURls').pipGtwSetupURL[copyIndex(0)]]",
+          "contentVersion": "1.0.0.0"
+        },
+        "parameters": {
+          "pipSettings": {
+            "value": "[parameters('gatewayPipSettings')]"
+          },
+          "location": {
+            "value": "[parameters('location')[copyIndex(0)]]"
+          }
+        }
+      }
+    },
+    {
+      "name": "[concat(variables('vpnGatewayDep'),'-',parameters('location')[copyIndex(0)])]",
+      "apiVersion": "[parameters('apiVersion').deploymentApiVersion]",
+      "type": "Microsoft.Resources/deployments",
+      "dependsOn": [
+        "[concat(variables('gatewayPipDep'),'-',parameters('location')[copyIndex(0)])]",
+      ],
+      "copy": {
+        "name": "regionLoop",
+        "count": "[parameters('regionCount')]"
+      },
+      "properties": {
+        "mode": "Incremental",
+        "templateLink": {
+          "uri": "[parameters('nestedURls').gatewaySetupURL[copyIndex(0)]]",
+          "contentVersion": "1.0.0.0"
+        },
+        "parameters": {
+          "vpnGatewaySettings": {
+            "value": "[parameters('vpnGatewaySettings')]"
+          },
+          "vnetSettings": {
+            "value": "[variables('vnetRegionArray')[copyIndex(0)]]"
+          },
+          "location": {
+            "value": "[parameters('location')[copyIndex(0)]]"
+          }
+        }
+      }
+    }
+  ]
+}
