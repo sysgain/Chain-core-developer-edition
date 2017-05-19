@@ -18,9 +18,9 @@ sudo apt-get install azure-cli
 sudo apt-get update
 sudo apt-get install azure-cli
 # pull chaincore docker image
-docker pull chaincore/developer:latest
+docker pull chaincore/developer:ivy-latest
 # run chaincore docker image
-docker run -d -p 1999:1999 chaincore/developer:latest
+docker run -d -p 1999:1999 chaincore/developer:ivy-latest
 sleep 30
 containerId=`docker ps | cut -d " " -f1 | sed 1d`
 #generator client access token / public key
