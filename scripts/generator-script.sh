@@ -20,7 +20,7 @@ sudo apt-get update && sudo apt-get install azure-cli
 
 
 # run chaincore docker image
-docker run -d -p 1999:1999 chaincore/developer:latest
+docker run -d -p 1999:1999 chaincore/developer:ivy-latest
 sleep 40
 containerId=`docker ps | cut -d " " -f1 | sed 1d`
 
