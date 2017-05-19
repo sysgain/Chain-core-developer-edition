@@ -264,7 +264,7 @@
             "generatorVmSetupURL": "[concat(variables('baseUrl'),'/nested/generator-vm.json')]",
             "generatorExtensionSetupURL": "[concat(variables('baseUrl'),'/nested/generator-extension.json')]",
             "generatorNicSetupURL": "[concat(variables('baseUrl'),'/nested/generator-nic.json')]",
-            "pipSetupURL": "[concat(variables('baseUrl'),'/nested/generator-gtwy-pip.json')]",
+            "pipGtwSetupURL": "[concat(variables('baseUrl'),'/nested/generator-gtwy-pip.json')]",
             "nsgSetupURL": "[concat(variables('baseUrl'),'/nested/nsg.json')]",
             "generatorSetupURL": "[concat(variables('baseUrl'),'/nested/generator-setup.json')]",
             "signerSetupURLReg1": "[concat(variables('baseUrl'),'/nested/',variables('signerTemplate')[variables('signerNodeCountReg1')])]",

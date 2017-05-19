@@ -1,3 +1,4 @@
+#scrip will run on all the signer machines
 #!/bin/bash
 
 # install prerequisites 
@@ -17,35 +18,29 @@ tenatid=$4
 subscriptionid=$5
 keyvaultname=$6
 signerclienttokenkeyname=$7
-copyIndex=$8
  
 az login --service-principal -u $serviceprincipal -p $secretkey --tenant $tenatid
 az account set -s $subscriptionid
-networkToken="networkTokenSignerVM${copyIndex}"
-echo "networkToken: $networkToken"
+networkToken="networkTokenSignerVM"
+
 generatornetworktoken=`az keyvault secret show --name $networkToken --vault-name $keyvaultname | grep "value" | cut -d "\"" -f4`
-blockchainid=`az keyvault secret show --name blockchainId --vault-name $keyvaultname | grep "value" | cut -d "\"" -f4`
+blockchainid=`az keyvault secret show --name blockchainid --vault-name $keyvaultname | grep "value" | cut -d "\"" -f4`
 
-echo "generatoretworktoken is $generatornetworktoken"
-
-# Pull chaincore docker image
-docker pull chaincore/developer:latest
-# Run chaincore docker container
+# run chaincore docker image
 docker run -d -p 1999:1999 chaincore/developer:latest
-sleep 40
+sleep 30
 containerId=`docker ps | cut -d " " -f1 | sed 1d`
 
+#signer client access token / public key
 docker exec -itd $containerId /usr/bin/chain/cored
 
-# Retrieve client token from docker logs
 signerctoken=`docker logs $containerId | grep "^client:" | uniq`
+
 signerctoken1=`echo $signerctoken | cut -c8-`
 
-# Signer config
+#signer config
 response=`docker exec $containerId /usr/bin/chain/corectl config -t $generatornetworktoken -k $signerctoken1 $blockchainid http://$generatornodeip:1999`
-
-echo $response
 
 docker restart $containerId
 
-az keyvault secret set --name $signerclienttokenkeyname$copyIndex --vault-name $keyvaultname --value $signerctoken
+az keyvault secret set --name $signerclienttokenkeyname --vault-name $keyvaultname --value $signerctoken
