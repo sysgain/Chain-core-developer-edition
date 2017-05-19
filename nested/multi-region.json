@@ -44,12 +44,20 @@
         "gatewayPipSettings": {
             "type": "object"
         },
+        "vpnGatewaySettings":{
+            "type": "object"
+        },
         "regionCount": {
             "type": "int"
+        },
+        "connectionSettings":{
+            "type": "object"
         }
     },
     "variables": {
         "gatewayPipDep": "gatewayPipSetup",
+        "vnetGatewayDep":"vnetGatewaySetup",
+        "conncetionsDep":"conncetionSetup",
         "vnetRegionArray": [
             "[parameters('vnetSettings').region1]",
             "[parameters('vnetSettings').region2]",
@@ -183,6 +191,66 @@
                     },
                     "location": {
                         "value": "[parameters('location')[copyIndex(0)]]"
+                    }
+                }
+            }
+        },
+        {
+            "name": "[concat(variables('vnetGatewayDep'),'-',parameters('location')[copyIndex(0)])]",
+            "apiVersion": "[parameters('apiVersion').deploymentApiVersion]",
+            "type": "Microsoft.Resources/deployments",
+            "dependsOn": [
+                "[concat(variables('gatewayPipDep'),'-',parameters('location')[copyIndex(0)])]"
+            ],
+            "copy": {
+                "name": "regionLoop",
+                "count": "[parameters('regionCount')]"
+            },
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "[parameters('nestedURls').pipGtwSetupURL]",
+                    "contentVersion": "1.0.0.0"
+                },
+                "parameters": {
+                    "vpnGatewaySettings": {
+                        "value": "[parameters('vpnGatewaySettings')]"
+                    },
+                    "vnetSettings": {
+                        "value": "[variables('vnetRegionArray')[copyIndex(0)]]"
+                    },
+                    "location": {
+                        "value": "[parameters('location')[copyIndex(0)]]"
+                    }
+                }
+            }
+        },
+        {
+            "name": "[concat(variables('conncetionsDep'),'-',parameters('location')[copyIndex(0)])]",
+            "apiVersion": "[parameters('apiVersion').deploymentApiVersion]",
+            "type": "Microsoft.Resources/deployments",
+            "dependsOn": [
+                "[concat(variables('vnetGatewayDep'),'-',parameters('location')[copyIndex(0)])]"
+            ],
+            "copy": {
+                "name": "regionLoop",
+                "count": "[parameters('regionCount')]"
+            },
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "[parameters('nestedURls').pipGtwSetupURL]",
+                    "contentVersion": "1.0.0.0"
+                },
+                "parameters": {
+                    "connectionSettings": {
+                        "value": "[parameters('connectionSettings')]"
+                    },
+                    "location_1": {
+                        "value": "[parameters('location')[0]]"
+                    },
+                    "location_2": {
+                        "value": "[parameters('location')[copyIndex(1)]]"
                     }
                 }
             }

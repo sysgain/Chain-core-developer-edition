@@ -220,20 +220,11 @@
         "location_1": "[tolower(replace(parameters('location_1'),' ',''))]",
         "location_2": "[tolower(replace(parameters('location_2'),' ',''))]",
         "location_3": "[tolower(replace(parameters('location_3'),' ',''))]",
-
-
-
         "signerCountReg2and3": "[add(variables('signerNodeCountReg2'),variables('signerNodeCountReg3'))]",
         "partCountReg2and3": "[add(variables('participantNodeCountReg2'),variables('participantNodeCountReg3'))]",
         "totalCountReg2and3": "[add(variables('signerCountReg2and3'),variables('partCountReg2and3'))]",
-
-    
         "totalCountReg2": "[add(variables('signerNodeCountReg2'),variables('participantNodeCountReg2'))]",
-
-       
         "totalCountReg3": "[add(variables('signerNodeCountReg3'),variables('participantNodeCountReg3'))]",
-
-
         "prefix": "chn",
         "suffix": "[substring(uniqueString(resourceGroup().id) ,0, 4)]",
         "multiTemplate": [
@@ -278,14 +269,12 @@
             "pipGtwSetupURL": "[concat(variables('baseUrl'),'/nested/generator-gtwy-pip.json')]",
             "nsgSetupURL": "[concat(variables('baseUrl'),'/nested/nsg.json')]",
             "generatorSetupURL": "[concat(variables('baseUrl'),'/nested/generator-setup.json')]",
-
             "signerSetupURLReg1": "[concat(variables('baseUrl'),'/nested/',variables('signerTemplate')[variables('signerNodeCountReg1')])]",
             "partSetupURLReg1": "[concat(variables('baseUrl'),'/nested/',variables('participantTemplate')[variables('participantNodeCountReg1')])]",
             "signerSetupURLReg2": "[concat(variables('baseUrl'),'/nested/',variables('signerTemplate')[variables('signerNodeCountReg2')])]",
             "partSetupURLReg2": "[concat(variables('baseUrl'),'/nested/',variables('participantTemplate')[variables('participantNodeCountReg2')])]",
             "signerSetupURLReg3": "[concat(variables('baseUrl'),'/nested/',variables('signerTemplate')[variables('signerNodeCountReg3')])]",
             "partSetupURLReg3": "[concat(variables('baseUrl'),'/nested/',variables('participantTemplate')[variables('participantNodeCountReg3')])]",
-            
             "vmsSetupURL": "[concat(variables('baseUrl'),'/nested/signer-participant-vm.json')]",
             "extensionSetupURL": "[concat(variables('baseUrl'),'/nested/signer-participant-extension.json')]",
             "nicSetupURL": "[concat(variables('baseUrl'),'/nested/signer-participant-nic.json')]",
@@ -293,11 +282,9 @@
             "gatewaySetupURL": "[concat(variables('baseUrl'),'/nested/gateway.json')]",
             "connectionsSetupURl": "[concat(variables('baseUrl'),'/nested/connections.json')]",
             "oneRegionSetupURL": "[concat(variables('baseUrl'),'/nested/one-region.json')]",
-
             "region2SetupURL": "[concat(variables('baseUrl'),'/nested/',variables('regionTemplate')[variables('totalCountReg2')])]",
             "region3SetupURL": "[concat(variables('baseUrl'),'/nested/',variables('regionTemplate')[variables('totalCountReg3')])]",
             "multiRegionURL": "[concat(variables('baseUrl'),'/nested/',variables('multiTemplate')[variables('totalCountReg2and3')])]",
-            
             "vnetSetupURL": "[concat(variables('baseUrl'),'/nested/vnet.json')]",
             "vnetmultiSetupURL": "[concat(variables('baseUrl'),'/nested/vnetmulti.json')]",
             "keyVaultSetupURL": "[concat(variables('baseUrl'),'/nested/keyvault.json')]",
@@ -517,6 +504,18 @@
             "apiVersion": "[variables('apiVersion').networkApiVersion]",
             "publicIPAllocationMethod": "Dynamic"
         },
+        "vpnGatewaySettings": {
+            "gatewayName": "[concat(variables('prefix'),'-gateway')]",
+            "apiVersion": "[variables('apiVersion').gatewayApiVersion]",
+            "gatewayPipName": "[variables('gatewayPipSettings').pipName]",
+            "vpnType": "RouteBased",
+            "sku": "Standard"
+        },
+        "connectionSettings": {
+            "apiVersion": "[variables('apiVersion').networkApiVersion]",
+            "gatewayNameReg": "[variables('vpnGatewaySettings').gatewayName]",
+            "VPNSharedKey": "[parameters('VPNSharedKey')]"
+        },
         "oneRegionDep": "oneRegionSetup",
         "multiRegionDep": "multiRegionSetup",
         "locationsArray": [
@@ -648,6 +647,12 @@
                     },
                     "gatewayPipSettings": {
                         "value": "[variables('gatewayPipSettings')]"
+                    },
+                    "vpnGatewaySettings": {
+                        "value": "[variables('vpnGatewaySettings')]"
+                    },
+                    "connectionSettings": {
+                        "value": "[variables('connectionSettings')]"
                     }
                 }
             }

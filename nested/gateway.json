@@ -2,19 +2,25 @@
     "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
     "contentVersion": "1.0.0.0",
     "parameters": {
-        "vnetGatewaySettings": {
+        "vpnGatewaySettings": {
             "type": "object"
+        },
+        "vnetSettings": {
+            "type": "object"
+        },
+        "location":{
+            "type": "string"
         }
     },
     "variables": {
-        "gatewayName": "[parameters('vnetGatewaySettings').gatewayName]",
-        "apiVersion": "[parameters('vnetGatewaySettings').apiVersion]",
-        "location": "[parameters('vnetGatewaySettings').location]",
-        "gatewaySubnetID": "[parameters('vnetGatewaySettings').gatewaySubnetID]",
-        "gatewayPipID": "[parameters('vnetGatewaySettings').gatewayPipID]",
-        "gatewayIpConfig": "[parameters('vnetGatewaySettings').gatewayIpConfig]",
-        "vpnType": "[parameters('vnetGatewaySettings').vpnType]",
-        "sku": "[parameters('vnetGatewaySettings').sku]"
+        "gatewayName": "[concat(parameters('vpnGatewaySettings').gatewayName,'-',parameters('location'))]",
+        "apiVersion": "[parameters('vpnGatewaySettings').apiVersion]",
+        "location": "[parameters('location')]",
+        "virtualNetworksName":"[concat(parameters('vnetSettings').virtualNetworksName,'-',parameters('location'))]",
+        "gatewayPipName": "[concat(parameters('vpnGatewaySettings').gatewayPipName,'-',parameters('location'))]",
+        "gatewayIpConfig": "[concat('gatewayIpConfig','-',parameters('location'))]",
+        "vpnType": "[parameters('vpnGatewaySettings').vpnType]",
+        "sku": "[parameters('vpnGatewaySettings').sku]"
     },
     "resources": [
         {
@@ -30,10 +36,10 @@
                         "properties": {
                             "privateIPAllocationMethod": "Dynamic",
                             "subnet": {
-                                "id": "[variables('gatewaySubnetID')]"
+                                "id": "[concat(resourceId('Microsoft.Network/virtualNetworks', variables('virtualNetworksName')), '/subnets/GatewaySubnet')]"
                             },
                             "publicIPAddress": {
-                                "id": "[variables('gatewayPipID')]"
+                                "id": "[resourceId('Microsoft.Network/publicIPAddresses', variables('gatewayPipName'))]"
                             }
                         },
                         "name": "[variables('gatewayIpConfig')]"

@@ -4,26 +4,29 @@
     "parameters": {
         "connectionSettings": {
             "type": "object"
+        },
+        "location_1":{
+            "type": "string"
+        },
+        "location_2":{
+            "type": "string"
         }
     },
     "variables": {
-        "gatewayNameReg1": "[parameters('connectionSettings').gatewayNameReg1]",
-        "gatewayNameReg2": "[parameters('connectionSettings').gatewayNameReg2]",
-        "gatewayNameReg3": "[parameters('connectionSettings').gatewayNameReg3]",
-        "gatewayNameReg4": "[parameters('connectionSettings').gatewayNameReg4]",
-        "gatewayNameReg5": "[parameters('connectionSettings').gatewayNameReg5]",
-        "VPNSharedKey": "[parameters('connectionSettings').VPNSharedKey]",
-        "location_1": "[parameters('connectionSettings').location_1]",
-        "location_2": "[parameters('connectionSettings').location_2]",
-        "location_3": "[parameters('connectionSettings').location_3]",
-        "location_4": "[parameters('connectionSettings').location_4]",
-        "location_5": "[parameters('connectionSettings').location_5]"
+        "conName1":"[concat(parameters('location_1'),'-to-',parameters('location_2'))]",
+        "conName2":"[concat(parameters('location_2'),'-to-',parameters('location_1'))]",
+        "apiVersion": "[parameters('connectionSettings').apiVersion]",
+        "location_1":"[parameters('location_1')]",
+        "location_2":"[parameters('location_2')]",
+        "VPNSharedKey":"[parameters('connectionSettings').VPNSharedKey]",
+        "gatewayNameReg1":"[concat(parameters('connectionSettings').gatewayNameReg,'-',parameters('location_1'))]",
+        "gatewayNameReg2":"[concat(parameters('connectionSettings').gatewayNameReg,'-',parameters('location_2'))]"
     },
     "resources": [
         {
-            "name": "reg1-to-reg2",
+            "name": "[variables('conName1')]",
             "type": "Microsoft.Network/connections",
-            "apiVersion": "2016-03-30",
+            "apiVersion": "[variables('apiVersion')]",
             "location": "[variables('location_1')]",
             "properties": {
                 "publicIPAllocationMethod": "Dynamic",
@@ -38,12 +41,9 @@
             }
         },
         {
-            "name": "reg2-to-reg1",
+            "name": "[variables('conName2')]",
             "type": "Microsoft.Network/connections",
             "apiVersion": "2016-03-30",
-            "dependsOn": [
-                "Microsoft.Network/connections/reg1-to-reg2"
-            ],
             "location": "[variables('location_2')]",
             "properties": {
                 "publicIPAllocationMethod": "Dynamic",
