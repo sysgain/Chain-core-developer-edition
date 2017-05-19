@@ -278,7 +278,7 @@
             "nicSetupURL": "[concat(variables('baseUrl'),'/nested/signer-participant-nic.json')]",
             "pipSetupURL": "[concat(variables('baseUrl'),'/nested/signer-participant-pip.json')]",
             "gatewaySetupURL": "[concat(variables('baseUrl'),'/nested/gateway.json')]",
-            "gatewayPipSetupURL": "[concat(variables('baseUrl'),'/nested/gateway-pip.json')]",
+        
             "connectionsSetupURl": "[concat(variables('baseUrl'),'/nested/connections.json')]",
             "oneRegionSetupURL": "[concat(variables('baseUrl'),'/nested/one-region.json')]",
 
