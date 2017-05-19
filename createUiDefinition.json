@@ -474,136 +474,6 @@
                             ]
                         },
                         "visible": "[greaterOrEquals(steps('regCnt').regionCnt, '3')]"
-                    },
-                    {
-                        "name": "loc4",
-                        "type": "Microsoft.Common.DropDown",
-                        "label": "Fourth Location",
-                        "toolTip": "Select the fourth region.",
-                        "defaultValue": "East US 2",
-                        "constraints": {
-                            "required": "[greaterOrEquals(steps('regCnt').regionCnt, '4')]",
-                            "allowedValues": [
-                                {
-                                    "label": "East US",
-                                    "value": "eastus"
-                                },
-                                {
-                                    "label": "North Central US",
-                                    "value": "northcentralus"
-                                },
-                                {
-                                    "label": "Central US",
-                                    "value": "centralus"
-                                },
-                                {
-                                    "label": "South Central US",
-                                    "value": "southcentralus"
-                                },
-                                {
-                                    "label": "West US",
-                                    "value": "westus"
-                                },
-                                {
-                                    "label": "East US 2",
-                                    "value": "eastus2"
-                                },
-                                {
-                                    "label": "North Europe",
-                                    "value": "northeurope"
-                                },
-                                {
-                                    "label": "West Europe",
-                                    "value": "westeurope"
-                                },
-                                {
-                                    "label": "East Asia",
-                                    "value": "eastasia"
-                                },
-                                {
-                                    "label": "Southeast Asia",
-                                    "value": "southeastasia"
-                                },
-                                {
-                                    "label": "Japan East",
-                                    "value": "japaneast"
-                                },
-                                {
-                                    "label": "Japan West",
-                                    "value": "japanwest"
-                                },
-                                {
-                                    "label": "Brazil South",
-                                    "value": "brazilsouth"
-                                }
-                            ]
-                        },
-                        "visible": "[greaterOrEquals(steps('regCnt').regionCnt, '4')]"
-                    },
-                    {
-                        "name": "loc5",
-                        "type": "Microsoft.Common.DropDown",
-                        "label": "Fifth Location",
-                        "toolTip": "Select the fifth region.",
-                        "defaultValue": "South Central US",
-                        "constraints": {
-                            "required": "[equals(steps('regCnt').regionCnt, '5')]",
-                            "allowedValues": [
-                                {
-                                    "label": "East US",
-                                    "value": "eastus"
-                                },
-                                {
-                                    "label": "North Central US",
-                                    "value": "northcentralus"
-                                },
-                                {
-                                    "label": "Central US",
-                                    "value": "centralus"
-                                },
-                                {
-                                    "label": "South Central US",
-                                    "value": "southcentralus"
-                                },
-                                {
-                                    "label": "West US",
-                                    "value": "westus"
-                                },
-                                {
-                                    "label": "East US 2",
-                                    "value": "eastus2"
-                                },
-                                {
-                                    "label": "North Europe",
-                                    "value": "northeurope"
-                                },
-                                {
-                                    "label": "West Europe",
-                                    "value": "westeurope"
-                                },
-                                {
-                                    "label": "East Asia",
-                                    "value": "eastasia"
-                                },
-                                {
-                                    "label": "Southeast Asia",
-                                    "value": "southeastasia"
-                                },
-                                {
-                                    "label": "Japan East",
-                                    "value": "japaneast"
-                                },
-                                {
-                                    "label": "Japan West",
-                                    "value": "japanwest"
-                                },
-                                {
-                                    "label": "Brazil South",
-                                    "value": "brazilsouth"
-                                }
-                            ]
-                        },
-                        "visible": "[equals(steps('regCnt').regionCnt, '5')]"
                     }
                 ]
             },
@@ -658,13 +528,11 @@
             "location_1": "[steps('regCnt').loc1]",
             "location_2": "[steps('regCnt').loc2]",
             "location_3": "[steps('regCnt').loc3]",
-            "location_4": "[steps('regCnt').loc4]",
-            "location_5": "[steps('regCnt').loc5]",
             "regionCount": "[steps('regCnt').regionCnt]",
             "generatorVmSize": "[steps('vmSize').generatorVmSize]",
-            "signerVmSize": "[steps('vmSize').signerVmSize]",
+            "signerAndParticipantVmSize": "[steps('vmSize').signerVmSize]",
             "signerNodeCount": "[steps('vmSize').signerVmCount]",
-            "participantNodeCount":"[steps('vmSize').partVmCount]",
+            "participantNodeCount": "[steps('vmSize').partVmCount]",
             "adminUsername": "[basics('basics').adminUsername]",
             "adminPassword": "[basics('basics').adminPassword]",
             "authenticationType": "[basics('basics').sshOrPassword.authenticationType]",
