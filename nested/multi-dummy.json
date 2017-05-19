@@ -44,8 +44,14 @@
         "gatewayPipSettings": {
             "type": "object"
         },
+        "vpnGatewaySettings": {
+            "type": "object"
+        },
         "regionCount": {
             "type": "int"
+        },
+        "connectionSettings": {
+            "type": "object"
         }
     },
     "variables": {},
