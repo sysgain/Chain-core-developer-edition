@@ -223,9 +223,15 @@
 
 
 
-        "signerRegCount": "[add(variables('signerNodeCountReg2'),variables('signerNodeCountReg3'))]",
-        "partRegCount": "[add(variables('participantNodeCountReg2'),variables('participantNodeCountReg3'))]",
-        "totalCount": "[add(variables('signerRegCount'),variables('partRegCount'))]",
+        "signerCountReg2and3": "[add(variables('signerNodeCountReg2'),variables('signerNodeCountReg3'))]",
+        "partCountReg2and3": "[add(variables('participantNodeCountReg2'),variables('participantNodeCountReg3'))]",
+        "totalCountReg2and3": "[add(variables('signerCountReg2and3'),variables('partCountReg2and3'))]",
+
+    
+        "totalCountReg2": "[add(variables('signerNodeCountReg2'),variables('participantNodeCountReg2'))]",
+
+       
+        "totalCountReg3": "[add(variables('signerNodeCountReg3'),variables('participantNodeCountReg3'))]",
 
 
         "prefix": "chn",
@@ -238,7 +244,6 @@
             "multi-region.json"
         ],
         "regionTemplate": [
-            "region-dummy.json",
             "region-dummy.json",
             "region-setup.json",
             "region-setup.json"
@@ -289,10 +294,9 @@
             "connectionsSetupURl": "[concat(variables('baseUrl'),'/nested/connections.json')]",
             "oneRegionSetupURL": "[concat(variables('baseUrl'),'/nested/one-region.json')]",
 
-            "region2SetupURL": "[concat(variables('baseUrl'),'/nested/',variables('regionTemplate')[variables('regionCount')])]",
-            "region3SetupURL": "[concat(variables('baseUrl'),'/nested/',variables('regionTemplate')[sub(variables('regionCount'),1)])]",
-            "multiRegionURL": "[concat(variables('baseUrl'),'/nested/',variables('multiTemplate')[variables('totalCount')])]",
-
+            "region2SetupURL": "[concat(variables('baseUrl'),'/nested/',variables('regionTemplate')[variables('totalCountReg2')])]",
+            "region3SetupURL": "[concat(variables('baseUrl'),'/nested/',variables('regionTemplate')[variables('totalCountReg3')])]",
+            "multiRegionURL": "[concat(variables('baseUrl'),'/nested/',variables('multiTemplate')[variables('totalCountReg2and3')])]",
             
             "vnetSetupURL": "[concat(variables('baseUrl'),'/nested/vnet.json')]",
             "vnetmultiSetupURL": "[concat(variables('baseUrl'),'/nested/vnetmulti.json')]",
