@@ -285,6 +285,7 @@
             "region2SetupURL": "[concat(variables('baseUrl'),'/nested/',variables('regionTemplate')[variables('totalCountReg2')])]",
             "region3SetupURL": "[concat(variables('baseUrl'),'/nested/',variables('regionTemplate')[variables('totalCountReg3')])]",
             "multiRegionURL": "[concat(variables('baseUrl'),'/nested/',variables('multiTemplate')[variables('totalCountReg2and3')])]",
+            "vpnGwtPipSetupURL": "[concat(variables('baseUrl'),'/nested/vpn-gwt-pip.json')]",
             "vnetSetupURL": "[concat(variables('baseUrl'),'/nested/vnet.json')]",
             "vnetmultiSetupURL": "[concat(variables('baseUrl'),'/nested/vnetmulti.json')]",
             "keyVaultSetupURL": "[concat(variables('baseUrl'),'/nested/keyvault.json')]",
