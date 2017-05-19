@@ -14,38 +14,48 @@
         "apiVersion": {
             "type": "object"
         },
-        "partSettings": {
+        "vnetSettings": {
+            "type": "object"
+        },
+        "signerSettings": {
+            "type": "object"
+        },
+        "participantSettings": {
+            "type": "object"
+        },
+        "nsgSettings": {
             "type": "object"
         },
         "generatorIp": {
             "type": "string"
         },
-        "nodeCount":{
+        "signerNodeCount": {
+            "type": "int"
+        },
+        "partNodeCount": {
             "type": "int"
         }
     },
     "variables": {
-        "prefix": "[parameters('prefix')]",
-        "partVmDep": "[concat(variables('prefix'),'-partVmSetup-',parameters('location'))]",
-        "partNicDep": "[concat(variables('prefix'),'-partNicSetup-',parameters('location'))]",
-        "partPipDep": "[concat(variables('prefix'),'-partPipSetup-',parameters('location'))]",
-        "partAvailDep": "[concat(variables('prefix'),'-partAvailSetup-',parameters('location'))]",
-        "partExtDep":"[concat(variables('prefix'),'-partExtSetup-',parameters('location'))]"
+        "nsgDep": "[concat('nsgSetup-',parameters('location'))]",
+        "vnetDep": "[concat('vnetSetup-',parameters('location'))]",
+        "signerDep": "[concat('signerSetup-',parameters('location'))]",
+        "participantSetup": "[concat('participantSetup-',parameters('location'))]"
     },
     "resources": [
         {
-            "name": "[variables('partAvailDep')]",
+            "name": "[variables('vnetDep')]",
             "apiVersion": "[parameters('apiVersion').deploymentApiVersion]",
             "type": "Microsoft.Resources/deployments",
             "properties": {
                 "mode": "Incremental",
                 "templateLink": {
-                    "uri": "[parameters('nestedURls').avaialabilitySetSetupURL]",
+                    "uri": "[parameters('nestedURLs').vnetmultiSetupURL]",
                     "contentVersion": "1.0.0.0"
                 },
                 "parameters": {
-                    "availSetSettings": {
-                        "value": "[parameters('partSettings').partAvailSetSettings]"
+                    "vnetSettings": {
+                        "value": "[parameters('vnetSettings')]"
                     },
                     "location": {
                         "value": "[parameters('location')]"
@@ -54,106 +64,99 @@
             }
         },
         {
-            "name": "[variables('partPipDep')]",
+            "name": "[variables('nsgDep')]",
             "apiVersion": "[parameters('apiVersion').deploymentApiVersion]",
             "type": "Microsoft.Resources/deployments",
             "properties": {
                 "mode": "Incremental",
                 "templateLink": {
-                    "uri": "[parameters('nestedURls').pipSetupURL]",
+                    "uri": "[parameters('nestedURls').nsgSetupURL]",
                     "contentVersion": "1.0.0.0"
                 },
                 "parameters": {
-                    "pipSettings": {
-                        "value": "[parameters('partSettings').partPipSettings]"
+                    "nsgSettings": {
+                        "value": "[parameters('nsgSettings')]"
                     },
                     "location": {
                         "value": "[parameters('location')]"
-                    },
-                    "nodeCount":{
-                        "value": "[parameters('nodeCount')]"
                     }
                 }
             }
         },
         {
-            "name": "[variables('partNicDep')]",
+            "name": "[variables('signerDep')]",
             "apiVersion": "[parameters('apiVersion').deploymentApiVersion]",
             "type": "Microsoft.Resources/deployments",
             "dependsOn": [
-                "[variables('partPipDep')]"
+                "[variables('vnetDep')]",
+                "[variables('nsgDep')]"
             ],
             "properties": {
                 "mode": "Incremental",
                 "templateLink": {
-                    "uri": "[parameters('nestedURls').nicSetupURL]",
+                    "uri": "[parameters('nestedURLs').signerSetupURLReg1]",
                     "contentVersion": "1.0.0.0"
                 },
                 "parameters": {
-                    "nicSettings": {
-                        "value": "[parameters('partSettings').partNicSettings]"
+                    "prefix": {
+                        "value": "[parameters('prefix')]"
                     },
                     "location": {
                         "value": "[parameters('location')]"
                     },
-                    "nodeCount":{
-                        "value": "[parameters('nodeCount')]"
-                    }
-                }
-            }
-        },
-        {
-            "name": "[variables('partVmDep')]",
-            "apiVersion": "[parameters('apiVersion').deploymentApiVersion]",
-            "type": "Microsoft.Resources/deployments",
-            "dependsOn": [
-                "[variables('partNicDep')]",
-                "[variables('partAvailDep')]"
-            ],
-            "properties": {
-                "mode": "Incremental",
-                "templateLink": {
-                    "uri": "[parameters('nestedURls').vmsSetupURL]",
-                    "contentVersion": "1.0.0.0"
-                },
-                "parameters": {
-                    "vmSettings": {
-                        "value": "[parameters('partSettings').partVMsettings]"
+                    "nestedURls": {
+                        "value": "[parameters('nestedURls')]"
                     },
-                    "location": {
-                        "value": "[parameters('location')]"
+                    "apiVersion": {
+                        "value": "[parameters('apiVersion')]"
                     },
-                    "nodeCount":{
-                        "value": "[parameters('nodeCount')]"
-                    }
-                }
-            }
-        },
-        {
-            "name": "[variables('partExtDep')]",
-            "apiVersion": "[parameters('apiVersion').deploymentApiVersion]",
-            "type": "Microsoft.Resources/deployments",
-            "dependsOn": [
-                "[variables('partVmDep')]"
-            ],
-            "properties": {
-                "mode": "Incremental",
-                "templateLink": {
-                    "uri": "[parameters('nestedURls').signerExtensionSetupURL]",
-                    "contentVersion": "1.0.0.0"
-                },
-                "parameters": {
-                    "extensionSettings": {
-                        "value": "[parameters('partSettings').partExtensionSettings]"
-                    },
-                    "location": {
-                        "value": "[parameters('location')]"
+                    "signerSettings": {
+                        "value": "[parameters('signerSettings')]"
                     },
                     "generatorIp": {
                         "value": "[parameters('generatorIp')]"
                     },
-                    "nodeCount":{
-                        "value": "[parameters('nodeCount')]"
+                    "nodeCount": {
+                        "value": "[parameters('signerNodeCount')]"
+                    }
+                }
+            }
+        },
+        {
+            "name": "[variables('participantSetup')]",
+            "apiVersion": "[parameters('apiVersion').deploymentApiVersion]",
+            "type": "Microsoft.Resources/deployments",
+            "dependsOn": [
+                "[variables('vnetDep')]",
+                "[variables('nsgDep')]"
+            ],
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "[parameters('nestedURLs').partSetupURLReg1]",
+                    "contentVersion": "1.0.0.0"
+                },
+                "parameters": {
+                    "prefix": {
+                        "value": "[parameters('prefix')]"
+                    },
+                    "location": {
+                        "value": "[parameters('location')]"
+                    },
+                    "nestedURls": {
+                        "value": "[parameters('nestedURls')]"
+                    },
+                    "apiVersion": {
+                        "value": "[parameters('apiVersion')]"
+                    },
+                    "partSettings": {
+                        "value": "[parameters('participantSettings')]"
+                    },
+                    "nodeCount": {
+                        "value": "[parameters('partNodeCount')]"
+                    },
+                    "generatorIp": {
+                        "value": "[parameters('generatorIp')]"
                     }
                 }
             }

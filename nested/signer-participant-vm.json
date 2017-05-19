@@ -7,6 +7,9 @@
         },
         "location": {
             "type": "string"
+        },
+        "nodeCount": {
+            "type": "int"
         }
     },
     "variables": {
@@ -15,7 +18,7 @@
         "availabilitySetsName": "[concat(parameters('vmSettings').availabilitySetsName,'-',parameters('location'))]",
         "nicName": "[concat(parameters('vmSettings').nicName,'-',parameters('location'))]",
         "vmName": "[concat(parameters('vmSettings').vmName,'-',parameters('location'))]",
-        "nodeCount": "[parameters('vmSettings').nodeCount]",
+        "nodeCount": "[parameters('nodeCount')]",
         "adminUsername": "[parameters('vmSettings').adminUsername]",
         "adminPassword": "[parameters('vmSettings').adminPassword]",
         "vmSize": "[parameters('vmSettings').vmSize]",

@@ -16,16 +16,14 @@
         },
         "partSettings": {
             "type": "object"
+        },
+        "generatorIp": {
+            "type": "string"
+        },
+        "nodeCount": {
+            "type": "int"
         }
     },
-    "variables": {
-        "prefix": "[parameters('prefix')]",
-        "partVmDep": "[concat(variables('prefix'),'-partVmSetup-',parameters('location'))]",
-        "partNicDep": "[concat(variables('prefix'),'-partNicSetup-',parameters('location'))]",
-        "partPipDep": "[concat(variables('prefix'),'-partPipSetup-',parameters('location'))]",
-        "partAvailDep": "[concat(variables('prefix'),'-partAvailSetup-',parameters('location'))]"
-    },
-    "resources": [
-        
-    ]
+    "variables": {},
+    "resources": []
 }

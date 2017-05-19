@@ -19,8 +19,7 @@
         "secretKey": "[parameters('genExtensionSettings').secretKey]",
         "tenantId": "[parameters('genExtensionSettings').tenantId]",
         "subscriptionId": "[parameters('genExtensionSettings').subscriptionId]",
-        "keyVaultName": "[parameters('genExtensionSettings').keyVaultName]",
-        "signerNodeCount": "[parameters('genExtensionSettings').signerNodeCount]"
+        "keyVaultName": "[parameters('genExtensionSettings').keyVaultName]"
     },
     "resources": [
         {
@@ -39,7 +38,7 @@
                     ]
                 },
                 "protectedSettings": {
-                    "commandToExecute": "[concat('sh ', variables('generatorScriptFileName'), ' \"', variables('networkTokenName'), '\" \"', variables('servicePrincipal'), '\" \"', variables('secretKey'), '\" \"', variables('tenantId'), '\" \"', variables('subscriptionId'), '\" \"', variables('keyVaultName'),'\" \"', variables('signerNodeCount'),'\"')]"
+                    "commandToExecute": "[concat('sh ', variables('generatorScriptFileName'), ' \"', variables('networkTokenName'), '\" \"', variables('servicePrincipal'), '\" \"', variables('secretKey'), '\" \"', variables('tenantId'), '\" \"', variables('subscriptionId'), '\" \"', variables('keyVaultName'),'\"')]"
                 }
             }
         }

@@ -7,11 +7,14 @@
         },
         "location": {
             "type": "string"
+        },
+        "nodeCount": {
+            "type": "int"
         }
     },
     "variables": {
         "nicName": "[concat(parameters('nicSettings').nicName,'-',parameters('location'))]",
-        "nodeCount": "[parameters('nicSettings').nodeCount]",
+        "nodeCount": "[parameters('nodeCount')]",
         "pipName": "[concat(parameters('nicSettings').pipName,'-',parameters('location'))]",
         "virtualNetworksName": "[concat(parameters('nicSettings').virtualNetworksName,'-',parameters('location'))]",
         "subnetName": "[parameters('nicSettings').subnetName]",

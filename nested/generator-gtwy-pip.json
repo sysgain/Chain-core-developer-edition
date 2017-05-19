@@ -2,7 +2,7 @@
     "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
     "contentVersion": "1.0.0.0",
     "parameters": {
-        "genPipSettings": {
+        "pipSettings": {
             "type": "object"
         },
         "location": {
@@ -10,16 +10,16 @@
         }
     },
     "variables": {
-        "generatorIpName": "[concat(parameters('genPipSettings').generatorIpName,'-',parameters('location'))]",
-        "pipDns": "[concat(parameters('genPipSettings').pipDns,'-',parameters('location'))]",
+        "pipName": "[concat(parameters('pipSettings').pipName,'-',parameters('location'))]",
+        "pipDns": "[concat(parameters('pipSettings').pipDns,'-',parameters('location'))]",
         "location": "[parameters('location')]",
-        "apiVersion": "[parameters('genPipSettings').apiVersion]",
-        "publicIPAllocationMethod": "[parameters('genPipSettings').publicIPAllocationMethod]"
+        "apiVersion": "[parameters('pipSettings').apiVersion]",
+        "publicIPAllocationMethod": "[parameters('pipSettings').publicIPAllocationMethod]"
     },
     "resources": [
         {
             "type": "Microsoft.Network/publicIPAddresses",
-            "name": "[variables('generatorIpName')]",
+            "name": "[variables('pipName')]",
             "apiVersion": "[variables('apiVersion')]",
             "location": "[variables('location')]",
             "properties": {
@@ -33,9 +33,9 @@
         }
     ],
     "outputs": {
-        "generatorIp": {
+        "dnsAddress": {
             "type": "string",
-            "value": "[reference(resourceId('Microsoft.Network/publicIPAddresses', variables('generatorIpName'))).dnsSettings.fqdn]"
+            "value": "[reference(resourceId('Microsoft.Network/publicIPAddresses', variables('pipName'))).dnsSettings.fqdn]"
         }
     }
 }

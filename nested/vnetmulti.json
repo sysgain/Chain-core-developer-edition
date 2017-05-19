@@ -10,7 +10,6 @@
         }
     },
     "variables": {
-        "regionCount": "[parameters('vnetSettings').regionCount]",
         "virtualNetworksName": "[concat(parameters('vnetSettings').virtualNetworksName,'-',parameters('location'))]",
         "location": "[parameters('location')]",
         "subnetName": "[parameters('vnetSettings').subnetName]",

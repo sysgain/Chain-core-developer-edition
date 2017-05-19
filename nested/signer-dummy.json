@@ -19,17 +19,11 @@
         },
         "generatorIp": {
             "type": "string"
+        },
+        "nodeCount": {
+            "type": "int"
         }
     },
-    "variables": {
-        "prefix": "[parameters('prefix')]",
-        "signerVmDep": "[concat(variables('prefix'),'-signerVmSetup-',parameters('location'))]",
-        "signerNicDep": "[concat(variables('prefix'),'-signerNicSetup-',parameters('location'))]",
-        "signerPipDep": "[concat(variables('prefix'),'-signerPipSetup-',parameters('location'))]",
-        "signerExtDep": "[concat(variables('prefix'),'-signerExtensionSetup-',parameters('location'))]",
-        "signerAvailDep": "[concat(variables('prefix'),'-signerAvailSetup-',parameters('location'))]"
-    },
-    "resources": [
-        
-    ]
+    "variables": {},
+    "resources": []
 }

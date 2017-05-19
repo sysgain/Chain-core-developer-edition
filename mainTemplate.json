@@ -8,9 +8,7 @@
             "allowedValues": [
                 "1",
                 "2",
-                "3",
-                "4",
-                "5"
+                "3"
             ]
         },
         "location_1": {
@@ -24,14 +22,6 @@
         "location_3": {
             "type": "string",
             "defaultValue": "eastus"
-        },
-        "location_4": {
-            "type": "string",
-            "defaultValue": "eastus2"
-        },
-        "location_5": {
-            "type": "string",
-            "defaultValue": "southcentralus"
         },
         "generatorVmSize": {
             "type": "string",
@@ -97,9 +87,9 @@
                 "description": "Signer Node VM(s) size"
             }
         },
-        "signerNodeCount": {
+        "signerNodeCountReg1": {
             "type": "string",
-            "defaultValue": "2",
+            "defaultValue": "1",
             "allowedValues": [
                 "0",
                 "1",
@@ -107,14 +97,46 @@
                 "3"
             ]
         },
-        "participantNodeCount": {
+        "participantNodeCountReg1": {
             "type": "string",
-            "defaultValue": "2",
+            "defaultValue": "1",
             "allowedValues": [
                 "0",
                 "1",
                 "2",
                 "3"
+            ]
+        },
+        "signerNodeCountReg2": {
+            "type": "string",
+            "defaultValue": "0",
+            "allowedValues": [
+                "0",
+                "1"
+            ]
+        },
+        "participantNodeCountReg2": {
+            "type": "string",
+            "defaultValue": "0",
+            "allowedValues": [
+                "0",
+                "1"
+            ]
+        },
+        "signerNodeCountReg3": {
+            "type": "string",
+            "defaultValue": "0",
+            "allowedValues": [
+                "0",
+                "1"
+            ]
+        },
+        "participantNodeCountReg3": {
+            "type": "string",
+            "defaultValue": "0",
+            "allowedValues": [
+                "0",
+                "1"
             ]
         },
         "authenticationType": {
@@ -188,26 +210,42 @@
     },
     "variables": {
         "baseUrl": "[parameters('artifactsBaseUrl')]",
-        "signerNodeCount": "[int(parameters('signerNodeCount'))]",
-        "participantNodeCount": "[int(parameters('participantNodeCount'))]",
+
+        "regionCount": "[int(parameters('regionCount'))]",
+        "signerNodeCountReg1": "[int(parameters('signerNodeCountReg1'))]",
+        "participantNodeCountReg1": "[int(parameters('participantNodeCountReg1'))]",
+        "signerNodeCountReg2": "[int(parameters('signerNodeCountReg2'))]",
+        "participantNodeCountReg2": "[int(parameters('participantNodeCountReg2'))]",
+        "signerNodeCountReg3": "[int(parameters('signerNodeCountReg3'))]",
+        "participantNodeCountReg3": "[int(parameters('participantNodeCountReg3'))]",
+        "location_1": "[tolower(replace(parameters('location_1'),' ',''))]",
+        "location_2": "[tolower(replace(parameters('location_2'),' ',''))]",
+        "location_3": "[tolower(replace(parameters('location_3'),' ',''))]",
+        "signerRegCount":"[add(variables('signerNodeCountReg2'),variables('signerNodeCountReg3'))]",
+        "partRegCount":"[add(variables('participantNodeCountReg2'),variables('participantNodeCountReg3'))]",
+        "totalCount":"[add(variables('signerRegCount'),variables('partRegCount'))]",
         "prefix": "chn",
-        "suffix": "[substring(uniqueString(resourceGroup().id) ,0, 5)]",
+        "suffix": "[substring(uniqueString(resourceGroup().id) ,0, 4)]",
         "multiTemplate": [
             "multi-dummy.json",
             "multi-region.json",
-            "multi-region.json",
+            "multi-region.json",      
             "multi-region.json",
             "multi-region.json"
         ],
+        "regionTemplate": [
+            "region-dummy.json",
+            "region-dummy.json",
+            "region-setup.json",
+            "region-setup.json"
+        ],
         "signerTemplate": [
             "signer-dummy.json",
-            "signer-setup.json",
             "signer-setup.json",
             "signer-setup.json"
         ],
         "participantTemplate": [
             "participant-dummy.json",
-            "participant-setup.json",
             "participant-setup.json",
             "participant-setup.json"
         ],
@@ -226,26 +264,37 @@
             "generatorVmSetupURL": "[concat(variables('baseUrl'),'/nested/generator-vm.json')]",
             "generatorExtensionSetupURL": "[concat(variables('baseUrl'),'/nested/generator-extension.json')]",
             "generatorNicSetupURL": "[concat(variables('baseUrl'),'/nested/generator-nic.json')]",
-            "generatorPipSetupURL": "[concat(variables('baseUrl'),'/nested/generator-pip.json')]",
+            "pipSetupURL": "[concat(variables('baseUrl'),'/nested/generator-gtwy-pip.json')]",
             "nsgSetupURL": "[concat(variables('baseUrl'),'/nested/nsg.json')]",
             "generatorSetupURL": "[concat(variables('baseUrl'),'/nested/generator-setup.json')]",
-            "signerSetupURL": "[concat(variables('baseUrl'),'/nested/',variables('signerTemplate')[variables('signerNodeCount')])]",
-            "partSetupURL": "[concat(variables('baseUrl'),'/nested/',variables('participantTemplate')[variables('participantNodeCount')])]",
+            "signerSetupURLReg1": "[concat(variables('baseUrl'),'/nested/',variables('signerTemplate')[variables('signerNodeCountReg1')])]",
+            "partSetupURLReg1": "[concat(variables('baseUrl'),'/nested/',variables('participantTemplate')[variables('participantNodeCountReg1')])]",
+            "signerSetupURLReg2": "[concat(variables('baseUrl'),'/nested/',variables('signerTemplate')[variables('signerNodeCountReg2')])]",
+            "partSetupURLReg2": "[concat(variables('baseUrl'),'/nested/',variables('participantTemplate')[variables('participantNodeCountReg2')])]",
+            "signerSetupURLReg3": "[concat(variables('baseUrl'),'/nested/',variables('signerTemplate')[variables('signerNodeCountReg3')])]",
+            "partSetupURLReg3": "[concat(variables('baseUrl'),'/nested/',variables('participantTemplate')[variables('participantNodeCountReg3')])]",
             "vmsSetupURL": "[concat(variables('baseUrl'),'/nested/signer-participant-vm.json')]",
-            "signerExtensionSetupURL": "[concat(variables('baseUrl'),'/nested/signer-extension.json')]",
+            "extensionSetupURL": "[concat(variables('baseUrl'),'/nested/signer-participant-extension.json')]",
             "nicSetupURL": "[concat(variables('baseUrl'),'/nested/signer-participant-nic.json')]",
             "pipSetupURL": "[concat(variables('baseUrl'),'/nested/signer-participant-pip.json')]",
             "gatewaySetupURL": "[concat(variables('baseUrl'),'/nested/gateway.json')]",
             "gatewayPipSetupURL": "[concat(variables('baseUrl'),'/nested/gateway-pip.json')]",
             "connectionsSetupURl": "[concat(variables('baseUrl'),'/nested/connections.json')]",
             "oneRegionSetupURL": "[concat(variables('baseUrl'),'/nested/one-region.json')]",
-            "multiRegionSetupURL": "[concat(variables('baseUrl'),'/nested/',variables('multiTemplate')[sub(int(parameters('regionCount')),1)])]",
+
+
+            "region2SetupURL": "[concat(variables('baseUrl'),'/nested/',variables('regionTemplate')[variables('regionCount')])]",
+            "region3SetupURL": "[concat(variables('baseUrl'),'/nested/',variables('regionTemplate')[sub(variables('regionCount'),1)])]",
+            "multiRegionURL": "[concat(variables('baseUrl'),'/nested/',variables('multiTemplate')[variables('totalCount')])]",
+
+
             "vnetSetupURL": "[concat(variables('baseUrl'),'/nested/vnet.json')]",
             "vnetmultiSetupURL": "[concat(variables('baseUrl'),'/nested/vnetmulti.json')]",
             "keyVaultSetupURL": "[concat(variables('baseUrl'),'/nested/keyvault.json')]",
             "avaialabilitySetSetupURL": "[concat(variables('baseUrl'),'/nested/availability-set.json')]",
             "signerScriptUrl": "[concat(variables('baseUrl'),'/scripts/signer-script.sh')]",
-            "generatorScriptUrl": "[concat(variables('baseUrl'),'/scripts/generator-script.sh')]"
+            "generatorScriptUrl": "[concat(variables('baseUrl'),'/scripts/generator-script.sh')]",
+            "partScriptUrl": "[concat(variables('baseUrl'),'/scripts/participant-script.sh')]"
         },
         "vnetSettings": {
             "region1": {
@@ -279,28 +328,6 @@
                 "subnet1Range": "10.3.1.0/24",
                 "subnet2Range": "10.3.2.0/24",
                 "gatewaySubnetRange": "10.3.0.0/24",
-                "apiVersion": "[variables('apiVersion').networkApiVersion]"
-            },
-            "region4": {
-                "regionCount": "[parameters('regionCount')]",
-                "virtualNetworksName": "[concat(variables('prefix'),'-vnet')]",
-                "generatorSubnetName": "gen-subnet",
-                "subnetName": "subnet",
-                "vnetRange": "10.4.0.0/16",
-                "subnet1Range": "10.4.1.0/24",
-                "subnet2Range": "10.4.2.0/24",
-                "gatewaySubnetRange": "10.4.0.0/24",
-                "apiVersion": "[variables('apiVersion').networkApiVersion]"
-            },
-            "region5": {
-                "regionCount": "[parameters('regionCount')]",
-                "virtualNetworksName": "[concat(variables('prefix'),'-vnet')]",
-                "generatorSubnetName": "gen-subnet",
-                "subnetName": "subnet",
-                "vnetRange": "10.5.0.0/16",
-                "subnet1Range": "10.5.1.0/24",
-                "subnet2Range": "10.5.2.0/24",
-                "gatewaySubnetRange": "10.5.0.0/24",
                 "apiVersion": "[variables('apiVersion').networkApiVersion]"
             }
         },
@@ -352,7 +379,7 @@
                 "generatorNsgName": "[variables('nsgSettings').nsgName]"
             },
             "genPipSettings": {
-                "generatorIpName": "[variables('generatorIpName')]",
+                "pipName": "[variables('generatorIpName')]",
                 "pipDns": "[concat('generator-',variables('suffix'))]",
                 "apiVersion": "[variables('apiVersion').networkApiVersion]",
                 "publicIPAllocationMethod": "Dynamic"
@@ -367,8 +394,7 @@
                 "secretKey": "[parameters('secretKey')]",
                 "tenantId": "[subscription().tenantId]",
                 "subscriptionId": "[subscription().subscriptionId]",
-                "keyVaultName": "[variables('keyVaultSettings').keyVaultName]",
-                "signerNodeCount": "[variables('signerNodeCount')]"
+                "keyVaultName": "[variables('keyVaultSettings').keyVaultName]"
             }
         },
         "signerSettings": {
@@ -388,7 +414,6 @@
                 "sku": "16.04-LTS",
                 "version": "latest",
                 "diskSizeGB": 30,
-                "nodeCount": "[variables('signerNodeCount')]",
                 "adminUsername": "[parameters('adminUsername')]",
                 "adminPassword": "[parameters('adminPassword')]",
                 "vmSize": "[parameters('signerAndParticipantVmSize')]",
@@ -398,7 +423,6 @@
             },
             "signerNicSettings": {
                 "nicName": "[variables('signerNicName')]",
-                "nodeCount": "[variables('signerNodeCount')]",
                 "privateIPAllocationMethod": "Dynamic",
                 "apiVersion": "[variables('apiVersion').networkApiVersion]",
                 "pipName": "[variables('signerIpName')]",
@@ -408,23 +432,21 @@
             },
             "signerPipSettings": {
                 "pipName": "[variables('signerIpName')]",
-                "nodeCount": "[variables('signerNodeCount')]",
                 "pipDns": "[concat('signer-',variables('suffix'))]",
                 "apiVersion": "[variables('apiVersion').networkApiVersion]",
                 "publicIPAllocationMethod": "Dynamic"
             },
             "signerExtensionSettings": {
                 "apiVersion": "[variables('apiVersion').computeApiVersion]",
-                "signerVmName": "[variables('signerVmName')]",
-                "signerScriptUrl": "[variables('nestedURls').signerScriptUrl]",
-                "signerScriptFileName": "signer-script.sh",
+                "vmName": "[variables('signerVmName')]",
+                "scriptUrl": "[variables('nestedURls').signerScriptUrl]",
+                "scriptFileName": "signer-script.sh",
                 "servicePrincipal": "[parameters('servicePrincipal')]",
                 "secretKey": "[parameters('secretKey')]",
                 "tenantId": "[subscription().tenantId]",
                 "subscriptionid": "[subscription().subscriptionId]",
                 "keyVaultName": "[variables('keyVaultSettings').keyVaultName]",
-                "tokenName": "sigClientToken",
-                "nodeCount": "[variables('signerNodeCount')]"
+                "tokenName": "sigClientToken"
             }
         },
         "participantSettings": {
@@ -444,7 +466,6 @@
                 "sku": "16.04-LTS",
                 "version": "latest",
                 "diskSizeGB": 30,
-                "nodeCount": "[variables('participantNodeCount')]",
                 "adminUsername": "[parameters('adminUsername')]",
                 "adminPassword": "[parameters('adminPassword')]",
                 "vmSize": "[parameters('signerAndParticipantVmSize')]",
@@ -454,7 +475,6 @@
             },
             "partNicSettings": {
                 "nicName": "[variables('partNicName')]",
-                "nodeCount": "[variables('participantNodeCount')]",
                 "privateIPAllocationMethod": "Dynamic",
                 "apiVersion": "[variables('apiVersion').networkApiVersion]",
                 "pipName": "[variables('partIpName')]",
@@ -464,27 +484,35 @@
             },
             "partPipSettings": {
                 "pipName": "[variables('partIpName')]",
-                "nodeCount": "[variables('participantNodeCount')]",
                 "pipDns": "[concat('participant-',variables('suffix'))]",
                 "apiVersion": "[variables('apiVersion').networkApiVersion]",
                 "publicIPAllocationMethod": "Dynamic"
+            },
+            "partExtensionSettings": {
+                "apiVersion": "[variables('apiVersion').computeApiVersion]",
+                "vmName": "[variables('partVmName')]",
+                "scriptUrl": "[variables('nestedURls').partScriptUrl]",
+                "scriptFileName": "participant-script.sh",
+                "servicePrincipal": "[parameters('servicePrincipal')]",
+                "secretKey": "[parameters('secretKey')]",
+                "tenantId": "[subscription().tenantId]",
+                "subscriptionid": "[subscription().subscriptionId]",
+                "keyVaultName": "[variables('keyVaultSettings').keyVaultName]",
+                "tokenName": "parClientToken"
             }
+        },
+        "gatewayPipSettings":{
+            "pipName": "gateway-pip",
+            "pipDns": "[concat('gateway-',variables('suffix'))]",
+            "apiVersion": "[variables('apiVersion').networkApiVersion]",
+            "publicIPAllocationMethod": "Dynamic"
         },
         "oneRegionDep": "oneRegionSetup",
         "multiRegionDep": "multiRegionSetup",
         "locationsArray": [
-            "[parameters('location_1')]",
-            "[parameters('location_2')]",
-            "[parameters('location_3')]",
-            "[parameters('location_4')]",
-            "[parameters('location_5')]"
-        ],
-        "vnetRegionArray": [
-            "[variables('vnetSettings').region1]",
-            "[variables('vnetSettings').region2]",
-            "[variables('vnetSettings').region3]",
-            "[variables('vnetSettings').region4]",
-            "[variables('vnetSettings').region5]"
+            "[variables('location_1')]",
+            "[variables('location_2')]",
+            "[variables('location_3')]"
         ]
     },
     "resources": [
@@ -517,7 +545,7 @@
                 },
                 "parameters": {
                     "location": {
-                        "value": "[parameters('location_1')]"
+                        "value": "[variables('location_1')]"
                     },
                     "prefix": {
                         "value": "[variables('prefix')]"
@@ -542,35 +570,36 @@
                     },
                     "nsgSettings": {
                         "value": "[variables('nsgSettings')]"
+                    },
+                    "signerNodeCountReg1": {
+                        "value": "[variables('signerNodeCountReg1')]"
+                    },
+                    "participantNodeCountReg1": {
+                        "value": "[variables('participantNodeCountReg1')]"
                     }
                 }
             }
         },
         {
-            
             "name": "[variables('multiRegionDep')]",
             "apiVersion": "[variables('apiVersion').deploymentApiVersion]",
             "type": "Microsoft.Resources/deployments",
             "dependsOn": [
                 "[variables('oneRegionDep')]"
             ],
-            
             "properties": {
                 "mode": "Incremental",
                 "templateLink": {
-                    "uri": "[variables('nestedURLs').multiRegionSetupURL]",
+                    "uri": "[variables('nestedURLs').multiRegionURL]",
                     "contentVersion": "1.0.0.0"
                 },
                 "parameters": {
-                    "location": {
-                        "value": "[variables('locationsArray')]"
-                    },
                     "prefix": {
                         "value": "[variables('prefix')]"
                     },
-                    "regionCount":{
-                        "value": "[parameters('regionCount')]"
-                    },
+                    "location": {
+                        "value": "[variables('locationsArray')]"
+                    },             
                     "nestedURls": {
                         "value": "[variables('nestedURls')]"
                     },
@@ -591,6 +620,24 @@
                     },
                     "generatorIp": {
                         "value": "[reference(variables('oneRegionDep')).outputs.generatorIp.value]"
+                    },
+                    "signerNodeCountReg2": {
+                        "value": "[variables('signerNodeCountReg2')]"
+                    },
+                    "partNodeCountReg2": {
+                        "value": "[variables('participantNodeCountReg2')]"
+                    },
+                    "signerNodeCountReg3": {
+                        "value": "[variables('signerNodeCountReg3')]"
+                    },
+                    "partNodeCountReg3": {
+                        "value": "[variables('participantNodeCountReg3')]"
+                    },
+                    "regionCount":{
+                        "value": "[variables('regionCount')]"
+                    },
+                    "gatewayPipSettings":{
+                        "value": "[variables('gatewayPipSettings')]"
                     }
                 }
             }

@@ -1,0 +1,58 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "extensionSettings": {
+            "type": "object"
+        },
+        "generatorIp": {
+            "type": "string"
+        },
+        "location": {
+            "type": "string"
+        },
+        "nodeCount": {
+            "type": "int"
+        }
+    },
+    "variables": {
+        "apiVersion": "[parameters('extensionSettings').apiVersion]",
+        "vmName": "[concat(parameters('extensionSettings').vmName,'-',parameters('location'))]",
+        "scriptUrl": "[parameters('extensionSettings').scriptUrl]",
+        "scriptFileName": "[parameters('extensionSettings').scriptFileName]",
+        "generatorIp": "[parameters('generatorIp')]",
+        "servicePrincipal": "[parameters('extensionSettings').servicePrincipal]",
+        "secretKey": "[parameters('extensionSettings').secretKey]",
+        "tenantId": "[parameters('extensionSettings').tenantId]",
+        "subscriptionId": "[parameters('extensionSettings').subscriptionId]",
+        "keyVaultName": "[parameters('extensionSettings').keyVaultName]",
+        "tokenName": "[parameters('extensionSettings').tokenName]",
+        "nodeCount": "[parameters('nodeCount')]"
+    },
+    "resources": [
+        {
+            "type": "Microsoft.Compute/virtualMachines/extensions",
+            "name": "[concat(variables('vmName'),'-',copyIndex(1), '/vmConfig')]",
+            "location": "[parameters('location')]",
+            "apiVersion": "[variables('apiVersion')]",
+            "copy": {
+                "name": "signerLoop",
+                "count": "[variables('nodeCount')]"
+            },
+            "properties": {
+                "publisher": "Microsoft.Azure.Extensions",
+                "type": "CustomScript",
+                "typeHandlerVersion": "2.0",
+                "autoUpgradeMinorVersion": true,
+                "settings": {
+                    "fileUris": [
+                        "[variables('scriptUrl')]"
+                    ]
+                },
+                "protectedSettings": {
+                    "commandToExecute": "[concat('sh ', variables('scriptFileName'), ' \"', variables('generatorIp'), '\" \"', variables('servicePrincipal'), '\" \"', variables('secretKey'), '\" \"', variables('tenantId'), '\" \"', variables('subscriptionId'), '\" \"', variables('keyVaultName'), '\" \"', variables('tokenName'), '\"')]"
+                }
+            }
+        }
+    ]
+}

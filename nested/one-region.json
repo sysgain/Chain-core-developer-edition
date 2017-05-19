@@ -28,6 +28,12 @@
         },
         "nsgSettings": {
             "type": "object"
+        },
+        "signerNodeCountReg1": {
+            "type": "int"
+        },
+        "participantNodeCountReg1": {
+            "type": "int"
         }
     },
     "variables": {
@@ -35,7 +41,7 @@
         "nsgDep": "[concat('nsgSetup-',parameters('location'))]",
         "generatorDep": "[concat('generatorSetup-',parameters('location'))]",
         "signerDep": "[concat('signerSetup-',parameters('location'))]",
-        "participantSetup":"[concat('participantSetup-',parameters('location'))]"
+        "participantSetup": "[concat('participantSetup-',parameters('location'))]"
     },
     "resources": [
         {
@@ -123,7 +129,7 @@
             "properties": {
                 "mode": "Incremental",
                 "templateLink": {
-                    "uri": "[parameters('nestedURLs').signerSetupURL]",
+                    "uri": "[parameters('nestedURLs').signerSetupURLReg1]",
                     "contentVersion": "1.0.0.0"
                 },
                 "parameters": {
@@ -144,6 +150,9 @@
                     },
                     "generatorIp": {
                         "value": "[reference(variables('generatorDep')).outputs.generatorIp.value]"
+                    },
+                    "nodeCount": {
+                        "value": "[parameters('signerNodeCountReg1')]"
                     }
                 }
             }
@@ -154,12 +163,13 @@
             "type": "Microsoft.Resources/deployments",
             "dependsOn": [
                 "[variables('vnetDep')]",
-                "[variables('nsgDep')]"
+                "[variables('nsgDep')]",
+                "[variables('generatorDep')]"
             ],
             "properties": {
                 "mode": "Incremental",
                 "templateLink": {
-                    "uri": "[parameters('nestedURLs').partSetupURL]",
+                    "uri": "[parameters('nestedURLs').partSetupURLReg1]",
                     "contentVersion": "1.0.0.0"
                 },
                 "parameters": {
@@ -177,13 +187,19 @@
                     },
                     "partSettings": {
                         "value": "[parameters('participantSettings')]"
+                    },
+                    "generatorIp": {
+                        "value": "[reference(variables('generatorDep')).outputs.generatorIp.value]"
+                    },
+                    "nodeCount": {
+                        "value": "[parameters('participantNodeCountReg1')]"
                     }
                 }
             }
         }
     ],
     "outputs": {
-        "generatorIp":{
+        "generatorIp": {
             "type": "string",
             "value": "[reference(variables('generatorDep')).outputs.generatorIp.value]"
         }
