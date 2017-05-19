@@ -27,7 +27,7 @@ generatornetworktoken=`az keyvault secret show --name $networkToken --vault-name
 blockchainid=`az keyvault secret show --name blockchainid --vault-name $keyvaultname | grep "value" | cut -d "\"" -f4`
 
 # run chaincore docker image
-docker run -d -p 1999:1999 chaincore/developer:latest
+docker run -d -p 1999:1999 chaincore/developer:ivy-latest
 sleep 30
 containerId=`docker ps | cut -d " " -f1 | sed 1d`
 
