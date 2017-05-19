@@ -33,7 +33,7 @@ docker restart $containerId
 sleep 30
 sudo az login --service-principal -u $serviceprincipal -p $secretkey --tenant $tenatid
 sudo az account set -s $subscriptionid
-ntokenamelen=`echo "$networktokenname${count}:" | wc -c`
+ntokenamelen=`echo "$networktokenname:" | wc -c`
 totallen=`expr 65 + $ntokenamelen`
 #a network token that will be used by remote signers
 networkToken=`docker exec $containerId /usr/bin/chain/corectl create-token -net $networktokenname | cut -c1-$totallen`
