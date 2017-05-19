@@ -171,56 +171,41 @@
         }
       }
     },
-    {
-      "name": "[concat(variables('gatewayPipDep'),'-',parameters('location')[copyIndex(0)])]",
-      "apiVersion": "[parameters('apiVersion').deploymentApiVersion]",
-      "type": "Microsoft.Resources/deployments",
-      "copy": {
-        "name": "regionLoop",
-        "count": "[parameters('regionCount')]"
-      },
-      "properties": {
-        "mode": "Incremental",
-        "templateLink": {
-          "uri": "[parameters('nestedURls').pipGtwSetupURL[copyIndex(0)]]",
-          "contentVersion": "1.0.0.0"
-        },
-        "parameters": {
-          "pipSettings": {
-            "value": "[parameters('gatewayPipSettings')]"
-          },
-          "location": {
-            "value": "[parameters('location')[copyIndex(0)]]"
-          }
-        }
-      }
-    },
-    {
-      "name": "[concat(variables('vpnGatewayDep'),'-',parameters('location')[copyIndex(0)])]",
+   {
+      "name": "vpn-gateway-pip",
       "apiVersion": "[parameters('apiVersion').deploymentApiVersion]",
       "type": "Microsoft.Resources/deployments",
       "dependsOn": [
-        "[concat(variables('gatewayPipDep'),'-',parameters('location')[copyIndex(0)])]"
+        "Region2",
+        "Region3"
       ],
-      "copy": {
-        "name": "regionLoop",
-        "count": "[parameters('regionCount')]"
-      },
       "properties": {
         "mode": "Incremental",
         "templateLink": {
-          "uri": "[parameters('nestedURls').gatewaySetupURL[copyIndex(0)]]",
+          "uri": "[parameters('nestedURLs').vpnGwtPipSetupURL]",
           "contentVersion": "1.0.0.0"
         },
         "parameters": {
+          "location": {
+            "value": "[parameters('location')]"
+          },
+          "nestedURls": {
+            "value": "[parameters('nestedURls')]"
+          },
+          "apiVersion": {
+            "value": "[parameters('apiVersion')]"
+          },
+          "vnetSettings": {
+            "value": "[parameters('vnetSettings')]"
+          },
+          "gatewayPipSettings": {
+            "value": "[parameters('gatewayPipSettings')]"
+          },
           "vpnGatewaySettings": {
             "value": "[parameters('vpnGatewaySettings')]"
           },
-          "vnetSettings": {
-            "value": "[variables('vnetRegionArray')[copyIndex(0)]]"
-          },
-          "location": {
-            "value": "[parameters('location')[copyIndex(0)]]"
+          "regionCount": {
+            "value": "[parameters('regionCount')]"
           }
         }
       }
