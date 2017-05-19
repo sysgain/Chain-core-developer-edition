@@ -6,7 +6,7 @@
             "type": "string"
         },
         "location": {
-            "type": "string"
+            "type": "array"
         },
         "nestedURls": {
             "type": "object"
@@ -29,10 +29,22 @@
         "generatorIp": {
             "type": "string"
         },
-        "signerNodeCount": {
+        "signerNodeCountReg2": {
             "type": "int"
         },
-        "partNodeCount": {
+        "partNodeCountReg2": {
+            "type": "int"
+        },
+        "signerNodeCountReg3": {
+            "type": "int"
+        },
+        "partNodeCountReg3": {
+            "type": "int"
+        },
+        "gatewayPipSettings": {
+            "type": "object"
+        },
+        "regionCount": {
             "type": "int"
         }
     },
