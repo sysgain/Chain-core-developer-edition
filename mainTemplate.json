@@ -300,11 +300,11 @@
       "gatewaySetupURL": [
         "[concat(variables('baseUrl'),'/nested/gateway.json')]",
         "[concat(variables('baseUrl'),'/nested/',variables('vpnGwtTemplate')[variables('totalCountReg2')])]",
-        "[concat(variables('baseUrl'),'/nested/',variables('vpnGwtTemplate')[variables('totalCountReg2')])]"
+        "[concat(variables('baseUrl'),'/nested/',variables('vpnGwtTemplate')[variables('totalCountReg3')])]"
       ],
       "connectionsSetupURl": [
         "[concat(variables('baseUrl'),'/nested/',variables('connectionsTemplate')[variables('totalCountReg2')])]",
-        "[concat(variables('baseUrl'),'/nested/',variables('connectionsTemplate')[variables('totalCountReg2')])]"
+        "[concat(variables('baseUrl'),'/nested/',variables('connectionsTemplate')[variables('totalCountReg3')])]"
       ],
       "oneRegionSetupURL": "[concat(variables('baseUrl'),'/nested/one-region.json')]",
       "region2SetupURL": "[concat(variables('baseUrl'),'/nested/',variables('regionTemplate')[variables('totalCountReg2')])]",
