@@ -55,8 +55,6 @@
         }
     },
     "variables": {
-        "gatewayPipDep": "gatewayPipSetup",
-        "vpnGatewayDep": "vpnGatewaySetup",
         "conncetionsDep": "conncetionSetup",
         "vnetRegionArray": [
             "[parameters('vnetSettings').region1]",
@@ -215,7 +213,7 @@
             "apiVersion": "[parameters('apiVersion').deploymentApiVersion]",
             "type": "Microsoft.Resources/deployments",
             "dependsOn": [
-                "[concat(variables('vpnGatewayDep'),'-',parameters('location')[copyIndex(0)])]"
+                "vpn-gateway-pip"
             ],
             "copy": {
                 "name": "regionLoop",
