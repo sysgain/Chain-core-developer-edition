@@ -666,6 +666,12 @@
           },
           "gatewayPipSettings": {
             "value": "[variables('gatewayPipSettings')]"
+          },
+          "vpnGatewaySettings": {
+            "value": "[variables('vpnGatewaySettings')]"
+          },
+          "connectionSettings": {
+            "value": "[variables('connectionSettings')]"
           }
         }
       }
