@@ -202,7 +202,7 @@
     },
     "artifactsBaseUrl": {
       "type": "string",
-      "defaultValue": "https://raw.githubusercontent.com/sysgain/Chain-core-developer-edition/chain-core-dev-v2",
+      "defaultValue": "https://raw.githubusercontent.com/sysgain/Chain-core-developer-edition/dev2",
       "metadata": {
         "artifactsBaseUrl": "Base URL of the Publisher Template gallery package"
       }
