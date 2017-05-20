@@ -60,7 +60,6 @@
                 "osProfile": {
                     "computerName": "[variables('generatorVmName')]",
                     "adminUsername": "[variables('adminUsername')]",
-                    "adminPassword": "[variables('adminPassword')]",
                     "linuxConfiguration": {
                         "disablePasswordAuthentication": true,
                         "ssh": {

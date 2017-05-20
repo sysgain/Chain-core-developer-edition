@@ -12,7 +12,6 @@
     "variables": {
         "apiVersion": "[parameters('genExtensionSettings').apiVersion]",
         "generatorVmName": "[concat(parameters('genExtensionSettings').generatorVmName,'-',parameters('location'))]",
-        "generatorScriptUrl": "[parameters('genExtensionSettings').generatorScriptUrl]",
         "generatorScriptFileName": "[parameters('genExtensionSettings').generatorScriptFileName]",
         "logScriptUrl": "[parameters('genExtensionSettings').logScriptUrl]",
         "adminUsername": "[parameters('genExtensionSettings').adminUsername]",

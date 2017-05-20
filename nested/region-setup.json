@@ -35,11 +35,11 @@
         "partNodeCount": {
             "type": "int"
         },
-        "signerSetupURL":{
-            "type":"string"
+        "signerSetupURL": {
+            "type": "string"
         },
-        "partSetupURL":{
-            "type":"string"
+        "partSetupURL": {
+            "type": "string"
         }
     },
     "variables": {

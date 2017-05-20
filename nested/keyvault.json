@@ -11,7 +11,7 @@
         "tenantId": "[parameters('keyVaultSettings').tenantId]",
         "apiVersion": "[parameters('keyVaultSettings').apiVersion]",
         "location": "[parameters('keyVaultSettings').location]",
-        "objectId":"[parameters('keyVaultSettings').objectId]"
+        "objectId": "[parameters('keyVaultSettings').objectId]"
     },
     "resources": [
         {

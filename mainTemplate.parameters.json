@@ -60,13 +60,13 @@
             "value": "secretkey"
         },
         "VPNSharedKey": {
-            "value": "vpnsharedkey"
+            "value": "GEN-VPNKEY"
         },
         "storageAccountType": {
             "value": "Standard_LRS"
         },
         "artifactsBaseUrl": {
-            "value": "https://raw.githubusercontent.com/sysgain/Chain-core-developer-edition/chain-core-dev-v2"
+            "value": "https://raw.githubusercontent.com/sysgain/Chain-core-developer-edition/dev2"
         }
     }
 }

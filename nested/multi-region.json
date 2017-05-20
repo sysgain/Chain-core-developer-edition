@@ -1,244 +1,244 @@
 {
-  "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
-  "contentVersion": "1.0.0.0",
-  "parameters": {
-    "prefix": {
-      "type": "string"
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "prefix": {
+            "type": "string"
+        },
+        "location": {
+            "type": "array"
+        },
+        "nestedURls": {
+            "type": "object"
+        },
+        "apiVersion": {
+            "type": "object"
+        },
+        "vnetSettings": {
+            "type": "object"
+        },
+        "signerSettings": {
+            "type": "object"
+        },
+        "participantSettings": {
+            "type": "object"
+        },
+        "nsgSettings": {
+            "type": "object"
+        },
+        "generatorIp": {
+            "type": "string"
+        },
+        "signerNodeCountReg2": {
+            "type": "int"
+        },
+        "partNodeCountReg2": {
+            "type": "int"
+        },
+        "signerNodeCountReg3": {
+            "type": "int"
+        },
+        "partNodeCountReg3": {
+            "type": "int"
+        },
+        "gatewayPipSettings": {
+            "type": "object"
+        },
+        "vpnGatewaySettings": {
+            "type": "object"
+        },
+        "regionCount": {
+            "type": "int"
+        },
+        "connectionSettings": {
+            "type": "object"
+        }
     },
-    "location": {
-      "type": "array"
+    "variables": {
+        "gatewayPipDep": "gatewayPipSetup",
+        "vpnGatewayDep": "vpnGatewaySetup",
+        "conncetionsDep": "conncetionSetup",
+        "vnetRegionArray": [
+            "[parameters('vnetSettings').region1]",
+            "[parameters('vnetSettings').region2]",
+            "[parameters('vnetSettings').region3]"
+        ]
     },
-    "nestedURls": {
-      "type": "object"
-    },
-    "apiVersion": {
-      "type": "object"
-    },
-    "vnetSettings": {
-      "type": "object"
-    },
-    "signerSettings": {
-      "type": "object"
-    },
-    "participantSettings": {
-      "type": "object"
-    },
-    "nsgSettings": {
-      "type": "object"
-    },
-    "generatorIp": {
-      "type": "string"
-    },
-    "signerNodeCountReg2": {
-      "type": "int"
-    },
-    "partNodeCountReg2": {
-      "type": "int"
-    },
-    "signerNodeCountReg3": {
-      "type": "int"
-    },
-    "partNodeCountReg3": {
-      "type": "int"
-    },
-    "gatewayPipSettings": {
-      "type": "object"
-    },
-    "vpnGatewaySettings": {
-      "type": "object"
-    },
-    "regionCount": {
-      "type": "int"
-    },
-    "connectionSettings": {
-      "type": "object"
-    }
-  },
-  "variables": {
-    "gatewayPipDep": "gatewayPipSetup",
-    "vpnGatewayDep": "vpnGatewaySetup",
-    "conncetionsDep": "conncetionSetup",
-    "vnetRegionArray": [
-      "[parameters('vnetSettings').region1]",
-      "[parameters('vnetSettings').region2]",
-      "[parameters('vnetSettings').region3]"
+    "resources": [
+        {
+            "name": "Region2",
+            "apiVersion": "[parameters('apiVersion').deploymentApiVersion]",
+            "type": "Microsoft.Resources/deployments",
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "[parameters('nestedURLs').region2SetupURL]",
+                    "contentVersion": "1.0.0.0"
+                },
+                "parameters": {
+                    "prefix": {
+                        "value": "[parameters('prefix')]"
+                    },
+                    "location": {
+                        "value": "[parameters('location')[1]]"
+                    },
+                    "nestedURls": {
+                        "value": "[parameters('nestedURls')]"
+                    },
+                    "apiVersion": {
+                        "value": "[parameters('apiVersion')]"
+                    },
+                    "vnetSettings": {
+                        "value": "[parameters('vnetSettings').region2]"
+                    },
+                    "signerSettings": {
+                        "value": "[parameters('signerSettings')]"
+                    },
+                    "participantSettings": {
+                        "value": "[parameters('participantSettings')]"
+                    },
+                    "nsgSettings": {
+                        "value": "[parameters('nsgSettings')]"
+                    },
+                    "generatorIp": {
+                        "value": "[parameters('generatorIp')]"
+                    },
+                    "signerNodeCount": {
+                        "value": "[parameters('signerNodeCountReg2')]"
+                    },
+                    "partNodeCount": {
+                        "value": "[parameters('partNodeCountReg2')]"
+                    },
+                    "signerSetupURL": {
+                        "value": "[parameters('nestedURls').signerSetupURLReg2]"
+                    },
+                    "partSetupURL": {
+                        "value": "[parameters('nestedURls').partSetupURLReg2]"
+                    }
+                }
+            }
+        },
+        {
+            "name": "Region3",
+            "apiVersion": "[parameters('apiVersion').deploymentApiVersion]",
+            "type": "Microsoft.Resources/deployments",
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "[parameters('nestedURLs').region3SetupURL]",
+                    "contentVersion": "1.0.0.0"
+                },
+                "parameters": {
+                    "prefix": {
+                        "value": "[parameters('prefix')]"
+                    },
+                    "location": {
+                        "value": "[parameters('location')[2]]"
+                    },
+                    "nestedURls": {
+                        "value": "[parameters('nestedURls')]"
+                    },
+                    "apiVersion": {
+                        "value": "[parameters('apiVersion')]"
+                    },
+                    "vnetSettings": {
+                        "value": "[parameters('vnetSettings').region3]"
+                    },
+                    "signerSettings": {
+                        "value": "[parameters('signerSettings')]"
+                    },
+                    "participantSettings": {
+                        "value": "[parameters('participantSettings')]"
+                    },
+                    "nsgSettings": {
+                        "value": "[parameters('nsgSettings')]"
+                    },
+                    "generatorIp": {
+                        "value": "[parameters('generatorIp')]"
+                    },
+                    "signerNodeCount": {
+                        "value": "[parameters('signerNodeCountReg3')]"
+                    },
+                    "partNodeCount": {
+                        "value": "[parameters('partNodeCountReg3')]"
+                    },
+                    "signerSetupURL": {
+                        "value": "[parameters('nestedURls').signerSetupURLReg3]"
+                    },
+                    "partSetupURL": {
+                        "value": "[parameters('nestedURls').partSetupURLReg3]"
+                    }
+                }
+            }
+        },
+        {
+            "name": "vpn-gateway-pip",
+            "apiVersion": "[parameters('apiVersion').deploymentApiVersion]",
+            "type": "Microsoft.Resources/deployments",
+            "dependsOn": [
+                "Region2",
+                "Region3"
+            ],
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "[parameters('nestedURLs').vpnGwtPipSetupURL]",
+                    "contentVersion": "1.0.0.0"
+                },
+                "parameters": {
+                    "location": {
+                        "value": "[parameters('location')]"
+                    },
+                    "nestedURls": {
+                        "value": "[parameters('nestedURls')]"
+                    },
+                    "apiVersion": {
+                        "value": "[parameters('apiVersion')]"
+                    },
+                    "vnetSettings": {
+                        "value": "[parameters('vnetSettings')]"
+                    },
+                    "gatewayPipSettings": {
+                        "value": "[parameters('gatewayPipSettings')]"
+                    },
+                    "vpnGatewaySettings": {
+                        "value": "[parameters('vpnGatewaySettings')]"
+                    },
+                    "regionCount": {
+                        "value": "[parameters('regionCount')]"
+                    }
+                }
+            }
+        },
+        {
+            "name": "[concat(variables('conncetionsDep'),'-',parameters('location')[copyIndex(0)])]",
+            "apiVersion": "[parameters('apiVersion').deploymentApiVersion]",
+            "type": "Microsoft.Resources/deployments",
+            "dependsOn": [
+                "[concat(variables('vpnGatewayDep'),'-',parameters('location')[copyIndex(0)])]"
+            ],
+            "copy": {
+                "name": "regionLoop",
+                "count": "[sub(parameters('regionCount'),1)]"
+            },
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "[parameters('nestedURls').connectionsSetupURL[copyIndex(0)]]",
+                    "contentVersion": "1.0.0.0"
+                },
+                "parameters": {
+                    "connectionSettings": {
+                        "value": "[parameters('connectionSettings')]"
+                    },
+                    "location_1": {
+                        "value": "[parameters('location')[0]]"
+                    },
+                    "location_2": {
+                        "value": "[parameters('location')[copyIndex(1)]]"
+                    }
+                }
+            }
+        }
     ]
-  },
-  "resources": [
-    {
-      "name": "Region2",
-      "apiVersion": "[parameters('apiVersion').deploymentApiVersion]",
-      "type": "Microsoft.Resources/deployments",
-      "properties": {
-        "mode": "Incremental",
-        "templateLink": {
-          "uri": "[parameters('nestedURLs').region2SetupURL]",
-          "contentVersion": "1.0.0.0"
-        },
-        "parameters": {
-          "prefix": {
-            "value": "[parameters('prefix')]"
-          },
-          "location": {
-            "value": "[parameters('location')[1]]"
-          },
-          "nestedURls": {
-            "value": "[parameters('nestedURls')]"
-          },
-          "apiVersion": {
-            "value": "[parameters('apiVersion')]"
-          },
-          "vnetSettings": {
-            "value": "[parameters('vnetSettings').region2]"
-          },
-          "signerSettings": {
-            "value": "[parameters('signerSettings')]"
-          },
-          "participantSettings": {
-            "value": "[parameters('participantSettings')]"
-          },
-          "nsgSettings": {
-            "value": "[parameters('nsgSettings')]"
-          },
-          "generatorIp": {
-            "value": "[parameters('generatorIp')]"
-          },
-          "signerNodeCount": {
-            "value": "[parameters('signerNodeCountReg2')]"
-          },
-          "partNodeCount": {
-            "value": "[parameters('partNodeCountReg2')]"
-          },
-          "signerSetupURL": {
-            "value": "[parameters('nestedURls').signerSetupURLReg2]"
-          },
-          "partSetupURL": {
-            "value": "[parameters('nestedURls').partSetupURLReg2]"
-          }
-        }
-      }
-    },
-    {
-      "name": "Region3",
-      "apiVersion": "[parameters('apiVersion').deploymentApiVersion]",
-      "type": "Microsoft.Resources/deployments",
-      "properties": {
-        "mode": "Incremental",
-        "templateLink": {
-          "uri": "[parameters('nestedURLs').region3SetupURL]",
-          "contentVersion": "1.0.0.0"
-        },
-        "parameters": {
-          "prefix": {
-            "value": "[parameters('prefix')]"
-          },
-          "location": {
-            "value": "[parameters('location')[2]]"
-          },
-          "nestedURls": {
-            "value": "[parameters('nestedURls')]"
-          },
-          "apiVersion": {
-            "value": "[parameters('apiVersion')]"
-          },
-          "vnetSettings": {
-            "value": "[parameters('vnetSettings').region3]"
-          },
-          "signerSettings": {
-            "value": "[parameters('signerSettings')]"
-          },
-          "participantSettings": {
-            "value": "[parameters('participantSettings')]"
-          },
-          "nsgSettings": {
-            "value": "[parameters('nsgSettings')]"
-          },
-          "generatorIp": {
-            "value": "[parameters('generatorIp')]"
-          },
-          "signerNodeCount": {
-            "value": "[parameters('signerNodeCountReg3')]"
-          },
-          "partNodeCount": {
-            "value": "[parameters('partNodeCountReg3')]"
-          },
-          "signerSetupURL": {
-            "value": "[parameters('nestedURls').signerSetupURLReg3]"
-          },
-          "partSetupURL": {
-            "value": "[parameters('nestedURls').partSetupURLReg3]"
-          }
-        }
-      }
-    },
-   {
-      "name": "vpn-gateway-pip",
-      "apiVersion": "[parameters('apiVersion').deploymentApiVersion]",
-      "type": "Microsoft.Resources/deployments",
-      "dependsOn": [
-        "Region2",
-        "Region3"
-      ],
-      "properties": {
-        "mode": "Incremental",
-        "templateLink": {
-          "uri": "[parameters('nestedURLs').vpnGwtPipSetupURL]",
-          "contentVersion": "1.0.0.0"
-        },
-        "parameters": {
-          "location": {
-            "value": "[parameters('location')]"
-          },
-          "nestedURls": {
-            "value": "[parameters('nestedURls')]"
-          },
-          "apiVersion": {
-            "value": "[parameters('apiVersion')]"
-          },
-          "vnetSettings": {
-            "value": "[parameters('vnetSettings')]"
-          },
-          "gatewayPipSettings": {
-            "value": "[parameters('gatewayPipSettings')]"
-          },
-          "vpnGatewaySettings": {
-            "value": "[parameters('vpnGatewaySettings')]"
-          },
-          "regionCount": {
-            "value": "[parameters('regionCount')]"
-          }
-        }
-      }
-    },
-    {
-      "name": "[concat(variables('conncetionsDep'),'-',parameters('location')[copyIndex(0)])]",
-      "apiVersion": "[parameters('apiVersion').deploymentApiVersion]",
-      "type": "Microsoft.Resources/deployments",
-      "dependsOn": [
-        "[concat(variables('vpnGatewayDep'),'-',parameters('location')[copyIndex(0)])]"
-      ],
-      "copy": {
-        "name": "regionLoop",
-        "count": "[sub(parameters('regionCount'),1)]"
-      },
-      "properties": {
-        "mode": "Incremental",
-        "templateLink": {
-          "uri": "[parameters('nestedURls').connectionsSetupURL[copyIndex(0)]]",
-          "contentVersion": "1.0.0.0"
-        },
-        "parameters": {
-          "connectionSettings": {
-            "value": "[parameters('connectionSettings')]"
-          },
-          "location_1": {
-            "value": "[parameters('location')[0]]"
-          },
-          "location_2": {
-            "value": "[parameters('location')[copyIndex(1)]]"
-          }
-        }
-      }
-    }
-  ]
 }

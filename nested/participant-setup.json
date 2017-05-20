@@ -20,7 +20,7 @@
         "generatorIp": {
             "type": "string"
         },
-        "nodeCount":{
+        "nodeCount": {
             "type": "int"
         }
     },
@@ -30,7 +30,7 @@
         "partNicDep": "[concat(variables('prefix'),'-partNicSetup-',parameters('location'))]",
         "partPipDep": "[concat(variables('prefix'),'-partPipSetup-',parameters('location'))]",
         "partAvailDep": "[concat(variables('prefix'),'-partAvailSetup-',parameters('location'))]",
-        "partExtDep":"[concat(variables('prefix'),'-partExtSetup-',parameters('location'))]"
+        "partExtDep": "[concat(variables('prefix'),'-partExtSetup-',parameters('location'))]"
     },
     "resources": [
         {
@@ -70,7 +70,7 @@
                     "location": {
                         "value": "[parameters('location')]"
                     },
-                    "nodeCount":{
+                    "nodeCount": {
                         "value": "[parameters('nodeCount')]"
                     }
                 }
@@ -96,7 +96,7 @@
                     "location": {
                         "value": "[parameters('location')]"
                     },
-                    "nodeCount":{
+                    "nodeCount": {
                         "value": "[parameters('nodeCount')]"
                     }
                 }
@@ -123,7 +123,7 @@
                     "location": {
                         "value": "[parameters('location')]"
                     },
-                    "nodeCount":{
+                    "nodeCount": {
                         "value": "[parameters('nodeCount')]"
                     }
                 }
@@ -152,7 +152,7 @@
                     "generatorIp": {
                         "value": "[parameters('generatorIp')]"
                     },
-                    "nodeCount":{
+                    "nodeCount": {
                         "value": "[parameters('nodeCount')]"
                     }
                 }

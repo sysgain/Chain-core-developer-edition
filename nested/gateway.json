@@ -8,7 +8,7 @@
         "vnetSettings": {
             "type": "object"
         },
-        "location":{
+        "location": {
             "type": "string"
         }
     },
@@ -16,7 +16,7 @@
         "gatewayName": "[concat(parameters('vpnGatewaySettings').gatewayName,'-',parameters('location'))]",
         "apiVersion": "[parameters('vpnGatewaySettings').apiVersion]",
         "location": "[parameters('location')]",
-        "virtualNetworksName":"[concat(parameters('vnetSettings').virtualNetworksName,'-',parameters('location'))]",
+        "virtualNetworksName": "[concat(parameters('vnetSettings').virtualNetworksName,'-',parameters('location'))]",
         "gatewayPipName": "[concat(parameters('vpnGatewaySettings').gatewayPipName,'-',parameters('location'))]",
         "gatewayIpConfig": "[concat('gatewayIpConfig','-',parameters('location'))]",
         "vpnType": "[parameters('vpnGatewaySettings').vpnType]",

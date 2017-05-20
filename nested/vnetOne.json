@@ -17,8 +17,7 @@
         "vnetRange": "[parameters('vnetSettings').vnetRange]",
         "subnet1Range": "[parameters('vnetSettings').subnet1Range]",
         "subnet2Range": "[parameters('vnetSettings').subnet2Range]",
-        "apiVersion": "[parameters('vnetSettings').apiVersion]",
-        "gatewaySubnetRange": "[parameters('vnetSettings').gatewaySubnetRange]"
+        "apiVersion": "[parameters('vnetSettings').apiVersion]"
     },
     "resources": [
         {

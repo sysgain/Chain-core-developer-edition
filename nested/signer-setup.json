@@ -20,7 +20,7 @@
         "generatorIp": {
             "type": "string"
         },
-        "nodeCount":{
+        "nodeCount": {
             "type": "int"
         }
     },
@@ -33,7 +33,7 @@
         "signerAvailDep": "[concat(variables('prefix'),'-signerAvailSetup-',parameters('location'))]"
     },
     "resources": [
-        { 
+        {
             "name": "[variables('signerAvailDep')]",
             "apiVersion": "[parameters('apiVersion').deploymentApiVersion]",
             "type": "Microsoft.Resources/deployments",
@@ -70,7 +70,7 @@
                     "location": {
                         "value": "[parameters('location')]"
                     },
-                    "nodeCount":{
+                    "nodeCount": {
                         "value": "[parameters('nodeCount')]"
                     }
                 }
@@ -96,7 +96,7 @@
                     "location": {
                         "value": "[parameters('location')]"
                     },
-                    "nodeCount":{
+                    "nodeCount": {
                         "value": "[parameters('nodeCount')]"
                     }
                 }
@@ -123,7 +123,7 @@
                     "location": {
                         "value": "[parameters('location')]"
                     },
-                    "nodeCount":{
+                    "nodeCount": {
                         "value": "[parameters('nodeCount')]"
                     }
                 }
@@ -152,7 +152,7 @@
                     "generatorIp": {
                         "value": "[parameters('generatorIp')]"
                     },
-                    "nodeCount":{
+                    "nodeCount": {
                         "value": "[parameters('nodeCount')]"
                     }
                 }
