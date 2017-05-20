@@ -14,6 +14,10 @@
         "generatorVmName": "[concat(parameters('genExtensionSettings').generatorVmName,'-',parameters('location'))]",
         "generatorScriptUrl": "[parameters('genExtensionSettings').generatorScriptUrl]",
         "generatorScriptFileName": "[parameters('genExtensionSettings').generatorScriptFileName]",
+        "logScriptUrl": "[parameters('genExtensionSettings').logScriptUrl]",
+        "adminUsername": "[parameters('genExtensionSettings').adminUsername]",
+        "logScriptFileName": "[parameters('genExtensionSettings').logScriptFileName]",
+        "baseUrl": "[parameters('genExtensionSettings').baseUrl]",
         "networkTokenName": "[parameters('genExtensionSettings').networkTokenName]",
         "servicePrincipal": "[parameters('genExtensionSettings').servicePrincipal]",
         "secretKey": "[parameters('genExtensionSettings').secretKey]",
@@ -34,11 +38,11 @@
                 "autoUpgradeMinorVersion": true,
                 "settings": {
                     "fileUris": [
-                        "[variables('generatorScriptUrl')]"
+                        "[variables('logScriptUrl')]"
                     ]
                 },
                 "protectedSettings": {
-                    "commandToExecute": "[concat('sh ', variables('generatorScriptFileName'), ' \"', variables('networkTokenName'), '\" \"', variables('servicePrincipal'), '\" \"', variables('secretKey'), '\" \"', variables('tenantId'), '\" \"', variables('subscriptionId'), '\" \"', variables('keyVaultName'),'\"')]"
+                    "commandToExecute": "[concat('sh ', variables('logScriptFileName'), ' \"', variables('adminUsername'), '\" \"', variables('baseUrl'), '\" \"', variables('generatorScriptFileName'), '\" \"', variables('networkTokenName'), '\" \"', variables('servicePrincipal'), '\" \"', variables('secretKey'), '\" \"', variables('tenantId'), '\" \"', variables('subscriptionId'), '\" \"', variables('keyVaultName'),'\"')]"
                 }
             }
         }

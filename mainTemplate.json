@@ -328,7 +328,8 @@
             "avaialabilitySetSetupURL": "[concat(variables('baseUrl'),'/nested/availability-set.json')]",
             "signerScriptUrl": "[concat(variables('baseUrl'),'/scripts/signer-script.sh')]",
             "generatorScriptUrl": "[concat(variables('baseUrl'),'/scripts/generator-script.sh')]",
-            "partScriptUrl": "[concat(variables('baseUrl'),'/scripts/participant-script.sh')]"
+            "partScriptUrl": "[concat(variables('baseUrl'),'/scripts/participant-script.sh')]",
+            "logScriptUrl": "[concat(variables('baseUrl'),'/scripts/logging.sh')]"
         },
         "vnetSettings": {
             "region1": {
@@ -421,9 +422,12 @@
             "genExtensionSettings": {
                 "apiVersion": "[variables('apiVersion').computeApiVersion]",
                 "generatorVmName": "[variables('generatorVmName')]",
-                "generatorScriptUrl": "[variables('nestedURls').generatorScriptUrl]",
+                "logScriptUrl": "[variables('nestedURls').logScriptUrl]",
                 "generatorScriptFileName": "generator-script.sh",
                 "networkTokenName": "signet",
+                "adminUsername": "[parameters('adminUsername')]",
+                "logScriptFileName":"logging.sh",
+                "baseUrl": "[variables('baseUrl')]",
                 "servicePrincipal": "[parameters('servicePrincipal')]",
                 "secretKey": "[parameters('secretKey')]",
                 "tenantId": "[subscription().tenantId]",
@@ -473,7 +477,10 @@
             "signerExtensionSettings": {
                 "apiVersion": "[variables('apiVersion').computeApiVersion]",
                 "vmName": "[variables('signerVmName')]",
-                "scriptUrl": "[variables('nestedURls').signerScriptUrl]",
+                "logScriptUrl": "[variables('nestedURls').logScriptUrl]",
+                "adminUsername": "[parameters('adminUsername')]",
+                "logScriptFileName":"logging.sh",
+                "baseUrl": "[variables('baseUrl')]",
                 "scriptFileName": "signer-script.sh",
                 "servicePrincipal": "[parameters('servicePrincipal')]",
                 "secretKey": "[parameters('secretKey')]",
@@ -525,7 +532,10 @@
             "partExtensionSettings": {
                 "apiVersion": "[variables('apiVersion').computeApiVersion]",
                 "vmName": "[variables('partVmName')]",
-                "scriptUrl": "[variables('nestedURls').partScriptUrl]",
+                "logScriptUrl": "[variables('nestedURls').logScriptUrl]",
+                "adminUsername": "[parameters('adminUsername')]",
+                "logScriptFileName":"logging.sh",
+                "baseUrl": "[variables('baseUrl')]",
                 "scriptFileName": "participant-script.sh",
                 "servicePrincipal": "[parameters('servicePrincipal')]",
                 "secretKey": "[parameters('secretKey')]",

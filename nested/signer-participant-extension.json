@@ -18,7 +18,10 @@
     "variables": {
         "apiVersion": "[parameters('extensionSettings').apiVersion]",
         "vmName": "[concat(parameters('extensionSettings').vmName,'-',parameters('location'))]",
-        "scriptUrl": "[parameters('extensionSettings').scriptUrl]",
+        "logScriptUrl": "[parameters('extensionSettings').logScriptUrl]",
+        "adminUsername": "[parameters('extensionSettings').adminUsername]",
+        "logScriptFileName": "[parameters('extensionSettings').logScriptFileName]",
+        "baseUrl": "[parameters('extensionSettings').baseUrl]",
         "scriptFileName": "[parameters('extensionSettings').scriptFileName]",
         "generatorIp": "[parameters('generatorIp')]",
         "servicePrincipal": "[parameters('extensionSettings').servicePrincipal]",
@@ -36,7 +39,7 @@
             "location": "[parameters('location')]",
             "apiVersion": "[variables('apiVersion')]",
             "copy": {
-                "name": "signerLoop",
+                "name": "loop",
                 "count": "[variables('nodeCount')]"
             },
             "properties": {
@@ -46,11 +49,11 @@
                 "autoUpgradeMinorVersion": true,
                 "settings": {
                     "fileUris": [
-                        "[variables('scriptUrl')]"
+                        "[variables('logScriptUrl')]"
                     ]
                 },
                 "protectedSettings": {
-                    "commandToExecute": "[concat('sh ', variables('scriptFileName'), ' \"', variables('generatorIp'), '\" \"', variables('servicePrincipal'), '\" \"', variables('secretKey'), '\" \"', variables('tenantId'), '\" \"', variables('subscriptionId'), '\" \"', variables('keyVaultName'), '\" \"', variables('tokenName'),'-',parameters('location'),copyIndex(1), '\"')]"
+                    "commandToExecute": "[concat('sh ', variables('logScriptFileName'), ' \"', variables('adminUsername'), '\" \"' , variables('baseUrl'), '\" \"' , variables('scriptFileName'), '\" \"' , variables('generatorIp'), '\" \"' , variables('servicePrincipal'), '\" \"' , variables('secretKey'), '\" \"' , variables('tenantId'), '\" \"' , variables('subscriptionId'), '\" \"' , variables('keyVaultName'), '\" \"' , variables('tokenName'),'-',parameters('location'),copyIndex(1), '\"')]"
                 }
             }
         }
