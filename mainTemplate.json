@@ -269,6 +269,12 @@
             "connections.json",
             "connections.json"
         ],
+        "vnetTemplate": [
+            "vnetOne.json",
+            "vnetOne.json",
+            "vnet.json",
+            "vnet.json"
+        ],
         "generatorNicName": "[concat(variables('prefix'),'-gen-nic')]",
         "generatorVmName": "[concat(variables('prefix'),'-gen-vm')]",
         "generatorIpName": "[concat(variables('prefix'),'-gen-pip')]",
@@ -316,7 +322,7 @@
             "region3SetupURL": "[concat(variables('baseUrl'),'/nested/',variables('regionTemplate')[variables('totalCountReg3')])]",
             "multiRegionURL": "[concat(variables('baseUrl'),'/nested/',variables('multiTemplate')[variables('totalCountReg2and3')])]",
             "vpnGwtPipSetupURL": "[concat(variables('baseUrl'),'/nested/vpn-gwt-pip.json')]",
-            "vnetSetupURL": "[concat(variables('baseUrl'),'/nested/vnet.json')]",
+            "vnetSetupURL": "[concat(variables('baseUrl'),'/nested/',variables('vnetTemplate')[variables('regionCount')])]",
             "vnetmultiSetupURL": "[concat(variables('baseUrl'),'/nested/vnetmulti.json')]",
             "keyVaultSetupURL": "[concat(variables('baseUrl'),'/nested/keyvault.json')]",
             "avaialabilitySetSetupURL": "[concat(variables('baseUrl'),'/nested/availability-set.json')]",
