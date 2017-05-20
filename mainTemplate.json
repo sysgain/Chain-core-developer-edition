@@ -306,17 +306,17 @@
                 "[concat(variables('baseUrl'),'/nested/',variables('connectionsTemplate')[variables('totalCountReg2')])]",
                 "[concat(variables('baseUrl'),'/nested/',variables('connectionsTemplate')[variables('totalCountReg3')])]"
             ],
+            "pipGtwSetupURL": [
+                "[concat(variables('baseUrl'),'/nested/generator-gtwy-pip.json')]",
+                "[concat(variables('baseUrl'),'/nested/',variables('pipGwtTemplate')[variables('totalCountReg2')])]",
+                "[concat(variables('baseUrl'),'/nested/',variables('pipGwtTemplate')[variables('totalCountReg3')])]"
+            ],
             "oneRegionSetupURL": "[concat(variables('baseUrl'),'/nested/one-region.json')]",
             "region2SetupURL": "[concat(variables('baseUrl'),'/nested/',variables('regionTemplate')[variables('totalCountReg2')])]",
             "region3SetupURL": "[concat(variables('baseUrl'),'/nested/',variables('regionTemplate')[variables('totalCountReg3')])]",
             "multiRegionURL": "[concat(variables('baseUrl'),'/nested/',variables('multiTemplate')[variables('totalCountReg2and3')])]",
             "vpnGwtPipSetupURL": "[concat(variables('baseUrl'),'/nested/vpn-gwt-pip.json')]",
             "vnetSetupURL": "[concat(variables('baseUrl'),'/nested/vnet.json')]",
-            "pipGtwSetupURL": [
-                "[concat(variables('baseUrl'),'/nested/generator-gtwy-pip.json')]",
-                "[concat(variables('baseUrl'),'/nested/',variables('pipGwtTemplate')[variables('totalCountReg2')])]",
-                "[concat(variables('baseUrl'),'/nested/',variables('pipGwtTemplate')[variables('totalCountReg3')])]"
-            ],
             "vnetmultiSetupURL": "[concat(variables('baseUrl'),'/nested/vnetmulti.json')]",
             "keyVaultSetupURL": "[concat(variables('baseUrl'),'/nested/keyvault.json')]",
             "avaialabilitySetSetupURL": "[concat(variables('baseUrl'),'/nested/availability-set.json')]",
