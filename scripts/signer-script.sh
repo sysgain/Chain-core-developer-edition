@@ -1,5 +1,12 @@
 #scrip will run on all the signer machines
 #!/bin/bash
+generatornodeip=$1
+serviceprincipal=$2
+secretkey=$3
+tenatid=$4
+subscriptionid=$5
+keyvaultname=$6
+signerclienttokenkeyname=$7
 # install prerequisites 
 sudo apt-get update 
 sudo apt-get install -y libssl-dev libffi-dev python-dev build-essential 
@@ -12,20 +19,13 @@ sudo apt-get update
 sudo apt-get install azure-cli
 sudo apt-get update 
 sudo apt-get install azure-cli
-generatornodeip=$1
-serviceprincipal=$2
-secretkey=$3
-tenatid=$4
-subscriptionid=$5
-keyvaultname=$6
-signerclienttokenkeyname=$7
 az login --service-principal -u $serviceprincipal -p $secretkey --tenant $tenatid
 az account set -s $subscriptionid
 networkToken="networkTokenSignerVM"
 generatornetworktoken=`az keyvault secret show --name $networkToken --vault-name $keyvaultname | grep "value" | cut -d "\"" -f4`
 blockchainid=`az keyvault secret show --name blockchainid --vault-name $keyvaultname | grep "value" | cut -d "\"" -f4`
 # run chaincore docker image
-docker run -d -p 1999:1999 chaincore/developer:latest
+docker run -d -p 1999:1999 chaincore/developer:ivy-latest
 sleep 30
 containerId=`docker ps | cut -d " " -f1 | sed 1d`
 #signer client access token / public key
