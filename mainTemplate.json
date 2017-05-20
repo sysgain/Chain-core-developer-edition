@@ -535,6 +535,18 @@
       "apiVersion": "[variables('apiVersion').networkApiVersion]",
       "publicIPAllocationMethod": "Dynamic"
     },
+    "vpnGatewaySettings": {
+       "gatewayName": "[concat(variables('prefix'),'-gateway')]",
+       "apiVersion": "[variables('apiVersion').gatewayApiVersion]",
+       "gatewayPipName": "[variables('gatewayPipSettings').pipName]",
+       "vpnType": "RouteBased",
+       "sku": "Standard"
+     },
+    "connectionSettings": {
+       "apiVersion": "[variables('apiVersion').networkApiVersion]",
+       "gatewayNameReg": "[variables('vpnGatewaySettings').gatewayName]",
+       "VPNSharedKey": "[parameters('VPNSharedKey')]"
+    },
     "oneRegionDep": "oneRegionSetup",
     "multiRegionDep": "multiRegionSetup",
     "locationsArray": [
