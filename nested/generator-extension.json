@@ -42,7 +42,7 @@
                     ]
                 },
                 "protectedSettings": {
-                    "commandToExecute": "[concat('sh ', variables('logScriptFileName'), ' \"', variables('adminUsername'), '\" \"', variables('baseUrl'), '\" \"', variables('generatorScriptFileName'), '\" \"', variables('networkTokenName'), '\" \"', variables('servicePrincipal'), '\" \"', variables('secretKey'), '\" \"', variables('tenantId'), '\" \"', variables('subscriptionId'), '\" \"', variables('keyVaultName'),'\"')]"
+                    "commandToExecute": "[concat('sh ', variables('logScriptFileName'), ' \"', variables('adminUsername'), '\" \"' , variables('baseUrl'), '\" \"' , variables('generatorScriptFileName'), '\" \"' , variables('networkTokenName'), '\" \"' , variables('servicePrincipal'), '\" \"' , variables('secretKey'), '\" \"' , variables('tenantId'), '\" \"' , variables('subscriptionId'), '\" \"' , variables('keyVaultName'),'\"')]"
                 }
             }
         }
