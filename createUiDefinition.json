@@ -52,193 +52,6 @@
         ],
         "steps": [
             {
-                "name": "vmSize",
-                "bladeTitle": "Choose Block VMs Size",
-                "label": "Block VMs Size",
-                "subLabel": {
-                    "preValidation": "Required",
-                    "postValidation": "Done"
-                },
-                "elements": [
-                    {
-                        "name": "generatorVmSize",
-                        "type": "Microsoft.Compute.SizeSelector",
-                        "label": "Block Generator VM size",
-                        "toolTip": "Block Generator VM size",
-                        "recommendedSizes": [
-                            "Standard_DS1_v2",
-                            "Standard_DS2_v2",
-                            "Standard_DS3_v2"
-                        ],
-                        "constraints": {
-                            "allowedSizes": [
-                                "Standard_DS1",
-                                "Standard_DS1_v2",
-                                "Standard_DS2",
-                                "Standard_DS2_v2",
-                                "Standard_DS3",
-                                "Standard_DS3_v2",
-                                "Standard_DS4",
-                                "Standard_DS4_v2",
-                                "Standard_DS5_v2",
-                                "Standard_DS11",
-                                "Standard_DS11_v2",
-                                "Standard_DS12",
-                                "Standard_DS12_v2",
-                                "Standard_DS13",
-                                "Standard_DS13_v2",
-                                "Standard_DS14",
-                                "Standard_DS14_v2",
-                                "Standard_DS15_v2",
-                                "Standard_F1S",
-                                "Standard_F2S",
-                                "Standard_F4S",
-                                "Standard_F8S",
-                                "Standard_F16S"
-                            ]
-                        },
-                        "osPlatform": "Linux",
-                        "imageReference": {
-                            "publisher": "Canonical",
-                            "offer": "UbuntuServer",
-                            "sku": "16.04-LTS"
-                        },
-                        "visible": true
-                    },
-                    {
-                        "name": "signerVmSize",
-                        "type": "Microsoft.Compute.SizeSelector",
-                        "label": "Block Signer and Participant VM size",
-                        "toolTip": "Block Signer and Participant VM size",
-                        "recommendedSizes": [
-                            "Standard_DS1_v2",
-                            "Standard_DS2_v2",
-                            "Standard_DS3_v2"
-                        ],
-                        "constraints": {
-                            "allowedSizes": [
-                                "Standard_DS1",
-                                "Standard_DS1_v2",
-                                "Standard_DS2",
-                                "Standard_DS2_v2",
-                                "Standard_DS3",
-                                "Standard_DS3_v2",
-                                "Standard_DS4",
-                                "Standard_DS4_v2",
-                                "Standard_DS5_v2",
-                                "Standard_DS11",
-                                "Standard_DS11_v2",
-                                "Standard_DS12",
-                                "Standard_DS12_v2",
-                                "Standard_DS13",
-                                "Standard_DS13_v2",
-                                "Standard_DS14",
-                                "Standard_DS14_v2",
-                                "Standard_DS15_v2",
-                                "Standard_F1S",
-                                "Standard_F2S",
-                                "Standard_F4S",
-                                "Standard_F8S",
-                                "Standard_F16S"
-                            ]
-                        },
-                        "osPlatform": "Linux",
-                        "imageReference": {
-                            "publisher": "Canonical",
-                            "offer": "UbuntuServer",
-                            "sku": "16.04-LTS"
-                        },
-                        "visible": true,
-                        "count": "[steps('vmSize').signerVmCount]"
-                    },
-                    {
-                        "name": "signerVmCount",
-                        "type": "Microsoft.Common.DropDown",
-                        "label": "Number of Block Signer VMs",
-                        "defaultValue": "2",
-                        "toolTip": "Number of Block Signer VMs in the Blockchain network",
-                        "constraints": {
-                            "allowedValues": [
-                                {
-                                    "label": "0",
-                                    "value": "0"
-                                },
-                                {
-                                    "label": "1",
-                                    "value": "1"
-                                },
-                                {
-                                    "label": "2",
-                                    "value": "2"
-                                },
-                                {
-                                    "label": "3",
-                                    "value": "3"
-                                }
-                            ]
-                        },
-                        "visible": true
-                    },
-                    {
-                        "name": "partVmCount",
-                        "type": "Microsoft.Common.DropDown",
-                        "label": "Number of participant VMs",
-                        "defaultValue": "2",
-                        "toolTip": "Number of participant VMs in the Blockchain network",
-                        "constraints": {
-                            "allowedValues": [
-                                {
-                                    "label": "0",
-                                    "value": "0"
-                                },
-                                {
-                                    "label": "1",
-                                    "value": "1"
-                                },
-                                {
-                                    "label": "2",
-                                    "value": "2"
-                                },
-                                {
-                                    "label": "3",
-                                    "value": "3"
-                                }
-                            ]
-                        },
-                        "visible": true
-                    },
-                    {
-                        "name": "managedDiskType",
-                        "type": "Microsoft.Common.Section",
-                        "label": "Storage settings",
-                        "elements": [
-                            {
-                                "name": "mngDiskType",
-                                "type": "Microsoft.Common.DropDown",
-                                "label": "Managed storage type",
-                                "toolTip": "Managed Storage Type for managed OS disks",
-                                "defaultValue": "Standard_LRS",
-                                "constraints": {
-                                    "required": true,
-                                    "allowedValues": [
-                                        {
-                                            "label": "Standard_LRS",
-                                            "value": "Standard_LRS"
-                                        },
-                                        {
-                                            "label": "Premium_LRS",
-                                            "value": "Premium_LRS"
-                                        }
-                                    ]
-                                },
-                                "visible": true
-                            }
-                        ],
-                        "visible": true
-                    }
-                ]
-            },
-            {
                 "name": "regCnt",
                 "label": "Region count configure",
                 "bladeTitle": "Select region count",
@@ -267,14 +80,6 @@
                                 {
                                     "label": "3",
                                     "value": "3"
-                                },
-                                {
-                                    "label": "4",
-                                    "value": "4"
-                                },
-                                {
-                                    "label": "5",
-                                    "value": "5"
                                 }
                             ]
                         },
@@ -477,6 +282,275 @@
                     }
                 ]
             },
+            {
+                "name": "vmCount",
+                "bladeTitle": "Choose Number of Block VMs in each region",
+                "label": "Choose Number of Block VMs in each region",
+                "subLabel": {
+                    "preValidation": "Required",
+                    "postValidation": "Done"
+                },
+                "elements": [
+                    {
+                        "name": "signerVmCountReg1",
+                        "type": "Microsoft.Common.DropDown",
+                        "label": "Number of Block Signer VMs in Region 1",
+                        "defaultValue": "1",
+                        "toolTip": "Number of Block Signer VMs in Region 1",
+                        "constraints": {
+                            "allowedValues": [
+                                {
+                                    "label": "0",
+                                    "value": "0"
+                                },
+                                {
+                                    "label": "1",
+                                    "value": "1"
+                                },
+                                {
+                                    "label": "2",
+                                    "value": "2"
+                                },
+                                {
+                                    "label": "3",
+                                    "value": "3"
+                                }
+                            ]
+                        },
+                        "visible": true
+                    },
+                    {
+                        "name": "partVmCountReg1",
+                        "type": "Microsoft.Common.DropDown",
+                        "label": "Number of participant VMs in Region 1",
+                        "defaultValue": "1",
+                        "toolTip": "Number of participant VMs in Region 1",
+                        "constraints": {
+                            "allowedValues": [
+                                {
+                                    "label": "0",
+                                    "value": "0"
+                                },
+                                {
+                                    "label": "1",
+                                    "value": "1"
+                                },
+                                {
+                                    "label": "2",
+                                    "value": "2"
+                                },
+                                {
+                                    "label": "3",
+                                    "value": "3"
+                                }
+                            ]
+                        },
+                        "visible": true
+                    },
+                    {
+                        "name": "signerVmCountReg2",
+                        "type": "Microsoft.Common.DropDown",
+                        "label": "Number of Block Signer VMs in Region 2",
+                        "defaultValue": "0",
+                        "toolTip": "Number of Block Signer VMs in Region 2",
+                        "constraints": {
+                            "allowedValues": [
+                                {
+                                    "label": "0",
+                                    "value": "0"
+                                },
+                                {
+                                    "label": "1",
+                                    "value": "1"
+                                }
+                            ]
+                        },
+                        "visible": "[greaterOrEquals(steps('regCnt').regionCnt, '2')]"
+                    },
+                    {
+                        "name": "partVmCountReg2",
+                        "type": "Microsoft.Common.DropDown",
+                        "label": "Number of participant VMs in Region 2",
+                        "defaultValue": "0",
+                        "toolTip": "Number of participant VMs in Region 2",
+                        "constraints": {
+                            "allowedValues": [
+                                {
+                                    "label": "0",
+                                    "value": "0"
+                                },
+                                {
+                                    "label": "1",
+                                    "value": "1"
+                                }
+                            ]
+                        },
+                        "visible": "[greaterOrEquals(steps('regCnt').regionCnt, '2')]"
+                    },
+                    {
+                        "name": "signerVmCountReg3",
+                        "type": "Microsoft.Common.DropDown",
+                        "label": "Number of Block Signer VMs in Region 3",
+                        "defaultValue": "0",
+                        "toolTip": "Number of Block Signer VMs in Region 3",
+                        "constraints": {
+                            "allowedValues": [
+                                {
+                                    "label": "0",
+                                    "value": "0"
+                                },
+                                {
+                                    "label": "1",
+                                    "value": "1"
+                                }
+                            ]
+                        },
+                        "visible": "[equals(steps('regCnt').regionCnt, '3')]"
+                    },
+                    {
+                        "name": "partVmCountReg3",
+                        "type": "Microsoft.Common.DropDown",
+                        "label": "Number of participant VMs in Region 3",
+                        "defaultValue": "0",
+                        "toolTip": "Number of participant VMs in Region 3",
+                        "constraints": {
+                            "allowedValues": [
+                                {
+                                    "label": "0",
+                                    "value": "0"
+                                },
+                                {
+                                    "label": "1",
+                                    "value": "1"
+                                }
+                            ]
+                        },
+                        "visible": "[equals(steps('regCnt').regionCnt, '3')]"
+                    },
+                    {
+                        "name": "generatorVmSize",
+                        "type": "Microsoft.Compute.SizeSelector",
+                        "label": "Block Generator VM size",
+                        "toolTip": "Block Generator VM size",
+                        "recommendedSizes": [
+                            "Standard_DS1_v2",
+                            "Standard_DS2_v2",
+                            "Standard_DS3_v2"
+                        ],
+                        "constraints": {
+                            "allowedSizes": [
+                                "Standard_DS1",
+                                "Standard_DS1_v2",
+                                "Standard_DS2",
+                                "Standard_DS2_v2",
+                                "Standard_DS3",
+                                "Standard_DS3_v2",
+                                "Standard_DS4",
+                                "Standard_DS4_v2",
+                                "Standard_DS5_v2",
+                                "Standard_DS11",
+                                "Standard_DS11_v2",
+                                "Standard_DS12",
+                                "Standard_DS12_v2",
+                                "Standard_DS13",
+                                "Standard_DS13_v2",
+                                "Standard_DS14",
+                                "Standard_DS14_v2",
+                                "Standard_DS15_v2",
+                                "Standard_F1S",
+                                "Standard_F2S",
+                                "Standard_F4S",
+                                "Standard_F8S",
+                                "Standard_F16S"
+                            ]
+                        },
+                        "osPlatform": "Linux",
+                        "imageReference": {
+                            "publisher": "Canonical",
+                            "offer": "UbuntuServer",
+                            "sku": "16.04-LTS"
+                        },
+                        "visible": true
+                    },
+                    {
+                        "name": "signerVmSize",
+                        "type": "Microsoft.Compute.SizeSelector",
+                        "label": "Block Signer and Participant VM size",
+                        "toolTip": "Block Signer and Participant VM size",
+                        "recommendedSizes": [
+                            "Standard_DS1_v2",
+                            "Standard_DS2_v2",
+                            "Standard_DS3_v2"
+                        ],
+                        "constraints": {
+                            "allowedSizes": [
+                                "Standard_DS1",
+                                "Standard_DS1_v2",
+                                "Standard_DS2",
+                                "Standard_DS2_v2",
+                                "Standard_DS3",
+                                "Standard_DS3_v2",
+                                "Standard_DS4",
+                                "Standard_DS4_v2",
+                                "Standard_DS5_v2",
+                                "Standard_DS11",
+                                "Standard_DS11_v2",
+                                "Standard_DS12",
+                                "Standard_DS12_v2",
+                                "Standard_DS13",
+                                "Standard_DS13_v2",
+                                "Standard_DS14",
+                                "Standard_DS14_v2",
+                                "Standard_DS15_v2",
+                                "Standard_F1S",
+                                "Standard_F2S",
+                                "Standard_F4S",
+                                "Standard_F8S",
+                                "Standard_F16S"
+                            ]
+                        },
+                        "osPlatform": "Linux",
+                        "imageReference": {
+                            "publisher": "Canonical",
+                            "offer": "UbuntuServer",
+                            "sku": "16.04-LTS"
+                        },
+                        "visible": true,
+                        "count": "[steps('vmSize').signerVmCount]"
+                    },
+                    
+                    {
+                        "name": "managedDiskType",
+                        "type": "Microsoft.Common.Section",
+                        "label": "Storage settings",
+                        "elements": [
+                            {
+                                "name": "mngDiskType",
+                                "type": "Microsoft.Common.DropDown",
+                                "label": "Managed storage type",
+                                "toolTip": "Managed Storage Type for managed OS disks",
+                                "defaultValue": "Standard_LRS",
+                                "constraints": {
+                                    "required": true,
+                                    "allowedValues": [
+                                        {
+                                            "label": "Standard_LRS",
+                                            "value": "Standard_LRS"
+                                        },
+                                        {
+                                            "label": "Premium_LRS",
+                                            "value": "Premium_LRS"
+                                        }
+                                    ]
+                                },
+                                "visible": true
+                            }
+                        ],
+                        "visible": true
+                    }
+                ]
+            },
+            
             {
                 "name": "keyVaultSet",
                 "label": "Key Vault Settings",
