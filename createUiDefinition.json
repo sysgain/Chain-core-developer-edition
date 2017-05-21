@@ -222,7 +222,7 @@
                         "toolTip": "Select the third region.",
                         "defaultValue": "East US",
                         "constraints": {
-                            "required": "[greaterOrEquals(steps('regCnt').regionCnt, '3')]",
+                            "required": "[equals(steps('regCnt').regionCnt, '3')]",
                             "allowedValues": [
                                 {
                                     "label": "East US",
@@ -278,7 +278,7 @@
                                 }
                             ]
                         },
-                        "visible": "[greaterOrEquals(steps('regCnt').regionCnt, '3')]"
+                        "visible": "[equals(steps('regCnt').regionCnt, '3')]"
                     }
                 ]
             },
@@ -520,8 +520,8 @@
                             "offer": "UbuntuServer",
                             "sku": "16.04-LTS"
                         },
-                        "visible": true,
-                        "count": "[add(add(steps('vmCount').signerVmCountReg3,steps('vmCount').partVmCountReg3),add(add(steps('vmCount').signerVmCountReg2,steps('vmCount').partVmCountReg2),add(steps('vmCount').signerVmCountReg1,steps('vmCount').partVmCountReg1)))]"
+                        "visible": "[equals(steps('regCnt').regionCnt, '3')]",
+                        "count": "[add(add(int(steps('vmCount').signerVmCountReg3),int(steps('vmCount').partVmCountReg3))),add(add(int(steps('vmCount').signerVmCountReg2),int(steps('vmCount').partVmCountReg2)),add(int(steps('vmCount').signerVmCountReg1),int(steps('vmCount').partVmCountReg1))))]"
                     }
                 ]
             },
