@@ -522,8 +522,18 @@
                         },
                         "visible": true,
                         "count": "[add(add(steps('vmCount').signerVmCountReg3,steps('vmCount').partVmCountReg3),add(add(steps('vmCount').signerVmCountReg2,steps('vmCount').partVmCountReg2),add(steps('vmCount').signerVmCountReg1,steps('vmCount').partVmCountReg1)))]"
-                    },
-                    
+                    }
+                ]
+            },
+            {
+                "name": "storageSettings",
+                "bladeTitle": "Storage configure",
+                "label": "Storage settings",
+                "subLabel": {
+                    "preValidation": "Required",
+                    "postValidation": "Done"
+                },
+                "elements": [
                     {
                         "name": "managedDiskType",
                         "type": "Microsoft.Common.Section",
@@ -552,14 +562,37 @@
                             }
                         ],
                         "visible": true
+                    },
+                    {
+                        "name": "vpnSettings",
+                        "type": "Microsoft.Common.Section",
+                        "label": "VPN settings",
+                        "elements": [
+                            {
+                                "name": "vpnKey",
+                                "type": "Microsoft.Common.PasswordBox",
+                                "label": {
+                                    "password": "VPN Shared Key",
+                                    "confirmPassword": "Confirm VPN Shared Key"
+                                },
+                                "toolTip": "Enter a shared key for vnet to vnet connections from region one to other regions",
+                                "options": {
+                                    "hideConfirmation": false
+                                },
+                                "constraints": {
+                                    "required": "[greaterOrEquals(steps('regCnt').regionCnt, '2')]"
+                                },
+                                "visible": "[greaterOrEquals(steps('regCnt').regionCnt, '2')]"
+                            }
+                        ],
+                        "visible": "[greaterOrEquals(steps('regCnt').regionCnt, '2')]"
                     }
                 ]
             },
-            
             {
                 "name": "keyVaultSet",
-                "label": "Key Vault Settings",
-                "bladeTitle": "Key Vault Configure",
+                "label": "Key Vault settings",
+                "bladeTitle": "Key Vault configure",
                 "subLabel": {
                     "preValidation": "Required",
                     "postValidation": "Done"
@@ -623,7 +656,8 @@
             "objectId": "[steps('keyVaultSet').objId]",
             "servicePrinciple": "[steps('keyVaultSet').srvPri]",
             "secretKey": "[steps('keyVaultSet').secretKey]",
-            "storageAccountType": "[steps('vmCount').managedDiskType.mngDiskType]"
+            "storageAccountType": "[steps('storageSettings').managedDiskType.mngDiskType]",
+            "VPNSharedKey": "[steps('storageSettings').vpnSettings.vpnKey]"
         }
     }
 }
