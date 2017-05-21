@@ -64,7 +64,7 @@
                         "name": "regionCnt",
                         "type": "Microsoft.Common.DropDown",
                         "label": "Number of Regions",
-                        "toolTip": "Select number of regions to deploy Block signer VMs ",
+                        "toolTip": "Select number of regions to deploy Block VMs ",
                         "defaultValue": "3",
                         "constraints": {
                             "required": true,
@@ -284,8 +284,8 @@
             },
             {
                 "name": "vmCount",
-                "bladeTitle": "Choose Number of Block VMs in each region",
-                "label": "Choose Number of Block VMs in each region",
+                "bladeTitle": "VM count configure",
+                "label": "VM count configure",
                 "subLabel": {
                     "preValidation": "Required",
                     "postValidation": "Done"
@@ -298,6 +298,7 @@
                         "defaultValue": "1",
                         "toolTip": "Number of Block Signer VMs in Region 1",
                         "constraints": {
+                            "required": true,
                             "allowedValues": [
                                 {
                                     "label": "0",
@@ -326,6 +327,7 @@
                         "defaultValue": "1",
                         "toolTip": "Number of participant VMs in Region 1",
                         "constraints": {
+                            "required": true,
                             "allowedValues": [
                                 {
                                     "label": "0",
@@ -350,10 +352,11 @@
                     {
                         "name": "signerVmCountReg2",
                         "type": "Microsoft.Common.DropDown",
-                        "label": "Number of Block Signer VMs in Region 2",
+                        "label": "Number of Signer VMs in Region 2",
                         "defaultValue": "0",
-                        "toolTip": "Number of Block Signer VMs in Region 2",
+                        "toolTip": "Number of Signer VMs in Region 2",
                         "constraints": {
+                            "required": "[greaterOrEquals(steps('regCnt').regionCnt, '2')]",
                             "allowedValues": [
                                 {
                                     "label": "0",
@@ -374,6 +377,7 @@
                         "defaultValue": "0",
                         "toolTip": "Number of participant VMs in Region 2",
                         "constraints": {
+                            "required": "[greaterOrEquals(steps('regCnt').regionCnt, '2')]",
                             "allowedValues": [
                                 {
                                     "label": "0",
@@ -390,10 +394,11 @@
                     {
                         "name": "signerVmCountReg3",
                         "type": "Microsoft.Common.DropDown",
-                        "label": "Number of Block Signer VMs in Region 3",
+                        "label": "Number of Signer VMs in Region 3",
                         "defaultValue": "0",
-                        "toolTip": "Number of Block Signer VMs in Region 3",
+                        "toolTip": "Number of Signer VMs in Region 3",
                         "constraints": {
+                            "required": "[equals(steps('regCnt').regionCnt, '3')]",
                             "allowedValues": [
                                 {
                                     "label": "0",
@@ -430,8 +435,8 @@
                     {
                         "name": "generatorVmSize",
                         "type": "Microsoft.Compute.SizeSelector",
-                        "label": "Block Generator VM size",
-                        "toolTip": "Block Generator VM size",
+                        "label": "Generator VM size",
+                        "toolTip": "Generator VM size",
                         "recommendedSizes": [
                             "Standard_DS1_v2",
                             "Standard_DS2_v2",
@@ -475,8 +480,8 @@
                     {
                         "name": "signerVmSize",
                         "type": "Microsoft.Compute.SizeSelector",
-                        "label": "Block Signer and Participant VM size",
-                        "toolTip": "Block Signer and Participant VM size",
+                        "label": "Signer and Participant VM size",
+                        "toolTip": "Signer and Participant VM size",
                         "recommendedSizes": [
                             "Standard_DS1_v2",
                             "Standard_DS2_v2",
@@ -515,8 +520,7 @@
                             "offer": "UbuntuServer",
                             "sku": "16.04-LTS"
                         },
-                        "visible": true,
-                        "count": "[steps('vmSize').signerVmCount]"
+                        "visible": true
                     },
                     
                     {
@@ -605,8 +609,12 @@
             "regionCount": "[steps('regCnt').regionCnt]",
             "generatorVmSize": "[steps('vmSize').generatorVmSize]",
             "signerAndParticipantVmSize": "[steps('vmSize').signerVmSize]",
-            "signerNodeCount": "[steps('vmSize').signerVmCount]",
-            "participantNodeCount": "[steps('vmSize').partVmCount]",
+            "signerNodeCountReg1": "[steps('vmCount').signerVmCountReg1]",
+            "participantNodeCountReg1": "[steps('vmCount').partVmCountReg1]",
+            "signerNodeCountReg2": "[steps('vmCount').signerVmCountReg2]",
+            "participantNodeCountReg2": "[steps('vmCount').partVmCountReg2]",
+            "signerNodeCountReg3": "[steps('vmCount').signerVmCountReg3]",
+            "participantNodeCountReg3": "[steps('vmCount').partVmCountReg3]",
             "adminUsername": "[basics('basics').adminUsername]",
             "adminPassword": "[basics('basics').adminPassword]",
             "authenticationType": "[basics('basics').sshOrPassword.authenticationType]",
