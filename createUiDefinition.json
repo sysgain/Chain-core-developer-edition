@@ -520,7 +520,8 @@
                             "offer": "UbuntuServer",
                             "sku": "16.04-LTS"
                         },
-                        "visible": true
+                        "visible": true,
+                        "count": "[add(add(steps('vmCount').signerVmCountReg3,steps('vmCount').partVmCountReg3),add(add(steps('vmCount').signerVmCountReg2,steps('vmCount').partVmCountReg2),add(steps('vmCount').signerVmCountReg1,steps('vmCount').partVmCountReg1))))]"
                     },
                     
                     {
@@ -607,8 +608,8 @@
             "location_2": "[steps('regCnt').loc2]",
             "location_3": "[steps('regCnt').loc3]",
             "regionCount": "[steps('regCnt').regionCnt]",
-            "generatorVmSize": "[steps('vmSize').generatorVmSize]",
-            "signerAndParticipantVmSize": "[steps('vmSize').signerVmSize]",
+            "generatorVmSize": "[steps('vmCount').generatorVmSize]",
+            "signerAndParticipantVmSize": "[steps('vmCount').signerVmSize]",
             "signerNodeCountReg1": "[steps('vmCount').signerVmCountReg1]",
             "participantNodeCountReg1": "[steps('vmCount').partVmCountReg1]",
             "signerNodeCountReg2": "[steps('vmCount').signerVmCountReg2]",
@@ -622,7 +623,7 @@
             "objectId": "[steps('keyVaultSet').objId]",
             "servicePrinciple": "[steps('keyVaultSet').srvPri]",
             "secretKey": "[steps('keyVaultSet').secretKey]",
-            "storageAccountType": "[steps('vmSize').managedDiskType.mngDiskType]"
+            "storageAccountType": "[steps('vmCount').managedDiskType.mngDiskType]"
         }
     }
 }
