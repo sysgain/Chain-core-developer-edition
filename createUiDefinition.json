@@ -521,7 +521,7 @@
                             "sku": "16.04-LTS"
                         },
                         "visible": true,
-                        "count": "[add(add(steps('vmCount').signerVmCountReg3,steps('vmCount').partVmCountReg3),add(add(steps('vmCount').signerVmCountReg2,steps('vmCount').partVmCountReg2),add(steps('vmCount').signerVmCountReg1,steps('vmCount').partVmCountReg1))))]"
+                        "count": "[add(add(steps('vmCount').signerVmCountReg3,steps('vmCount').partVmCountReg3),add(add(steps('vmCount').signerVmCountReg2,steps('vmCount').partVmCountReg2),add(steps('vmCount').signerVmCountReg1,steps('vmCount').partVmCountReg1)))]"
                     },
                     
                     {
