@@ -294,9 +294,9 @@
                     {
                         "name": "signerVmCountReg1",
                         "type": "Microsoft.Common.DropDown",
-                        "label": "Number of Block Signer VMs in Region 1",
+                        "label": "Number of Signer VMs in Region 1",
                         "defaultValue": "1",
-                        "toolTip": "Number of Block Signer VMs in Region 1",
+                        "toolTip": "Number of Signer VMs in Region 1",
                         "constraints": {
                             "required": true,
                             "allowedValues": [
