@@ -28,8 +28,8 @@ echo "=================Extracting generatornetworktoken and blockchainid from Az
 generatornetworktoken=`az keyvault secret show --name networkToken --vault-name $keyvaultname | grep "value" | cut -d "\"" -f4`
 blockchainid=`az keyvault secret show --name blockchainid --vault-name $keyvaultname | grep "value" | cut -d "\"" -f4`
 # run chaincore docker image
-docker run -d -p 1999:1999 chaincore/developer:latest
-sleep 30
+docker run -d -p 1999:1999 chaincore/developer:ivy-latest
+sleep 60
 echo "===========================================Extracting container Id=============================================="
 containerId=`docker ps | cut -d " " -f1 | sed 1d`
 #signer client access token / public key
