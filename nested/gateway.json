@@ -1,0 +1,55 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "vpnGatewaySettings": {
+            "type": "object"
+        },
+        "vnetSettings": {
+            "type": "object"
+        },
+        "location": {
+            "type": "string"
+        }
+    },
+    "variables": {
+        "gatewayName": "[concat(parameters('vpnGatewaySettings').gatewayName,'-',parameters('location'))]",
+        "apiVersion": "[parameters('vpnGatewaySettings').apiVersion]",
+        "location": "[parameters('location')]",
+        "virtualNetworksName": "[concat(parameters('vnetSettings').virtualNetworksName,'-',parameters('location'))]",
+        "gatewayPipName": "[concat(parameters('vpnGatewaySettings').gatewayPipName,'-',parameters('location'))]",
+        "gatewayIpConfig": "[concat('gatewayIpConfig','-',parameters('location'))]",
+        "vpnType": "[parameters('vpnGatewaySettings').vpnType]",
+        "sku": "[parameters('vpnGatewaySettings').sku]"
+    },
+    "resources": [
+        {
+            "name": "[variables('gatewayName')]",
+            "type": "Microsoft.Network/virtualNetworkGateways",
+            "apiVersion": "[variables('apiVersion')]",
+            "location": "[variables('location')]",
+            "properties": {
+                "gatewayType": "Vpn",
+                "vpnType": "[variables('vpnType')]",
+                "ipConfigurations": [
+                    {
+                        "properties": {
+                            "privateIPAllocationMethod": "Dynamic",
+                            "subnet": {
+                                "id": "[concat(resourceId('Microsoft.Network/virtualNetworks', variables('virtualNetworksName')), '/subnets/GatewaySubnet')]"
+                            },
+                            "publicIPAddress": {
+                                "id": "[resourceId('Microsoft.Network/publicIPAddresses', variables('gatewayPipName'))]"
+                            }
+                        },
+                        "name": "[variables('gatewayIpConfig')]"
+                    }
+                ],
+                "sku": {
+                    "name": "[variables('sku')]",
+                    "tier": "[variables('sku')]"
+                }
+            }
+        }
+    ]
+}

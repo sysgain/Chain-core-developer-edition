@@ -1,0 +1,32 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "availSetSettings": {
+            "type": "object"
+        },
+        "location": {
+            "type": "string"
+        }
+    },
+    "variables": {
+        "availabilitySetsName": "[concat(parameters('availSetSettings').availabilitySetsName,'-',parameters('location'))]",
+        "apiVersion": "[parameters('availSetSettings').apiVersion]"
+    },
+    "resources": [
+        {
+            "type": "Microsoft.Compute/availabilitySets",
+            "sku": {
+                "name": "Aligned"
+            },
+            "name": "[variables('availabilitySetsName')]",
+            "apiVersion": "[variables('apiVersion')]",
+            "location": "[parameters('location')]",
+            "tags": {},
+            "properties": {
+                "platformUpdateDomainCount": 5,
+                "platformFaultDomainCount": 2
+            }
+        }
+    ]
+}

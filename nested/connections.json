@@ -1,0 +1,61 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "connectionSettings": {
+            "type": "object"
+        },
+        "location_1": {
+            "type": "string"
+        },
+        "location_2": {
+            "type": "string"
+        }
+    },
+    "variables": {
+        "conName1": "[concat(parameters('location_1'),'-to-',parameters('location_2'))]",
+        "conName2": "[concat(parameters('location_2'),'-to-',parameters('location_1'))]",
+        "apiVersion": "[parameters('connectionSettings').apiVersion]",
+        "location_1": "[parameters('location_1')]",
+        "location_2": "[parameters('location_2')]",
+        "VPNSharedKey": "[parameters('connectionSettings').VPNSharedKey]",
+        "gatewayNameReg1": "[concat(parameters('connectionSettings').gatewayNameReg,'-',parameters('location_1'))]",
+        "gatewayNameReg2": "[concat(parameters('connectionSettings').gatewayNameReg,'-',parameters('location_2'))]"
+    },
+    "resources": [
+        {
+            "name": "[variables('conName1')]",
+            "type": "Microsoft.Network/connections",
+            "apiVersion": "[variables('apiVersion')]",
+            "location": "[variables('location_1')]",
+            "properties": {
+                "publicIPAllocationMethod": "Dynamic",
+                "virtualNetworkGateway1": {
+                    "id": "[resourceId('Microsoft.Network/virtualNetworkGateways', variables('gatewayNameReg1'))]"
+                },
+                "virtualNetworkGateway2": {
+                    "id": "[resourceId('Microsoft.Network/virtualNetworkGateways', variables('gatewayNameReg2'))]"
+                },
+                "connectionType": "Vnet2Vnet",
+                "sharedKey": "[variables('VPNSharedKey')]"
+            }
+        },
+        {
+            "name": "[variables('conName2')]",
+            "type": "Microsoft.Network/connections",
+            "apiVersion": "2016-03-30",
+            "location": "[variables('location_2')]",
+            "properties": {
+                "publicIPAllocationMethod": "Dynamic",
+                "virtualNetworkGateway1": {
+                    "id": "[resourceId('Microsoft.Network/virtualNetworkGateways', variables('gatewayNameReg2'))]"
+                },
+                "virtualNetworkGateway2": {
+                    "id": "[resourceId('Microsoft.Network/virtualNetworkGateways', variables('gatewayNameReg1'))]"
+                },
+                "connectionType": "Vnet2Vnet",
+                "sharedKey": "[variables('VPNSharedKey')]"
+            }
+        }
+    ]
+}

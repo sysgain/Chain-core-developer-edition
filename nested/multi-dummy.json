@@ -1,0 +1,59 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "prefix": {
+            "type": "string"
+        },
+        "location": {
+            "type": "array"
+        },
+        "nestedURls": {
+            "type": "object"
+        },
+        "apiVersion": {
+            "type": "object"
+        },
+        "vnetSettings": {
+            "type": "object"
+        },
+        "signerSettings": {
+            "type": "object"
+        },
+        "participantSettings": {
+            "type": "object"
+        },
+        "nsgSettings": {
+            "type": "object"
+        },
+        "generatorIp": {
+            "type": "string"
+        },
+        "signerNodeCountReg2": {
+            "type": "int"
+        },
+        "partNodeCountReg2": {
+            "type": "int"
+        },
+        "signerNodeCountReg3": {
+            "type": "int"
+        },
+        "partNodeCountReg3": {
+            "type": "int"
+        },
+        "gatewayPipSettings": {
+            "type": "object"
+        },
+        "vpnGatewaySettings": {
+            "type": "object"
+        },
+        "regionCount": {
+            "type": "int"
+        },
+        "connectionSettings": {
+            "type": "object"
+        }
+    },
+    "variables": {},
+    "resources": []
+}

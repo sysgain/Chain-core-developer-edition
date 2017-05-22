@@ -1,0 +1,105 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "genVMsettings": {
+            "type": "object"
+        },
+        "location": {
+            "type": "string"
+        }
+    },
+    "variables": {
+        "suffix": "[parameters('genVMsettings').suffix]",
+        "location": "[parameters('location')]",
+        "generatorNicName": "[concat(parameters('genVMsettings').generatorNicName,'-',parameters('location'))]",
+        "generatorVmName": "[concat(parameters('genVMsettings').generatorVmName,'-',parameters('location'))]",
+        "adminPassword": "[parameters('genVMsettings').adminPassword]",
+        "adminUsername": "[parameters('genVMsettings').adminUsername]",
+        "generatorVmSize": "[parameters('genVMsettings').generatorVmSize]",
+        "apiVersion": "[parameters('genVMsettings').apiVersion]",
+        "storageAccountType": "[parameters('genVMsettings').storageAccountType]",
+        "publisher": "[parameters('genVMsettings').publisher]",
+        "offer": "[parameters('genVMsettings').offer]",
+        "sku": "[parameters('genVMsettings').sku]",
+        "version": "[parameters('genVMsettings').version]",
+        "diskSizeGB": "[parameters('genVMsettings').diskSizeGB]",
+        "passwordOrSshKey": "[parameters('genVMsettings').passwordOrSshKey]",
+        "sshPublicKey": "[parameters('genVMsettings').sshPublicKey]",
+        "dockerApiVersion": "[parameters('genVMsettings').dockerApiVersion]"
+    },
+    "resources": [
+        {
+            "type": "Microsoft.Compute/virtualMachines",
+            "name": "[variables('generatorVmName')]",
+            "apiVersion": "[variables('apiVersion')]",
+            "location": "[variables('location')]",
+            "properties": {
+                "hardwareProfile": {
+                    "vmSize": "[variables('generatorVmSize')]"
+                },
+                "storageProfile": {
+                    "imageReference": {
+                        "publisher": "[variables('publisher')]",
+                        "offer": "[variables('offer')]",
+                        "sku": "[variables('sku')]",
+                        "version": "[variables('version')]"
+                    },
+                    "osDisk": {
+                        "osType": "Linux",
+                        "name": "[concat(variables('generatorVmName'),'-',variables('suffix'),'-osDisk')]",
+                        "createOption": "FromImage",
+                        "caching": "ReadWrite",
+                        "managedDisk": {
+                            "storageAccountType": "[variables('storageAccountType')]"
+                        },
+                        "diskSizeGB": "[variables('diskSizeGB')]"
+                    },
+                    "dataDisks": []
+                },
+                "osProfile": {
+                    "computerName": "[variables('generatorVmName')]",
+                    "adminUsername": "[variables('adminUsername')]",
+                    "linuxConfiguration": {
+                        "disablePasswordAuthentication": true,
+                        "ssh": {
+                            "publicKeys": [
+                                {
+                                    "path": "[concat('/home/',variables('adminUserName'),'/.ssh/authorized_keys')]",
+                                    "keyData": "[variables('sshPublicKey')]"
+                                }
+                            ]
+                        }
+                    },
+                    "secrets": []
+                },
+                "networkProfile": {
+                    "networkInterfaces": [
+                        {
+                            "id": "[resourceId('Microsoft.Network/networkInterfaces', variables('generatorNicName'))]"
+                        }
+                    ]
+                }
+            },
+            "resources": [
+                {
+                    "type": "extensions",
+                    "name": "DockerExtension",
+                    "apiVersion": "[variables('dockerApiVersion')]",
+                    "location": "[parameters('location')]",
+                    "dependsOn": [
+                        "[concat('Microsoft.Compute/virtualMachines/', variables('generatorVmName'))]"
+                    ],
+                    "properties": {
+                        "publisher": "Microsoft.Azure.Extensions",
+                        "type": "DockerExtension",
+                        "typeHandlerVersion": "1.1",
+                        "autoUpgradeMinorVersion": true,
+                        "settings": {},
+                        "protectedSettings": {}
+                    }
+                }
+            ]
+        }
+    ]
+}

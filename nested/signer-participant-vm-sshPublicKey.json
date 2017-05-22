@@ -1,0 +1,116 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "vmSettings": {
+            "type": "object"
+        },
+        "location": {
+            "type": "string"
+        },
+        "nodeCount": {
+            "type": "int"
+        }
+    },
+    "variables": {
+        "suffix": "[concat(parameters('vmSettings').suffix)]",
+        "apiVersion": "[concat(parameters('vmSettings').apiVersion)]",
+        "availabilitySetsName": "[concat(parameters('vmSettings').availabilitySetsName,'-',parameters('location'))]",
+        "nicName": "[concat(parameters('vmSettings').nicName,'-',parameters('location'))]",
+        "vmName": "[concat(parameters('vmSettings').vmName,'-',parameters('location'))]",
+        "nodeCount": "[parameters('nodeCount')]",
+        "adminUsername": "[parameters('vmSettings').adminUsername]",
+        "adminPassword": "[parameters('vmSettings').adminPassword]",
+        "vmSize": "[parameters('vmSettings').vmSize]",
+        "storageAccountType": "[parameters('vmSettings').storageAccountType]",
+        "publisher": "[parameters('vmSettings').publisher]",
+        "offer": "[parameters('vmSettings').offer]",
+        "sku": "[parameters('vmSettings').sku]",
+        "version": "[parameters('vmSettings').version]",
+        "diskSizeGB": "[parameters('vmSettings').diskSizeGB]",
+        "dockerApiVersion": "[parameters('vmSettings').dockerApiVersion]",
+        "passwordOrSshKey": "[parameters('vmSettings').passwordOrSshKey]",
+        "sshPublicKey": "[parameters('vmSettings').sshPublicKey]"
+    },
+    "resources": [
+        {
+            "type": "Microsoft.Compute/virtualMachines",
+            "name": "[concat(variables('vmName'),'-',copyIndex(1))]",
+            "apiVersion": "[variables('apiVersion')]",
+            "location": "[parameters('location')]",
+            "copy": {
+                "name": "signerLoop",
+                "count": "[variables('nodeCount')]"
+            },
+            "properties": {
+                "availabilitySet": {
+                    "id": "[resourceId('Microsoft.Compute/availabilitySets',variables('availabilitySetsName'))]"
+                },
+                "hardwareProfile": {
+                    "vmSize": "[variables('vmSize')]"
+                },
+                "storageProfile": {
+                    "imageReference": {
+                        "publisher": "[variables('publisher')]",
+                        "offer": "[variables('offer')]",
+                        "sku": "[variables('sku')]",
+                        "version": "[variables('version')]"
+                    },
+                    "osDisk": {
+                        "osType": "Linux",
+                        "name": "[concat(variables('vmName'),'-',copyIndex(1),'-',variables('suffix'),'-osDisk')]",
+                        "createOption": "FromImage",
+                        "caching": "ReadWrite",
+                        "managedDisk": {
+                            "storageAccountType": "[variables('storageAccountType')]"
+                        },
+                        "diskSizeGB": "[variables('diskSizeGB')]"
+                    },
+                    "dataDisks": []
+                },
+                "osProfile": {
+                    "computerName": "[concat(variables('vmName'),'-',copyIndex(1))]",
+                    "adminUsername": "[variables('adminUsername')]",
+                    "linuxConfiguration": {
+                        "disablePasswordAuthentication": true,
+                        "ssh": {
+                            "publicKeys": [
+                                {
+                                    "path": "[concat('/home/',variables('adminUserName'),'/.ssh/authorized_keys')]",
+                                    "keyData": "[variables('sshPublicKey')]"
+                                }
+                            ]
+                        }
+                    },
+                    "secrets": []
+                },
+                "networkProfile": {
+                    "networkInterfaces": [
+                        {
+                            "id": "[resourceId('Microsoft.Network/networkInterfaces', concat(variables('nicName'),'-',copyIndex(1)))]"
+                        }
+                    ]
+                }
+            },
+            "resources": [
+                {
+                    "type": "extensions",
+                    "name": "DockerExtension",
+                    "apiVersion": "[variables('dockerApiVersion')]",
+                    "location": "[parameters('location')]",
+                    "dependsOn": [
+                        "[concat('Microsoft.Compute/virtualMachines/', variables('vmName'),'-',copyIndex(1))]"
+                    ],
+                    "properties": {
+                        "publisher": "Microsoft.Azure.Extensions",
+                        "type": "DockerExtension",
+                        "typeHandlerVersion": "1.1",
+                        "autoUpgradeMinorVersion": true,
+                        "settings": {},
+                        "protectedSettings": {}
+                    }
+                }
+            ]
+        }
+    ]
+}

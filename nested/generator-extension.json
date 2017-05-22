@@ -1,0 +1,49 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "genExtensionSettings": {
+            "type": "object"
+        },
+        "location": {
+            "type": "string"
+        }
+    },
+    "variables": {
+        "apiVersion": "[parameters('genExtensionSettings').apiVersion]",
+        "generatorVmName": "[concat(parameters('genExtensionSettings').generatorVmName,'-',parameters('location'))]",
+        "generatorScriptFileName": "[parameters('genExtensionSettings').generatorScriptFileName]",
+        "logScriptUrl": "[parameters('genExtensionSettings').logScriptUrl]",
+        "adminUsername": "[parameters('genExtensionSettings').adminUsername]",
+        "logScriptFileName": "[parameters('genExtensionSettings').logScriptFileName]",
+        "baseUrl": "[parameters('genExtensionSettings').baseUrl]",
+        "networkTokenName": "[parameters('genExtensionSettings').networkTokenName]",
+        "servicePrincipal": "[parameters('genExtensionSettings').servicePrincipal]",
+        "secretKey": "[parameters('genExtensionSettings').secretKey]",
+        "tenantId": "[parameters('genExtensionSettings').tenantId]",
+        "subscriptionId": "[parameters('genExtensionSettings').subscriptionId]",
+        "keyVaultName": "[parameters('genExtensionSettings').keyVaultName]"
+    },
+    "resources": [
+        {
+            "type": "Microsoft.Compute/virtualMachines/extensions",
+            "name": "[concat(variables('generatorVmName'), '/generatorConfig')]",
+            "location": "[parameters('location')]",
+            "apiVersion": "[variables('apiVersion')]",
+            "properties": {
+                "publisher": "Microsoft.Azure.Extensions",
+                "type": "CustomScript",
+                "typeHandlerVersion": "2.0",
+                "autoUpgradeMinorVersion": true,
+                "settings": {
+                    "fileUris": [
+                        "[variables('logScriptUrl')]"
+                    ]
+                },
+                "protectedSettings": {
+                    "commandToExecute": "[concat('sh ', variables('logScriptFileName'), ' \"', variables('adminUsername'), '\" \"' , variables('baseUrl'), '\" \"' , variables('generatorScriptFileName'), '\" \"' , variables('networkTokenName'), '\" \"' , variables('servicePrincipal'), '\" \"' , variables('secretKey'), '\" \"' , variables('tenantId'), '\" \"' , variables('subscriptionId'), '\" \"' , variables('keyVaultName'),'\"')]"
+                }
+            }
+        }
+    ]
+}

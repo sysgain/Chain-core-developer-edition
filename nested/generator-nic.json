@@ -1,0 +1,53 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "genNicSettings": {
+            "type": "object"
+        },
+        "location": {
+            "type": "string"
+        }
+    },
+    "variables": {
+        "location": "[parameters('location')]",
+        "generatorNicName": "[concat(parameters('genNicSettings').generatorNicName,'-',parameters('location'))]",
+        "virtualNetworksName": "[concat(parameters('genNicSettings').virtualNetworksName,'-',parameters('location'))]",
+        "generatorSubnetName": "[parameters('genNicSettings').generatorSubnetName]",
+        "generatorNsgName": "[concat(parameters('genNicSettings').generatorNsgName,'-',parameters('location'))]",
+        "privateIPAllocationMethod": "[parameters('genNicSettings').privateIPAllocationMethod]",
+        "apiVersion": "[parameters('genNicSettings').apiVersion]",
+        "generatorIpName": "[concat(parameters('genNicSettings').generatorIpName,'-',parameters('location'))]"
+    },
+    "resources": [
+        {
+            "type": "Microsoft.Network/networkInterfaces",
+            "name": "[variables('generatorNicName')]",
+            "apiVersion": "[variables('apiVersion')]",
+            "location": "[variables('location')]",
+            "properties": {
+                "ipConfigurations": [
+                    {
+                        "name": "ipconfig1",
+                        "properties": {
+                            "privateIPAllocationMethod": "[variables('privateIPAllocationMethod')]",
+                            "subnet": {
+                                "id": "[concat(resourceId('Microsoft.Network/virtualNetworks', variables('virtualNetworksName')), '/subnets/', variables('generatorSubnetName'))]"
+                            },
+                            "publicIPAddress": {
+                                "id": "[resourceId('Microsoft.Network/publicIPAddresses', variables('generatorIpName'))]"
+                            }
+                        }
+                    }
+                ],
+                "dnsSettings": {
+                    "dnsServers": []
+                },
+                "enableIPForwarding": false,
+                "networkSecurityGroup": {
+                    "id": "[resourceId('Microsoft.Network/networkSecurityGroups', variables('generatorNsgName'))]"
+                }
+            }
+        }
+    ]
+}

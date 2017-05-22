@@ -1,0 +1,162 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "prefix": {
+            "type": "string"
+        },
+        "location": {
+            "type": "string"
+        },
+        "nestedURls": {
+            "type": "object"
+        },
+        "apiVersion": {
+            "type": "object"
+        },
+        "signerSettings": {
+            "type": "object"
+        },
+        "generatorIp": {
+            "type": "string"
+        },
+        "nodeCount": {
+            "type": "int"
+        }
+    },
+    "variables": {
+        "prefix": "[parameters('prefix')]",
+        "signerVmDep": "[concat(variables('prefix'),'-signerVmSetup-',parameters('location'))]",
+        "signerNicDep": "[concat(variables('prefix'),'-signerNicSetup-',parameters('location'))]",
+        "signerPipDep": "[concat(variables('prefix'),'-signerPipSetup-',parameters('location'))]",
+        "signerExtDep": "[concat(variables('prefix'),'-signerExtensionSetup-',parameters('location'))]",
+        "signerAvailDep": "[concat(variables('prefix'),'-signerAvailSetup-',parameters('location'))]"
+    },
+    "resources": [
+        {
+            "name": "[variables('signerAvailDep')]",
+            "apiVersion": "[parameters('apiVersion').deploymentApiVersion]",
+            "type": "Microsoft.Resources/deployments",
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "[parameters('nestedURls').avaialabilitySetSetupURL]",
+                    "contentVersion": "1.0.0.0"
+                },
+                "parameters": {
+                    "availSetSettings": {
+                        "value": "[parameters('signerSettings').signerAvailSetSettings]"
+                    },
+                    "location": {
+                        "value": "[parameters('location')]"
+                    }
+                }
+            }
+        },
+        {
+            "name": "[variables('signerPipDep')]",
+            "apiVersion": "[parameters('apiVersion').deploymentApiVersion]",
+            "type": "Microsoft.Resources/deployments",
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "[parameters('nestedURls').pipSetupURL]",
+                    "contentVersion": "1.0.0.0"
+                },
+                "parameters": {
+                    "pipSettings": {
+                        "value": "[parameters('signerSettings').signerPipSettings]"
+                    },
+                    "location": {
+                        "value": "[parameters('location')]"
+                    },
+                    "nodeCount": {
+                        "value": "[parameters('nodeCount')]"
+                    }
+                }
+            }
+        },
+        {
+            "name": "[variables('signerNicDep')]",
+            "apiVersion": "[parameters('apiVersion').deploymentApiVersion]",
+            "type": "Microsoft.Resources/deployments",
+            "dependsOn": [
+                "[variables('signerPipDep')]"
+            ],
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "[parameters('nestedURls').nicSetupURL]",
+                    "contentVersion": "1.0.0.0"
+                },
+                "parameters": {
+                    "nicSettings": {
+                        "value": "[parameters('signerSettings').signerNicSettings]"
+                    },
+                    "location": {
+                        "value": "[parameters('location')]"
+                    },
+                    "nodeCount": {
+                        "value": "[parameters('nodeCount')]"
+                    }
+                }
+            }
+        },
+        {
+            "name": "[variables('signerVmDep')]",
+            "apiVersion": "[parameters('apiVersion').deploymentApiVersion]",
+            "type": "Microsoft.Resources/deployments",
+            "dependsOn": [
+                "[variables('signerNicDep')]",
+                "[variables('signerAvailDep')]"
+            ],
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "[parameters('nestedURls').vmsSetupURL]",
+                    "contentVersion": "1.0.0.0"
+                },
+                "parameters": {
+                    "vmSettings": {
+                        "value": "[parameters('signerSettings').signerVMsettings]"
+                    },
+                    "location": {
+                        "value": "[parameters('location')]"
+                    },
+                    "nodeCount": {
+                        "value": "[parameters('nodeCount')]"
+                    }
+                }
+            }
+        },
+        {
+            "name": "[variables('signerExtDep')]",
+            "apiVersion": "[parameters('apiVersion').deploymentApiVersion]",
+            "type": "Microsoft.Resources/deployments",
+            "dependsOn": [
+                "[variables('signerVmDep')]"
+            ],
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "[parameters('nestedURls').extensionSetupURL]",
+                    "contentVersion": "1.0.0.0"
+                },
+                "parameters": {
+                    "extensionSettings": {
+                        "value": "[parameters('signerSettings').signerExtensionSettings]"
+                    },
+                    "location": {
+                        "value": "[parameters('location')]"
+                    },
+                    "generatorIp": {
+                        "value": "[parameters('generatorIp')]"
+                    },
+                    "nodeCount": {
+                        "value": "[parameters('nodeCount')]"
+                    }
+                }
+            }
+        }
+    ]
+}

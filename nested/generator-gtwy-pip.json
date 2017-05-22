@@ -1,0 +1,41 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "pipSettings": {
+            "type": "object"
+        },
+        "location": {
+            "type": "string"
+        }
+    },
+    "variables": {
+        "pipName": "[concat(parameters('pipSettings').pipName,'-',parameters('location'))]",
+        "pipDns": "[concat(parameters('pipSettings').pipDns,'-',parameters('location'))]",
+        "location": "[parameters('location')]",
+        "apiVersion": "[parameters('pipSettings').apiVersion]",
+        "publicIPAllocationMethod": "[parameters('pipSettings').publicIPAllocationMethod]"
+    },
+    "resources": [
+        {
+            "type": "Microsoft.Network/publicIPAddresses",
+            "name": "[variables('pipName')]",
+            "apiVersion": "[variables('apiVersion')]",
+            "location": "[variables('location')]",
+            "properties": {
+                "publicIPAllocationMethod": "[variables('publicIPAllocationMethod')]",
+                "idleTimeoutInMinutes": 4,
+                "dnsSettings": {
+                    "domainNameLabel": "[variables('pipDns')]"
+                }
+            },
+            "dependsOn": []
+        }
+    ],
+    "outputs": {
+        "dnsAddress": {
+            "type": "string",
+            "value": "[reference(resourceId('Microsoft.Network/publicIPAddresses', variables('pipName'))).dnsSettings.fqdn]"
+        }
+    }
+}

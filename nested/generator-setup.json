@@ -1,0 +1,125 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "prefix": {
+            "type": "string"
+        },
+        "location": {
+            "type": "string"
+        },
+        "nestedURls": {
+            "type": "object"
+        },
+        "apiVersion": {
+            "type": "object"
+        },
+        "generatorSettings": {
+            "type": "object"
+        }
+    },
+    "variables": {
+        "prefix": "[parameters('prefix')]",
+        "generatorVmDep": "[concat(variables('prefix'),'-generatorVMSetup-',parameters('location'))]",
+        "generatorNicDep": "[concat(variables('prefix'),'-generatorNICSetup-',parameters('location'))]",
+        "generatorExtDep": "[concat(variables('prefix'),'-genExtensionSetup-',parameters('location'))]",
+        "generatorPipDep": "[concat(parameters('prefix'),'-genPipSetup-',parameters('location'))]"
+    },
+    "resources": [
+        {
+            "name": "[variables('generatorPipDep')]",
+            "apiVersion": "[parameters('apiVersion').deploymentApiVersion]",
+            "type": "Microsoft.Resources/deployments",
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "[parameters('nestedURls').generatorPipSetupURL]",
+                    "contentVersion": "1.0.0.0"
+                },
+                "parameters": {
+                    "pipSettings": {
+                        "value": "[parameters('generatorSettings').genPipSettings]"
+                    },
+                    "location": {
+                        "value": "[parameters('location')]"
+                    }
+                }
+            }
+        },
+        {
+            "name": "[variables('generatorNicDep')]",
+            "apiVersion": "[parameters('apiVersion').deploymentApiVersion]",
+            "type": "Microsoft.Resources/deployments",
+            "dependsOn": [
+                "[variables('generatorPipDep')]"
+            ],
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "[parameters('nestedURls').generatorNicSetupURL]",
+                    "contentVersion": "1.0.0.0"
+                },
+                "parameters": {
+                    "genNicSettings": {
+                        "value": "[parameters('generatorSettings').genNicSettings]"
+                    },
+                    "location": {
+                        "value": "[parameters('location')]"
+                    }
+                }
+            }
+        },
+        {
+            "name": "[variables('generatorVmDep')]",
+            "apiVersion": "[parameters('apiVersion').deploymentApiVersion]",
+            "type": "Microsoft.Resources/deployments",
+            "dependsOn": [
+                "[variables('generatorNicDep')]"
+            ],
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "[parameters('nestedURls').generatorVmSetupURL]",
+                    "contentVersion": "1.0.0.0"
+                },
+                "parameters": {
+                    "genVMsettings": {
+                        "value": "[parameters('generatorSettings').genVMsettings]"
+                    },
+                    "location": {
+                        "value": "[parameters('location')]"
+                    }
+                }
+            }
+        },
+        {
+            "name": "[variables('generatorExtDep')]",
+            "apiVersion": "[parameters('apiVersion').deploymentApiVersion]",
+            "type": "Microsoft.Resources/deployments",
+            "dependsOn": [
+                "[variables('generatorVmDep')]"
+            ],
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "[parameters('nestedURls').generatorExtensionSetupURL]",
+                    "contentVersion": "1.0.0.0"
+                },
+                "parameters": {
+                    "genExtensionSettings": {
+                        "value": "[parameters('generatorSettings').genExtensionSettings]"
+                    },
+                    "location": {
+                        "value": "[parameters('location')]"
+                    }
+                }
+            }
+        }
+    ],
+    "outputs": {
+        "generatorIp": {
+            "type": "string",
+            "value": "[reference(variables('generatorPipDep')).outputs.dnsAddress.value]"
+        }
+    }
+}
