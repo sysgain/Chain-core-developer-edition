@@ -158,7 +158,10 @@
             }
         },
         "sshPublicKey": {
-            "type": "securestring"
+            "type": "securestring",
+            "metadata": {
+                "description": "SSH public key for VM login."
+            }
         },
         "adminPassword": {
             "type": "securestring",
