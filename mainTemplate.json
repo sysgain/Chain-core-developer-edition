@@ -152,18 +152,16 @@
         },
         "adminUsername": {
             "type": "string",
-            "defaultValue": "ashuser",
+            "defaultValue": "blockuser",
             "metadata": {
                 "description": "Username for VM login"
             }
         },
         "sshPublicKey": {
-            "type": "securestring",
-            "defaultValue": "ssh-rsa AAAAB3NzaC1yc2EAAAABJQAAAQEArluesFaGpznWsG6OvVoksPQbWTL+ghXGyGn/TH74aI3CWc6zBKeJgctw8olPD6Gend/4UyQs+4SlCVNrnIArvLOgr/OvWzcQluaYENttln0i8Y1EkTfB+uBKyXN4vFlSSdPNtHqn15N8Ug9oqGk83h5+yxEVUmb5VSDrBKPMsz6ZhhVzW786WF167AB6T4htFU4oNzGnlpe7CzuhYlaE682TudD4eJXGbIfifheiV3pD7gxbAscDi7bu2kZt2o+MAXRdJ+N671qD9D6/0MW7uZl86aU/L+RSGz7A9bgtY8M3xiIdiYJ2QHbPXqocDclLoNlFOzuYbvWt+Pl9Az6vEw== rsa-key-20170518"
+            "type": "securestring"
         },
         "adminPassword": {
             "type": "securestring",
-            "defaultValue": "Ashpassword123",
             "metadata": {
                 "description": "Password VM login"
             }
@@ -188,7 +186,6 @@
         },
         "VPNSharedKey": {
             "type": "securestring",
-            "defaultValue": "Ashpassword123",
             "metadata": {
                 "description": "VPN shared key is used by VPN's. It could be any passphrase"
             }
@@ -202,7 +199,7 @@
         },
         "artifactsBaseUrl": {
             "type": "string",
-            "defaultValue": "https://raw.githubusercontent.com/sysgain/Chain-core-developer-edition/dev2",
+            "defaultValue": "https://aztdrepo.blob.core.windows.net/chaincore-developer",
             "metadata": {
                 "artifactsBaseUrl": "Base URL of the Publisher Template gallery package"
             }
