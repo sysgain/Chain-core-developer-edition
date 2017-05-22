@@ -27,6 +27,7 @@ az account set -s $subscriptionid
 echo "=================Extracting generatornetworktoken and blockchainid from Azure Key Vault========================="
 generatornetworktoken=`az keyvault secret show --name networkToken --vault-name $keyvaultname | grep "value" | cut -d "\"" -f4`
 blockchainid=`az keyvault secret show --name blockchainid --vault-name $keyvaultname | grep "value" | cut -d "\"" -f4`
+docker pull chaincore/developer:ivy-latest
 # run chaincore docker image
 docker run -d -p 1999:1999 chaincore/developer:ivy-latest
 sleep 60
