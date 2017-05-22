@@ -1,0 +1,72 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "regionCount": {
+            "value": "3"
+        },
+        "location_1": {
+            "value": "westus"
+        },
+        "location_2": {
+            "value": "centralus"
+        },
+        "location_3": {
+            "value": "eastus"
+        },
+        "generatorVmSize": {
+            "value": "Standard_DS1_v2"
+        },
+        "signerAndParticipantVmSize": {
+            "value": "Standard_DS1_v2"
+        },
+        "signerNodeCountReg1": {
+            "value": "1"
+        },
+        "participantNodeCountReg1": {
+            "value": "1"
+        },
+        "signerNodeCountReg2": {
+            "value": "0"
+        },
+        "participantNodeCountReg2": {
+            "value": "0"
+        },
+        "signerNodeCountReg3": {
+            "value": "0"
+        },
+        "participantNodeCountReg3": {
+            "value": "0"
+        },
+        "authenticationType": {
+            "value": "password"
+        },
+        "sshPublicKey": {
+            "value": "GEN-SSHKEY"
+        },
+        "adminUsername": {
+            "value": "GEN-USER"
+        },
+        "adminPassword": {
+            "value": "GEN-PASSWORD"
+        },
+        "objectId": {
+            "value": "123-43-55"
+        },
+        "servicePrinciple": {
+            "value": "service principal"
+        },
+        "secretKey": {
+            "value": "secretkey"
+        },
+        "VPNSharedKey": {
+            "value": "GEN-VPNKEY"
+        },
+        "storageAccountType": {
+            "value": "Standard_LRS"
+        },
+        "artifactsBaseUrl": {
+            "value": "https://raw.githubusercontent.com/sysgain/Chain-core-developer-edition/dev2"
+        }
+    }
+}
