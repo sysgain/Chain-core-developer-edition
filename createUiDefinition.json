@@ -302,19 +302,19 @@
                             "allowedValues": [
                                 {
                                     "label": "0",
-                                    "value": 0
+                                    "value": "0"
                                 },
                                 {
                                     "label": "1",
-                                    "value": 1
+                                    "value": "1"
                                 },
                                 {
                                     "label": "2",
-                                    "value": 2
+                                    "value": "2"
                                 },
                                 {
                                     "label": "3",
-                                    "value": 3
+                                    "value": "3"
                                 }
                             ]
                         },
@@ -331,19 +331,19 @@
                             "allowedValues": [
                                 {
                                     "label": "0",
-                                    "value": 0
+                                    "value": "0"
                                 },
                                 {
                                     "label": "1",
-                                    "value": 1
+                                    "value": "1"
                                 },
                                 {
                                     "label": "2",
-                                    "value": 2
+                                    "value": "2"
                                 },
                                 {
                                     "label": "3",
-                                    "value": 3
+                                    "value": "3"
                                 }
                             ]
                         },
@@ -360,11 +360,11 @@
                             "allowedValues": [
                                 {
                                     "label": "0",
-                                    "value": 0
+                                    "value": "0"
                                 },
                                 {
                                     "label": "1",
-                                    "value": 1
+                                    "value": "1"
                                 }
                             ]
                         },
@@ -381,11 +381,11 @@
                             "allowedValues": [
                                 {
                                     "label": "0",
-                                    "value": 0
+                                    "value": "0"
                                 },
                                 {
                                     "label": "1",
-                                    "value": 1
+                                    "value": "1"
                                 }
                             ]
                         },
@@ -402,11 +402,11 @@
                             "allowedValues": [
                                 {
                                     "label": "0",
-                                    "value": 0
+                                    "value": "0"
                                 },
                                 {
                                     "label": "1",
-                                    "value": 1
+                                    "value": "1"
                                 }
                             ]
                         },
@@ -422,11 +422,11 @@
                             "allowedValues": [
                                 {
                                     "label": "0",
-                                    "value": 0
+                                    "value": "0"
                                 },
                                 {
                                     "label": "1",
-                                    "value": 1
+                                    "value": "1"
                                 }
                             ]
                         },
@@ -477,11 +477,10 @@
                         },
                         "visible": true
                     },
-                
                     {
                         "name": "signerVmSize",
                         "type": "Microsoft.Compute.SizeSelector",
-                        "label": "Signer and Participant VM size",
+                        "label": "Signer and Participant VM size",     
                         "toolTip": "Signer and Participant VM size",
                         "recommendedSizes": [
                             "Standard_DS1_v2",
@@ -521,9 +520,8 @@
                             "offer": "UbuntuServer",
                             "sku": "16.04-LTS"
                         },
-                        
-                        "visible": true,
-                        "count": "[add(add(steps('vmCount').signerVmCountReg3,steps('vmCount').partVmCountReg3),add(add(steps('vmCount').signerVmCountReg2,steps('vmCount').partVmCountReg2),add(steps('vmCount').signerVmCountReg1,steps('vmCount').partVmCountReg1)))]"
+                        "visible": true,            
+                        "count": "[add(add(coalesce(steps('vmCount').signerVmCountReg3,0),coalesce(steps('vmCount').partVmCountReg3),0),add(add(coalesce(steps('vmCount').signerVmCountReg2,0),coalesce(steps('vmCount').partVmCountReg2),0),add(coalesce(steps('vmCount').signerVmCountReg1,0),coalesce(steps('vmCount').partVmCountReg1,0))))]"
                     }
                 ]
             },
@@ -539,7 +537,7 @@
                     {
                         "name": "managedDiskType",
                         "type": "Microsoft.Common.Section",
-                        "label": "Storage settings",
+                        "label": "Storage settings",          
                         "elements": [
                             {
                                 "name": "mngDiskType",
