@@ -159,36 +159,42 @@
         },
         "sshPublicKey": {
             "type": "securestring",
+            "defaultValue": ""
             "metadata": {
                 "description": "SSH public key for VM login."
             }
         },
         "adminPassword": {
             "type": "securestring",
+            "defaultValue": ""
             "metadata": {
                 "description": "Password VM login"
             }
         },
         "objectId": {
             "type": "string",
+            "defaultValue": ""
             "metadata": {
                 "description": "Azure access control user objectId for Service principal"
             }
         },
         "servicePrincipal": {
             "type": "string",
+            "defaultValue": ""
             "metadata": {
                 "description": "Service principal objectId"
             }
         },
         "secretKey": {
             "type": "securestring",
+            "defaultValue": ""
             "metadata": {
                 "description": "Service principal secret key"
             }
         },
         "VPNSharedKey": {
             "type": "securestring",
+            "defaultValue": ""
             "metadata": {
                 "description": "VPN shared key is used by gateway connections. It could be any passphrase"
             }
