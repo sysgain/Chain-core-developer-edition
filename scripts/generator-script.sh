@@ -23,7 +23,7 @@ sudo apt-get install azure-cli
 docker pull chaincore/developer:ivy-latest
 # run chaincore docker image
 docker run -d -p 1999:1999 chaincore/developer:ivy-latest
-sleep 30
+sleep 60
 echo "===========================================Extracting container Id==========================================="
 containerId=`docker ps | cut -d " " -f1 | sed 1d`
 #generator client access token / public key
