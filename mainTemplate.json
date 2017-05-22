@@ -202,7 +202,7 @@
         },
         "artifactsBaseUrl": {
             "type": "string",
-            "defaultValue": "https://aztdrepo.blob.core.windows.net/chaincore-developer",
+            "defaultValue": "https://raw.githubusercontent.com/sysgain/Chain-core-developer-edition/master",
             "metadata": {
                 "artifactsBaseUrl": "Base URL of the Publisher Template gallery package"
             }
