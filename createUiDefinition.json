@@ -1,663 +1,821 @@
 {
-    "$schema": "https://schema.management.azure.com/schemas/0.1.2-preview/CreateUIDefinition.MultiVm.json#",
-    "handler": "Microsoft.Compute.MultiVm",
-    "version": "0.1.2-preview",
-    "parameters": {
-        "basics": [
-            {
-                "name": "basics",
-                "type": "Microsoft.Common.Section",
-                "label": "Basic configurations",
-                "elements": [
+  "$schema": "https://schema.management.azure.com/schemas/0.1.2-preview/CreateUIDefinition.MultiVm.json#",
+  "handler": "Microsoft.Compute.MultiVm",
+  "version": "0.1.2-preview",
+  "parameters": {
+    "basics": [
+      {
+        "name": "basics",
+        "type": "Microsoft.Common.Section",
+        "label": "Basic configurations",
+        "elements": [
+          {
+            "name": "adminUsername",
+            "type": "Microsoft.Compute.UserNameTextBox",
+            "label": "User name",
+            "defaultValue": "blockuser",
+            "toolTip": "Virtual Machine Admin User",
+            "constraints": {
+              "required": true,
+              "regex": "^[a-z0-9A-Z]{4,20}$",
+              "validationMessage": "Only alphanumeric characters are allowed, and the value must be 4-20 characters long."
+            },
+            "osPlatform": "Linux",
+            "visible": true
+          },
+          {
+            "name": "sshOrPassword",
+            "type": "Microsoft.Compute.CredentialsCombo",
+            "label": {
+              "authenticationType": "Authentication type",
+              "password": "Password",
+              "confirmPassword": "Confirm password",
+              "sshPublicKey": "SSH public key"
+            },
+            "toolTip": {
+              "authenticationType": "Authentication Type for the admin user",
+              "password": "Virtual Machine Admin Password",
+              "sshPublicKey": "Virtual Machine SSH Public Key"
+            },
+            "constraints": {
+              "required": true
+            },
+            "options": {
+              "hideConfirmation": false
+            },
+            "osPlatform": "Linux",
+            "visible": true
+          }
+        ],
+        "visible": true
+      }
+    ],
+    "steps": [
+      {
+        "name": "regCnt",
+        "label": "Region count configure",
+        "bladeTitle": "Select region count",
+        "subLabel": {
+          "preValidation": "Required",
+          "postValidation": "Done"
+        },
+        "elements": [
+          {
+            "name": "regionCnt",
+            "type": "Microsoft.Common.DropDown",
+            "label": "Number of Regions",
+            "toolTip": "Select number of regions to deploy Block VMs ",
+            "defaultValue": "3",
+            "constraints": {
+              "required": true,
+              "allowedValues": [
+                {
+                  "label": "1",
+                  "value": "1"
+                },
+                {
+                  "label": "2",
+                  "value": "2"
+                },
+                {
+                  "label": "3",
+                  "value": "3"
+                }
+              ]
+            },
+            "visible": true
+          },
+          {
+            "name": "loc1",
+            "type": "Microsoft.Common.DropDown",
+            "label": "First Location",
+            "toolTip": "Select the first region.",
+            "defaultValue": "West US",
+            "constraints": {
+              "required": true,
+              "allowedValues": [
+                {
+                  "label": "Australia East",
+                  "value": "australiaeast"
+                },
+                {
+                  "label": "Australia Southeast",
+                  "value": "australiasoutheast"
+                },
+                {
+                  "label": "Brazil South",
+                  "value": "brazilsouth"
+                },
+                {
+                  "label": "Canada Central",
+                  "value": "canadacentral"
+                },
+                {
+                  "label": "Canada East",
+                  "value": "canadaeast"
+                },
+                {
+                  "label": "Central India",
+                  "value": "centralindia"
+                },
+                {
+                  "label": "Central US",
+                  "value": "centralus"
+                },
+                {
+                  "label": "East Asia",
+                  "value": "eastasia"
+                },
+                {
+                  "label": "East US",
+                  "value": "eastus"
+                },
+                {
+                  "label": "East US 2",
+                  "value": "eastus2"
+                },
+                {
+                  "label": "Japan East",
+                  "value": "japaneast"
+                },
+                {
+                  "label": "Japan West",
+                  "value": "japanwest"
+                },
+                {
+                  "label": "Korea Central",
+                  "value": "koreacentral"
+                },
+                {
+                  "label": "Korea South",
+                  "value": "koreasouth"
+                },
+                {
+                  "label": "North Central US",
+                  "value": "northcentralus"
+                },
+                {
+                  "label": "North Europe",
+                  "value": "northeurope"
+                },
+                {
+                  "label": "South Central US",
+                  "value": "southcentralus"
+                },
+                {
+                  "label": "South India",
+                  "value": "southindia"
+                },
+                {
+                  "label": "Southeast Asia",
+                  "value": "southeastasia"
+                },
+                {
+                  "label": "UK South",
+                  "value": "uksouth"
+                },
+                {
+                  "label": "UK West",
+                  "value": "ukwest"
+                },
+                {
+                  "label": "West Central US",
+                  "value": "westcentralus"
+                },
+                {
+                  "label": "West Europe",
+                  "value": "westeurope"
+                },
+                {
+                  "label": "West US",
+                  "value": "westus"
+                },
+                {
+                  "label": "West US 2",
+                  "value": "westus2"
+                }
+              ]
+            },
+            "visible": true
+          },
+          {
+            "name": "loc2",
+            "type": "Microsoft.Common.DropDown",
+            "label": "Second Location",
+            "toolTip": "Select the second region.",
+            "defaultValue": "Central US",
+            "constraints": {
+              "required": "[greaterOrEquals(steps('regCnt').regionCnt, '2')]",
+              "allowedValues": [
+                {
+                  "label": "Australia East",
+                  "value": "australiaeast"
+                },
+                {
+                  "label": "Australia Southeast",
+                  "value": "australiasoutheast"
+                },
+                {
+                  "label": "Brazil South",
+                  "value": "brazilsouth"
+                },
+                {
+                  "label": "Canada Central",
+                  "value": "canadacentral"
+                },
+                {
+                  "label": "Canada East",
+                  "value": "canadaeast"
+                },
+                {
+                  "label": "Central India",
+                  "value": "centralindia"
+                },
+                {
+                  "label": "Central US",
+                  "value": "centralus"
+                },
+                {
+                  "label": "East Asia",
+                  "value": "eastasia"
+                },
+                {
+                  "label": "East US",
+                  "value": "eastus"
+                },
+                {
+                  "label": "East US 2",
+                  "value": "eastus2"
+                },
+                {
+                  "label": "Japan East",
+                  "value": "japaneast"
+                },
+                {
+                  "label": "Japan West",
+                  "value": "japanwest"
+                },
+                {
+                  "label": "Korea Central",
+                  "value": "koreacentral"
+                },
+                {
+                  "label": "Korea South",
+                  "value": "koreasouth"
+                },
+                {
+                  "label": "North Central US",
+                  "value": "northcentralus"
+                },
+                {
+                  "label": "North Europe",
+                  "value": "northeurope"
+                },
+                {
+                  "label": "South Central US",
+                  "value": "southcentralus"
+                },
+                {
+                  "label": "South India",
+                  "value": "southindia"
+                },
+                {
+                  "label": "Southeast Asia",
+                  "value": "southeastasia"
+                },
+                {
+                  "label": "UK South",
+                  "value": "uksouth"
+                },
+                {
+                  "label": "UK West",
+                  "value": "ukwest"
+                },
+                {
+                  "label": "West Central US",
+                  "value": "westcentralus"
+                },
+                {
+                  "label": "West Europe",
+                  "value": "westeurope"
+                },
+                {
+                  "label": "West US",
+                  "value": "westus"
+                },
+                {
+                  "label": "West US 2",
+                  "value": "westus2"
+                }
+              ]
+            },
+            "visible": "[greaterOrEquals(steps('regCnt').regionCnt, '2')]"
+          },
+          {
+            "name": "loc3",
+            "type": "Microsoft.Common.DropDown",
+            "label": "Third Location",
+            "toolTip": "Select the third region.",
+            "defaultValue": "East US",
+            "constraints": {
+              "required": "[equals(steps('regCnt').regionCnt, '3')]",
+              "allowedValues": [
+                {
+                  "label": "Australia East",
+                  "value": "australiaeast"
+                },
+                {
+                  "label": "Australia Southeast",
+                  "value": "australiasoutheast"
+                },
+                {
+                  "label": "Brazil South",
+                  "value": "brazilsouth"
+                },
+                {
+                  "label": "Canada Central",
+                  "value": "canadacentral"
+                },
+                {
+                  "label": "Canada East",
+                  "value": "canadaeast"
+                },
+                {
+                  "label": "Central India",
+                  "value": "centralindia"
+                },
+                {
+                  "label": "Central US",
+                  "value": "centralus"
+                },
+                {
+                  "label": "East Asia",
+                  "value": "eastasia"
+                },
+                {
+                  "label": "East US",
+                  "value": "eastus"
+                },
+                {
+                  "label": "East US 2",
+                  "value": "eastus2"
+                },
+                {
+                  "label": "Japan East",
+                  "value": "japaneast"
+                },
+                {
+                  "label": "Japan West",
+                  "value": "japanwest"
+                },
+                {
+                  "label": "Korea Central",
+                  "value": "koreacentral"
+                },
+                {
+                  "label": "Korea South",
+                  "value": "koreasouth"
+                },
+                {
+                  "label": "North Central US",
+                  "value": "northcentralus"
+                },
+                {
+                  "label": "North Europe",
+                  "value": "northeurope"
+                },
+                {
+                  "label": "South Central US",
+                  "value": "southcentralus"
+                },
+                {
+                  "label": "South India",
+                  "value": "southindia"
+                },
+                {
+                  "label": "Southeast Asia",
+                  "value": "southeastasia"
+                },
+                {
+                  "label": "UK South",
+                  "value": "uksouth"
+                },
+                {
+                  "label": "UK West",
+                  "value": "ukwest"
+                },
+                {
+                  "label": "West Central US",
+                  "value": "westcentralus"
+                },
+                {
+                  "label": "West Europe",
+                  "value": "westeurope"
+                },
+                {
+                  "label": "West US",
+                  "value": "westus"
+                },
+                {
+                  "label": "West US 2",
+                  "value": "westus2"
+                }
+              ]
+            },
+            "visible": "[equals(steps('regCnt').regionCnt, '3')]"
+          }
+        ]
+      },
+      {
+        "name": "vmCount",
+        "bladeTitle": "VM count configure",
+        "label": "VM count configure",
+        "subLabel": {
+          "preValidation": "Required",
+          "postValidation": "Done"
+        },
+        "elements": [
+          {
+            "name": "signerVmCountReg1",
+            "type": "Microsoft.Common.DropDown",
+            "label": "Number of Signer VMs in Region 1",
+            "defaultValue": "1",
+            "toolTip": "Number of Signer VMs in Region 1",
+            "constraints": {
+              "required": true,
+              "allowedValues": [
+                {
+                  "label": "0",
+                  "value": "0"
+                },
+                {
+                  "label": "1",
+                  "value": "1"
+                },
+                {
+                  "label": "2",
+                  "value": "2"
+                },
+                {
+                  "label": "3",
+                  "value": "3"
+                }
+              ]
+            },
+            "visible": true
+          },
+          {
+            "name": "partVmCountReg1",
+            "type": "Microsoft.Common.DropDown",
+            "label": "Number of participant VMs in Region 1",
+            "defaultValue": "1",
+            "toolTip": "Number of participant VMs in Region 1",
+            "constraints": {
+              "required": true,
+              "allowedValues": [
+                {
+                  "label": "0",
+                  "value": "0"
+                },
+                {
+                  "label": "1",
+                  "value": "1"
+                },
+                {
+                  "label": "2",
+                  "value": "2"
+                },
+                {
+                  "label": "3",
+                  "value": "3"
+                }
+              ]
+            },
+            "visible": true
+          },
+          {
+            "name": "signerVmCountReg2",
+            "type": "Microsoft.Common.DropDown",
+            "label": "Number of Signer VMs in Region 2",
+            "defaultValue": "0",
+            "toolTip": "Number of Signer VMs in Region 2",
+            "constraints": {
+              "required": "[greaterOrEquals(steps('regCnt').regionCnt, '2')]",
+              "allowedValues": [
+                {
+                  "label": "0",
+                  "value": "0"
+                },
+                {
+                  "label": "1",
+                  "value": "1"
+                }
+              ]
+            },
+            "visible": "[greaterOrEquals(steps('regCnt').regionCnt, '2')]"
+          },
+          {
+            "name": "partVmCountReg2",
+            "type": "Microsoft.Common.DropDown",
+            "label": "Number of participant VMs in Region 2",
+            "defaultValue": "0",
+            "toolTip": "Number of participant VMs in Region 2",
+            "constraints": {
+              "required": "[greaterOrEquals(steps('regCnt').regionCnt, '2')]",
+              "allowedValues": [
+                {
+                  "label": "0",
+                  "value": "0"
+                },
+                {
+                  "label": "1",
+                  "value": "1"
+                }
+              ]
+            },
+            "visible": "[greaterOrEquals(steps('regCnt').regionCnt, '2')]"
+          },
+          {
+            "name": "signerVmCountReg3",
+            "type": "Microsoft.Common.DropDown",
+            "label": "Number of Signer VMs in Region 3",
+            "defaultValue": "0",
+            "toolTip": "Number of Signer VMs in Region 3",
+            "constraints": {
+              "required": "[equals(steps('regCnt').regionCnt, '3')]",
+              "allowedValues": [
+                {
+                  "label": "0",
+                  "value": "0"
+                },
+                {
+                  "label": "1",
+                  "value": "1"
+                }
+              ]
+            },
+            "visible": "[equals(steps('regCnt').regionCnt, '3')]"
+          },
+          {
+            "name": "partVmCountReg3",
+            "type": "Microsoft.Common.DropDown",
+            "label": "Number of participant VMs in Region 3",
+            "defaultValue": "0",
+            "toolTip": "Number of participant VMs in Region 3",
+            "constraints": {
+              "allowedValues": [
+                {
+                  "label": "0",
+                  "value": "0"
+                },
+                {
+                  "label": "1",
+                  "value": "1"
+                }
+              ]
+            },
+            "visible": "[equals(steps('regCnt').regionCnt, '3')]"
+          },
+          {
+            "name": "generatorVmSize",
+            "type": "Microsoft.Compute.SizeSelector",
+            "label": "Generator VM size",
+            "toolTip": "Generator VM size",
+            "recommendedSizes": [
+              "Standard_DS1_v2",
+              "Standard_DS2_v2",
+              "Standard_DS3_v2"
+            ],
+            "constraints": {
+              "allowedSizes": [
+                "Standard_A2",
+                "Standard_A3",
+                "Standard_A4",
+                "Standard_A5",
+                "Standard_A6",
+                "Standard_A7",
+                "Standard_A2_v2",
+                "Standard_A4_v2",
+                "Standard_A8_v2",
+                "Standard_A2m_v2",
+                "Standard_A4m_v2",
+                "Standard_A8m_v2",
+                "Standard_D1",
+                "Standard_D2",
+                "Standard_D3",
+                "Standard_D4",
+                "Standard_D1_v2",
+                "Standard_D2_v2",
+                "Standard_D3_v2",
+                "Standard_D4_v2",
+                "Standard_D5_v2",
+                "Standard_DS1",
+                "Standard_DS2",
+                "Standard_DS3",
+                "Standard_DS4",
+                "Standard_DS1_v2",
+                "Standard_DS2_v2",
+                "Standard_DS3_v2",
+                "Standard_DS4_v2",
+                "Standard_DS5_v2"
+              ]
+            },
+            "osPlatform": "Linux",
+            "imageReference": {
+              "publisher": "Canonical",
+              "offer": "UbuntuServer",
+              "sku": "16.04-LTS"
+            },
+            "visible": true
+          },
+          {
+            "name": "signerVmSize",
+            "type": "Microsoft.Compute.SizeSelector",
+            "label": "Signer and Participant VM size",
+            "toolTip": "Signer and Participant VM size",
+            "recommendedSizes": [
+              "Standard_DS1_v2",
+              "Standard_DS2_v2",
+              "Standard_DS3_v2"
+            ],
+            "constraints": {
+              "allowedSizes": [
+                "Standard_A2",
+                "Standard_A3",
+                "Standard_A4",
+                "Standard_A5",
+                "Standard_A6",
+                "Standard_A7",
+                "Standard_A2_v2",
+                "Standard_A4_v2",
+                "Standard_A8_v2",
+                "Standard_A2m_v2",
+                "Standard_A4m_v2",
+                "Standard_A8m_v2",
+                "Standard_D1",
+                "Standard_D2",
+                "Standard_D3",
+                "Standard_D4",
+                "Standard_D1_v2",
+                "Standard_D2_v2",
+                "Standard_D3_v2",
+                "Standard_D4_v2",
+                "Standard_D5_v2",
+                "Standard_DS1",
+                "Standard_DS2",
+                "Standard_DS3",
+                "Standard_DS4",
+                "Standard_DS1_v2",
+                "Standard_DS2_v2",
+                "Standard_DS3_v2",
+                "Standard_DS4_v2",
+                "Standard_DS5_v2"
+              ]
+            },
+            "osPlatform": "Linux",
+            "imageReference": {
+              "publisher": "Canonical",
+              "offer": "UbuntuServer",
+              "sku": "16.04-LTS"
+            },
+            "visible": true,
+            "count": "[add(add(coalesce(steps('vmCount').signerVmCountReg3,0),coalesce(steps('vmCount').partVmCountReg3,0)),add(add(coalesce(steps('vmCount').signerVmCountReg2,0),coalesce(steps('vmCount').partVmCountReg2,0)),add(coalesce(steps('vmCount').signerVmCountReg1,0),coalesce(steps('vmCount').partVmCountReg1,0))))]"
+          }
+        ]
+      },
+      {
+        "name": "storageSettings",
+        "bladeTitle": "Storage configure",
+        "label": "Storage settings",
+        "subLabel": {
+          "preValidation": "Required",
+          "postValidation": "Done"
+        },
+        "elements": [
+          {
+            "name": "managedDiskType",
+            "type": "Microsoft.Common.Section",
+            "label": "Storage settings",
+            "elements": [
+              {
+                "name": "mngDiskType",
+                "type": "Microsoft.Common.DropDown",
+                "label": "Managed storage type",
+                "toolTip": "Managed Storage Type for managed OS disks",
+                "defaultValue": "Standard_LRS",
+                "constraints": {
+                  "required": true,
+                  "allowedValues": [
                     {
-                        "name": "adminUsername",
-                        "type": "Microsoft.Compute.UserNameTextBox",
-                        "label": "User name",
-                        "defaultValue": "blockuser",
-                        "toolTip": "Virtual Machine Admin User",
-                        "constraints": {
-                            "required": true,
-                            "regex": "^[a-z0-9A-Z]{4,20}$",
-                            "validationMessage": "Only alphanumeric characters are allowed, and the value must be 4-20 characters long."
-                        },
-                        "osPlatform": "Linux",
-                        "visible": true
+                      "label": "Standard_LRS",
+                      "value": "Standard_LRS"
                     },
                     {
-                        "name": "sshOrPassword",
-                        "type": "Microsoft.Compute.CredentialsCombo",
-                        "label": {
-                            "authenticationType": "Authentication type",
-                            "password": "Password",
-                            "confirmPassword": "Confirm password",
-                            "sshPublicKey": "SSH public key"
-                        },
-                        "toolTip": {
-                            "authenticationType": "Authentication Type for the admin user",
-                            "password": "Virtual Machine Admin Password",
-                            "sshPublicKey": "Virtual Machine SSH Public Key"
-                        },
-                        "constraints": {
-                            "required": true
-                        },
-                        "options": {
-                            "hideConfirmation": false
-                        },
-                        "osPlatform": "Linux",
-                        "visible": true
+                      "label": "Premium_LRS",
+                      "value": "Premium_LRS"
                     }
-                ],
+                  ]
+                },
                 "visible": true
-            }
-        ],
-        "steps": [
-            {
-                "name": "regCnt",
-                "label": "Region count configure",
-                "bladeTitle": "Select region count",
-                "subLabel": {
-                    "preValidation": "Required",
-                    "postValidation": "Done"
+              }
+            ],
+            "visible": true
+          },
+          {
+            "name": "vpnSettings",
+            "type": "Microsoft.Common.Section",
+            "label": "VPN settings",
+            "elements": [
+              {
+                "name": "vpnKey",
+                "type": "Microsoft.Common.PasswordBox",
+                "label": {
+                  "password": "VPN Shared Key",
+                  "confirmPassword": "Confirm VPN Shared Key"
                 },
-                "elements": [
-                    {
-                        "name": "regionCnt",
-                        "type": "Microsoft.Common.DropDown",
-                        "label": "Number of Regions",
-                        "toolTip": "Select number of regions to deploy Block VMs ",
-                        "defaultValue": "3",
-                        "constraints": {
-                            "required": true,
-                            "allowedValues": [
-                                {
-                                    "label": "1",
-                                    "value": "1"
-                                },
-                                {
-                                    "label": "2",
-                                    "value": "2"
-                                },
-                                {
-                                    "label": "3",
-                                    "value": "3"
-                                }
-                            ]
-                        },
-                        "visible": true
-                    },
-                    {
-                        "name": "loc1",
-                        "type": "Microsoft.Common.DropDown",
-                        "label": "First Location",
-                        "toolTip": "Select the first region.",
-                        "defaultValue": "West US",
-                        "constraints": {
-                            "required": true,
-                            "allowedValues": [
-                                {
-                                    "label": "East US",
-                                    "value": "eastus"
-                                },
-                                {
-                                    "label": "North Central US",
-                                    "value": "northcentralus"
-                                },
-                                {
-                                    "label": "Central US",
-                                    "value": "centralus"
-                                },
-                                {
-                                    "label": "South Central US",
-                                    "value": "southcentralus"
-                                },
-                                {
-                                    "label": "West US",
-                                    "value": "westus"
-                                },
-                                {
-                                    "label": "East US 2",
-                                    "value": "eastus2"
-                                },
-                                {
-                                    "label": "North Europe",
-                                    "value": "northeurope"
-                                },
-                                {
-                                    "label": "West Europe",
-                                    "value": "westeurope"
-                                },
-                                {
-                                    "label": "East Asia",
-                                    "value": "eastasia"
-                                },
-                                {
-                                    "label": "Southeast Asia",
-                                    "value": "southeastasia"
-                                },
-                                {
-                                    "label": "Japan East",
-                                    "value": "japaneast"
-                                },
-                                {
-                                    "label": "Japan West",
-                                    "value": "japanwest"
-                                },
-                                {
-                                    "label": "Brazil South",
-                                    "value": "brazilsouth"
-                                }
-                            ]
-                        },
-                        "visible": true
-                    },
-                    {
-                        "name": "loc2",
-                        "type": "Microsoft.Common.DropDown",
-                        "label": "Second Location",
-                        "toolTip": "Select the second region.",
-                        "defaultValue": "Central US",
-                        "constraints": {
-                            "required": "[greaterOrEquals(steps('regCnt').regionCnt, '2')]",
-                            "allowedValues": [
-                                {
-                                    "label": "East US",
-                                    "value": "eastus"
-                                },
-                                {
-                                    "label": "North Central US",
-                                    "value": "northcentralus"
-                                },
-                                {
-                                    "label": "Central US",
-                                    "value": "centralus"
-                                },
-                                {
-                                    "label": "South Central US",
-                                    "value": "southcentralus"
-                                },
-                                {
-                                    "label": "West US",
-                                    "value": "westus"
-                                },
-                                {
-                                    "label": "East US 2",
-                                    "value": "eastus2"
-                                },
-                                {
-                                    "label": "North Europe",
-                                    "value": "northeurope"
-                                },
-                                {
-                                    "label": "West Europe",
-                                    "value": "westeurope"
-                                },
-                                {
-                                    "label": "East Asia",
-                                    "value": "eastasia"
-                                },
-                                {
-                                    "label": "Southeast Asia",
-                                    "value": "southeastasia"
-                                },
-                                {
-                                    "label": "Japan East",
-                                    "value": "japaneast"
-                                },
-                                {
-                                    "label": "Japan West",
-                                    "value": "japanwest"
-                                },
-                                {
-                                    "label": "Brazil South",
-                                    "value": "brazilsouth"
-                                }
-                            ]
-                        },
-                        "visible": "[greaterOrEquals(steps('regCnt').regionCnt, '2')]"
-                    },
-                    {
-                        "name": "loc3",
-                        "type": "Microsoft.Common.DropDown",
-                        "label": "Third Location",
-                        "toolTip": "Select the third region.",
-                        "defaultValue": "East US",
-                        "constraints": {
-                            "required": "[equals(steps('regCnt').regionCnt, '3')]",
-                            "allowedValues": [
-                                {
-                                    "label": "East US",
-                                    "value": "eastus"
-                                },
-                                {
-                                    "label": "North Central US",
-                                    "value": "northcentralus"
-                                },
-                                {
-                                    "label": "Central US",
-                                    "value": "centralus"
-                                },
-                                {
-                                    "label": "South Central US",
-                                    "value": "southcentralus"
-                                },
-                                {
-                                    "label": "West US",
-                                    "value": "westus"
-                                },
-                                {
-                                    "label": "East US 2",
-                                    "value": "eastus2"
-                                },
-                                {
-                                    "label": "North Europe",
-                                    "value": "northeurope"
-                                },
-                                {
-                                    "label": "West Europe",
-                                    "value": "westeurope"
-                                },
-                                {
-                                    "label": "East Asia",
-                                    "value": "eastasia"
-                                },
-                                {
-                                    "label": "Southeast Asia",
-                                    "value": "southeastasia"
-                                },
-                                {
-                                    "label": "Japan East",
-                                    "value": "japaneast"
-                                },
-                                {
-                                    "label": "Japan West",
-                                    "value": "japanwest"
-                                },
-                                {
-                                    "label": "Brazil South",
-                                    "value": "brazilsouth"
-                                }
-                            ]
-                        },
-                        "visible": "[equals(steps('regCnt').regionCnt, '3')]"
-                    }
-                ]
+                "toolTip": "Enter a shared key for vnet to vnet connections from region one to other regions",
+                "options": {
+                  "hideConfirmation": false
+                },
+                "constraints": {
+                  "required": "[greaterOrEquals(steps('regCnt').regionCnt, '2')]"
+                },
+                "visible": "[greaterOrEquals(steps('regCnt').regionCnt, '2')]"
+              }
+            ],
+            "visible": "[greaterOrEquals(steps('regCnt').regionCnt, '2')]"
+          }
+        ]
+      },
+      {
+        "name": "keyVaultSet",
+        "label": "Key Vault settings",
+        "bladeTitle": "Key Vault configure",
+        "subLabel": {
+          "preValidation": "Required",
+          "postValidation": "Done"
+        },
+        "elements": [
+          {
+            "name": "objId",
+            "type": "Microsoft.Common.TextBox",
+            "label": "Object ID",
+            "toolTip": "This is the unique ID of the service principal object associates with the application. This ID can be used to perform management operations against the application using Powershell or other programmatic interfaces. This obect ID can be found in the Application properties section.",
+            "constraints": {
+              "required": true
             },
-            {
-                "name": "vmCount",
-                "bladeTitle": "VM count configure",
-                "label": "VM count configure",
-                "subLabel": {
-                    "preValidation": "Required",
-                    "postValidation": "Done"
-                },
-                "elements": [
-                    {
-                        "name": "signerVmCountReg1",
-                        "type": "Microsoft.Common.DropDown",
-                        "label": "Number of Signer VMs in Region 1",
-                        "defaultValue": "1",
-                        "toolTip": "Number of Signer VMs in Region 1",
-                        "constraints": {
-                            "required": true,
-                            "allowedValues": [
-                                {
-                                    "label": "0",
-                                    "value": "0"
-                                },
-                                {
-                                    "label": "1",
-                                    "value": "1"
-                                },
-                                {
-                                    "label": "2",
-                                    "value": "2"
-                                },
-                                {
-                                    "label": "3",
-                                    "value": "3"
-                                }
-                            ]
-                        },
-                        "visible": true
-                    },
-                    {
-                        "name": "partVmCountReg1",
-                        "type": "Microsoft.Common.DropDown",
-                        "label": "Number of participant VMs in Region 1",
-                        "defaultValue": "1",
-                        "toolTip": "Number of participant VMs in Region 1",
-                        "constraints": {
-                            "required": true,
-                            "allowedValues": [
-                                {
-                                    "label": "0",
-                                    "value": "0"
-                                },
-                                {
-                                    "label": "1",
-                                    "value": "1"
-                                },
-                                {
-                                    "label": "2",
-                                    "value": "2"
-                                },
-                                {
-                                    "label": "3",
-                                    "value": "3"
-                                }
-                            ]
-                        },
-                        "visible": true
-                    },
-                    {
-                        "name": "signerVmCountReg2",
-                        "type": "Microsoft.Common.DropDown",
-                        "label": "Number of Signer VMs in Region 2",
-                        "defaultValue": "0",
-                        "toolTip": "Number of Signer VMs in Region 2",
-                        "constraints": {
-                            "required": "[greaterOrEquals(steps('regCnt').regionCnt, '2')]",
-                            "allowedValues": [
-                                {
-                                    "label": "0",
-                                    "value": "0"
-                                },
-                                {
-                                    "label": "1",
-                                    "value": "1"
-                                }
-                            ]
-                        },
-                        "visible": "[greaterOrEquals(steps('regCnt').regionCnt, '2')]"
-                    },
-                    {
-                        "name": "partVmCountReg2",
-                        "type": "Microsoft.Common.DropDown",
-                        "label": "Number of participant VMs in Region 2",
-                        "defaultValue": "0",
-                        "toolTip": "Number of participant VMs in Region 2",
-                        "constraints": {
-                            "required": "[greaterOrEquals(steps('regCnt').regionCnt, '2')]",
-                            "allowedValues": [
-                                {
-                                    "label": "0",
-                                    "value": "0"
-                                },
-                                {
-                                    "label": "1",
-                                    "value": "1"
-                                }
-                            ]
-                        },
-                        "visible": "[greaterOrEquals(steps('regCnt').regionCnt, '2')]"
-                    },
-                    {
-                        "name": "signerVmCountReg3",
-                        "type": "Microsoft.Common.DropDown",
-                        "label": "Number of Signer VMs in Region 3",
-                        "defaultValue": "0",
-                        "toolTip": "Number of Signer VMs in Region 3",
-                        "constraints": {
-                            "required": "[equals(steps('regCnt').regionCnt, '3')]",
-                            "allowedValues": [
-                                {
-                                    "label": "0",
-                                    "value": "0"
-                                },
-                                {
-                                    "label": "1",
-                                    "value": "1"
-                                }
-                            ]
-                        },
-                        "visible": "[equals(steps('regCnt').regionCnt, '3')]"
-                    },
-                    {
-                        "name": "partVmCountReg3",
-                        "type": "Microsoft.Common.DropDown",
-                        "label": "Number of participant VMs in Region 3",
-                        "defaultValue": "0",
-                        "toolTip": "Number of participant VMs in Region 3",
-                        "constraints": {
-                            "allowedValues": [
-                                {
-                                    "label": "0",
-                                    "value": "0"
-                                },
-                                {
-                                    "label": "1",
-                                    "value": "1"
-                                }
-                            ]
-                        },
-                        "visible": "[equals(steps('regCnt').regionCnt, '3')]"
-                    },
-                    {
-                        "name": "generatorVmSize",
-                        "type": "Microsoft.Compute.SizeSelector",
-                        "label": "Generator VM size",
-                        "toolTip": "Generator VM size",
-                        "recommendedSizes": [
-                            "Standard_DS1_v2",
-                            "Standard_DS2_v2",
-                            "Standard_DS3_v2"
-                        ],
-                        "constraints": {
-                            "allowedSizes": [
-                                "Standard_DS1",
-                                "Standard_DS1_v2",
-                                "Standard_DS2",
-                                "Standard_DS2_v2",
-                                "Standard_DS3",
-                                "Standard_DS3_v2",
-                                "Standard_DS4",
-                                "Standard_DS4_v2",
-                                "Standard_DS5_v2",
-                                "Standard_DS11",
-                                "Standard_DS11_v2",
-                                "Standard_DS12",
-                                "Standard_DS12_v2",
-                                "Standard_DS13",
-                                "Standard_DS13_v2",
-                                "Standard_DS14",
-                                "Standard_DS14_v2",
-                                "Standard_DS15_v2",
-                                "Standard_F1S",
-                                "Standard_F2S",
-                                "Standard_F4S",
-                                "Standard_F8S",
-                                "Standard_F16S"
-                            ]
-                        },
-                        "osPlatform": "Linux",
-                        "imageReference": {
-                            "publisher": "Canonical",
-                            "offer": "UbuntuServer",
-                            "sku": "16.04-LTS"
-                        },
-                        "visible": true
-                    },
-                    {
-                        "name": "signerVmSize",
-                        "type": "Microsoft.Compute.SizeSelector",
-                        "label": "Signer and Participant VM size",
-                        "toolTip": "Signer and Participant VM size",
-                        "recommendedSizes": [
-                            "Standard_DS1_v2",
-                            "Standard_DS2_v2",
-                            "Standard_DS3_v2"
-                        ],
-                        "constraints": {
-                            "allowedSizes": [
-                                "Standard_DS1",
-                                "Standard_DS1_v2",
-                                "Standard_DS2",
-                                "Standard_DS2_v2",
-                                "Standard_DS3",
-                                "Standard_DS3_v2",
-                                "Standard_DS4",
-                                "Standard_DS4_v2",
-                                "Standard_DS5_v2",
-                                "Standard_DS11",
-                                "Standard_DS11_v2",
-                                "Standard_DS12",
-                                "Standard_DS12_v2",
-                                "Standard_DS13",
-                                "Standard_DS13_v2",
-                                "Standard_DS14",
-                                "Standard_DS14_v2",
-                                "Standard_DS15_v2",
-                                "Standard_F1S",
-                                "Standard_F2S",
-                                "Standard_F4S",
-                                "Standard_F8S",
-                                "Standard_F16S"
-                            ]
-                        },
-                        "osPlatform": "Linux",
-                        "imageReference": {
-                            "publisher": "Canonical",
-                            "offer": "UbuntuServer",
-                            "sku": "16.04-LTS"
-                        },
-                        "visible": true,
-                        "count": "[add(add(coalesce(steps('vmCount').signerVmCountReg3,0),coalesce(steps('vmCount').partVmCountReg3,0)),add(add(coalesce(steps('vmCount').signerVmCountReg2,0),coalesce(steps('vmCount').partVmCountReg2,0)),add(coalesce(steps('vmCount').signerVmCountReg1,0),coalesce(steps('vmCount').partVmCountReg1,0))))]"
-                    }
-                ]
+            "visible": true
+          },
+          {
+            "name": "srvPri",
+            "type": "Microsoft.Common.TextBox",
+            "label": "Service principal",
+            "toolTip": "Service Principal Application ID",
+            "constraints": {
+              "required": true
             },
-            {
-                "name": "storageSettings",
-                "bladeTitle": "Storage configure",
-                "label": "Storage settings",
-                "subLabel": {
-                    "preValidation": "Required",
-                    "postValidation": "Done"
-                },
-                "elements": [
-                    {
-                        "name": "managedDiskType",
-                        "type": "Microsoft.Common.Section",
-                        "label": "Storage settings",
-                        "elements": [
-                            {
-                                "name": "mngDiskType",
-                                "type": "Microsoft.Common.DropDown",
-                                "label": "Managed storage type",
-                                "toolTip": "Managed Storage Type for managed OS disks",
-                                "defaultValue": "Standard_LRS",
-                                "constraints": {
-                                    "required": true,
-                                    "allowedValues": [
-                                        {
-                                            "label": "Standard_LRS",
-                                            "value": "Standard_LRS"
-                                        },
-                                        {
-                                            "label": "Premium_LRS",
-                                            "value": "Premium_LRS"
-                                        }
-                                    ]
-                                },
-                                "visible": true
-                            }
-                        ],
-                        "visible": true
-                    },
-                    {
-                        "name": "vpnSettings",
-                        "type": "Microsoft.Common.Section",
-                        "label": "VPN settings",
-                        "elements": [
-                            {
-                                "name": "vpnKey",
-                                "type": "Microsoft.Common.PasswordBox",
-                                "label": {
-                                    "password": "VPN Shared Key",
-                                    "confirmPassword": "Confirm VPN Shared Key"
-                                },
-                                "toolTip": "Enter a shared key for vnet to vnet connections from region one to other regions",
-                                "options": {
-                                    "hideConfirmation": false
-                                },
-                                "constraints": {
-                                    "required": "[greaterOrEquals(steps('regCnt').regionCnt, '2')]"
-                                },
-                                "visible": "[greaterOrEquals(steps('regCnt').regionCnt, '2')]"
-                            }
-                        ],
-                        "visible": "[greaterOrEquals(steps('regCnt').regionCnt, '2')]"
-                    }
-                ]
+            "visible": true
+          },
+          {
+            "name": "secretKey",
+            "type": "Microsoft.Common.PasswordBox",
+            "label": {
+              "password": "Shared secret key"
             },
-            {
-                "name": "keyVaultSet",
-                "label": "Key Vault settings",
-                "bladeTitle": "Key Vault configure",
-                "subLabel": {
-                    "preValidation": "Required",
-                    "postValidation": "Done"
-                },
-                "elements": [
-                    {
-                        "name": "objId",
-                        "type": "Microsoft.Common.TextBox",
-                        "label": "Object ID",
-                        "toolTip": "This is the unique ID of the service principal object associates with the application. This ID can be used to perform management operations against the application using Powershell or other programmatic interfaces. This obect ID can be found in the Application properties section.",
-                        "constraints": {
-                            "required": true
-                        },
-                        "visible": true
-                    },
-                    {
-                        "name": "srvPri",
-                        "type": "Microsoft.Common.TextBox",
-                        "label": "Service principal",
-                        "toolTip": "Service Principal Application ID",
-                        "constraints": {
-                            "required": true
-                        },
-                        "visible": true
-                    },
-                    {
-                        "name": "secretKey",
-                        "type": "Microsoft.Common.PasswordBox",
-                        "label": {
-                            "password": "Shared secret key"
-                        },
-                        "toolTip": "Service Principal Key",
-                        "constraints": {
-                            "required": true
-                        },
-                        "options": {
-                            "hideConfirmation": true
-                        },
-                        "visible": true
-                    }
-                ]
-            }
-        ],
-        "outputs": {
-            "location_1": "[steps('regCnt').loc1]",
-            "location_2": "[steps('regCnt').loc2]",
-            "location_3": "[steps('regCnt').loc3]",
-            "regionCount": "[steps('regCnt').regionCnt]",
-            "generatorVmSize": "[steps('vmCount').generatorVmSize]",
-            "signerAndParticipantVmSize": "[steps('vmCount').signerVmSize]",
-            "signerNodeCountReg1": "[steps('vmCount').signerVmCountReg1]",
-            "participantNodeCountReg1": "[steps('vmCount').partVmCountReg1]",
-            "signerNodeCountReg2": "[steps('vmCount').signerVmCountReg2]",
-            "participantNodeCountReg2": "[steps('vmCount').partVmCountReg2]",
-            "signerNodeCountReg3": "[steps('vmCount').signerVmCountReg3]",
-            "participantNodeCountReg3": "[steps('vmCount').partVmCountReg3]",
-            "adminUsername": "[basics('basics').adminUsername]",
-            "adminPassword": "[basics('basics').adminPassword]",
-            "authenticationType": "[basics('basics').sshOrPassword.authenticationType]",
-            "sshPublicKey": "[basics('basics').sshOrPassword.sshPublicKey]",
-            "objectId": "[steps('keyVaultSet').objId]",
-            "servicePrinciple": "[steps('keyVaultSet').srvPri]",
-            "secretKey": "[steps('keyVaultSet').secretKey]",
-            "storageAccountType": "[steps('storageSettings').managedDiskType.mngDiskType]",
-            "VPNSharedKey": "[steps('storageSettings').vpnSettings.vpnKey]"
-        }
+            "toolTip": "Service Principal Key",
+            "constraints": {
+              "required": true
+            },
+            "options": {
+              "hideConfirmation": true
+            },
+            "visible": true
+          }
+        ]
+      }
+    ],
+    "outputs": {
+      "location_1": "[steps('regCnt').loc1]",
+      "location_2": "[steps('regCnt').loc2]",
+      "location_3": "[steps('regCnt').loc3]",
+      "regionCount": "[steps('regCnt').regionCnt]",
+      "generatorVmSize": "[steps('vmCount').generatorVmSize]",
+      "signerAndParticipantVmSize": "[steps('vmCount').signerVmSize]",
+      "signerNodeCountReg1": "[steps('vmCount').signerVmCountReg1]",
+      "participantNodeCountReg1": "[steps('vmCount').partVmCountReg1]",
+      "signerNodeCountReg2": "[steps('vmCount').signerVmCountReg2]",
+      "participantNodeCountReg2": "[steps('vmCount').partVmCountReg2]",
+      "signerNodeCountReg3": "[steps('vmCount').signerVmCountReg3]",
+      "participantNodeCountReg3": "[steps('vmCount').partVmCountReg3]",
+      "adminUsername": "[basics('basics').adminUsername]",
+      "adminPassword": "[basics('basics').adminPassword]",
+      "authenticationType": "[basics('basics').sshOrPassword.authenticationType]",
+      "sshPublicKey": "[basics('basics').sshOrPassword.sshPublicKey]",
+      "objectId": "[steps('keyVaultSet').objId]",
+      "servicePrinciple": "[steps('keyVaultSet').srvPri]",
+      "secretKey": "[steps('keyVaultSet').secretKey]",
+      "storageAccountType": "[steps('storageSettings').managedDiskType.mngDiskType]",
+      "VPNSharedKey": "[steps('storageSettings').vpnSettings.vpnKey]"
     }
+  }
 }
