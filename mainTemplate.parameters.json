@@ -3,7 +3,7 @@
     "contentVersion": "1.0.0.0",
     "parameters": {
         "regionCount": {
-            "value": "3"
+            "value": "1"
         },
         "location_1": {
             "value": "westus"
@@ -13,6 +13,18 @@
         },
         "location_3": {
             "value": "eastus"
+        },
+        "authenticationType": {
+            "value": "password"
+        },
+        "adminUsername": {
+            "value": "GEN-USER"
+        },
+        "adminPassword": {
+            "value": "GEN-PASSWORD"
+        },
+        "sshPublicKey": {
+            "value": "GEN-SSHKEY"
         },
         "generatorVmSize": {
             "value": "Standard_DS1_v2"
@@ -38,17 +50,11 @@
         "participantNodeCountReg3": {
             "value": "0"
         },
-        "authenticationType": {
-            "value": "password"
+        "storageAccountType": {
+            "value": "Standard_LRS"
         },
-        "sshPublicKey": {
-            "value": "GEN-SSHKEY"
-        },
-        "adminUsername": {
-            "value": "GEN-USER"
-        },
-        "adminPassword": {
-            "value": "GEN-PASSWORD"
+        "VPNSharedKey": {
+            "value": "GEN-VPNKEY"
         },
         "objectId": {
             "value": "123-43-55"
@@ -59,14 +65,8 @@
         "secretKey": {
             "value": "secretkey"
         },
-        "VPNSharedKey": {
-            "value": "GEN-VPNKEY"
-        },
-        "storageAccountType": {
-            "value": "Standard_LRS"
-        },
         "artifactsBaseUrl": {
-            "value": "https://raw.githubusercontent.com/sysgain/Chain-core-developer-edition/dev2"
+            "value": "https://raw.githubusercontent.com/sysgain/Chain-core-developer-edition/dev3"
         }
     }
 }
