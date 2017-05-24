@@ -10,14 +10,17 @@
         },
         "location": {
             "type": "string"
+        },
+        "suffix": {
+            "type": "string"
         }
     },
     "variables": {
-        "gatewayName": "[concat(parameters('vpnGatewaySettings').gatewayName,'-',parameters('location'))]",
+        "gatewayName": "[concat(parameters('vpnGatewaySettings').gatewayName,'-',parameters('location'),'-',parameters('suffix'))]",
         "apiVersion": "[parameters('vpnGatewaySettings').apiVersion]",
         "location": "[parameters('location')]",
-        "virtualNetworksName": "[concat(parameters('vnetSettings').virtualNetworksName,'-',parameters('location'))]",
-        "gatewayPipName": "[concat(parameters('vpnGatewaySettings').gatewayPipName,'-',parameters('location'))]",
+        "virtualNetworksName": "[concat(parameters('vnetSettings').virtualNetworksName,'-',parameters('location'),'-',parameters('suffix'))]",
+        "gatewayPipName": "[concat(parameters('vpnGatewaySettings').gatewayPipName,'-',parameters('location'),'-',parameters('suffix'))]",
         "gatewayIpConfig": "[concat('gatewayIpConfig','-',parameters('location'))]",
         "vpnType": "[parameters('vpnGatewaySettings').vpnType]",
         "sku": "[parameters('vpnGatewaySettings').sku]"

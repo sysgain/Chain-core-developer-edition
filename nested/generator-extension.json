@@ -7,12 +7,15 @@
         },
         "location": {
             "type": "string"
+        },
+        "suffix": {
+            "type": "string"
         }
     },
     "variables": {
         "apiVersion": "[parameters('genExtensionSettings').apiVersion]",
-        "generatorVmName": "[concat(parameters('genExtensionSettings').generatorVmName,'-',parameters('location'))]",
-        "generatorScriptFileName": "[parameters('genExtensionSettings').generatorScriptFileName]",
+        "generatorVmName": "[concat(parameters('genExtensionSettings').vmName,'-',parameters('location'),'-',parameters('suffix'))]",
+        "generatorScriptFileName": "[parameters('genExtensionSettings').scriptFileName]",
         "logScriptUrl": "[parameters('genExtensionSettings').logScriptUrl]",
         "adminUsername": "[parameters('genExtensionSettings').adminUsername]",
         "logScriptFileName": "[parameters('genExtensionSettings').logScriptFileName]",

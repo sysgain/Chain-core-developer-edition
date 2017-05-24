@@ -7,10 +7,13 @@
         },
         "location": {
             "type": "string"
+        },
+        "suffix": {
+            "type": "string"
         }
     },
     "variables": {
-        "availabilitySetsName": "[concat(parameters('availSetSettings').availabilitySetsName,'-',parameters('location'))]",
+        "availabilitySetsName": "[concat(parameters('availSetSettings').availabilitySetsName,'-',parameters('location'),'-',parameters('suffix'))]",
         "apiVersion": "[parameters('availSetSettings').apiVersion]"
     },
     "resources": [

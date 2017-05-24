@@ -16,14 +16,17 @@
         },
         "generatorSettings": {
             "type": "object"
+        },
+        "suffix": {
+            "type": "string"
         }
     },
     "variables": {
         "prefix": "[parameters('prefix')]",
-        "generatorVmDep": "[concat(variables('prefix'),'-generatorVMSetup-',parameters('location'))]",
-        "generatorNicDep": "[concat(variables('prefix'),'-generatorNICSetup-',parameters('location'))]",
-        "generatorExtDep": "[concat(variables('prefix'),'-genExtensionSetup-',parameters('location'))]",
-        "generatorPipDep": "[concat(parameters('prefix'),'-genPipSetup-',parameters('location'))]"
+        "generatorVmDep": "[concat(variables('prefix'),'-generatorVMSetup-',parameters('location'),'-',parameters('suffix'))]",
+        "generatorNicDep": "[concat(variables('prefix'),'-generatorNICSetup-',parameters('location'),'-',parameters('suffix'))]",
+        "generatorExtDep": "[concat(variables('prefix'),'-genExtensionSetup-',parameters('location'),'-',parameters('suffix'))]",
+        "generatorPipDep": "[concat(parameters('prefix'),'-genPipSetup-',parameters('location'),'-',parameters('suffix'))]"
     },
     "resources": [
         {
@@ -42,6 +45,9 @@
                     },
                     "location": {
                         "value": "[parameters('location')]"
+                    },
+                    "suffix": {
+                        "value": "[parameters('suffix')]"
                     }
                 }
             }
@@ -65,6 +71,9 @@
                     },
                     "location": {
                         "value": "[parameters('location')]"
+                    },
+                    "suffix": {
+                        "value": "[parameters('suffix')]"
                     }
                 }
             }
@@ -88,6 +97,9 @@
                     },
                     "location": {
                         "value": "[parameters('location')]"
+                    },
+                    "suffix": {
+                        "value": "[parameters('suffix')]"
                     }
                 }
             }
@@ -111,6 +123,9 @@
                     },
                     "location": {
                         "value": "[parameters('location')]"
+                    },
+                    "suffix": {
+                        "value": "[parameters('suffix')]"
                     }
                 }
             }

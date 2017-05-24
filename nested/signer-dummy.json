@@ -22,6 +22,9 @@
         },
         "nodeCount": {
             "type": "int"
+        },
+        "suffix": {
+            "type": "string"
         }
     },
     "variables": {},

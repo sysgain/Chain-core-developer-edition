@@ -10,15 +10,18 @@
         },
         "nodeCount": {
             "type": "int"
+        },
+        "suffix": {
+            "type": "string"
         }
     },
     "variables": {
-        "nicName": "[concat(parameters('nicSettings').nicName,'-',parameters('location'))]",
+        "nicName": "[concat(parameters('nicSettings').nicName,'-',parameters('location'),'-',parameters('suffix'))]",
         "nodeCount": "[parameters('nodeCount')]",
-        "pipName": "[concat(parameters('nicSettings').pipName,'-',parameters('location'))]",
-        "virtualNetworksName": "[concat(parameters('nicSettings').virtualNetworksName,'-',parameters('location'))]",
+        "pipName": "[concat(parameters('nicSettings').pipName,'-',parameters('location'),'-',parameters('suffix'))]",
+        "virtualNetworksName": "[concat(parameters('nicSettings').virtualNetworksName,'-',parameters('location'),'-',parameters('suffix'))]",
         "subnetName": "[parameters('nicSettings').subnetName]",
-        "nsgName": "[concat(parameters('nicSettings').nsgName,'-',parameters('location'))]",
+        "nsgName": "[concat(parameters('nicSettings').nsgName,'-',parameters('location'),'-',parameters('suffix'))]",
         "privateIPAllocationMethod": "[parameters('nicSettings').privateIPAllocationMethod]",
         "apiVersion": "[parameters('nicSettings').apiVersion]"
     },
@@ -29,7 +32,7 @@
             "apiVersion": "[variables('apiVersion')]",
             "location": "[parameters('location')]",
             "copy": {
-                "name": "signerLoop",
+                "name": "loop",
                 "count": "[variables('nodeCount')]"
             },
             "properties": {

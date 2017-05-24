@@ -22,15 +22,18 @@
         },
         "nodeCount": {
             "type": "int"
+        },
+        "suffix":{
+            "type": "string"
         }
     },
     "variables": {
         "prefix": "[parameters('prefix')]",
-        "signerVmDep": "[concat(variables('prefix'),'-signerVmSetup-',parameters('location'))]",
-        "signerNicDep": "[concat(variables('prefix'),'-signerNicSetup-',parameters('location'))]",
-        "signerPipDep": "[concat(variables('prefix'),'-signerPipSetup-',parameters('location'))]",
-        "signerExtDep": "[concat(variables('prefix'),'-signerExtensionSetup-',parameters('location'))]",
-        "signerAvailDep": "[concat(variables('prefix'),'-signerAvailSetup-',parameters('location'))]"
+        "signerVmDep": "[concat(variables('prefix'),'-signerVmSetup-',parameters('location'),'-',parameters('suffix'))]",
+        "signerNicDep": "[concat(variables('prefix'),'-signerNicSetup-',parameters('location'),'-',parameters('suffix'))]",
+        "signerPipDep": "[concat(variables('prefix'),'-signerPipSetup-',parameters('location'),'-',parameters('suffix'))]",
+        "signerExtDep": "[concat(variables('prefix'),'-signerExtensionSetup-',parameters('location'),'-',parameters('suffix'))]",
+        "signerAvailDep": "[concat(variables('prefix'),'-signerAvailSetup-',parameters('location'),'-',parameters('suffix'))]"
     },
     "resources": [
         {
@@ -49,6 +52,9 @@
                     },
                     "location": {
                         "value": "[parameters('location')]"
+                    },
+                    "suffix": {
+                        "value": "[parameters('suffix')]"
                     }
                 }
             }
@@ -72,6 +78,9 @@
                     },
                     "nodeCount": {
                         "value": "[parameters('nodeCount')]"
+                    },
+                    "suffix": {
+                        "value": "[parameters('suffix')]"
                     }
                 }
             }
@@ -98,6 +107,9 @@
                     },
                     "nodeCount": {
                         "value": "[parameters('nodeCount')]"
+                    },
+                    "suffix": {
+                        "value": "[parameters('suffix')]"
                     }
                 }
             }
@@ -125,6 +137,9 @@
                     },
                     "nodeCount": {
                         "value": "[parameters('nodeCount')]"
+                    },
+                    "suffix": {
+                        "value": "[parameters('suffix')]"
                     }
                 }
             }
@@ -154,6 +169,9 @@
                     },
                     "nodeCount": {
                         "value": "[parameters('nodeCount')]"
+                    },
+                    "suffix": {
+                        "value": "[parameters('suffix')]"
                     }
                 }
             }

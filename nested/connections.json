@@ -10,17 +10,23 @@
         },
         "location_2": {
             "type": "string"
+        },
+        "suffix": {
+            "type": "string"
+        },
+        "suffix2": {
+            "type": "string"
         }
     },
     "variables": {
-        "conName1": "[concat(parameters('location_1'),'-to-',parameters('location_2'))]",
-        "conName2": "[concat(parameters('location_2'),'-to-',parameters('location_1'))]",
+        "conName1": "[concat(parameters('location_1'),'-',parameters('suffix'),'-to-',parameters('location_2'),'-',parameters('suffix2'))]",
+        "conName2": "[concat(parameters('location_2'),'-',parameters('suffix2'),'-to-',parameters('location_1'),'-',parameters('suffix'))]",
         "apiVersion": "[parameters('connectionSettings').apiVersion]",
         "location_1": "[parameters('location_1')]",
         "location_2": "[parameters('location_2')]",
         "VPNSharedKey": "[parameters('connectionSettings').VPNSharedKey]",
-        "gatewayNameReg1": "[concat(parameters('connectionSettings').gatewayNameReg,'-',parameters('location_1'))]",
-        "gatewayNameReg2": "[concat(parameters('connectionSettings').gatewayNameReg,'-',parameters('location_2'))]"
+        "gatewayNameReg1": "[concat(parameters('connectionSettings').gatewayNameReg,'-',parameters('location_1'),'-',parameters('suffix'))]",
+        "gatewayNameReg2": "[concat(parameters('connectionSettings').gatewayNameReg,'-',parameters('location_2'),'-',parameters('suffix2'))]"
     },
     "resources": [
         {

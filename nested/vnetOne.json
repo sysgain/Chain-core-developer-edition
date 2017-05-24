@@ -7,10 +7,13 @@
         },
         "location": {
             "type": "string"
+        },
+        "suffix": {
+            "type": "string"
         }
     },
     "variables": {
-        "virtualNetworksName": "[concat(parameters('vnetSettings').virtualNetworksName,'-',parameters('location'))]",
+        "virtualNetworksName": "[concat(parameters('vnetSettings').virtualNetworksName,'-',parameters('location'),'-',parameters('suffix'))]",
         "location": "[parameters('location')]",
         "generatorSubnetName": "[parameters('vnetSettings').generatorSubnetName]",
         "subnetName": "[parameters('vnetSettings').subnetName]",

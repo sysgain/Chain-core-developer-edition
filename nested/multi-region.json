@@ -56,10 +56,13 @@
     },
     "variables": {
         "conncetionsDep": "conncetionSetup",
-        "vnetRegionArray": [
-            "[parameters('vnetSettings').region1]",
-            "[parameters('vnetSettings').region2]",
-            "[parameters('vnetSettings').region3]"
+        "uniqueStringReg1": "reg1",
+        "uniqueStringReg2": "reg2",
+        "uniqueStringReg3": "reg3",
+        "uniqueStringRegArray": [
+            "[variables('uniqueStringReg1')]",
+            "[variables('uniqueStringReg2')]",
+            "[variables('uniqueStringReg3')]"
         ]
     },
     "resources": [
@@ -112,6 +115,9 @@
                     },
                     "partSetupURL": {
                         "value": "[parameters('nestedURls').partSetupURLReg2]"
+                    },
+                    "suffix": {
+                        "value": "[variables('uniqueStringReg2')]"
                     }
                 }
             }
@@ -165,6 +171,9 @@
                     },
                     "partSetupURL": {
                         "value": "[parameters('nestedURls').partSetupURLReg3]"
+                    },
+                    "suffix": {
+                        "value": "[variables('uniqueStringReg3')]"
                     }
                 }
             }
@@ -204,12 +213,15 @@
                     },
                     "regionCount": {
                         "value": "[parameters('regionCount')]"
+                    },
+                    "suffix": {
+                        "value": "[variables('uniqueStringRegArray')]"
                     }
                 }
             }
         },
         {
-            "name": "[concat(variables('conncetionsDep'),'-',parameters('location')[copyIndex(0)])]",
+            "name": "[concat(variables('conncetionsDep'),'-',parameters('location')[copyIndex(0)],'-',variables('uniqueStringRegArray')[copyIndex(0)])]",
             "apiVersion": "[parameters('apiVersion').deploymentApiVersion]",
             "type": "Microsoft.Resources/deployments",
             "dependsOn": [
@@ -234,6 +246,12 @@
                     },
                     "location_2": {
                         "value": "[parameters('location')[copyIndex(1)]]"
+                    },
+                    "suffix": {
+                        "value": "[variables('uniqueStringRegArray')[0]]"
+                    },
+                    "suffix2": {
+                        "value": "[variables('uniqueStringRegArray')[copyIndex(1)]]"
                     }
                 }
             }

@@ -7,22 +7,25 @@
         },
         "location": {
             "type": "string"
+        },
+        "suffix": {
+            "type": "string"
         }
     },
     "variables": {
         "location": "[parameters('location')]",
-        "generatorNicName": "[concat(parameters('genNicSettings').generatorNicName,'-',parameters('location'))]",
-        "virtualNetworksName": "[concat(parameters('genNicSettings').virtualNetworksName,'-',parameters('location'))]",
-        "generatorSubnetName": "[parameters('genNicSettings').generatorSubnetName]",
-        "generatorNsgName": "[concat(parameters('genNicSettings').generatorNsgName,'-',parameters('location'))]",
+        "nicName": "[concat(parameters('genNicSettings').nicName,'-',parameters('location'),'-',parameters('suffix'))]",
+        "virtualNetworksName": "[concat(parameters('genNicSettings').virtualNetworksName,'-',parameters('location'),'-',parameters('suffix'))]",
+        "generatorSubnetName": "[parameters('genNicSettings').subnetName]",
+        "nsgName": "[concat(parameters('genNicSettings').nsgName,'-',parameters('location'),'-',parameters('suffix'))]",
         "privateIPAllocationMethod": "[parameters('genNicSettings').privateIPAllocationMethod]",
         "apiVersion": "[parameters('genNicSettings').apiVersion]",
-        "generatorIpName": "[concat(parameters('genNicSettings').generatorIpName,'-',parameters('location'))]"
+        "pipName": "[concat(parameters('genNicSettings').pipName,'-',parameters('location'),'-',parameters('suffix'))]"
     },
     "resources": [
         {
             "type": "Microsoft.Network/networkInterfaces",
-            "name": "[variables('generatorNicName')]",
+            "name": "[variables('nicName')]",
             "apiVersion": "[variables('apiVersion')]",
             "location": "[variables('location')]",
             "properties": {
@@ -35,7 +38,7 @@
                                 "id": "[concat(resourceId('Microsoft.Network/virtualNetworks', variables('virtualNetworksName')), '/subnets/', variables('generatorSubnetName'))]"
                             },
                             "publicIPAddress": {
-                                "id": "[resourceId('Microsoft.Network/publicIPAddresses', variables('generatorIpName'))]"
+                                "id": "[resourceId('Microsoft.Network/publicIPAddresses', variables('pipName'))]"
                             }
                         }
                     }
@@ -45,7 +48,7 @@
                 },
                 "enableIPForwarding": false,
                 "networkSecurityGroup": {
-                    "id": "[resourceId('Microsoft.Network/networkSecurityGroups', variables('generatorNsgName'))]"
+                    "id": "[resourceId('Microsoft.Network/networkSecurityGroups', variables('nsgName'))]"
                 }
             }
         }

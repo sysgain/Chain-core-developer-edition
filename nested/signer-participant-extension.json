@@ -13,11 +13,14 @@
         },
         "nodeCount": {
             "type": "int"
+        },
+        "suffix": {
+            "type": "string"
         }
     },
     "variables": {
         "apiVersion": "[parameters('extensionSettings').apiVersion]",
-        "vmName": "[concat(parameters('extensionSettings').vmName,'-',parameters('location'))]",
+        "vmName": "[concat(parameters('extensionSettings').vmName,'-',parameters('location'),'-',parameters('suffix'))]",
         "logScriptUrl": "[parameters('extensionSettings').logScriptUrl]",
         "adminUsername": "[parameters('extensionSettings').adminUsername]",
         "logScriptFileName": "[parameters('extensionSettings').logScriptFileName]",

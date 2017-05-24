@@ -7,10 +7,13 @@
         },
         "location": {
             "type": "string"
+        },
+        "suffix":{
+            "type": "string"
         }
     },
     "variables": {
-        "nsgName": "[concat(parameters('nsgSettings').nsgName,'-',parameters('location'))]",
+        "nsgName": "[concat(parameters('nsgSettings').nsgName,'-',parameters('location'),'-',parameters('suffix'))]",
         "apiVersion": "[parameters('nsgSettings').apiVersion]"
     },
     "resources": [

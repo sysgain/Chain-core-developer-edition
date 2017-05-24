@@ -40,13 +40,16 @@
         },
         "partSetupURL": {
             "type": "string"
+        },
+        "suffix":{
+            "type": "string"
         }
     },
     "variables": {
-        "nsgDep": "[concat('nsgSetup-',parameters('location'))]",
-        "vnetDep": "[concat('vnetSetup-',parameters('location'))]",
-        "signerDep": "[concat('signerSetup-',parameters('location'))]",
-        "participantSetup": "[concat('participantSetup-',parameters('location'))]"
+        "nsgDep": "[concat('nsgSetup-',parameters('location'),'-',parameters('suffix'))]",
+        "vnetDep": "[concat('vnetSetup-',parameters('location'),'-',parameters('suffix'))]",
+        "signerDep": "[concat('signerSetup-',parameters('location'),'-',parameters('suffix'))]",
+        "participantSetup": "[concat('participantSetup-',parameters('location'),'-',parameters('suffix'))]"
     },
     "resources": [
         {
@@ -65,6 +68,9 @@
                     },
                     "location": {
                         "value": "[parameters('location')]"
+                    },
+                    "suffix":{
+                        "value":"[parameters('suffix')]"
                     }
                 }
             }
@@ -85,6 +91,9 @@
                     },
                     "location": {
                         "value": "[parameters('location')]"
+                    },
+                    "suffix":{
+                        "value":"[parameters('suffix')]"
                     }
                 }
             }
@@ -124,6 +133,9 @@
                     },
                     "nodeCount": {
                         "value": "[parameters('signerNodeCount')]"
+                    },
+                    "suffix":{
+                        "value":"[parameters('suffix')]"
                     }
                 }
             }
@@ -163,6 +175,9 @@
                     },
                     "generatorIp": {
                         "value": "[parameters('generatorIp')]"
+                    },
+                    "suffix":{
+                        "value":"[parameters('suffix')]"
                     }
                 }
             }

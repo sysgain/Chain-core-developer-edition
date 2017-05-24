@@ -7,11 +7,14 @@
         },
         "location": {
             "type": "string"
+        },
+        "suffix": {
+            "type": "string"
         }
     },
     "variables": {
-        "pipName": "[concat(parameters('pipSettings').pipName,'-',parameters('location'))]",
-        "pipDns": "[concat(parameters('pipSettings').pipDns,'-',parameters('location'))]",
+        "pipName": "[concat(parameters('pipSettings').pipName,'-',parameters('location'),'-',parameters('suffix'))]",
+        "pipDns": "[concat(parameters('pipSettings').pipDns,'-',parameters('suffix'))]",
         "location": "[parameters('location')]",
         "apiVersion": "[parameters('pipSettings').apiVersion]",
         "publicIPAllocationMethod": "[parameters('pipSettings').publicIPAllocationMethod]"

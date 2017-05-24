@@ -10,12 +10,15 @@
         },
         "nodeCount": {
             "type": "int"
+        },
+        "suffix":{
+            "type": "string"
         }
     },
     "variables": {
-        "pipName": "[concat(parameters('pipSettings').pipName,'-',parameters('location'))]",
+        "pipName": "[concat(parameters('pipSettings').pipName,'-',parameters('location'),'-',parameters('suffix'))]",
         "nodeCount": "[parameters('nodeCount')]",
-        "pipDns": "[concat(parameters('pipSettings').pipDns,'-',parameters('location'))]",
+        "pipDns": "[concat(parameters('pipSettings').pipDns,'-',parameters('suffix'))]",
         "apiVersion": "[parameters('pipSettings').apiVersion]",
         "publicIPAllocationMethod": "[parameters('pipSettings').publicIPAllocationMethod]"
     },

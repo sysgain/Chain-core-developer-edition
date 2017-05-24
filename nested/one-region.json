@@ -37,11 +37,12 @@
         }
     },
     "variables": {
-        "vnetDep": "[concat('vnetSetup-',parameters('location'))]",
-        "nsgDep": "[concat('nsgSetup-',parameters('location'))]",
-        "generatorDep": "[concat('generatorSetup-',parameters('location'))]",
-        "signerDep": "[concat('signerSetup-',parameters('location'))]",
-        "participantSetup": "[concat('participantSetup-',parameters('location'))]"
+        "uniqueStringReg1":"reg1",
+        "vnetDep": "[concat('vnetSetup-',parameters('location'),'-',variables('uniqueStringReg1'))]",
+        "nsgDep": "[concat('nsgSetup-',parameters('location'),'-',variables('uniqueStringReg1'))]",
+        "generatorDep": "[concat('generatorSetup-',parameters('location'),'-',variables('uniqueStringReg1'))]",
+        "signerDep": "[concat('signerSetup-',parameters('location'),'-',variables('uniqueStringReg1'))]",
+        "participantSetup": "[concat('participantSetup-',parameters('location'),'-',variables('uniqueStringReg1'))]"
     },
     "resources": [
         {
@@ -60,6 +61,9 @@
                     },
                     "location": {
                         "value": "[parameters('location')]"
+                    },
+                    "suffix":{
+                        "value":"[variables('uniqueStringReg1')]"
                     }
                 }
             }
@@ -80,6 +84,9 @@
                     },
                     "location": {
                         "value": "[parameters('location')]"
+                    },
+                    "suffix":{
+                        "value":"[variables('uniqueStringReg1')]"
                     }
                 }
             }
@@ -113,6 +120,9 @@
                     },
                     "generatorSettings": {
                         "value": "[parameters('generatorSettings')]"
+                    },
+                    "suffix":{
+                        "value":"[variables('uniqueStringReg1')]"
                     }
                 }
             }
@@ -153,6 +163,9 @@
                     },
                     "nodeCount": {
                         "value": "[parameters('signerNodeCountReg1')]"
+                    },
+                    "suffix":{
+                        "value":"[variables('uniqueStringReg1')]"
                     }
                 }
             }
@@ -193,6 +206,9 @@
                     },
                     "nodeCount": {
                         "value": "[parameters('participantNodeCountReg1')]"
+                    },
+                    "suffix":{
+                        "value":"[variables('uniqueStringReg1')]"
                     }
                 }
             }

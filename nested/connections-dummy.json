@@ -10,6 +10,12 @@
         },
         "location_2": {
             "type": "string"
+        },
+        "suffix": {
+            "type": "string"
+        },
+        "suffix2": {
+            "type": "string"
         }
     },
     "variables": {},
