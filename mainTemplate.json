@@ -60,14 +60,92 @@
         },
         "generatorVmSize": {
             "type": "string",
-            "defaultValue": "Standard_DS1_v2",
+            "defaultValue": "Standard_D2_v2",
+            "allowedValues": [
+                "Standard_A1",
+                "Standard_A2",
+                "Standard_A3",
+                "Standard_A4",
+                "Standard_A5",
+                "Standard_A6",
+                "Standard_A7",
+                "Standard_A1_v2",
+                "Standard_A2_v2",
+                "Standard_A4_v2",
+                "Standard_A8_v2",
+                "Standard_A2m_v2",
+                "Standard_A4m_v2",
+                "Standard_A8m_v2",
+                "Standard_D1",
+                "Standard_D2",
+                "Standard_D3",
+                "Standard_D4",
+                "Standard_D1_v2",
+                "Standard_D2_v2",
+                "Standard_D3_v2",
+                "Standard_D4_v2",
+                "Standard_D5_v2",
+                "Standard_DS1",
+                "Standard_DS2",
+                "Standard_DS3",
+                "Standard_DS4",
+                "Standard_DS1_v2",
+                "Standard_DS2_v2",
+                "Standard_DS3_v2",
+                "Standard_DS4_v2",
+                "Standard_DS5_v2",
+                "Standard_DS11_v2",
+                "Standard_DS12_v2",
+                "Standard_DS13_v2",
+                "Standard_DS14_v2",
+                "Standard_DS15_v2"
+            ],
             "metadata": {
                 "description": "Size of the virtual machine used for Block Generator VM"
             }
         },
         "signerAndParticipantVmSize": {
             "type": "string",
-            "defaultValue": "Standard_DS1_v2",
+            "defaultValue": "Standard_D2_v2",
+            "allowedValues": [
+                "Standard_A1",
+                "Standard_A2",
+                "Standard_A3",
+                "Standard_A4",
+                "Standard_A5",
+                "Standard_A6",
+                "Standard_A7",
+                "Standard_A1_v2",
+                "Standard_A2_v2",
+                "Standard_A4_v2",
+                "Standard_A8_v2",
+                "Standard_A2m_v2",
+                "Standard_A4m_v2",
+                "Standard_A8m_v2",
+                "Standard_D1",
+                "Standard_D2",
+                "Standard_D3",
+                "Standard_D4",
+                "Standard_D1_v2",
+                "Standard_D2_v2",
+                "Standard_D3_v2",
+                "Standard_D4_v2",
+                "Standard_D5_v2",
+                "Standard_DS1",
+                "Standard_DS2",
+                "Standard_DS3",
+                "Standard_DS4",
+                "Standard_DS1_v2",
+                "Standard_DS2_v2",
+                "Standard_DS3_v2",
+                "Standard_DS4_v2",
+                "Standard_DS5_v2",
+                "Standard_DS11_v2",
+                "Standard_DS12_v2",
+                "Standard_DS13_v2",
+                "Standard_DS14_v2",
+                "Standard_DS15_v2"
+            ],
             "metadata": {
                 "description": "Size of the virtual machine used for Signer and Participants VM(s)"
             }
@@ -111,7 +189,7 @@
         },
         "participantNodeCountReg2": {
             "type": "int",
-            "defaultValue": 0,
+            "defaultValue": 1,
             "allowedValues": [
                 0,
                 1
@@ -133,7 +211,7 @@
         },
         "participantNodeCountReg3": {
             "type": "int",
-            "defaultValue": 0,
+            "defaultValue": 1,
             "allowedValues": [
                 0,
                 1
@@ -179,7 +257,7 @@
         },
         "artifactsBaseUrl": {
             "type": "string",
-            "defaultValue": "https://raw.githubusercontent.com/sysgain/Chain-core-developer-edition/master",
+            "defaultValue": "https://raw.githubusercontent.com/sysgain/Chain-core-developer-edition/dev3",
             "metadata": {
                 "artifactsBaseUrl": "The base URL for dependent assets"
             }
@@ -254,7 +332,7 @@
         ],
         "generatorNicName": "[concat(variables('prefix'),'-gen-nic')]",
         "generatorVmName": "[concat(variables('prefix'),'-gen-vm')]",
-        "generatorIpName": "[concat(variables('prefix'),'-gen-pip')]",
+        "generatorPipName": "[concat(variables('prefix'),'-gen-pip')]",
         "signerNicName": "[concat(variables('prefix'),'-signer-nic')]",
         "signerVmName": "[concat(variables('prefix'),'-signer-vm')]",
         "availabilitySetsName": "[concat(variables('prefix'),'-signer-avset')]",
@@ -263,6 +341,7 @@
         "partVmName": "[concat(variables('prefix'),'-part-vm')]",
         "partAvailabilitySetsName": "[concat(variables('prefix'),'-part-avset')]",
         "partIpName": "[concat(variables('prefix'),'-part-pip')]",
+        "chaincorePort":"1999",
         "imageReference": {
             "publisher": "Canonical",
             "offer": "UbuntuServer",
@@ -314,11 +393,11 @@
             "partScriptUrl": "[concat(variables('baseUrl'),'/scripts/participant-script.sh')]",
             "logScriptUrl": "[concat(variables('baseUrl'),'/scripts/logging.sh')]"
         },
-        "gatewaySkuTypes":{
-            "Basic":"Basic",
-            "Standard":"Standard",
-            "HighPerformance":"HighPerformance",
-            "UltraPerformance":"UltraPerformance"
+        "gatewaySkuTypes": {
+            "Basic": "Basic",
+            "Standard": "Standard",
+            "HighPerformance": "HighPerformance",
+            "UltraPerformance": "UltraPerformance"
         },
         "vnetSettings": {
             "region1": {
@@ -399,11 +478,11 @@
                 "apiVersion": "[variables('apiVersion').networkApiVersion]",
                 "virtualNetworksName": "[variables('vnetSettings').region1.virtualNetworksName]",
                 "subnetName": "[variables('vnetSettings').region1.generatorSubnetName]",
-                "pipName": "[variables('generatorIpName')]",
+                "pipName": "[variables('generatorPipName')]",
                 "nsgName": "[variables('nsgSettings').nsgName]"
             },
             "genPipSettings": {
-                "pipName": "[variables('generatorIpName')]",
+                "pipName": "[variables('generatorPipName')]",
                 "pipDns": "[concat('generator-',variables('suffix'))]",
                 "apiVersion": "[variables('apiVersion').networkApiVersion]",
                 "publicIPAllocationMethod": "Dynamic"
@@ -663,8 +742,8 @@
                     "nsgSettings": {
                         "value": "[variables('nsgSettings')]"
                     },
-                    "generatorIp": {
-                        "value": "[reference(variables('oneRegionDep')).outputs.generatorIp.value]"
+                    "generatorFqdn": {
+                        "value": "[reference(variables('oneRegionDep')).outputs.generatorFqdn.value]"
                     },
                     "signerNodeCountReg2": {
                         "value": "[variables('signerNodeCountReg2')]"
@@ -695,17 +774,13 @@
         }
     ],
     "outputs": {
-        "generatorFqdn ":{
+        "SSH_to_generatorVM ": {
             "type": "string",
-            "value": "[reference(variables('oneRegionDep')).outputs.generatorIp.value]"
+            "value": "[concat('ssh ',parameters('adminUsername'),'@',reference(variables('oneRegionDep')).outputs.generatorFqdn.value)]"
         },
-        "SSH_to_generatorVM ":{
+        "generatorDashboardURL ": {
             "type": "string",
-            "value": "[concat('ssh ',parameters('adminUsername'),'@',reference(variables('oneRegionDep')).outputs.generatorIp.value)]"
-        },
-        "generatorDashboardURL ":{
-            "type": "string",
-            "value": "[concat('http://',reference(variables('oneRegionDep')).outputs.generatorIp.value,':1999')]"
+            "value": "[concat('http://',reference(variables('oneRegionDep')).outputs.generatorFqdn.value,':1999')]"
         }
     }
 }

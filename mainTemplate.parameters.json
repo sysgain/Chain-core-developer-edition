@@ -27,10 +27,10 @@
             "value": "GEN-SSHKEY"
         },
         "generatorVmSize": {
-            "value": "Standard_DS1_v2"
+            "value": "Standard_D1_v2"
         },
         "signerAndParticipantVmSize": {
-            "value": "Standard_DS1_v2"
+            "value": "Standard_D1_v2"
         },
         "signerNodeCountReg1": {
             "value": "1"
