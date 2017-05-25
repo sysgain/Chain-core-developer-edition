@@ -63,13 +63,13 @@
             "value": "123-43-55"
         },
         "servicePrinciple": {
-            "value": "service principal"
+            "value": "serviceprincipal"
         },
         "secretKey": {
             "value": "secretkey"
         },
         "baseUrl": {
-            "value": "https://raw.githubusercontent.com/sysgain/Chain-core-developer-edition/dev3"
+            "value": "https://raw.githubusercontent.com/sysgain/Chain-core-developer-edition/master"
         }
     }
 }
