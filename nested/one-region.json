@@ -158,8 +158,8 @@
                     "signerSettings": {
                         "value": "[parameters('signerSettings')]"
                     },
-                    "generatorIp": {
-                        "value": "[reference(variables('generatorDep')).outputs.generatorIp.value]"
+                    "generatorFqdn": {
+                        "value": "[reference(variables('generatorDep')).outputs.generatorFqdn.value]"
                     },
                     "nodeCount": {
                         "value": "[parameters('signerNodeCountReg1')]"
@@ -201,8 +201,8 @@
                     "partSettings": {
                         "value": "[parameters('participantSettings')]"
                     },
-                    "generatorIp": {
-                        "value": "[reference(variables('generatorDep')).outputs.generatorIp.value]"
+                    "generatorFqdn": {
+                        "value": "[reference(variables('generatorDep')).outputs.generatorFqdn.value]"
                     },
                     "nodeCount": {
                         "value": "[parameters('participantNodeCountReg1')]"
@@ -215,9 +215,9 @@
         }
     ],
     "outputs": {
-        "generatorIp": {
+        "generatorFqdn": {
             "type": "string",
-            "value": "[reference(variables('generatorDep')).outputs.generatorIp.value]"
+            "value": "[reference(variables('generatorDep')).outputs.generatorFqdn.value]"
         }
     }
 }

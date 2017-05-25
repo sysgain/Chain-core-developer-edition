@@ -17,7 +17,7 @@
         "signerSettings": {
             "type": "object"
         },
-        "generatorIp": {
+        "generatorFqdn": {
             "type": "string"
         },
         "nodeCount": {
@@ -164,8 +164,8 @@
                     "location": {
                         "value": "[parameters('location')]"
                     },
-                    "generatorIp": {
-                        "value": "[parameters('generatorIp')]"
+                    "generatorFqdn": {
+                        "value": "[parameters('generatorFqdn')]"
                     },
                     "nodeCount": {
                         "value": "[parameters('nodeCount')]"

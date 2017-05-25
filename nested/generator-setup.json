@@ -132,7 +132,7 @@
         }
     ],
     "outputs": {
-        "generatorIp": {
+        "generatorFqdn": {
             "type": "string",
             "value": "[reference(variables('generatorPipDep')).outputs.dnsAddress.value]"
         }

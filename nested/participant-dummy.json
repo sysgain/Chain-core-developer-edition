@@ -17,7 +17,7 @@
         "partSettings": {
             "type": "object"
         },
-        "generatorIp": {
+        "generatorFqdn": {
             "type": "string"
         },
         "nodeCount": {

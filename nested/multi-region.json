@@ -26,7 +26,7 @@
         "nsgSettings": {
             "type": "object"
         },
-        "generatorIp": {
+        "generatorFqdn": {
             "type": "string"
         },
         "signerNodeCountReg2": {
@@ -101,8 +101,8 @@
                     "nsgSettings": {
                         "value": "[parameters('nsgSettings')]"
                     },
-                    "generatorIp": {
-                        "value": "[parameters('generatorIp')]"
+                    "generatorFqdn": {
+                        "value": "[parameters('generatorFqdn')]"
                     },
                     "signerNodeCount": {
                         "value": "[parameters('signerNodeCountReg2')]"
@@ -157,8 +157,8 @@
                     "nsgSettings": {
                         "value": "[parameters('nsgSettings')]"
                     },
-                    "generatorIp": {
-                        "value": "[parameters('generatorIp')]"
+                    "generatorFqdn": {
+                        "value": "[parameters('generatorFqdn')]"
                     },
                     "signerNodeCount": {
                         "value": "[parameters('signerNodeCountReg3')]"
