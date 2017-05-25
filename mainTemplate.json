@@ -341,7 +341,7 @@
         "partVmName": "[concat(variables('prefix'),'-part-vm')]",
         "partAvailabilitySetsName": "[concat(variables('prefix'),'-part-avset')]",
         "partIpName": "[concat(variables('prefix'),'-part-pip')]",
-        "chaincorePort": "1999",
+        "chaincorePort": 1999,
         "imageReference": {
             "publisher": "Canonical",
             "offer": "UbuntuServer",
