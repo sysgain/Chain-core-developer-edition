@@ -7,6 +7,7 @@ tenatid=$4
 subscriptionid=$5
 keyvaultname=$6
 participantclienttokenkeyname=$7
+portnumber=$8
 # install prerequisites 
 echo "===========================================Installing prerequisites============================================"
 sudo apt-get update 
@@ -29,7 +30,7 @@ generatornetworktoken=`az keyvault secret show --name networkToken --vault-name 
 blockchainid=`az keyvault secret show --name blockchainid --vault-name $keyvaultname | grep "value" | cut -d "\"" -f4`
 docker pull chaincore/developer:ivy-latest
 # run chaincore docker image
-docker run -d -p 1999:1999 chaincore/developer:ivy-latest
+docker run -d -p $portnumber:$portnumber chaincore/developer:ivy-latest
 sleep 60
 echo "===========================================Extracting container Id=============================================="
 containerId=`docker ps | cut -d " " -f1 | sed 1d`
@@ -39,7 +40,7 @@ docker exec -itd $containerId /usr/bin/chain/cored
 echo "===========================================Genarating participant client token==================================="
 participantctoken=`docker logs $containerId | grep "^client:" | uniq`
 #signer config
-response=`docker exec $containerId /usr/bin/chain/corectl config -t $generatornetworktoken  $blockchainid http://$generatornodeip:1999`
+response=`docker exec $containerId /usr/bin/chain/corectl config -t $generatornetworktoken  $blockchainid http://$generatornodeip:$portnumber`
 docker restart $containerId
 echo "===========================================Storing participant token to the Azure Key Vault======================"
 az keyvault secret set --name $participantclienttokenkeyname --vault-name $keyvaultname --value $participantctoken
