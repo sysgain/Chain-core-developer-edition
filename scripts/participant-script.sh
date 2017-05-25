@@ -40,7 +40,7 @@ docker exec -itd $containerId /usr/bin/chain/cored
 echo "===========================================Genarating participant client token==================================="
 participantctoken=`docker logs $containerId | grep "^client:" | uniq`
 #signer config
-response=`docker exec $containerId /usr/bin/chain/corectl config -t $generatornetworktoken  $blockchainid http://$generatornodeip:$portnumber`
+response=`docker exec $containerId /usr/bin/chain/corectl config -t $generatornetworktoken $blockchainid http://$generatornodeip:$portnumber`
 docker restart $containerId
 echo "===========================================Storing participant token to the Azure Key Vault======================"
 az keyvault secret set --name $participantclienttokenkeyname --vault-name $keyvaultname --value $participantctoken
