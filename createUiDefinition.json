@@ -852,6 +852,7 @@
         ],
         "outputs": {
             "regionCount": "[steps('regCnt').regionCnt]",
+            "location": "[location()]",
             "location_1": "[steps('regCnt').loc1]",
             "location_2": "[steps('regCnt').loc2]",
             "location_3": "[steps('regCnt').loc3]",
