@@ -1,0 +1,62 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "vnetSettings": {
+            "type": "object"
+        },
+        "location": {
+            "type": "string"
+        },
+        "suffix": {
+            "type": "string"
+        }
+    },
+    "variables": {
+        "virtualNetworksName": "[concat(parameters('vnetSettings').virtualNetworksName,'-',parameters('location'),'-',parameters('suffix'))]",
+        "location": "[parameters('location')]",
+        "generatorSubnetName": "[parameters('vnetSettings').subnet1Name]",
+        "subnet2Name": "[parameters('vnetSettings').subnet2Name]",
+        "subnet3Name": "[parameters('vnetSettings').subnet3Name]",
+        "vnetRange": "[parameters('vnetSettings').vnetRange]",
+        "subnet1Range": "[parameters('vnetSettings').subnet1Range]",
+        "subnet2Range": "[parameters('vnetSettings').subnet2Range]",
+        "subnet3Range": "[parameters('vnetSettings').subnet3Range]",
+        "apiVersion": "[parameters('vnetSettings').apiVersion]"
+    },
+    "resources": [
+        {
+            "type": "Microsoft.Network/virtualNetworks",
+            "name": "[concat(variables('virtualNetworksName'))]",
+            "apiVersion": "[variables('apiVersion')]",
+            "location": "[variables('location')]",
+            "properties": {
+                "addressSpace": {
+                    "addressPrefixes": [
+                        "[variables('vnetRange')]"
+                    ]
+                },
+                "subnets": [
+                    {
+                        "name": "[variables('generatorSubnetName')]",
+                        "properties": {
+                            "addressPrefix": "[variables('subnet1Range')]"
+                        }
+                    },
+                    {
+                        "name": "[variables('subnet2Name')]",
+                        "properties": {
+                            "addressPrefix": "[variables('subnet2Range')]"
+                        }
+                    },
+                    {
+                        "name": "[variables('subnet3Name')]",
+                        "properties": {
+                            "addressPrefix": "[variables('subnet3Range')]"
+                        }
+                    }
+                ]
+            }
+        }
+    ]
+}

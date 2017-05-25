@@ -25,7 +25,8 @@
         "secretKey": "[parameters('genExtensionSettings').secretKey]",
         "tenantId": "[parameters('genExtensionSettings').tenantId]",
         "subscriptionId": "[parameters('genExtensionSettings').subscriptionId]",
-        "keyVaultName": "[parameters('genExtensionSettings').keyVaultName]"
+        "keyVaultName": "[parameters('genExtensionSettings').keyVaultName]",
+        "portNumber": "[parameters('genExtensionSettings').portNumber]"
     },
     "resources": [
         {
@@ -44,7 +45,7 @@
                     ]
                 },
                 "protectedSettings": {
-                    "commandToExecute": "[concat('sh ', variables('logScriptFileName'), ' \"', variables('adminUsername'), '\" \"' , variables('baseUrl'), '\" \"' , variables('generatorScriptFileName'), '\" \"' , variables('networkTokenName'), '\" \"' , variables('servicePrincipal'), '\" \"' , variables('secretKey'), '\" \"' , variables('tenantId'), '\" \"' , variables('subscriptionId'), '\" \"' , variables('keyVaultName'),'\"')]"
+                    "commandToExecute": "[concat('sh ', variables('logScriptFileName'), ' \"', variables('adminUsername'), '\" \"' , variables('baseUrl'), '\" \"' , variables('generatorScriptFileName'), '\" \"' , variables('networkTokenName'), '\" \"' , variables('servicePrincipal'), '\" \"' , variables('secretKey'), '\" \"' , variables('tenantId'), '\" \"' , variables('subscriptionId'), '\" \"' , variables('keyVaultName'),'\" \"' ,variables('portNumber'),'\"')]"
                 }
             }
         }
