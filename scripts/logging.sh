@@ -35,7 +35,7 @@ for LOOPCOUNT in `seq 1 5`; do
     elif [ "new$SCRIPTNAME" = "newsigner-script.sh" ]; then
        sudo -u $AZUREUSER /bin/bash /home/$AZUREUSER/newsigner-script.sh "$4" "$5" "$6" "$7" "$8" "$9"  "${10}" "${11}">> $CONFIG_LOG_FILE_PATH 2>&1;
     elif [ "new$SCRIPTNAME" = "newparticipant-script.sh" ]; then
-       sudo -u $AZUREUSER /bin/bash /home/$AZUREUSER/newparticipant-script.sh "$4" "$5" "$6" "$7" "$8" "$9" "${10} "${11}"">> $CONFIG_LOG_FILE_PATH 2>&1;
+       sudo -u $AZUREUSER /bin/bash /home/$AZUREUSER/newparticipant-script.sh "$4" "$5" "$6" "$7" "$8" "$9" "${10}" "${11}">> $CONFIG_LOG_FILE_PATH 2>&1;
     else
       exit 1
     fi
