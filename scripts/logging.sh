@@ -4,7 +4,7 @@
 ##############################################
 # Validate that all arguments are supplied
 
-if [ $# -lt 9 ]; then echo "Insufficient parameters supplied. Exiting"; exit 1; fi
+if [ $# -lt 10 ]; then echo "Insufficient parameters supplied. Exiting"; exit 1; fi
 
 AZUREUSER=$1;
 BASE_URL=$2
@@ -31,11 +31,11 @@ cat ${SCRIPTNAME} | tr -d '\r' > new${SCRIPTNAME}
 
 for LOOPCOUNT in `seq 1 5`; do
     if [ "new$SCRIPTNAME" = "newgenerator-script.sh" ]; then
-       sudo -u $AZUREUSER /bin/bash /home/$AZUREUSER/newgenerator-script.sh "$4" "$5" "$6" "$7" "$8" "$9" >> $CONFIG_LOG_FILE_PATH 2>&1;
+       sudo -u $AZUREUSER /bin/bash /home/$AZUREUSER/newgenerator-script.sh "$4" "$5" "$6" "$7" "$8" "$9" "${10}" >> $CONFIG_LOG_FILE_PATH 2>&1;
     elif [ "new$SCRIPTNAME" = "newsigner-script.sh" ]; then
-       sudo -u $AZUREUSER /bin/bash /home/$AZUREUSER/newsigner-script.sh "$4" "$5" "$6" "$7" "$8" "$9"  "${10}">> $CONFIG_LOG_FILE_PATH 2>&1;
+       sudo -u $AZUREUSER /bin/bash /home/$AZUREUSER/newsigner-script.sh "$4" "$5" "$6" "$7" "$8" "$9"  "${10}" "${11}">> $CONFIG_LOG_FILE_PATH 2>&1;
     elif [ "new$SCRIPTNAME" = "newparticipant-script.sh" ]; then
-       sudo -u $AZUREUSER /bin/bash /home/$AZUREUSER/newparticipant-script.sh "$4" "$5" "$6" "$7" "$8" "$9" "${10}">> $CONFIG_LOG_FILE_PATH 2>&1;
+       sudo -u $AZUREUSER /bin/bash /home/$AZUREUSER/newparticipant-script.sh "$4" "$5" "$6" "$7" "$8" "$9" "${10} "${11}"">> $CONFIG_LOG_FILE_PATH 2>&1;
     else
       exit 1
     fi
