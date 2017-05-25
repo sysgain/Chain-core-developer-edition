@@ -15,7 +15,7 @@
     "variables": {
         "virtualNetworksName": "[concat(parameters('vnetSettings').virtualNetworksName,'-',parameters('location'),'-',parameters('suffix'))]",
         "location": "[parameters('location')]",
-        "generatorSubnetName": "[parameters('vnetSettings').generatorSubnetName]",
+        "generatorSubnetName": "[parameters('vnetSettings').subnet1Name]",
         "subnet2Name": "[parameters('vnetSettings').subnet2Name]",
         "subnet3Name": "[parameters('vnetSettings').subnet3Name]",
         "vnetRange": "[parameters('vnetSettings').vnetRange]",
