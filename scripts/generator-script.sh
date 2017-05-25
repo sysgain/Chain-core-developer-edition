@@ -23,7 +23,7 @@ sudo apt-get install azure-cli
 # pull chaincore docker image
 docker pull chaincore/developer:ivy-latest
 # run chaincore docker image
-docker run -d -p $portnumber:$portnumber chaincore/developer:ivy-latest
+docker run -d -p $portnumber:1999 chaincore/developer:ivy-latest
 sleep 60
 echo "===========================================Extracting container Id==========================================="
 containerId=`docker ps | cut -d " " -f1 | sed 1d`

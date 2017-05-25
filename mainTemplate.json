@@ -789,7 +789,7 @@
         },
         "generatorDashboardURL ": {
             "type": "string",
-            "value": "[concat('http://',reference(variables('oneRegionDep')).outputs.generatorFqdn.value,':1999')]"
+            "value": "[concat('http://',reference(variables('oneRegionDep')).outputs.generatorFqdn.value,':',variables('chaincorePort'))]"
         }
     }
 }
