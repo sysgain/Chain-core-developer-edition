@@ -68,7 +68,7 @@
         "secretKey": {
             "value": "secretkey"
         },
-        "artifactsBaseUrl": {
+        "baseUrl": {
             "value": "https://raw.githubusercontent.com/sysgain/Chain-core-developer-edition/dev3"
         }
     }
