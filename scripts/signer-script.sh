@@ -42,7 +42,7 @@ echo "============================================Genarating signer client token
 signerctoken=`docker logs $containerId | grep "^client:" | uniq`
 signerctoken1=`echo $signerctoken | cut -c8-`
 #signer config
-response=`docker exec $containerId /usr/bin/chain/corectl config -t $generatornetworktoken -k $signerctoken1 $blockchainid http://$generatornodeip:1999`
+response=`docker exec $containerId /usr/bin/chain/corectl config -t $generatornetworktoken -k $signerctoken1 $blockchainid http://$generatornodeip:$portnumber`
 docker restart $containerId
 echo "======================================Storing signer token to the Azure Key Vault==============================="
 az keyvault secret set --name $signerclienttokenkeyname --vault-name $keyvaultname --value $signerctoken
