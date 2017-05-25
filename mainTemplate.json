@@ -325,10 +325,10 @@
             "connections.json"
         ],
         "vnetTemplate": [
-            "vnetOne.json",
-            "vnetOne.json",
-            "vnet.json",
-            "vnet.json"
+            "vnet-one.json",
+            "vnet-one.json",
+            "vnet-one-multi.json",
+            "vnet-one-multi.json"
         ],
         "generatorNicName": "[concat(variables('prefix'),'-gen-nic')]",
         "generatorVmName": "[concat(variables('prefix'),'-gen-vm')]",
@@ -341,7 +341,7 @@
         "partVmName": "[concat(variables('prefix'),'-part-vm')]",
         "partAvailabilitySetsName": "[concat(variables('prefix'),'-part-avset')]",
         "partIpName": "[concat(variables('prefix'),'-part-pip')]",
-        "chaincorePort":"1999",
+        "chaincorePort": "1999",
         "imageReference": {
             "publisher": "Canonical",
             "offer": "UbuntuServer",
@@ -385,7 +385,7 @@
             "multiRegionURL": "[concat(variables('baseUrl'),'/nested/',variables('multiTemplate')[variables('totalCountReg2and3')])]",
             "vpnGwtPipSetupURL": "[concat(variables('baseUrl'),'/nested/vpn-gwt-pip.json')]",
             "vnetSetupURL": "[concat(variables('baseUrl'),'/nested/',variables('vnetTemplate')[variables('regionCount')])]",
-            "vnetmultiSetupURL": "[concat(variables('baseUrl'),'/nested/vnetmulti.json')]",
+            "vnetmultiSetupURL": "[concat(variables('baseUrl'),'/nested/vnet-multi.json')]",
             "keyVaultSetupURL": "[concat(variables('baseUrl'),'/nested/keyvault.json')]",
             "avaialabilitySetSetupURL": "[concat(variables('baseUrl'),'/nested/availability-set.json')]",
             "signerScriptUrl": "[concat(variables('baseUrl'),'/scripts/signer-script.sh')]",
@@ -403,33 +403,39 @@
             "region1": {
                 "regionCount": "[parameters('regionCount')]",
                 "virtualNetworksName": "[concat(variables('prefix'),'-vnet')]",
-                "generatorSubnetName": "gen-subnet",
-                "subnetName": "subnet",
+                "subnet1Name": "generator-subnet",
+                "subnet2Name": "signer-subnet",
+                "subnet3Name": "participant-subnet",
                 "vnetRange": "10.1.0.0/16",
                 "subnet1Range": "10.1.1.0/24",
                 "subnet2Range": "10.1.2.0/24",
+                "subnet3Range": "10.1.3.0/24",
                 "gatewaySubnetRange": "10.1.0.0/24",
                 "apiVersion": "[variables('apiVersion').networkApiVersion]"
             },
             "region2": {
                 "regionCount": "[parameters('regionCount')]",
                 "virtualNetworksName": "[concat(variables('prefix'),'-vnet')]",
-                "generatorSubnetName": "gen-subnet",
-                "subnetName": "subnet",
+                "subnet1Name": "generator-subnet",
+                "subnet2Name": "signer-subnet",
+                "subnet3Name": "participant-subnet",
                 "vnetRange": "10.2.0.0/16",
                 "subnet1Range": "10.2.1.0/24",
                 "subnet2Range": "10.2.2.0/24",
+                "subnet3Range": "10.2.3.0/24",
                 "gatewaySubnetRange": "10.2.0.0/24",
                 "apiVersion": "[variables('apiVersion').networkApiVersion]"
             },
             "region3": {
                 "regionCount": "[parameters('regionCount')]",
                 "virtualNetworksName": "[concat(variables('prefix'),'-vnet')]",
-                "generatorSubnetName": "gen-subnet",
-                "subnetName": "subnet",
+                "subnet1Name": "generator-subnet",
+                "subnet2Name": "signer-subnet",
+                "subnet3Name": "participant-subnet",
                 "vnetRange": "10.3.0.0/16",
                 "subnet1Range": "10.3.1.0/24",
                 "subnet2Range": "10.3.2.0/24",
+                "subnet3Range": "10.3.3.0/24",
                 "gatewaySubnetRange": "10.3.0.0/24",
                 "apiVersion": "[variables('apiVersion').networkApiVersion]"
             }
@@ -477,7 +483,7 @@
                 "privateIPAllocationMethod": "Dynamic",
                 "apiVersion": "[variables('apiVersion').networkApiVersion]",
                 "virtualNetworksName": "[variables('vnetSettings').region1.virtualNetworksName]",
-                "subnetName": "[variables('vnetSettings').region1.generatorSubnetName]",
+                "subnetName": "[variables('vnetSettings').region1.subnet1Name]",
                 "pipName": "[variables('generatorPipName')]",
                 "nsgName": "[variables('nsgSettings').nsgName]"
             },
@@ -533,7 +539,7 @@
                 "apiVersion": "[variables('apiVersion').networkApiVersion]",
                 "pipName": "[variables('signerIpName')]",
                 "virtualNetworksName": "[variables('vnetSettings').region1.virtualNetworksName]",
-                "subnetName": "[variables('vnetSettings').region1.subnetName]",
+                "subnetName": "[variables('vnetSettings').region1.subnet2Name]",
                 "nsgName": "[variables('nsgSettings').nsgName]"
             },
             "signerPipSettings": {
@@ -588,7 +594,7 @@
                 "apiVersion": "[variables('apiVersion').networkApiVersion]",
                 "pipName": "[variables('partIpName')]",
                 "virtualNetworksName": "[variables('vnetSettings').region1.virtualNetworksName]",
-                "subnetName": "[variables('vnetSettings').region1.subnetName]",
+                "subnetName": "[variables('vnetSettings').region1.subnet3Name]",
                 "nsgName": "[variables('nsgSettings').nsgName]"
             },
             "partPipSettings": {
