@@ -7,6 +7,7 @@ tenatid=$4
 subscriptionid=$5
 keyvaultname=$6
 signerclienttokenkeyname=$7
+portnumber=$8
 # install prerequisites 
 echo "============================================Installing prerequisites============================================"
 sudo apt-get update 
@@ -30,7 +31,7 @@ blockchainid=`az keyvault secret show --name blockchainid --vault-name $keyvault
 # pull chaincore docker image
 docker pull chaincore/developer:ivy-latest
 # run chaincore docker image
-docker run -d -p 1999:1999 chaincore/developer:ivy-latest
+docker run -d -p $portnumber:$portnumber chaincore/developer:ivy-latest
 sleep 60
 echo "============================================Extracting container Id============================================="
 containerId=`docker ps | cut -d " " -f1 | sed 1d`
