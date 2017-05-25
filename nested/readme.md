@@ -1,1 +1,0 @@
-# Chain-core-developer-edition
