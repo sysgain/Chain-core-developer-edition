@@ -4,7 +4,7 @@
     "parameters": {
         "location": {
             "type": "string",
-            "defaultValue": ""
+            "defaultValue": "westus"
         },
         "regionCount": {
             "type": "int",
@@ -50,7 +50,7 @@
         },
         "adminPassword": {
             "type": "securestring",
-            "defaultValue": "",
+            "defaultValue": "Ashpassword123",
             "metadata": {
                 "description": "Administrator password for each deployed VM"
             }
@@ -162,7 +162,7 @@
         },
         "VPNSharedKey": {
             "type": "string",
-            "defaultValue": "",
+            "defaultValue": "Ashpassword123",
             "metadata": {
                 "description": "VPN shared key is used by gateway connections. It could be any passphrase"
             }
@@ -190,6 +190,7 @@
         },
         "baseUrl": {
             "type": "string",
+            "defaultValue": "https://raw.githubusercontent.com/sysgain/Chain-core-developer-edition/master",
             "metadata": {
                 "artifactsBaseUrl": "The base URL for dependent assets"
             }
