@@ -48,8 +48,8 @@
         "steps": [
             {
                 "name": "regCnt",
-                "label": "Deployment Regions",
-                "bladeTitle": "Deployment Regions",
+                "label": "Deployment regions",
+                "bladeTitle": "Deployment regions",
                 "subLabel": {
                     "preValidation": "Required",
                     "postValidation": "Done"
@@ -860,8 +860,8 @@
             },
             {
                 "name": "otherSettings",
-                "label": "Other Settings",
-                "bladeTitle": "Other Settings",
+                "label": "Other settings",
+                "bladeTitle": "Other settings",
                 "subLabel": {
                     "preValidation": "Required",
                     "postValidation": "Done"
