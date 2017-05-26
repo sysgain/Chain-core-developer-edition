@@ -63,7 +63,7 @@
             "value": "GEN-VPNKEY"
         },
         "objectId": {
-            "value": "123-43-55"
+            "value": "objectId"
         },
         "servicePrinciple": {
             "value": "serviceprincipal"
