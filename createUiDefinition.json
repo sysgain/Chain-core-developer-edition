@@ -429,36 +429,7 @@
                     "preValidation": "Required",
                     "postValidation": "Done"
                 },
-                "elements": [
-                    {
-                        "name": "managedDiskType",
-                        "type": "Microsoft.Common.Section",
-                        "label": "Storage settings",
-                        "elements": [
-                            {
-                                "name": "mngDiskType",
-                                "type": "Microsoft.Common.DropDown",
-                                "label": "Managed disks storage type",
-                                "toolTip": "Managed Disks is an abstraction of current Standard and Premium storage disk in Azure Storage. You only need to specify the type (Standard or Premium) you need, in your selected Azure region, and Azure will create and manage the Disk accordingly.",
-                                "defaultValue": "Standard (HDD)",
-                                "constraints": {
-                                    "required": true,
-                                    "allowedValues": [
-                                        {
-                                            "label": "Standard (HDD)",
-                                            "value": "Standard_LRS"
-                                        },
-                                        {
-                                            "label": "Premium (SSD)",
-                                            "value": "Premium_LRS"
-                                        }
-                                    ]
-                                },
-                                "visible": true
-                            }
-                        ],
-                        "visible": true
-                    },
+                "elements": [    
                     {
                         "name": "vmCountReg1",
                         "type": "Microsoft.Common.Section",
@@ -626,152 +597,264 @@
                         "visible": "[equals(steps('regCnt').regionCnt, 3)]"
                     },
                     {
-                        "name": "generatorVmSizeHDD",
-                        "type": "Microsoft.Compute.SizeSelector",
-                        "label": "Block Generator Virtual Machine size",
-                        "recommendedSizes": [
-                            "Standard_D1_v2",
-                            "Standard_D2_v2",
-                            "Standard_D3_v2"
+                        "name": "managedDiskType",
+                        "type": "Microsoft.Common.Section",
+                        "label": "Storage settings",
+                        "elements": [
+                            {
+                                "name": "mngDiskType",
+                                "type": "Microsoft.Common.DropDown",
+                                "label": "Managed disks storage type",
+                                "toolTip": "Managed Disks is an abstraction of current Standard and Premium storage disk in Azure Storage. You only need to specify the type (Standard or Premium) you need, in your selected Azure region, and Azure will create and manage the Disk accordingly.",
+                                "defaultValue": "Standard (HDD)",
+                                "constraints": {
+                                    "required": true,
+                                    "allowedValues": [
+                                        {
+                                            "label": "Standard (HDD)",
+                                            "value": "Standard_LRS"
+                                        },
+                                        {
+                                            "label": "Premium (SSD)",
+                                            "value": "Premium_LRS"
+                                        }
+                                    ]
+                                },
+                                "visible": true
+                            }
                         ],
-                        "constraints": {
-                            "allowedSizes": [
-                                "Standard_A1",
-                                "Standard_A2",
-                                "Standard_A3",
-                                "Standard_A4",
-                                "Standard_A5",
-                                "Standard_A6",
-                                "Standard_A7",
-                                "Standard_A1_v2",
-                                "Standard_A2_v2",
-                                "Standard_A4_v2",
-                                "Standard_A8_v2",
-                                "Standard_A2m_v2",
-                                "Standard_A4m_v2",
-                                "Standard_A8m_v2",
-                                "Standard_D1",
-                                "Standard_D2",
-                                "Standard_D3",
-                                "Standard_D4",
-                                "Standard_D1_v2",
-                                "Standard_D2_v2",
-                                "Standard_D3_v2",
-                                "Standard_D4_v2",
-                                "Standard_D5_v2"
-                            ]
-                        },
-                        "osPlatform": "Linux",
-                        "visible": "[equals(steps('vmCount').managedDiskType.mngDiskType, 'Standard_LRS')]"
+                        "visible": true
                     },
                     {
-                        "name": "signerVmSizeHDD",
-                        "type": "Microsoft.Compute.SizeSelector",
-                        "label": "Signer and Participant Virtual Machine size",
-                        "recommendedSizes": [
-                            "Standard_D1_v2",
-                            "Standard_D2_v2",
-                            "Standard_D3_v2"
-                        ],
-                        "constraints": {
-                            "allowedSizes": [
-                                "Standard_A1",
-                                "Standard_A2",
-                                "Standard_A3",
-                                "Standard_A4",
-                                "Standard_A5",
-                                "Standard_A6",
-                                "Standard_A7",
-                                "Standard_A1_v2",
-                                "Standard_A2_v2",
-                                "Standard_A4_v2",
-                                "Standard_A8_v2",
-                                "Standard_A2m_v2",
-                                "Standard_A4m_v2",
-                                "Standard_A8m_v2",
-                                "Standard_D1",
-                                "Standard_D2",
-                                "Standard_D3",
-                                "Standard_D4",
-                                "Standard_D1_v2",
-                                "Standard_D2_v2",
-                                "Standard_D3_v2",
-                                "Standard_D4_v2",
-                                "Standard_D5_v2"
-                            ]
-                        },
-                        "osPlatform": "Linux",
-                        "visible": "[equals(steps('vmCount').managedDiskType.mngDiskType, 'Standard_LRS')]",
-                        "count": "[add(add(coalesce(steps('vmCount').vmCountReg3.signerVmCountReg3,0),coalesce(steps('vmCount').vmCountReg3.partVmCountReg3,0)),add(add(coalesce(steps('vmCount').vmCountReg2.signerVmCountReg2,0),coalesce(steps('vmCount').vmCountReg2.partVmCountReg2,0)),add(coalesce(steps('vmCount').vmCountReg1.signerVmCountReg1,0),coalesce(steps('vmCount').vmCountReg1.partVmCountReg1,0))))]"
-                    },
-                    {
-                        "name": "generatorVmSizeSSD",
-                        "type": "Microsoft.Compute.SizeSelector",
-                        "label": "Block Generator Virtual Machine size",
-                        "recommendedSizes": [
-                            "Standard_DS1_v2",
-                            "Standard_DS2_v2",
-                            "Standard_DS3_v2"
-                        ],
-                        "constraints": {
-                            "allowedSizes": [
-                                "Standard_DS1",
-                                "Standard_DS2",
-                                "Standard_DS3",
-                                "Standard_DS4",
-                                "Standard_DS11",
-                                "Standard_DS12",
-                                "Standard_DS13",
-                                "Standard_DS14",
-                                "Standard_DS1_v2",
-                                "Standard_DS2_v2",
-                                "Standard_DS3_v2",
-                                "Standard_DS4_v2",
-                                "Standard_DS5_v2",
-                                "Standard_DS11_v2",
-                                "Standard_DS12_v2",
-                                "Standard_DS13_v2",
-                                "Standard_DS14_v2",
-                                "Standard_DS15_v2"
-                            ]
-                        },
-                        "osPlatform": "Linux",
-                        "visible": "[equals(steps('vmCount').managedDiskType.mngDiskType, 'Premium_LRS')]"
-                    },
-                    {
-                        "name": "signerVmSizeSSD",
-                        "type": "Microsoft.Compute.SizeSelector",
-                        "label": "Signer and Participant Virtual Machine size",
-                        "recommendedSizes": [
-                            "Standard_DS1_v2",
-                            "Standard_DS2_v2",
-                            "Standard_DS3_v2"
-                        ],
-                        "constraints": {
-                            "allowedSizes": [
-                                "Standard_DS1",
-                                "Standard_DS2",
-                                "Standard_DS3",
-                                "Standard_DS4",
-                                "Standard_DS11",
-                                "Standard_DS12",
-                                "Standard_DS13",
-                                "Standard_DS14",
-                                "Standard_DS1_v2",
-                                "Standard_DS2_v2",
-                                "Standard_DS3_v2",
-                                "Standard_DS4_v2",
-                                "Standard_DS5_v2",
-                                "Standard_DS11_v2",
-                                "Standard_DS12_v2",
-                                "Standard_DS13_v2",
-                                "Standard_DS14_v2",
-                                "Standard_DS15_v2"
-                            ]
-                        },
-                        "osPlatform": "Linux",
-                        "visible": "[equals(steps('vmCount').managedDiskType.mngDiskType, 'Premium_LRS')]",
-                        "count": "[add(add(coalesce(steps('vmCount').vmCountReg3.signerVmCountReg3,0),coalesce(steps('vmCount').vmCountReg3.partVmCountReg3,0)),add(add(coalesce(steps('vmCount').vmCountReg2.signerVmCountReg2,0),coalesce(steps('vmCount').vmCountReg2.partVmCountReg2,0)),add(coalesce(steps('vmCount').vmCountReg1.signerVmCountReg1,0),coalesce(steps('vmCount').vmCountReg1.partVmCountReg1,0))))]"
+                        "name": "vmSizeSelector",
+                        "type": "Microsoft.Common.Section",
+                        "label": "Virtual machine size",
+                        "visible": true,
+                        "elements": [
+                            {
+                                "name": "generatorVmSizeHDD",
+                                "type": "Microsoft.Compute.SizeSelector",
+                                "label": "Block Generator Virtual Machine size",
+                                "recommendedSizes": [
+                                    "Standard_D1_v2",
+                                    "Standard_D2_v2",
+                                    "Standard_D3_v2"
+                                ],
+                                "constraints": {
+                                    "allowedSizes": [
+                                        "Standard_A1",
+                                        "Standard_A2",
+                                        "Standard_A3",
+                                        "Standard_A4",
+                                        "Standard_A5",
+                                        "Standard_A6",
+                                        "Standard_A7",
+                                        "Standard_A1_v2",
+                                        "Standard_A2_v2",
+                                        "Standard_A4_v2",
+                                        "Standard_A8_v2",
+                                        "Standard_A2m_v2",
+                                        "Standard_A4m_v2",
+                                        "Standard_A8m_v2",
+                                        "Standard_D1",
+                                        "Standard_D2",
+                                        "Standard_D3",
+                                        "Standard_D4",
+                                        "Standard_D1_v2",
+                                        "Standard_D2_v2",
+                                        "Standard_D3_v2",
+                                        "Standard_D4_v2",
+                                        "Standard_D5_v2"
+                                    ]
+                                },
+                                "osPlatform": "Linux",
+                                "visible": "[equals(steps('vmCount').managedDiskType.mngDiskType, 'Standard_LRS')]"
+                            },
+                            {
+                                "name": "generatorVmSizeSSD",
+                                "type": "Microsoft.Compute.SizeSelector",
+                                "label": "Block Generator virtual machine size",
+                                "recommendedSizes": [
+                                    "Standard_DS1_v2",
+                                    "Standard_DS2_v2",
+                                    "Standard_DS3_v2"
+                                ],
+                                "constraints": {
+                                    "allowedSizes": [
+                                        "Standard_DS1",
+                                        "Standard_DS2",
+                                        "Standard_DS3",
+                                        "Standard_DS4",
+                                        "Standard_DS11",
+                                        "Standard_DS12",
+                                        "Standard_DS13",
+                                        "Standard_DS14",
+                                        "Standard_DS1_v2",
+                                        "Standard_DS2_v2",
+                                        "Standard_DS3_v2",
+                                        "Standard_DS4_v2",
+                                        "Standard_DS5_v2",
+                                        "Standard_DS11_v2",
+                                        "Standard_DS12_v2",
+                                        "Standard_DS13_v2",
+                                        "Standard_DS14_v2",
+                                        "Standard_DS15_v2"
+                                    ]
+                                },
+                                "osPlatform": "Linux",
+                                "visible": "[equals(steps('vmCount').managedDiskType.mngDiskType, 'Premium_LRS')]"
+                            },
+                            {
+                                "name": "signerVmSizeHDD",
+                                "type": "Microsoft.Compute.SizeSelector",
+                                "label": "Signer virtual Machine size",
+                                "recommendedSizes": [
+                                    "Standard_D1_v2",
+                                    "Standard_D2_v2",
+                                    "Standard_D3_v2"
+                                ],
+                                "constraints": {
+                                    "allowedSizes": [
+                                        "Standard_A1",
+                                        "Standard_A2",
+                                        "Standard_A3",
+                                        "Standard_A4",
+                                        "Standard_A5",
+                                        "Standard_A6",
+                                        "Standard_A7",
+                                        "Standard_A1_v2",
+                                        "Standard_A2_v2",
+                                        "Standard_A4_v2",
+                                        "Standard_A8_v2",
+                                        "Standard_A2m_v2",
+                                        "Standard_A4m_v2",
+                                        "Standard_A8m_v2",
+                                        "Standard_D1",
+                                        "Standard_D2",
+                                        "Standard_D3",
+                                        "Standard_D4",
+                                        "Standard_D1_v2",
+                                        "Standard_D2_v2",
+                                        "Standard_D3_v2",
+                                        "Standard_D4_v2",
+                                        "Standard_D5_v2"
+                                    ]
+                                },
+                                "osPlatform": "Linux",
+                                "visible": "[equals(steps('vmCount').managedDiskType.mngDiskType, 'Standard_LRS')]",
+                                "count": "[add(coalesce(steps('vmCount').vmCountReg3.signerVmCountReg3,0),add(coalesce(steps('vmCount').vmCountReg2.signerVmCountReg2,0),coalesce(steps('vmCount').vmCountReg1.signerVmCountReg1,0)))]"
+                            },
+                            {
+                                "name": "signerVmSizeSSD",
+                                "type": "Microsoft.Compute.SizeSelector",
+                                "label": "Signer virtual machine size",
+                                "recommendedSizes": [
+                                    "Standard_DS1_v2",
+                                    "Standard_DS2_v2",
+                                    "Standard_DS3_v2"
+                                ],
+                                "constraints": {
+                                    "allowedSizes": [
+                                        "Standard_DS1",
+                                        "Standard_DS2",
+                                        "Standard_DS3",
+                                        "Standard_DS4",
+                                        "Standard_DS11",
+                                        "Standard_DS12",
+                                        "Standard_DS13",
+                                        "Standard_DS14",
+                                        "Standard_DS1_v2",
+                                        "Standard_DS2_v2",
+                                        "Standard_DS3_v2",
+                                        "Standard_DS4_v2",
+                                        "Standard_DS5_v2",
+                                        "Standard_DS11_v2",
+                                        "Standard_DS12_v2",
+                                        "Standard_DS13_v2",
+                                        "Standard_DS14_v2",
+                                        "Standard_DS15_v2"
+                                    ]
+                                },
+                                "osPlatform": "Linux",
+                                "visible": "[equals(steps('vmCount').managedDiskType.mngDiskType, 'Premium_LRS')]",
+                                "count": "[add(coalesce(steps('vmCount').vmCountReg3.signerVmCountReg3,0),add(coalesce(steps('vmCount').vmCountReg2.signerVmCountReg2,0),coalesce(steps('vmCount').vmCountReg1.signerVmCountReg1,0)))]"
+                            },
+                            {
+                                "name": "partVmSizeHDD",
+                                "type": "Microsoft.Compute.SizeSelector",
+                                "label": "Participant virtual machine size",
+                                "recommendedSizes": [
+                                    "Standard_D1_v2",
+                                    "Standard_D2_v2",
+                                    "Standard_D3_v2"
+                                ],
+                                "constraints": {
+                                    "allowedSizes": [
+                                        "Standard_A1",
+                                        "Standard_A2",
+                                        "Standard_A3",
+                                        "Standard_A4",
+                                        "Standard_A5",
+                                        "Standard_A6",
+                                        "Standard_A7",
+                                        "Standard_A1_v2",
+                                        "Standard_A2_v2",
+                                        "Standard_A4_v2",
+                                        "Standard_A8_v2",
+                                        "Standard_A2m_v2",
+                                        "Standard_A4m_v2",
+                                        "Standard_A8m_v2",
+                                        "Standard_D1",
+                                        "Standard_D2",
+                                        "Standard_D3",
+                                        "Standard_D4",
+                                        "Standard_D1_v2",
+                                        "Standard_D2_v2",
+                                        "Standard_D3_v2",
+                                        "Standard_D4_v2",
+                                        "Standard_D5_v2"
+                                    ]
+                                },
+                                "osPlatform": "Linux",
+                                "visible": "[equals(steps('vmCount').managedDiskType.mngDiskType, 'Standard_LRS')]",
+                                "count": "[add(coalesce(steps('vmCount').vmCountReg3.partVmCountReg3,0),add(coalesce(steps('vmCount').vmCountReg2.partVmCountReg2,0),coalesce(steps('vmCount').vmCountReg1.partVmCountReg1,0)))]"
+                            },
+                            {
+                                "name": "partVmSizeSSD",
+                                "type": "Microsoft.Compute.SizeSelector",
+                                "label": "Participant virtual machine size",
+                                "recommendedSizes": [
+                                    "Standard_DS1_v2",
+                                    "Standard_DS2_v2",
+                                    "Standard_DS3_v2"
+                                ],
+                                "constraints": {
+                                    "allowedSizes": [
+                                        "Standard_DS1",
+                                        "Standard_DS2",
+                                        "Standard_DS3",
+                                        "Standard_DS4",
+                                        "Standard_DS11",
+                                        "Standard_DS12",
+                                        "Standard_DS13",
+                                        "Standard_DS14",
+                                        "Standard_DS1_v2",
+                                        "Standard_DS2_v2",
+                                        "Standard_DS3_v2",
+                                        "Standard_DS4_v2",
+                                        "Standard_DS5_v2",
+                                        "Standard_DS11_v2",
+                                        "Standard_DS12_v2",
+                                        "Standard_DS13_v2",
+                                        "Standard_DS14_v2",
+                                        "Standard_DS15_v2"
+                                    ]
+                                },
+                                "osPlatform": "Linux",
+                                "visible": "[equals(steps('vmCount').managedDiskType.mngDiskType, 'Premium_LRS')]",
+                                "count": "[add(coalesce(steps('vmCount').vmCountReg3.partVmCountReg3,0),add(coalesce(steps('vmCount').vmCountReg2.partVmCountReg2,0),coalesce(steps('vmCount').vmCountReg1.partVmCountReg1,0)))]"
+                            }
+                        ]
                     }
                 ]
             },
@@ -813,7 +896,7 @@
                                 "name": "srvPriSecretKey",
                                 "type": "Microsoft.Common.PasswordBox",
                                 "label": {
-                                    "password": "Service principal Key"
+                                    "password": "Service principal key"
                                 },
                                 "toolTip": "Refer to the deployment guide for details on where to find this ID.  The key of a service principal is equivalent to its password and is used to login as the service principal from the deployed virtual machines so it can access Key Vault and perform key distribution.",
                                 "constraints": {
@@ -835,12 +918,12 @@
                             {
                                 "name": "connectionSharedKey",
                                 "type": "Microsoft.Common.TextBox",
-                                "label": "Shared Key for Connections",
+                                "label": "Shared key for connections",
                                 "toolTip": "A mixture of letters and numbers, used to establish encryption for the connection. The same shared key must be used in both the virtual network gateways.",
                                 "constraints": {
                                     "required": "[greaterOrEquals(steps('regCnt').regionCnt, 2)]",
-                                    "regex": "^[A-Za-z0-9]{1,128}$",
-                                    "validationMessage": "Must only be letters and numbers between 1 and 128 characters."
+                                    "regex": "^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])[^\"]{5,}$",
+                                    "validationMessage": "Passphrase must be 5 characters or more with a minimum of 1 lower case, 1 upper case and one number. Double quotes are not allowed."
                                 },
                                 "visible": "[greaterOrEquals(steps('regCnt').regionCnt, 2)]"
                             }
@@ -860,8 +943,9 @@
             "adminUsername": "[basics('basics').adminUsername]",
             "adminPassword": "[basics('basics').adminCredentials.password]",
             "sshPublicKey": "[basics('basics').adminCredentials.sshPublicKey]",
-            "generatorVmSize": "[coalesce(steps('vmCount').generatorVmSizeHDD, steps('vmCount').generatorVmSizeSSD)]",
-            "signerAndParticipantVmSize": "[coalesce(steps('vmCount').signerVmSizeHDD, steps('vmCount').signerVmSizeSSD)]",
+            "generatorVmSize": "[coalesce(steps('vmCount').vmSizeSelector.generatorVmSizeHDD, steps('vmCount').vmSizeSelector.generatorVmSizeSSD)]",
+            "signerVmSize": "[coalesce(steps('vmCount').vmSizeSelector.signerVmSizeHDD, steps('vmCount').vmSizeSelector.signerVmSizeSSD)]",
+            "participantVmSize": "[coalesce(steps('vmCount').vmSizeSelector.partVmSizeHDD, steps('vmCount').vmSizeSelector.partVmSizeSSD)]",
             "signerNodeCountReg1": "[steps('vmCount').vmCountReg1.signerVmCountReg1]",
             "participantNodeCountReg1": "[steps('vmCount').vmCountReg1.partVmCountReg1]",
             "signerNodeCountReg2": "[steps('vmCount').vmCountReg2.signerVmCountReg2]",
