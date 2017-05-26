@@ -8,7 +8,7 @@
         },
         "regionCount": {
             "type": "int",
-            "defaultValue": 3,
+            "defaultValue": 1,
             "allowedValues": [
                 1,
                 2,
@@ -122,7 +122,7 @@
         },
         "participantNodeCountReg2": {
             "type": "int",
-            "defaultValue": 1,
+            "defaultValue": 0,
             "allowedValues": [
                 0,
                 1
@@ -144,7 +144,7 @@
         },
         "participantNodeCountReg3": {
             "type": "int",
-            "defaultValue": 1,
+            "defaultValue": 0,
             "allowedValues": [
                 0,
                 1
