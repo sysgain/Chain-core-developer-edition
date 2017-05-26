@@ -108,7 +108,7 @@
                 "description": "Size of the virtual machine used for Block Generator VM"
             }
         },
-        "signerAndParticipantVmSize": {
+        "signerVmSize": {
             "type": "string",
             "defaultValue": "Standard_D2_v2",
             "allowedValues": [
@@ -151,7 +151,53 @@
                 "Standard_DS15_v2"
             ],
             "metadata": {
-                "description": "Size of the virtual machine used for Signer and Participants VM(s)"
+                "description": "Size of the virtual machine used for Signer VM(s)"
+            }
+        },
+        "participantVmSize":{
+            "type": "string",
+            "defaultValue": "Standard_D2_v2",
+            "allowedValues": [
+                "Standard_A1",
+                "Standard_A2",
+                "Standard_A3",
+                "Standard_A4",
+                "Standard_A5",
+                "Standard_A6",
+                "Standard_A7",
+                "Standard_A1_v2",
+                "Standard_A2_v2",
+                "Standard_A4_v2",
+                "Standard_A8_v2",
+                "Standard_A2m_v2",
+                "Standard_A4m_v2",
+                "Standard_A8m_v2",
+                "Standard_D1",
+                "Standard_D2",
+                "Standard_D3",
+                "Standard_D4",
+                "Standard_D1_v2",
+                "Standard_D2_v2",
+                "Standard_D3_v2",
+                "Standard_D4_v2",
+                "Standard_D5_v2",
+                "Standard_DS1",
+                "Standard_DS2",
+                "Standard_DS3",
+                "Standard_DS4",
+                "Standard_DS1_v2",
+                "Standard_DS2_v2",
+                "Standard_DS3_v2",
+                "Standard_DS4_v2",
+                "Standard_DS5_v2",
+                "Standard_DS11_v2",
+                "Standard_DS12_v2",
+                "Standard_DS13_v2",
+                "Standard_DS14_v2",
+                "Standard_DS15_v2"
+            ],
+            "metadata": {
+                "description": "Size of the virtual machine used for Participants VM(s)"
             }
         },
         "signerNodeCountReg1": {
@@ -532,7 +578,7 @@
                 "diskSizeGB": 30,
                 "adminUsername": "[parameters('adminUsername')]",
                 "adminPassword": "[parameters('adminPassword')]",
-                "vmSize": "[parameters('signerAndParticipantVmSize')]",
+                "vmSize": "[parameters('signerVmSize')]",
                 "storageAccountType": "[parameters('storageAccountType')]",
                 "passwordOrSshKey": "[parameters('authenticationType')]",
                 "sshPublicKey": "[parameters('sshPublicKey')]"
@@ -588,7 +634,7 @@
                 "diskSizeGB": 30,
                 "adminUsername": "[parameters('adminUsername')]",
                 "adminPassword": "[parameters('adminPassword')]",
-                "vmSize": "[parameters('signerAndParticipantVmSize')]",
+                "vmSize": "[parameters('participantVmSize')]",
                 "storageAccountType": "[parameters('storageAccountType')]",
                 "passwordOrSshKey": "[parameters('authenticationType')]",
                 "sshPublicKey": "[parameters('sshPublicKey')]"

@@ -858,7 +858,7 @@
             "location_3": "[steps('regCnt').loc3]",
             "authenticationType": "[basics('basics').adminCredentials.authenticationType]",
             "adminUsername": "[basics('basics').adminUsername]",
-            "adminPassword": "[basics('basics').adminCredentials.adminPassword]",
+            "adminPassword": "[basics('basics').adminCredentials.password]",
             "sshPublicKey": "[basics('basics').adminCredentials.sshPublicKey]",
             "generatorVmSize": "[coalesce(steps('vmCount').generatorVmSizeHDD, steps('vmCount').generatorVmSizeSSD)]",
             "signerAndParticipantVmSize": "[coalesce(steps('vmCount').signerVmSizeHDD, steps('vmCount').signerVmSizeSSD)]",
