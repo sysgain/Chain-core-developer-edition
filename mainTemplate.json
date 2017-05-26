@@ -24,11 +24,11 @@
         },
         "location_2": {
             "type": "string",
-            "defaultValue": "centralus"
+            "defaultValue": "eastus"
         },
         "location_3": {
             "type": "string",
-            "defaultValue": "eastus"
+            "defaultValue": "centralus"
         },
         "authenticationType": {
             "type": "string",

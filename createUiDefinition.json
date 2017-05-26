@@ -634,7 +634,7 @@
                             {
                                 "name": "generatorVmSizeHDD",
                                 "type": "Microsoft.Compute.SizeSelector",
-                                "label": "Block Generator Virtual Machine size",
+                                "label": "Block Generator virtual machine size",
                                 "recommendedSizes": [
                                     "Standard_D1_v2",
                                     "Standard_D2_v2",
@@ -707,7 +707,7 @@
                             {
                                 "name": "signerVmSizeHDD",
                                 "type": "Microsoft.Compute.SizeSelector",
-                                "label": "Signer virtual Machine size",
+                                "label": "Signer virtual machine size",
                                 "recommendedSizes": [
                                     "Standard_D1_v2",
                                     "Standard_D2_v2",
