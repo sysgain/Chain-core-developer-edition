@@ -32,7 +32,10 @@
         "generatorVmSize": {
             "value": "Standard_D1_v2"
         },
-        "signerAndParticipantVmSize": {
+        "signerVmSize": {
+            "value": "Standard_D1_v2"
+        },
+        "participantVmSize": {
             "value": "Standard_D1_v2"
         },
         "signerNodeCountReg1": {
