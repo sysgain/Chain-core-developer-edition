@@ -526,7 +526,7 @@
                                 "name": "partVmCountReg2",
                                 "type": "Microsoft.Common.DropDown",
                                 "label": "Number of participant chain core instances",
-                                "defaultValue": "1",
+                                "defaultValue": "0",
                                 "toolTip": "Select the number of participant chain core instances to deploy into Region 2",
                                 "constraints": {
                                     "required": "[greaterOrEquals(steps('regCnt').regionCnt, 2)]",
@@ -576,7 +576,7 @@
                                 "name": "partVmCountReg3",
                                 "type": "Microsoft.Common.DropDown",
                                 "label": "Number of participant chain core instances",
-                                "defaultValue": "1",
+                                "defaultValue": "0",
                                 "toolTip": "Select the number of participant chain core instances to deploy into Region 3",
                                 "constraints": {
                                     "required": "[equals(steps('regCnt').regionCnt, 3)]",
