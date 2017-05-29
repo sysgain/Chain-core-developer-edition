@@ -50,7 +50,7 @@
         },
         "adminPassword": {
             "type": "securestring",
-            "defaultValue": "Ashpassword123",
+            "defaultValue": "",
             "metadata": {
                 "description": "Administrator password for each deployed VM"
             }
@@ -162,7 +162,7 @@
         },
         "VPNSharedKey": {
             "type": "string",
-            "defaultValue": "Ashpassword123",
+            "defaultValue": "",
             "metadata": {
                 "description": "VPN shared key is used by gateway connections. It could be any passphrase"
             }
