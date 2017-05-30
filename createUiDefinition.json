@@ -198,7 +198,6 @@
                         "toolTip": "Select the second region.",
                         "defaultValue": "Central US",
                         "constraints": {
-                            "required": "[greaterOrEquals(steps('regCnt').regionCnt, 2)]",
                             "allowedValues": [
                                 {
                                     "label": "Australia East",
@@ -311,7 +310,6 @@
                         "toolTip": "Select the third region.",
                         "defaultValue": "East US",
                         "constraints": {
-                            "required": "[equals(steps('regCnt').regionCnt, 3)]",
                             "allowedValues": [
                                 {
                                     "label": "Australia East",
