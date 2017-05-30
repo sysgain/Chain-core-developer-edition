@@ -196,9 +196,8 @@
                         "type": "Microsoft.Common.DropDown",
                         "label": "Second region",
                         "toolTip": "Select the second region.",
-                        "defaultValue": "Central US",
+                        "defaultValue": "East US",
                         "constraints": {
-                            "required": "[greaterOrEquals(steps('regCnt').regionCnt, 2)]",
                             "allowedValues": [
                                 {
                                     "label": "Australia East",
@@ -309,9 +308,8 @@
                         "type": "Microsoft.Common.DropDown",
                         "label": "Third region",
                         "toolTip": "Select the third region.",
-                        "defaultValue": "East US",
+                        "defaultValue": "Central US",
                         "constraints": {
-                            "required": "[equals(steps('regCnt').regionCnt, 3)]",
                             "allowedValues": [
                                 {
                                     "label": "Australia East",
@@ -427,7 +425,7 @@
                     "preValidation": "Required",
                     "postValidation": "Done"
                 },
-                "elements": [    
+                "elements": [
                     {
                         "name": "vmCountReg1",
                         "type": "Microsoft.Common.Section",
@@ -734,7 +732,7 @@
                                 },
                                 "osPlatform": "Linux",
                                 "visible": "[equals(steps('vmCount').managedDiskType.mngDiskType, 'Standard_LRS')]",
-                                "count": "[add(steps('vmCount').vmCountReg1.signerVmCountReg1, add(mul(steps('vmCount').vmCountReg2.signerVmCountReg2, div(steps('regCnt').regionCnt, 2)), mul(steps('vmCount').vmCountReg3.signerVmCountReg3, div(steps('regCnt').regionCnt, 3))))]"
+                                "count": "[add(steps('vmCount').vmCountReg1.signerVmCountReg1, add(mul(coalesce(steps('vmCount').vmCountReg2.signerVmCountReg2,0), div(steps('regCnt').regionCnt, 2)), mul(coalesce(steps('vmCount').vmCountReg3.signerVmCountReg3,0), div(steps('regCnt').regionCnt, 3))))]"
                             },
                             {
                                 "name": "signerVmSizeSSD",
@@ -769,7 +767,7 @@
                                 },
                                 "osPlatform": "Linux",
                                 "visible": "[equals(steps('vmCount').managedDiskType.mngDiskType, 'Premium_LRS')]",
-                                "count": "[add(steps('vmCount').vmCountReg1.signerVmCountReg1, add(mul(steps('vmCount').vmCountReg2.signerVmCountReg2, div(steps('regCnt').regionCnt, 2)), mul(steps('vmCount').vmCountReg3.signerVmCountReg3, div(steps('regCnt').regionCnt, 3))))]"
+                                "count": "[add(steps('vmCount').vmCountReg1.signerVmCountReg1, add(mul(coalesce(steps('vmCount').vmCountReg2.signerVmCountReg2,0), div(steps('regCnt').regionCnt, 2)), mul(coalesce(steps('vmCount').vmCountReg3.signerVmCountReg3,0), div(steps('regCnt').regionCnt, 3))))]"
                             },
                             {
                                 "name": "partVmSizeHDD",
@@ -809,7 +807,7 @@
                                 },
                                 "osPlatform": "Linux",
                                 "visible": "[equals(steps('vmCount').managedDiskType.mngDiskType, 'Standard_LRS')]",
-                                "count": "[add(steps('vmCount').vmCountReg1.partVmCountReg1, add(mul(steps('vmCount').vmCountReg2.partVmCountReg2, div(steps('regCnt').regionCnt, 2)), mul(steps('vmCount').vmCountReg3.partVmCountReg3, div(steps('regCnt').regionCnt, 3))))]"
+                                "count": "[add(steps('vmCount').vmCountReg1.partVmCountReg1, add(mul(coalesce(steps('vmCount').vmCountReg2.partVmCountReg2,0), div(steps('regCnt').regionCnt, 2)), mul(coalesce(steps('vmCount').vmCountReg3.partVmCountReg3,0), div(steps('regCnt').regionCnt, 3))))]"
                             },
                             {
                                 "name": "partVmSizeSSD",
@@ -844,7 +842,7 @@
                                 },
                                 "osPlatform": "Linux",
                                 "visible": "[equals(steps('vmCount').managedDiskType.mngDiskType, 'Premium_LRS')]",
-                                "count": "[add(steps('vmCount').vmCountReg1.partVmCountReg1, add(mul(steps('vmCount').vmCountReg2.partVmCountReg2, div(steps('regCnt').regionCnt, 2)), mul(steps('vmCount').vmCountReg3.partVmCountReg3, div(steps('regCnt').regionCnt, 3))))]"
+                                "count": "[add(steps('vmCount').vmCountReg1.partVmCountReg1, add(mul(coalesce(steps('vmCount').vmCountReg2.partVmCountReg2,0), div(steps('regCnt').regionCnt, 2)), mul(coalesce(steps('vmCount').vmCountReg3.partVmCountReg3,0), div(steps('regCnt').regionCnt, 3))))]"
                             }
                         ]
                     }
