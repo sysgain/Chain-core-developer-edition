@@ -775,7 +775,7 @@
                                 },
                                 "osPlatform": "Linux",
                                 "visible": "[equals(steps('vmCount').managedDiskType.mngDiskType, 'Standard_LRS')]",
-                                "count": "[add(steps('vmCount').vmCountReg1.signerVmCountReg1, add(mul(coalesce(int(last(steps('vmCount').vmCountReg2.signerAndParticpantVmCountReg2)),0), div(steps('regCnt').regionCnt, 2)), mul(coalesce(int(last(steps('vmCount').vmCountReg3.signerAndParticpantVmCountReg3)),0), div(steps('regCnt').regionCnt, 3))))]"
+                                "count": "[add(steps('vmCount').vmCountReg1.partVmCountReg1, add(mul(coalesce(int(last(steps('vmCount').vmCountReg2.signerAndParticpantVmCountReg2)),0), div(steps('regCnt').regionCnt, 2)), mul(coalesce(int(last(steps('vmCount').vmCountReg3.signerAndParticpantVmCountReg3)),0), div(steps('regCnt').regionCnt, 3))))]"
                             },
                             {
                                 "name": "partVmSizeSSD",
@@ -810,7 +810,7 @@
                                 },
                                 "osPlatform": "Linux",
                                 "visible": "[equals(steps('vmCount').managedDiskType.mngDiskType, 'Premium_LRS')]",
-                                "count": "[add(steps('vmCount').vmCountReg1.signerVmCountReg1, add(mul(coalesce(int(last(steps('vmCount').vmCountReg2.signerAndParticpantVmCountReg2)),0), div(steps('regCnt').regionCnt, 2)), mul(coalesce(int(last(steps('vmCount').vmCountReg3.signerAndParticpantVmCountReg3)),0), div(steps('regCnt').regionCnt, 3))))]"
+                                "count": "[add(steps('vmCount').vmCountReg1.partVmCountReg1, add(mul(coalesce(int(last(steps('vmCount').vmCountReg2.signerAndParticpantVmCountReg2)),0), div(steps('regCnt').regionCnt, 2)), mul(coalesce(int(last(steps('vmCount').vmCountReg3.signerAndParticpantVmCountReg3)),0), div(steps('regCnt').regionCnt, 3))))]"
                             }
                         ]
                     }
