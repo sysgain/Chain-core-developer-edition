@@ -33,8 +33,8 @@ echo "============================================Logging into azure account====
 sudo az login --service-principal -u $serviceprincipal -p $secretkey --tenant $tenatid
 sudo az account set -s $subscriptionid
 echo "=================Extracting generatornetworktoken and blockchainid from Azure Key Vault==========================="
-generatornetworktoken=`az keyvault secret show --name networkToken --vault-name $keyvaultname | grep "value" | cut -d "\"" -f4`
-blockchainid=`az keyvault secret show --name blockchainid --vault-name $keyvaultname | grep "value" | cut -d "\"" -f4`
+generatornetworktoken=`sudo az keyvault secret show --name networkToken --vault-name $keyvaultname | grep "value" | cut -d "\"" -f4`
+blockchainid=`sudo az keyvault secret show --name blockchainid --vault-name $keyvaultname | grep "value" | cut -d "\"" -f4`
 # pull chaincore docker image
 sudo docker pull chaincore/developer:ivy-latest
 # run chaincore docker image
