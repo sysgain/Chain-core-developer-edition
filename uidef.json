@@ -505,15 +505,15 @@
                                     "allowedValues": [
                                         {
                                             "label": "0 Signer and 1 Participant",
-                                            "value": "[parse('[0,1]')]"
+                                            "value": "01"
                                         },
                                         {
                                             "label": "1 Signer and 0 Participant",
-                                            "value": "[parse('[1,0]')]"
+                                            "value": "10"
                                         },
                                         {
                                             "label": "1 Signer and 1 Participant",
-                                            "value": "[parse('[1,1]')]"
+                                            "value": "11"
                                         }
                                     ]
                                 },
@@ -522,6 +522,7 @@
                         ],
                         "visible": "[greaterOrEquals(steps('regCnt').regionCnt, 2)]"
                     },
+                    
                     {
                         "name": "vmCountReg3",
                         "type": "Microsoft.Common.Section",
@@ -537,15 +538,15 @@
                                     "allowedValues": [
                                         {
                                             "label": "0 Signer and 1 Participant",
-                                            "value": "[parse('[0,1]')]"
+                                            "value": "01"
                                         },
                                         {
                                             "label": "1 Signer and 0 Participant",
-                                            "value": "[parse('[1,0]')]"
+                                            "value": "10"
                                         },
                                         {
                                             "label": "1 Signer and 1 Participant",
-                                            "value": "[parse('[1,1]')]"
+                                            "value": "11"
                                         }
                                     ]
                                 },
@@ -902,10 +903,15 @@
             "participantVmSize": "[coalesce(steps('vmCount').vmSizeSelector.partVmSizeHDD, steps('vmCount').vmSizeSelector.partVmSizeSSD)]",
             "signerNodeCountReg1": "[steps('vmCount').vmCountReg1.signerVmCountReg1]",
             "participantNodeCountReg1": "[steps('vmCount').vmCountReg1.partVmCountReg1]",
-            "signerNodeCountReg2": "[steps('vmCount').vmCountReg2.signerAndParticpantVmCountReg2]",
-            "participantNodeCountReg2": "[steps('vmCount').vmCountReg2.signerAndParticpantVmCountReg2]",
-            "signerNodeCountReg3": "[steps('vmCount').vmCountReg3.signerAndParticpantVmCountReg3]",
-            "participantNodeCountReg3": "[steps('vmCount').vmCountReg3.signerAndParticpantVmCountReg3]",
+
+
+            "signerNodeCountReg2": "[int(first(steps('vmCount').vmCountReg2.signerAndParticpantVmCountReg2))]",
+            "participantNodeCountReg2": "[int(last(steps('vmCount').vmCountReg2.signerAndParticpantVmCountReg2))]",
+            "signerNodeCountReg3": "[int(first(steps('vmCount').vmCountReg3.signerAndParticpantVmCountReg3))]",
+            "participantNodeCountReg3": "[int(last(steps('vmCount').vmCountReg3.signerAndParticpantVmCountReg3))]",
+
+
+
             "storageAccountType": "[steps('vmCount').managedDiskType.mngDiskType]",
             "VPNSharedKey": "[steps('otherSettings').vnetGatewaySettings.connectionSharedKey]",
             "objectId": "[steps('otherSettings').keyVaultSettings.objId]",
