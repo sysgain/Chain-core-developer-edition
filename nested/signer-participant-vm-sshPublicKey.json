@@ -29,7 +29,6 @@
         "sku": "[parameters('vmSettings').sku]",
         "version": "[parameters('vmSettings').version]",
         "diskSizeGB": "[parameters('vmSettings').diskSizeGB]",
-        "dockerApiVersion": "[parameters('vmSettings').dockerApiVersion]",
         "sshPublicKey": "[parameters('vmSettings').sshPublicKey]"
     },
     "resources": [
