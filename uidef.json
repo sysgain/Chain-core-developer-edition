@@ -502,18 +502,27 @@
                                 "defaultValue": "0 Signer and 1 Participant",
                                 "toolTip": "Select the number of signer and participant chain core instances to deploy into Region 2",
                                 "constraints": {
-                                     "allowedValues": [
+                                    "allowedValues": [
                                         {
                                             "label": "0 Signer and 1 Participant",
-                                            "value": [0,1]
+                                            "value": [
+                                                0,
+                                                1
+                                            ]
                                         },
                                         {
                                             "label": "1 Signer and 0 Participant",
-                                            "value": [1,0]
+                                            "value": [
+                                                1,
+                                                0
+                                            ]
                                         },
                                         {
                                             "label": "1 Signer and 1 Participant",
-                                            "value": [1,1]
+                                            "value": [
+                                                1,
+                                                1
+                                            ]
                                         }
                                     ]
                                 },
@@ -537,15 +546,24 @@
                                     "allowedValues": [
                                         {
                                             "label": "0 Signer and 1 Participant",
-                                            "value": [0,1]
+                                            "value": [
+                                                0,
+                                                1
+                                            ]
                                         },
                                         {
                                             "label": "1 Signer and 0 Participant",
-                                            "value": [1,0]
+                                            "value": [
+                                                1,
+                                                0
+                                            ]
                                         },
                                         {
                                             "label": "1 Signer and 1 Participant",
-                                            "value": [1,1]
+                                            "value": [
+                                                1,
+                                                1
+                                            ]
                                         }
                                     ]
                                 },
@@ -699,8 +717,8 @@
                                     ]
                                 },
                                 "osPlatform": "Linux",
-                                "visible": "[equals(steps('vmCount').managedDiskType.mngDiskType, 'Standard_LRS')]",
-                                   },
+                                "visible": "[equals(steps('vmCount').managedDiskType.mngDiskType, 'Standard_LRS')]"
+                            },
                             {
                                 "name": "signerVmSizeSSD",
                                 "type": "Microsoft.Compute.SizeSelector",
@@ -733,8 +751,8 @@
                                     ]
                                 },
                                 "osPlatform": "Linux",
-                                "visible": "[equals(steps('vmCount').managedDiskType.mngDiskType, 'Premium_LRS')]",
-                                },
+                                "visible": "[equals(steps('vmCount').managedDiskType.mngDiskType, 'Premium_LRS')]"
+                            },
                             {
                                 "name": "partVmSizeHDD",
                                 "type": "Microsoft.Compute.SizeSelector",
@@ -772,8 +790,8 @@
                                     ]
                                 },
                                 "osPlatform": "Linux",
-                                "visible": "[equals(steps('vmCount').managedDiskType.mngDiskType, 'Standard_LRS')]",
-                                },
+                                "visible": "[equals(steps('vmCount').managedDiskType.mngDiskType, 'Standard_LRS')]"
+                            },
                             {
                                 "name": "partVmSizeSSD",
                                 "type": "Microsoft.Compute.SizeSelector",
@@ -806,8 +824,8 @@
                                     ]
                                 },
                                 "osPlatform": "Linux",
-                                "visible": "[equals(steps('vmCount').managedDiskType.mngDiskType, 'Premium_LRS')]",
-                                }
+                                "visible": "[equals(steps('vmCount').managedDiskType.mngDiskType, 'Premium_LRS')]"
+                            }
                         ]
                     }
                 ]
