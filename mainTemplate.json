@@ -111,6 +111,7 @@
         },
         "nodeCountReg2": {
             "type": "string",
+            "defaultValue": "1_signer_and_0_participant",
             "allowedValues": [
                 "1_signer_and_1_participant",
                 "1_signer_and_0_participant",
@@ -119,6 +120,7 @@
         },
         "nodeCountReg3": {
             "type": "string",
+            "defaultValue": "1_signer_and_0_participant",
             "allowedValues": [
                 "1_signer_and_1_participant",
                 "1_signer_and_0_participant",
