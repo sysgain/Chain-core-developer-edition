@@ -505,7 +505,7 @@
                                      "allowedValues": [
                                         {
                                             "label": "0 Signer and 1 Participant",
-                                            "value": "00"
+                                            "value": "01"
                                         },
                                         {
                                             "label": "1 Signer and 0 Participant",
