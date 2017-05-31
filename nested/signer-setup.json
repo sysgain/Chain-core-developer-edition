@@ -15,7 +15,7 @@
             "type": "object"
         },
         "signerSettings": {
-            "type": "object"
+            "type": "secureObject"
         },
         "generatorFqdn": {
             "type": "string"
