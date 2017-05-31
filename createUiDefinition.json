@@ -496,40 +496,24 @@
                         "label": "Region 2 instance count",
                         "elements": [
                             {
-                                "name": "signerVmCountReg2",
+                                "name": "signerAndParticpantVmCountReg2",
                                 "type": "Microsoft.Common.DropDown",
-                                "label": "Number of signer chain core instances",
-                                "defaultValue": "0",
-                                "toolTip": "Select the number of signer chain core instances to deploy into Region 2",
+                                "label": "Number of signer and participant chain core instances",
+                                "defaultValue": "0 Signer and 1 Participant",
+                                "toolTip": "Select the number of signer and participant chain core instances to deploy into Region 2",
                                 "constraints": {
-                                    "allowedValues": [
+                                     "allowedValues": [
                                         {
-                                            "label": "0",
-                                            "value": 0
+                                            "label": "0 Signer and 1 Participant",
+                                            "value": [0,1]
                                         },
                                         {
-                                            "label": "1",
-                                            "value": 1
-                                        }
-                                    ]
-                                },
-                                "visible": "[greaterOrEquals(steps('regCnt').regionCnt, 2)]"
-                            },
-                            {
-                                "name": "partVmCountReg2",
-                                "type": "Microsoft.Common.DropDown",
-                                "label": "Number of participant chain core instances",
-                                "defaultValue": "1",
-                                "toolTip": "Select the number of participant chain core instances to deploy into Region 2",
-                                "constraints": {
-                                    "allowedValues": [
-                                        {
-                                            "label": "0",
-                                            "value": 0
+                                            "label": "1 Signer and 0 Participant",
+                                            "value": [1,0]
                                         },
                                         {
-                                            "label": "1",
-                                            "value": 1
+                                            "label": "1 Signer and 1 Participant",
+                                            "value": [1,1]
                                         }
                                     ]
                                 },
@@ -544,40 +528,24 @@
                         "label": "Region 3 instance count",
                         "elements": [
                             {
-                                "name": "signerVmCountReg3",
+                                "name": "signerAndParticpantVmCountReg3",
                                 "type": "Microsoft.Common.DropDown",
-                                "label": "Number of signer chain core instances",
-                                "defaultValue": "0",
-                                "toolTip": "Select the number of signer chain core instances to deploy into Region 3",
+                                "label": "Number of signer and participant chain core instances",
+                                "defaultValue": "0 Signer and 1 Participant",
+                                "toolTip": "Select the number of signer and participant chain core instances to deploy into Region 3",
                                 "constraints": {
                                     "allowedValues": [
                                         {
-                                            "label": "0",
-                                            "value": 0
+                                            "label": "0 Signer and 1 Participant",
+                                            "value": [0,1]
                                         },
                                         {
-                                            "label": "1",
-                                            "value": 1
-                                        }
-                                    ]
-                                },
-                                "visible": "[equals(steps('regCnt').regionCnt, 3)]"
-                            },
-                            {
-                                "name": "partVmCountReg3",
-                                "type": "Microsoft.Common.DropDown",
-                                "label": "Number of participant chain core instances",
-                                "defaultValue": "1",
-                                "toolTip": "Select the number of participant chain core instances to deploy into Region 3",
-                                "constraints": {
-                                    "allowedValues": [
-                                        {
-                                            "label": "0",
-                                            "value": 0
+                                            "label": "1 Signer and 0 Participant",
+                                            "value": [1,0]
                                         },
                                         {
-                                            "label": "1",
-                                            "value": 1
+                                            "label": "1 Signer and 1 Participant",
+                                            "value": [1,1]
                                         }
                                     ]
                                 },
@@ -732,7 +700,7 @@
                                 },
                                 "osPlatform": "Linux",
                                 "visible": "[equals(steps('vmCount').managedDiskType.mngDiskType, 'Standard_LRS')]",
-                                "count": "[add(steps('vmCount').vmCountReg1.signerVmCountReg1, add(mul(coalesce(steps('vmCount').vmCountReg2.signerVmCountReg2,0), div(steps('regCnt').regionCnt, 2)), mul(coalesce(steps('vmCount').vmCountReg3.signerVmCountReg3,0), div(steps('regCnt').regionCnt, 3))))]"
+                                "count": "[add(steps('vmCount').vmCountReg1.signerVmCountReg1, add(mul(coalesce(steps('vmCount').vmCountReg2.signerAndParticpantVmCountReg2[0],0), div(steps('regCnt').regionCnt, 2)), mul(coalesce(steps('vmCount').vmCountReg3.signerAndParticpantVmCountReg3[0],0), div(steps('regCnt').regionCnt, 3))))]"
                             },
                             {
                                 "name": "signerVmSizeSSD",
@@ -767,7 +735,7 @@
                                 },
                                 "osPlatform": "Linux",
                                 "visible": "[equals(steps('vmCount').managedDiskType.mngDiskType, 'Premium_LRS')]",
-                                "count": "[add(steps('vmCount').vmCountReg1.signerVmCountReg1, add(mul(coalesce(steps('vmCount').vmCountReg2.signerVmCountReg2,0), div(steps('regCnt').regionCnt, 2)), mul(coalesce(steps('vmCount').vmCountReg3.signerVmCountReg3,0), div(steps('regCnt').regionCnt, 3))))]"
+                                "count": "[add(steps('vmCount').vmCountReg1.signerVmCountReg1, add(mul(coalesce(steps('vmCount').vmCountReg2.signerAndParticpantVmCountReg2[0],0), div(steps('regCnt').regionCnt, 2)), mul(coalesce(steps('vmCount').vmCountReg3.signerAndParticpantVmCountReg3[0],0), div(steps('regCnt').regionCnt, 3))))]"
                             },
                             {
                                 "name": "partVmSizeHDD",
@@ -807,7 +775,7 @@
                                 },
                                 "osPlatform": "Linux",
                                 "visible": "[equals(steps('vmCount').managedDiskType.mngDiskType, 'Standard_LRS')]",
-                                "count": "[add(steps('vmCount').vmCountReg1.partVmCountReg1, add(mul(coalesce(steps('vmCount').vmCountReg2.partVmCountReg2,0), div(steps('regCnt').regionCnt, 2)), mul(coalesce(steps('vmCount').vmCountReg3.partVmCountReg3,0), div(steps('regCnt').regionCnt, 3))))]"
+                                "count": "[add(steps('vmCount').vmCountReg1.signerVmCountReg1, add(mul(coalesce(steps('vmCount').vmCountReg2.signerAndParticpantVmCountReg2[1],0), div(steps('regCnt').regionCnt, 2)), mul(coalesce(steps('vmCount').vmCountReg3.signerAndParticpantVmCountReg3[1],0), div(steps('regCnt').regionCnt, 3))))]"
                             },
                             {
                                 "name": "partVmSizeSSD",
@@ -842,7 +810,7 @@
                                 },
                                 "osPlatform": "Linux",
                                 "visible": "[equals(steps('vmCount').managedDiskType.mngDiskType, 'Premium_LRS')]",
-                                "count": "[add(steps('vmCount').vmCountReg1.partVmCountReg1, add(mul(coalesce(steps('vmCount').vmCountReg2.partVmCountReg2,0), div(steps('regCnt').regionCnt, 2)), mul(coalesce(steps('vmCount').vmCountReg3.partVmCountReg3,0), div(steps('regCnt').regionCnt, 3))))]"
+                                "count": "[add(steps('vmCount').vmCountReg1.signerVmCountReg1, add(mul(coalesce(steps('vmCount').vmCountReg2.signerAndParticpantVmCountReg2[1],0), div(steps('regCnt').regionCnt, 2)), mul(coalesce(steps('vmCount').vmCountReg3.signerAndParticpantVmCountReg3[1],0), div(steps('regCnt').regionCnt, 3))))]"
                             }
                         ]
                     }
@@ -938,10 +906,10 @@
             "participantVmSize": "[coalesce(steps('vmCount').vmSizeSelector.partVmSizeHDD, steps('vmCount').vmSizeSelector.partVmSizeSSD)]",
             "signerNodeCountReg1": "[steps('vmCount').vmCountReg1.signerVmCountReg1]",
             "participantNodeCountReg1": "[steps('vmCount').vmCountReg1.partVmCountReg1]",
-            "signerNodeCountReg2": "[steps('vmCount').vmCountReg2.signerVmCountReg2]",
-            "participantNodeCountReg2": "[steps('vmCount').vmCountReg2.partVmCountReg2]",
-            "signerNodeCountReg3": "[steps('vmCount').vmCountReg3.signerVmCountReg3]",
-            "participantNodeCountReg3": "[steps('vmCount').vmCountReg3.partVmCountReg3]",
+            "signerNodeCountReg2": "[steps('vmCount').vmCountReg2.signerAndParticpantVmCountReg2[0]]",
+            "participantNodeCountReg2": "[steps('vmCount').vmCountReg2.signerAndParticpantVmCountReg2[1]]",
+            "signerNodeCountReg3": "[steps('vmCount').vmCountReg3.signerAndParticpantVmCountReg3[0]]",
+            "participantNodeCountReg3": "[steps('vmCount').vmCountReg3.signerAndParticpantVmCountReg3[1]]",
             "storageAccountType": "[steps('vmCount').managedDiskType.mngDiskType]",
             "VPNSharedKey": "[steps('otherSettings').vnetGatewaySettings.connectionSharedKey]",
             "objectId": "[steps('otherSettings').keyVaultSettings.objId]",

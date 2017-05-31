@@ -76,7 +76,7 @@
                 "description": "Size of the virtual machine used for Signer VM(s)"
             }
         },
-        "participantVmSize": {
+        "participantVmSize":{
             "type": "string",
             "defaultValue": "Standard_D1_v2",
             "metadata": {
@@ -109,25 +109,49 @@
                 "description": "Number of participant chain core instances in Region 1"
             }
         },
-        "nodeCountReg2": {
-            "type": "string",
-            "defaultValue": "0_signer_and_1_participant",
+        "signerNodeCountReg2": {
+            "type": "int",
+            "defaultValue": 0,
             "allowedValues": [
-                "1_signer_and_1_participant",
-                "1_signer_and_0_participant",
-                "0_signer_and_1_participant",
-                "0_signer_and_0_participant"
-            ]
+                0,
+                1
+            ],
+            "metadata": {
+                "description": "Number of signer chain core instances in Region 2"
+            }
         },
-        "nodeCountReg3": {
-            "type": "string",
-            "defaultValue": "0_signer_and_1_participant",
+        "participantNodeCountReg2": {
+            "type": "int",
+            "defaultValue": 0,
             "allowedValues": [
-                "1_signer_and_1_participant",
-                "1_signer_and_0_participant",
-                "0_signer_and_1_participant",
-                "0_signer_and_0_participant"
-            ]
+                0,
+                1
+            ],
+            "metadata": {
+                "description": "Number of participant chain core instances in Region 2"
+            }
+        },
+        "signerNodeCountReg3": {
+            "type": "int",
+            "defaultValue": 0,
+            "allowedValues": [
+                0,
+                1
+            ],
+            "metadata": {
+                "description": "Number of signer chain core instances in Region 3"
+            }
+        },
+        "participantNodeCountReg3": {
+            "type": "int",
+            "defaultValue": 0,
+            "allowedValues": [
+                0,
+                1
+            ],
+            "metadata": {
+                "description": "Number of participant chain core instances in Region 3"
+            }
         },
         "storageAccountType": {
             "type": "string",
@@ -175,28 +199,12 @@
     "variables": {
         "baseUrl": "[parameters('baseUrl')]",
         "regionCount": "[parameters('regionCount')]",
-        "0_signer_and_0_participant": {
-            "signerNum": 0,
-            "partNum": 0
-        },
-        "0_signer_and_1_participant": {
-            "signerNum": 0,
-            "partNum": 1
-        },
-        "1_signer_and_0_participant": {
-            "signerNum": 1,
-            "partNum": 0
-        },
-        "1_signer_and_1_participant": {
-            "signerNum": 1,
-            "partNum": 1
-        },    
         "signerNodeCountReg1": "[parameters('signerNodeCountReg1')]",
         "participantNodeCountReg1": "[parameters('participantNodeCountReg1')]",
-        "signerNodeCountReg2": "[variables(parameters('nodeCountReg2')).signerNum]",
-        "participantNodeCountReg2": "[variables(parameters('nodeCountReg2')).partNum]",
-        "signerNodeCountReg3": "[variables(parameters('nodeCountReg3')).signerNum]",
-        "participantNodeCountReg3": "[variables(parameters('nodeCountReg3')).partNum]",
+        "signerNodeCountReg2": "[parameters('signerNodeCountReg2')]",
+        "participantNodeCountReg2": "[parameters('participantNodeCountReg2')]",
+        "signerNodeCountReg3": "[parameters('signerNodeCountReg3')]",
+        "participantNodeCountReg3": "[parameters('participantNodeCountReg3')]",
         "location_1": "[tolower(replace(parameters('location_1'),' ',''))]",
         "location_2": "[tolower(replace(parameters('location_2'),' ',''))]",
         "location_3": "[tolower(replace(parameters('location_3'),' ',''))]",
