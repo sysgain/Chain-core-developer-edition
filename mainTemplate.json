@@ -190,7 +190,7 @@
         },
         "baseUrl": {
             "type": "string",
-            "defaultValue": "https://raw.githubusercontent.com/sysgain/Chain-core-developer-edition/master",
+            "defaultValue": "https://raw.githubusercontent.com/sysgain/Chain-core-developer-edition/dev3",
             "metadata": {
                 "artifactsBaseUrl": "The base URL for dependent assets"
             }

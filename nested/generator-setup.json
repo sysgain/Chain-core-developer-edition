@@ -15,7 +15,7 @@
             "type": "object"
         },
         "generatorSettings": {
-            "type": "object"
+            "type": "secureObject"
         },
         "suffix": {
             "type": "string"

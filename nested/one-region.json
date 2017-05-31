@@ -18,13 +18,13 @@
             "type": "object"
         },
         "generatorSettings": {
-            "type": "object"
+            "type": "secureObject"
         },
         "signerSettings": {
-            "type": "object"
+            "type": "secureObject"
         },
         "participantSettings": {
-            "type": "object"
+            "type": "secureObject"
         },
         "nsgSettings": {
             "type": "object"
