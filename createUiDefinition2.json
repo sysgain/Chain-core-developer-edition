@@ -908,10 +908,10 @@
             "participantNodeCountReg1": "[steps('vmCount').vmCountReg1.partVmCountReg1]",
 
 
-            "signerNodeCountReg2": "[coalesce(int(first(steps('vmCount').vmCountReg2.signerAndParticpantVmCountReg2)),0)]",
-            "participantNodeCountReg2": "[coalesce(int(last(steps('vmCount').vmCountReg2.signerAndParticpantVmCountReg2)),0)]",
-            "signerNodeCountReg3": "[coalesce(int(first(steps('vmCount').vmCountReg3.signerAndParticpantVmCountReg3)),0)]",
-            "participantNodeCountReg3": "[coalesce(int(last(steps('vmCount').vmCountReg3.signerAndParticpantVmCountReg3)),0)]",
+            "signerNodeCountReg2": "[steps('vmCount').vmCountReg2.signerAndParticpantVmCountReg2]",
+            "participantNodeCountReg2": "[steps('vmCount').vmCountReg2.signerAndParticpantVmCountReg2]",
+            "signerNodeCountReg3": "[steps('vmCount').vmCountReg3.signerAndParticpantVmCountReg3]",
+            "participantNodeCountReg3": "[steps('vmCount').vmCountReg3.signerAndParticpantVmCountReg3]",
 
 
 
