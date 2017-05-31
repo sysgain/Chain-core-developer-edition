@@ -85,7 +85,7 @@
         },
         "signerNodeCountReg1": {
             "type": "int",
-            "defaultValue": 1,
+            "defaultValue": 0,
             "allowedValues": [
                 0,
                 1,
@@ -98,7 +98,7 @@
         },
         "participantNodeCountReg1": {
             "type": "int",
-            "defaultValue": 1,
+            "defaultValue": 0,
             "allowedValues": [
                 0,
                 1,
