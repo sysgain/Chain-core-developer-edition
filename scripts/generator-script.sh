@@ -28,21 +28,21 @@ sudo apt-get update
 sudo apt-get install -y docker-ce
 sudo systemctl enable docker
 # pull chaincore docker image
-docker pull chaincore/developer:ivy-latest
+sudo docker pull chaincore/developer:ivy-latest
 # run chaincore docker image
-docker run -d -p $portnumber:1999 chaincore/developer:ivy-latest
+sudo docker run -d -p $portnumber:1999 chaincore/developer:ivy-latest
 sleep 60
 echo "===========================================Extracting container Id==========================================="
-containerId=`docker ps | cut -d " " -f1 | sed 1d`
+containerId=`sudo docker ps | cut -d " " -f1 | sed 1d`
 #generator client access token / public key
-docker exec -itd $containerId /usr/bin/chain/cored
-#generatorctoken=`docker exec  $containerId /usr/bin/chain/corectl create-token $clienttokenname | cut -c1-71`
+sudo docker exec -itd $containerId /usr/bin/chain/cored
+#generatorctoken=`sudo docker exec  $containerId /usr/bin/chain/corectl create-token $clienttokenname | cut -c1-71`
 echo "===========================================Genarating generator client token=================================="
-generatorctoken=`docker logs $containerId | grep "^client:" | uniq`
+generatorctoken=`sudo docker logs $containerId | grep "^client:" | uniq`
 #generator blockchain_id
 echo "===========================================Genarating generator blockchain ID================================="
-chaincoreid=`docker exec $containerId /usr/bin/chain/corectl config-generator`
-docker restart $containerId
+chaincoreid=`sudo docker exec $containerId /usr/bin/chain/corectl config-generator`
+sudo docker restart $containerId
 sleep 30
 echo "===========================================Logging into azure account========================================="
 sudo az login --service-principal -u $serviceprincipal -p $secretkey --tenant $tenatid
@@ -51,7 +51,7 @@ ntokenamelen=`echo "$networktokenname:" | wc -c`
 totallen=`expr 65 + $ntokenamelen`
 #a network token that will be used by remote signers
 echo "===========================================Genarating generator network token=================================="
-networkToken=`docker exec $containerId /usr/bin/chain/corectl create-token -net $networktokenname | cut -c1-$totallen`
+networkToken=`sudo docker exec $containerId /usr/bin/chain/corectl create-token -net $networktokenname | cut -c1-$totallen`
 echo "=============Storing networkToken,generatorClientToken and blockchainid to the Azure Key Vault================="
 sudo az keyvault secret set --name networkToken   --vault-name $keyvaultname --value $networkToken
 sudo az keyvault secret set --name generatorClientToken --vault-name $keyvaultname --value $generatorctoken
