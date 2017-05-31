@@ -115,7 +115,8 @@
             "allowedValues": [
                 "1_signer_and_1_participant",
                 "1_signer_and_0_participant",
-                "0_signer_and_1_participant"
+                "0_signer_and_1_participant",
+                "0_signer_and_0_participant"
             ]
         },
         "nodeCountReg3": {
@@ -124,7 +125,8 @@
             "allowedValues": [
                 "1_signer_and_1_participant",
                 "1_signer_and_0_participant",
-                "0_signer_and_1_participant"
+                "0_signer_and_1_participant",
+                "0_signer_and_0_participant"
             ]
         },
         "storageAccountType": {
@@ -173,14 +175,22 @@
     "variables": {
         "baseUrl": "[parameters('baseUrl')]",
         "regionCount": "[parameters('regionCount')]",
-        "1_signer_and_1_participant": {
-            "signerNum": 1,
-            "partNum": 1
+        "0_signer_and_0_participant": {
+            "signerNum": 0,
+            "partNum": 0
         },
-        "1_signer_and_0_participant": {
+        "0_signer_and_1_participant": {
             "signerNum": 0,
             "partNum": 1
         },
+        "1_signer_and_0_participant": {
+            "signerNum": 1,
+            "partNum": 0
+        },
+        "1_signer_and_1_participant": {
+            "signerNum": 1,
+            "partNum": 1
+        },    
         "signerNodeCountReg1": "[parameters('signerNodeCountReg1')]",
         "participantNodeCountReg1": "[parameters('participantNodeCountReg1')]",
         "signerNodeCountReg2": "[variables(parameters('nodeCountReg2')).signerNum]",
