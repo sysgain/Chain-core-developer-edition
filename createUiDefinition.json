@@ -502,7 +502,7 @@
                                 "defaultValue": "0 Signer and 1 Participant",
                                 "toolTip": "Select the number of signer and participant chain core instances to deploy into Region 2",
                                 "constraints": {
-                                     "allowedValues": [
+                                    "allowedValues": [
                                         {
                                             "label": "0 Signer and 1 Participant",
                                             "value": "01"
@@ -906,10 +906,10 @@
             "participantVmSize": "[coalesce(steps('vmCount').vmSizeSelector.partVmSizeHDD, steps('vmCount').vmSizeSelector.partVmSizeSSD)]",
             "signerNodeCountReg1": "[steps('vmCount').vmCountReg1.signerVmCountReg1]",
             "participantNodeCountReg1": "[steps('vmCount').vmCountReg1.partVmCountReg1]",
-            "signerNodeCountReg2": "[int(first(steps('vmCount').vmCountReg2.signerAndParticpantVmCountReg2))]",
-            "participantNodeCountReg2": "[int(last(steps('vmCount').vmCountReg2.signerAndParticpantVmCountReg2))]",
-            "signerNodeCountReg3": "[int(first(steps('vmCount').vmCountReg3.signerAndParticpantVmCountReg3))]",
-            "participantNodeCountReg3": "[int(last(steps('vmCount').vmCountReg3.signerAndParticpantVmCountReg3))]",
+            "signerNodeCountReg2": "[coalesce(int(first(steps('vmCount').vmCountReg2.signerAndParticpantVmCountReg2)))]",
+            "participantNodeCountReg2": "[coalesce(int(last(steps('vmCount').vmCountReg2.signerAndParticpantVmCountReg2)))]",
+            "signerNodeCountReg3": "[coalesce(int(first(steps('vmCount').vmCountReg3.signerAndParticpantVmCountReg3)))]",
+            "participantNodeCountReg3": "[coalesce(int(last(steps('vmCount').vmCountReg3.signerAndParticpantVmCountReg3)))]",
             "storageAccountType": "[steps('vmCount').managedDiskType.mngDiskType]",
             "VPNSharedKey": "[steps('otherSettings').vnetGatewaySettings.connectionSharedKey]",
             "objectId": "[steps('otherSettings').keyVaultSettings.objId]",
