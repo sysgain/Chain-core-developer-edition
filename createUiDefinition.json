@@ -505,15 +505,15 @@
                                      "allowedValues": [
                                         {
                                             "label": "0 Signer and 1 Participant",
-                                            "value": "[0,1]"
+                                            "value": ["0","1"]
                                         },
                                         {
                                             "label": "1 Signer and 0 Participant",
-                                            "value": "[1,0]"
+                                            "value": ["1","0"]
                                         },
                                         {
                                             "label": "1 Signer and 1 Participant",
-                                            "value": "[1,1]"
+                                            "value": ["1","1"]
                                         }
                                     ]
                                 },
@@ -537,15 +537,15 @@
                                     "allowedValues": [
                                         {
                                             "label": "0 Signer and 1 Participant",
-                                            "value": "[0,1]"
+                                            "value": ["0","1"]
                                         },
                                         {
                                             "label": "1 Signer and 0 Participant",
-                                            "value": "[1,0]"
+                                            "value": ["1","0"]
                                         },
                                         {
                                             "label": "1 Signer and 1 Participant",
-                                            "value": "[1,1]"
+                                            "value": ["1","1"]
                                         }
                                     ]
                                 },
