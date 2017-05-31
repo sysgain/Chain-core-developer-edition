@@ -11,19 +11,17 @@
         "nodeCount": {
             "type": "int"
         },
-        "suffix":{
+        "suffix": {
             "type": "string"
         }
     },
     "variables": {
-        "suffix": "[concat(parameters('vmSettings').suffix)]",
         "apiVersion": "[concat(parameters('vmSettings').apiVersion)]",
         "availabilitySetsName": "[concat(parameters('vmSettings').availabilitySetsName,'-',parameters('location'),'-',parameters('suffix'))]",
         "nicName": "[concat(parameters('vmSettings').nicName,'-',parameters('location'),'-',parameters('suffix'))]",
         "vmName": "[concat(parameters('vmSettings').vmName,'-',parameters('location'),'-',parameters('suffix'))]",
         "nodeCount": "[parameters('nodeCount')]",
         "adminUsername": "[parameters('vmSettings').adminUsername]",
-        "adminPassword": "[parameters('vmSettings').adminPassword]",
         "vmSize": "[parameters('vmSettings').vmSize]",
         "storageAccountType": "[parameters('vmSettings').storageAccountType]",
         "publisher": "[parameters('vmSettings').publisher]",
@@ -32,7 +30,6 @@
         "version": "[parameters('vmSettings').version]",
         "diskSizeGB": "[parameters('vmSettings').diskSizeGB]",
         "dockerApiVersion": "[parameters('vmSettings').dockerApiVersion]",
-        "passwordOrSshKey": "[parameters('vmSettings').passwordOrSshKey]",
         "sshPublicKey": "[parameters('vmSettings').sshPublicKey]"
     },
     "resources": [

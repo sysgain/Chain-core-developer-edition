@@ -13,11 +13,9 @@
         }
     },
     "variables": {
-        "suffix": "[parameters('genVMsettings').suffix]",
         "location": "[parameters('location')]",
         "nicName": "[concat(parameters('genVMsettings').nicName,'-',parameters('location'),'-',parameters('suffix'))]",
         "vmName": "[concat(parameters('genVMsettings').vmName,'-',parameters('location'),'-',parameters('suffix'))]",
-        "adminPassword": "[parameters('genVMsettings').adminPassword]",
         "adminUsername": "[parameters('genVMsettings').adminUsername]",
         "vmSize": "[parameters('genVMsettings').vmSize]",
         "apiVersion": "[parameters('genVMsettings').apiVersion]",
@@ -27,9 +25,7 @@
         "sku": "[parameters('genVMsettings').sku]",
         "version": "[parameters('genVMsettings').version]",
         "diskSizeGB": "[parameters('genVMsettings').diskSizeGB]",
-        "passwordOrSshKey": "[parameters('genVMsettings').passwordOrSshKey]",
-        "sshPublicKey": "[parameters('genVMsettings').sshPublicKey]",
-        "dockerApiVersion": "[parameters('genVMsettings').dockerApiVersion]"
+        "sshPublicKey": "[parameters('genVMsettings').sshPublicKey]"
     },
     "resources": [
         {
@@ -83,26 +79,7 @@
                         }
                     ]
                 }
-            },
-            "resources": [
-                {
-                    "type": "extensions",
-                    "name": "DockerExtension",
-                    "apiVersion": "[variables('dockerApiVersion')]",
-                    "location": "[parameters('location')]",
-                    "dependsOn": [
-                        "[concat('Microsoft.Compute/virtualMachines/', variables('vmName'))]"
-                    ],
-                    "properties": {
-                        "publisher": "Microsoft.Azure.Extensions",
-                        "type": "DockerExtension",
-                        "typeHandlerVersion": "1.1",
-                        "autoUpgradeMinorVersion": true,
-                        "settings": {},
-                        "protectedSettings": {}
-                    }
-                }
-            ]
+            }
         }
     ]
 }
