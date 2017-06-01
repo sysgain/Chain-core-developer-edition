@@ -65,7 +65,7 @@
         "objectId": {
             "value": "objectId"
         },
-        "servicePrinciple": {
+        "servicePrincipal": {
             "value": "serviceprincipal"
         },
         "secretKey": {
