@@ -435,7 +435,7 @@
                 "name": "signerVmCountReg1",
                 "type": "Microsoft.Common.DropDown",
                 "label": "Number of signer chain core instances",
-                "defaultValue": "0",
+                "defaultValue": "1",
                 "toolTip": "Select the number of signer chain core instances to deploy into Region 1",
                 "constraints": {
                   "allowedValues": [
@@ -463,7 +463,7 @@
                 "name": "partVmCountReg1",
                 "type": "Microsoft.Common.DropDown",
                 "label": "Number of participant chain core instances",
-                "defaultValue": "0",
+                "defaultValue": "1",
                 "toolTip": "Select the number of participant chain core instances to deploy into Region 1",
                 "constraints": {
                   "allowedValues": [
