@@ -30,7 +30,7 @@ sudo apt-get update
 sudo apt-get install -y docker-ce
 sudo systemctl enable docker
 echo "============================================Logging into azure account==========================================="
-sudo az login --service-principal -u $serviceprincipal -p $secretkey --tenant $tenatid
+sudo sudo az login --service-principal -u $serviceprincipal -p $secretkey --tenant $tenatid --allow-no-subscriptions
 sudo az account set -s $subscriptionid
 echo "=================Extracting generatornetworktoken and blockchainid from Azure Key Vault==========================="
 generatornetworktoken=`sudo az keyvault secret show --name networkToken --vault-name $keyvaultname | grep "value" | cut -d "\"" -f4`
