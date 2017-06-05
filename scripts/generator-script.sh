@@ -46,7 +46,6 @@ sudo docker restart $containerId
 sleep 30
 echo "===========================================Logging into azure account========================================="
 sudo az login --service-principal -u $serviceprincipal -p $secretkey --tenant $tenatid --allow-no-subscriptions
-sudo az account set -s $subscriptionid
 ntokenamelen=`echo "$networktokenname:" | wc -c`
 totallen=`expr 65 + $ntokenamelen`
 #a network token that will be used by remote signers
