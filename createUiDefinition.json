@@ -843,7 +843,7 @@
               {
                 "name": "objId",
                 "type": "Microsoft.Common.TextBox",
-                "label": "Service principal's Object ID",
+                "label": "Service principal Object ID",
                 "toolTip": "Refer to the deployment guide for details on where to find this ID.  This is the unique ID of the service principal that will perform credential distribution across instances via key vault. The object ID is needed to grant access to the key vault this deployment creates.",
                 "constraints": {
                   "required": true
